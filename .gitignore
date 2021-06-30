@@ -348,3 +348,13 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Union builds
+G[12] Debug
+G[12] Release
+G[12]A Debug
+G[12]A Release
+MP Debug
+MP Release
+
+*.last
