@@ -214,6 +214,9 @@
     <Filter Include="Engine SDK\4. Gothic II NoTR\Overloads">
       <UniqueIdentifier>{225cc81e-eae0-432b-9f39-e93512644977}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\Workspace\Features">
+      <UniqueIdentifier>{b2fd20c8-69a8-4b42-b710-40843c5464a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2778,6 +2781,15 @@
       <Filter>Plugin\Workspace\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="FocusColor.cpp">
+      <Filter>Plugin\Workspace\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="Hello.cpp">
+      <Filter>Plugin\Workspace\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="Options.cpp">
+      <Filter>Plugin\Workspace\Features</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl">

@@ -3,6 +3,9 @@
 
 // Automatically generated block
 #pragma region Includes
+#include "Options.cpp"
+#include "FocusColor.cpp"
+#include "Hello.cpp"
 #include "Plugin.cpp"
 #pragma endregion
 

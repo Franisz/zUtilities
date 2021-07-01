@@ -472,6 +472,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DllMain.cpp" />
+    <ClInclude Include="FocusColor.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Hello.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Options.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Plugin.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="ZenGin\Gothic_II_Addon\ClassDeclarators_G2A.cpp" />

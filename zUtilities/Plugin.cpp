@@ -4,13 +4,11 @@
 
 namespace GOTHIC_ENGINE {
 
-  // TO DO
-  // Your code ...
-
   void Game_Entry() {
   }
-  
+
   void Game_Init() {
+    initOptions();
   }
 
   void Game_Exit() {
@@ -20,6 +18,13 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_Loop() {
+
+#if _DEBUG
+    showHello();
+#endif
+
+    updateFocusColor();
+
   }
 
   void Game_PostLoop() {
@@ -69,16 +74,16 @@ namespace GOTHIC_ENGINE {
 
   void Game_LoadBegin_Trigger() {
   }
-  
+
   void Game_LoadEnd_Trigger() {
   }
-  
+
   void Game_Pause() {
   }
-  
+
   void Game_Unpause() {
   }
-  
+
   void Game_DefineExternals() {
   }
 
@@ -90,7 +95,7 @@ namespace GOTHIC_ENGINE {
     - Game_Entry           * Gothic entry point
     - Game_DefineExternals * Define external script functions
     - Game_Init            * After DAT files init
-  
+
   Functions call order on Change level:
     - Game_LoadBegin_Trigger     * Entry in trigger
     - Game_LoadEnd_Trigger       *
@@ -99,14 +104,14 @@ namespace GOTHIC_ENGINE {
     - Game_SaveBegin             * Save previous level information
     - Game_SaveEnd               *
     - Game_LoadEnd_ChangeLevel   *
-  
+
   Functions call order on Save game:
     - Game_Pause     * Open menu
     - Game_Unpause   * Click on save
     - Game_Loop      * Frame call window
     - Game_SaveBegin * Save begin
     - Game_SaveEnd   *
-  
+
   Functions call order on Load game:
     - Game_Pause              * Open menu
     - Game_Unpause            * Click on load
