@@ -484,6 +484,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PlayerHelper.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Plugin.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="ZenGin\Gothic_II_Addon\ClassDeclarators_G2A.cpp" />
@@ -502,6 +506,14 @@
   <ItemGroup>
     <ClInclude Include="Plugin.h" />
     <ClInclude Include="Headers.h" />
+    <ClInclude Include="QuickSave.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="QuickSave.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Sources.h" />
     <ClInclude Include="UnionAfx.h" />

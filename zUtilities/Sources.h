@@ -5,6 +5,7 @@
 #pragma region Includes
 #include "Options.cpp"
 #include "FocusColor.cpp"
+#include "QuickSave.cpp"
 #include "Hello.cpp"
 #include "Plugin.cpp"
 #pragma endregion

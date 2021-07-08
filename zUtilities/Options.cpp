@@ -4,13 +4,15 @@
 namespace GOTHIC_ENGINE {
 
 #define pluginName "ZUTILITIES"
+#define printWin(a) ogame->GetTextView()->Printwin(a);
 
-  int bColorNpcs, bColorChests, bColorDoors;
+  int bColorNpcs, bColorChests, bColorDoors, bUseQuickSave;
 
   void initOptions() {
     bColorNpcs = zoptions->ReadInt( pluginName, "bColorNpcs", TRUE );
     bColorChests = zoptions->ReadInt( pluginName, "bColorChests", TRUE );
     bColorDoors = zoptions->ReadInt( pluginName, "bColorDoors", TRUE );
+    bUseQuickSave = zoptions->ReadInt( pluginName, "bUseQuickSave", TRUE );
   }
 
 }

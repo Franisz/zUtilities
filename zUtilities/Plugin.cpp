@@ -3,12 +3,20 @@
 #include "resource.h"
 
 namespace GOTHIC_ENGINE {
+  PlayerHelper playerHelper;
+  QuickSave* quickSave;
 
   void Game_Entry() {
+    quickSave = new QuickSave();
   }
 
   void Game_Init() {
     initOptions();
+
+    if ( quickSave && bUseQuickSave ) {
+      quickSave->SetStringsByLanguage();
+      quickSave->ReadOptions();
+    }
   }
 
   void Game_Exit() {
@@ -25,6 +33,9 @@ namespace GOTHIC_ENGINE {
 
     updateFocusColor();
 
+    if ( quickSave && bUseQuickSave )
+      quickSave->QuickSaveLoop( &playerHelper );
+
   }
 
   void Game_PostLoop() {
@@ -37,9 +48,11 @@ namespace GOTHIC_ENGINE {
   TSaveLoadGameInfo& SaveLoadGameInfo = UnionCore::SaveLoadGameInfo;
 
   void Game_SaveBegin() {
+    playerHelper.isSaving = true;
   }
 
   void Game_SaveEnd() {
+    playerHelper.isSaving = false;
   }
 
   void LoadBegin() {

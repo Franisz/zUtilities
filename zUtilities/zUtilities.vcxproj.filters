@@ -217,6 +217,12 @@
     <Filter Include="Plugin\Workspace\Features">
       <UniqueIdentifier>{b2fd20c8-69a8-4b42-b710-40843c5464a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\Workspace\Helper">
+      <UniqueIdentifier>{0cb87235-0353-4728-af5f-5d2e64f6e024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugin\Workspace\Features\QuickSave">
+      <UniqueIdentifier>{3c7b62ef-db00-4b80-9a0c-fe612bd5dc7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2789,6 +2795,15 @@
     </ClInclude>
     <ClInclude Include="Options.cpp">
       <Filter>Plugin\Workspace\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHelper.h">
+      <Filter>Plugin\Workspace\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="QuickSave.cpp">
+      <Filter>Plugin\Workspace\Features\QuickSave</Filter>
+    </ClInclude>
+    <ClInclude Include="QuickSave.h">
+      <Filter>Plugin\Workspace\Features\QuickSave</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

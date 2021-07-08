@@ -77,8 +77,8 @@ namespace GOTHIC_ENGINE {
       return true;
     }
 #else
-    if ( (focusNpc->IsHostile( player ) && focusNpc->GetPermAttitude( player ) == NPC_ATT_HOSTILE) 
-      || (focusNpc->enemy == player && focusNpc->aiscriptvars[35] && focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) ))) {
+    if ( (focusNpc->IsHostile( player ) && focusNpc->GetPermAttitude( player ) == NPC_ATT_HOSTILE)
+      || (focusNpc->enemy == player && focusNpc->aiscriptvars[35] && focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) )) ) {
       screen->SetFontColor( zCOLOR( 255, 0, 0 ) );
       return true;
     }
