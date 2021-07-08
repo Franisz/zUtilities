@@ -2805,6 +2805,9 @@
     <ClInclude Include="QuickSave.h">
       <Filter>Plugin\Workspace\Features\QuickSave</Filter>
     </ClInclude>
+    <ClInclude Include="Meatbug.cpp">
+      <Filter>Plugin\Workspace\Features</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl">
