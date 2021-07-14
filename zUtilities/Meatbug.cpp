@@ -15,24 +15,32 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    if ( npc->GetInstanceName().HasWord( "MEATBUG" ) ) {
+    if ( npc->GetInstanceName().HasWord( "MEATBUG" ) && npc->attribute[NPC_ATR_HITPOINTSMAX] <= 25 ) {
       // Kill
       npc->attribute[NPC_ATR_HITPOINTS] = 0;
 
       // Sound
       zCSoundFX* snd = zsound->LoadSoundFX( "MEA_Ambient" );
-      if ( snd ) 
+      if ( snd )
         zsound->PlaySound( snd, 50 );
 
       // Exp
+      int index, exp;
 #if ENGINE >= Engine_G2
-      int index = parser->GetIndex( "B_GivePlayerXP" );
+      if ( parser->GetSymbol( "XP_PER_VICTORY" ) )
+        exp = parser->GetSymbol( "XP_PER_VICTORY" )->single_intdata;
+
+      index = parser->GetIndex( "B_GivePlayerXP" );
 #else
-      int index = parser->GetIndex( "B_GiveXP" );
+      if ( parser->GetSymbol( "XP_PER_LEVEL_DEAD" ) )
+        exp = parser->GetSymbol( "XP_PER_LEVEL_DEAD" )->single_intdata;
+
+      index = parser->GetIndex( "B_GiveXP" );
 #endif
+      if ( !exp ) exp = 10;
 
       if ( index )
-        parser->CallFunc( index, npc->level * 10 );
+        parser->CallFunc( index, npc->level * exp );
     }
 
     THISCALL( Hook_oCNpc_OnTouch )(vob);
