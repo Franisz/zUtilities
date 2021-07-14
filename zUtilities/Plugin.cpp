@@ -5,9 +5,11 @@
 namespace GOTHIC_ENGINE {
   PlayerHelper playerHelper;
   QuickSave* quickSave;
+  FocusColor* focusColor;
 
   void Game_Entry() {
     quickSave = new QuickSave();
+    focusColor = new FocusColor();
   }
 
   void Game_Init() {
@@ -31,7 +33,8 @@ namespace GOTHIC_ENGINE {
     showHello();
 #endif
 
-    updateFocusColor();
+    if ( focusColor )
+      focusColor->FocusColorLoop();
 
     if ( quickSave && bUseQuickSave )
       quickSave->QuickSaveLoop( &playerHelper );

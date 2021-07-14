@@ -223,6 +223,9 @@
     <Filter Include="Plugin\Workspace\Features\QuickSave">
       <UniqueIdentifier>{3c7b62ef-db00-4b80-9a0c-fe612bd5dc7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\Workspace\Features\FocusColor">
+      <UniqueIdentifier>{3c13377e-9713-4827-8b63-b1019a256cb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2787,9 +2790,6 @@
       <Filter>Plugin\Workspace\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="FocusColor.cpp">
-      <Filter>Plugin\Workspace\Features</Filter>
-    </ClInclude>
     <ClInclude Include="Hello.cpp">
       <Filter>Plugin\Workspace\Features</Filter>
     </ClInclude>
@@ -2807,6 +2807,12 @@
     </ClInclude>
     <ClInclude Include="Meatbug.cpp">
       <Filter>Plugin\Workspace\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="FocusColor.h">
+      <Filter>Plugin\Workspace\Features\FocusColor</Filter>
+    </ClInclude>
+    <ClInclude Include="FocusColor.cpp">
+      <Filter>Plugin\Workspace\Features\FocusColor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

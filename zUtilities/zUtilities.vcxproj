@@ -476,6 +476,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="FocusColor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Hello.cpp">
       <SubType>
       </SubType>

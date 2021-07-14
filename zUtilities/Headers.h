@@ -4,6 +4,7 @@
 // Automatically generated block
 #pragma region Includes
 #include "PlayerHelper.h"
+#include "FocusColor.h"
 #include "QuickSave.h"
 #include "Plugin.h"
 #pragma endregion

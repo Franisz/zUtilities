@@ -4,7 +4,7 @@
 namespace GOTHIC_ENGINE {
 
 #if ENGINE >= Engine_G2
-  int getAbsolutionLevel( oCNpc* slf ) {
+  int FocusColor::GetAbsolutionLevel( oCNpc* slf ) {
     if ( (slf->npcType == 3 || slf->npcType == 4) && (slf->guild == 1 || slf->guild == 2 || slf->guild == 3) )
       if ( parser->GetSymbol( "ABSOLUTIONLEVEL_OldCamp" ) )
         return parser->GetSymbol( "ABSOLUTIONLEVEL_OldCamp" )->single_intdata;
@@ -29,17 +29,13 @@ namespace GOTHIC_ENGINE {
   }
 #endif
 
-  bool npcColor() {
-    oCNpc* focusNpc = player->GetFocusNpc();
-
-    if ( !focusNpc ) return false;
+  zCOLOR FocusColor::NpcColor( oCNpc* focusNpc ) {
 
     if ( focusNpc->attribute[NPC_ATR_HITPOINTS] <= 0 ) {
       if ( !focusNpc->stealcontainer->contList.GetNumInList() )
-        screen->SetFontColor( zCOLOR( 175, 175, 175 ) );
+        return zCOLOR( 175, 175, 175 );
       else
-        screen->SetFontColor( zCOLOR( 255, 255, 255 ) );
-      return true;
+        return colDefault;
     }
 
 #if ENGINE >= Engine_G2
@@ -53,118 +49,98 @@ namespace GOTHIC_ENGINE {
         || focusNpc->aiscriptvars[9] == 19
         || focusNpc->aiscriptvars[1] == 4
         || focusNpc->aiscriptvars[52] == 1) ) {
-      screen->SetFontColor( zCOLOR( 255, 0, 0 ) );
-      return true;
+      return zCOLOR( 255, 0, 0 );
     }
 
-    if ( focusNpc->IsAngry( player ) || (focusNpc->enemy == player && focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) )) ) {
-      screen->SetFontColor( zCOLOR( 255, 180, 0 ) );
-      return true;
-    }
+    if ( focusNpc->IsAngry( player ) || (focusNpc->enemy == player && focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) )) )
+      return zCOLOR( 255, 180, 0 );
 
     int day, hour, min;
     ogame->GetTime( day, hour, min );
 
     if ( focusNpc->aiscriptvars[1] != 0
       && !(focusNpc->aiscriptvars[1] <= 3 && focusNpc->aiscriptvars[2] < day - 2)
-      && !(focusNpc->aiscriptvars[46] < getAbsolutionLevel( focusNpc )) ) {
-      screen->SetFontColor( zCOLOR( 255, 180, 0 ) );
-      return true;
-    }
+      && !(focusNpc->aiscriptvars[46] < GetAbsolutionLevel( focusNpc )) )
+      return zCOLOR( 255, 180, 0 );
 
-    if ( (focusNpc->IsFriendly( player ) || focusNpc->npcType == 2) && !focusNpc->IsAIState( parser->GetIndex( "ZS_ReactToDamage" ) ) ) {
-      screen->SetFontColor( zCOLOR( 0, 255, 0 ) );
-      return true;
-    }
+    if ( (focusNpc->IsFriendly( player ) || focusNpc->npcType == 2) && !focusNpc->IsAIState( parser->GetIndex( "ZS_ReactToDamage" ) ) )
+      return zCOLOR( 0, 255, 0 );
 #else
     if ( (focusNpc->IsHostile( player ) && focusNpc->GetPermAttitude( player ) == NPC_ATT_HOSTILE)
-      || (focusNpc->enemy == player && focusNpc->aiscriptvars[35] && focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) )) ) {
-      screen->SetFontColor( zCOLOR( 255, 0, 0 ) );
-      return true;
-    }
+      || (focusNpc->enemy == player && focusNpc->aiscriptvars[35] && focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) )) )
+      return zCOLOR( 255, 0, 0 );
 
     if ( (focusNpc->IsAngry( player ) || focusNpc->enemy == player)
-      && (focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) ) || focusNpc->IsAIState( parser->GetIndex( "ZS_ReactToDamage" ) )) ) {
-      screen->SetFontColor( zCOLOR( 255, 180, 0 ) );
-      return true;
-    }
+      && (focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) ) || focusNpc->IsAIState( parser->GetIndex( "ZS_ReactToDamage" ) )) )
+      return zCOLOR( 255, 180, 0 );
 
-    if ( focusNpc->IsFriendly( player ) || focusNpc->npcType == 3 ) {
-      screen->SetFontColor( zCOLOR( 0, 255, 0 ) );
-      return true;
-    }
+    if ( focusNpc->IsFriendly( player ) || focusNpc->npcType == 3 )
+      return zCOLOR( 0, 255, 0 );
 #endif
 
-    if ( focusNpc->IsNeutral( player ) ) {
-      screen->SetFontColor( zCOLOR( 255, 255, 255 ) );
-      return true;
-    }
+    //if ( focusNpc->IsNeutral( player ) ) 
+    //  return colDefault;
 
-    return false;
+    return colDefault;
   }
 
-  bool chestColor() {
+  zCOLOR FocusColor::ChestColor( oCMobContainer* focusContainer ) {
+
+    oCMobLockable* focusLockable = focusContainer->CastTo<oCMobLockable>();
+
+    if ( !focusLockable ) return colDefault;
+
+    if ( focusLockable->locked && (focusLockable->keyInstance != "") )
+      return zCOLOR( 255, 20, 20 );
+
+    if ( focusLockable->locked )
+      return zCOLOR( 255, 175, 0 );
+
+    if ( focusContainer->containList.GetNumInList() )
+      return zCOLOR( 0, 175, 0 );
+
+
+    return zCOLOR( 175, 175, 175 );
+  }
+
+  zCOLOR FocusColor::DoorColor( oCMobDoor* focusDoor ) {
+
+    oCMobLockable* focusLockable = focusDoor->CastTo<oCMobLockable>();
+
+    if ( !focusLockable ) return colDefault;
+
+    if ( focusLockable->locked && (focusLockable->keyInstance != "") )
+      return zCOLOR( 255, 20, 20 );
+
+    if ( focusLockable->locked )
+      return zCOLOR( 255, 175, 0 );
+
+    return colDefault;
+  }
+
+  zCOLOR FocusColor::CheckFocus() {
     zCVob* focusVob = player->GetFocusVob();
 
-    if ( !focusVob ) return false;
+    if ( !focusVob ) return colDefault;
 
-    oCMobLockable* focusLockable = focusVob->CastTo<oCMobLockable>();
-    oCMobContainer* focusContainer = focusVob->CastTo<oCMobContainer>();
+    if ( bColorChests )
+      if ( oCMobContainer* focusContainer = focusVob->CastTo<oCMobContainer>() )
+        return ChestColor( focusContainer );
 
-    if ( !focusLockable || !focusContainer ) return false;
+    if ( bColorDoors )
+      if ( oCMobDoor* focusDoor = focusVob->CastTo<oCMobDoor>() )
+        return DoorColor( focusDoor );
 
-    if ( focusLockable->locked && (focusLockable->keyInstance != "") ) {
-      screen->SetFontColor( zCOLOR( 255, 20, 20 ) );
-      return true;
-    }
+    if ( bColorNpcs )
+      if ( oCNpc* focusNpc = focusVob->CastTo<oCNpc>() )
+        return NpcColor( focusNpc );
 
-    if ( focusLockable->locked ) {
-      screen->SetFontColor( zCOLOR( 255, 175, 0 ) );
-      return true;
-    }
-
-    if ( focusContainer->containList.GetNumInList() ) {
-      screen->SetFontColor( zCOLOR( 0, 175, 0 ) );
-      return true;
-    }
-
-    screen->SetFontColor( zCOLOR( 175, 175, 175 ) );
-    return true;
+    return colDefault;
   }
 
-  bool doorColor() {
-    zCVob* focusVob = player->GetFocusVob();
-
-    if ( !focusVob ) return false;
-
-    oCMobLockable* focusLockable = focusVob->CastTo<oCMobLockable>();
-    oCMobDoor* focusDoor = focusVob->CastTo<oCMobDoor>();
-
-    if ( !focusLockable || !focusDoor ) return false;
-
-    if ( focusLockable->locked && (focusLockable->keyInstance != "") ) {
-      screen->SetFontColor( zCOLOR( 255, 20, 20 ) );
-      return true;
-    }
-
-    if ( focusLockable->locked ) {
-      screen->SetFontColor( zCOLOR( 255, 175, 0 ) );
-      return true;
-    }
-
-    screen->SetFontColor( zCOLOR( 255, 255, 255 ) );
-    return true;
-  }
-
-  void updateFocusColor() {
+  void FocusColor::FocusColorLoop() {
     if ( !bColorNpcs && !bColorChests && !bColorDoors ) return;
 
-    if ( npcColor() && bColorNpcs ) return;
-
-    if ( chestColor() && bColorChests ) return;
-
-    if ( doorColor() && bColorDoors ) return;
-
-    screen->SetFontColor( zCOLOR( 255, 255, 255 ) );
+    screen->SetFontColor( CheckFocus() );
   }
 }
