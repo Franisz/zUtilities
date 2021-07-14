@@ -99,7 +99,6 @@ namespace GOTHIC_ENGINE {
 
     // SaveGame
     ogame->WriteSavegame( iLastSaveSlot, true );
-    ogame->savegameManager->Reinit();
 
     // SaveInfo
     auto info = ogame->savegameManager->GetSavegame( iLastSaveSlot );
@@ -113,6 +112,7 @@ namespace GOTHIC_ENGINE {
     info->m_TimeMin = min;
     info->m_PlayTimeSeconds = gameMan->GetPlaytimeSeconds();
     info->UpdateThumbPic( thumb );
+    delete thumb;
 
     ogame->savegameManager->SetAndWriteSavegame( iLastSaveSlot, info );
   }
