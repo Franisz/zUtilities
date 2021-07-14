@@ -17,4 +17,7 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
   - Containers: `Red - locked on key`, `Orange - locked`, `Green - open with items`, `Grey - open and empty`.
   - Each group can be disabled separately in `gothic.ini` with `bColorNpcs`, `bColorChests` and `bColorDoors` options.
 
+- Stepping on meatbugs kills them and give player exp.
+  - This can be disabled in `gothic.ini` with `bTrampleMeatbugs` option.
+
 - Also on debug build prints info on the screen about plugin and platform.
