@@ -21,8 +21,11 @@ namespace GOTHIC_ENGINE {
 
       // Sound
       zCSoundFX* snd = zsound->LoadSoundFX( "MEA_Ambient" );
-      if ( snd )
+      if ( snd ) {
         zsound->PlaySound( snd, 50 );
+        snd->Release();
+        snd = nullptr;
+      }
 
       // Exp
       int index, exp;
