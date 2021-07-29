@@ -3,29 +3,72 @@
 
 namespace GOTHIC_ENGINE {
 
+  bool FocusColor::CanTakeFromRoom( oCItem* focusItem ) {
+    oCPortalRoomManager* rooms = ogame->GetPortalRoomManager();
+
+    if ( !rooms ) return TRUE;
+
+    const zSTRING* portalName = focusItem->GetSectorNameVobIsIn();
+
+    if ( !portalName ) return TRUE;
+
+    int portalIndex = rooms->GetPortalRoomIndex( *portalName );
+
+    if ( portalIndex == Invalid ) return TRUE;
+
+    oCPortalRoom* portalRoom = rooms->portals[portalIndex];
+
+    if ( !portalRoom ) return TRUE;
+
+    int roomGuild = portalRoom->GetOwnerGuild();
+
+    if ( !roomGuild ) return TRUE;
+
+    int att = ogame->GetGuilds()->GetAttitude( roomGuild, player->guild );
+
+    if ( att == NPC_ATT_FRIENDLY ) return TRUE;
+
+    return FALSE;
+  }
+
 #if ENGINE >= Engine_G2
   int FocusColor::GetAbsolutionLevel( oCNpc* slf ) {
+    zCPar_Symbol* sym = nullptr;
+
     if ( (slf->npcType == 3 || slf->npcType == 4) && (slf->guild == 1 || slf->guild == 2 || slf->guild == 3) )
-      if ( parser->GetSymbol( "ABSOLUTIONLEVEL_OldCamp" ) )
-        return parser->GetSymbol( "ABSOLUTIONLEVEL_OldCamp" )->single_intdata;
+      if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_OldCamp" ) )
+        return sym->single_intdata;
 
     if ( slf->guild == 1 || slf->guild == 2 || slf->guild == 3 )
-      if ( parser->GetSymbol( "ABSOLUTIONLEVEL_City" ) )
-        return parser->GetSymbol( "ABSOLUTIONLEVEL_City" )->single_intdata;
+      if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_City" ) )
+        return sym->single_intdata;
 
     if ( slf->guild == 4 || slf->guild == 5 )
-      if ( parser->GetSymbol( "ABSOLUTIONLEVEL_Monastery" ) )
-        return parser->GetSymbol( "ABSOLUTIONLEVEL_Monastery" )->single_intdata;
+      if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_Monastery" ) )
+        return sym->single_intdata;
 
     if ( slf->guild == 7 || slf->guild == 8 )
-      if ( parser->GetSymbol( "ABSOLUTIONLEVEL_Monastery" ) )
-        return parser->GetSymbol( "ABSOLUTIONLEVEL_Monastery" )->single_intdata;
+      if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_Monastery" ) )
+        return sym->single_intdata;
 
     if ( slf->npcType == 5 || slf->npcType == 7 )
-      if ( parser->GetSymbol( "ABSOLUTIONLEVEL_BL" ) )
-        return parser->GetSymbol( "ABSOLUTIONLEVEL_BL" )->single_intdata;
+      if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_BL" ) )
+        return sym->single_intdata;
 
     return 0;
+  }
+
+  bool FocusColor::HasReasonToKill( oCNpc* slf ) {
+    if ( slf->aiscriptvars[1] == 4 ) return TRUE;
+    if ( slf->aiscriptvars[9] == 13 ) return TRUE;
+    if ( slf->aiscriptvars[9] == 14 ) return TRUE;
+    if ( slf->aiscriptvars[9] == 15 ) return TRUE;
+    if ( slf->aiscriptvars[9] == 17 ) return TRUE;
+    if ( slf->aiscriptvars[9] == 18 ) return TRUE;
+    if ( slf->aiscriptvars[9] == 19 ) return TRUE;
+    if ( slf->aiscriptvars[52] == 1 ) return TRUE;
+
+    return FALSE;
   }
 #endif
 
@@ -38,21 +81,15 @@ namespace GOTHIC_ENGINE {
         return colDefault;
     }
 
-#if ENGINE >= Engine_G2
-    if ( focusNpc->IsHostile( player )
-      || (focusNpc->enemy == player && focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) ))
-      && (focusNpc->aiscriptvars[9] == 13
-        || focusNpc->aiscriptvars[9] == 14
-        || focusNpc->aiscriptvars[9] == 15
-        || focusNpc->aiscriptvars[9] == 17
-        || focusNpc->aiscriptvars[9] == 18
-        || focusNpc->aiscriptvars[9] == 19
-        || focusNpc->aiscriptvars[1] == 4
-        || focusNpc->aiscriptvars[52] == 1) ) {
-      return zCOLOR( 255, 0, 0 );
-    }
+    bool attacking = focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) );
+    bool reacting = focusNpc->IsAIState( parser->GetIndex( "ZS_ReactToDamage" ) );
 
-    if ( focusNpc->IsAngry( player ) || (focusNpc->enemy == player && focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) )) )
+#if ENGINE >= Engine_G2
+    if ( focusNpc->IsHostile( player ) && focusNpc->GetPermAttitude( player ) == NPC_ATT_HOSTILE
+      || (focusNpc->enemy == player && attacking && HasReasonToKill( focusNpc )) )
+      return zCOLOR( 255, 0, 0 );
+
+    if ( focusNpc->IsAngry( player ) || (focusNpc->enemy == player && attacking) )
       return zCOLOR( 255, 180, 0 );
 
     int day, hour, min;
@@ -63,59 +100,66 @@ namespace GOTHIC_ENGINE {
       && !(focusNpc->aiscriptvars[46] < GetAbsolutionLevel( focusNpc )) )
       return zCOLOR( 255, 180, 0 );
 
-    if ( (focusNpc->IsFriendly( player ) || focusNpc->npcType == 2) && !focusNpc->IsAIState( parser->GetIndex( "ZS_ReactToDamage" ) ) )
+    if ( (focusNpc->IsFriendly( player ) || focusNpc->npcType == 2) && !reacting )
       return zCOLOR( 0, 255, 0 );
 #else
     if ( (focusNpc->IsHostile( player ) && focusNpc->GetPermAttitude( player ) == NPC_ATT_HOSTILE)
-      || (focusNpc->enemy == player && focusNpc->aiscriptvars[35] && focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) )) )
+      || (focusNpc->enemy == player && attacking && focusNpc->aiscriptvars[35]) )
       return zCOLOR( 255, 0, 0 );
 
-    if ( (focusNpc->IsAngry( player ) || focusNpc->enemy == player)
-      && (focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) ) || focusNpc->IsAIState( parser->GetIndex( "ZS_ReactToDamage" ) )) )
+    if ( (focusNpc->IsAngry( player ) || focusNpc->enemy == player) && (attacking || reacting) )
       return zCOLOR( 255, 180, 0 );
 
     if ( focusNpc->IsFriendly( player ) || focusNpc->npcType == 3 )
       return zCOLOR( 0, 255, 0 );
 #endif
 
-    //if ( focusNpc->IsNeutral( player ) ) 
-    //  return colDefault;
+    if ( ogame->GetGuilds()->GetAttitude( focusNpc->guild, player->guild ) == NPC_ATT_FRIENDLY && !reacting )
+      return zCOLOR( 175, 255, 175 );
 
     return colDefault;
   }
 
   zCOLOR FocusColor::ChestColor( oCMobContainer* focusContainer ) {
-
-    oCMobLockable* focusLockable = focusContainer->CastTo<oCMobLockable>();
-
-    if ( !focusLockable ) return colDefault;
-
-    if ( focusLockable->locked && (focusLockable->keyInstance != "") )
-      return zCOLOR( 255, 20, 20 );
-
-    if ( focusLockable->locked )
-      return zCOLOR( 255, 175, 0 );
+    if ( focusContainer->locked )
+      if ( focusContainer->keyInstance != "" )
+        return zCOLOR( 255, 20, 20 );
+      else
+        return zCOLOR( 255, 175, 0 );
 
     if ( focusContainer->containList.GetNumInList() )
       return zCOLOR( 0, 175, 0 );
-
 
     return zCOLOR( 175, 175, 175 );
   }
 
   zCOLOR FocusColor::DoorColor( oCMobDoor* focusDoor ) {
-
-    oCMobLockable* focusLockable = focusDoor->CastTo<oCMobLockable>();
-
-    if ( !focusLockable ) return colDefault;
-
-    if ( focusLockable->locked && (focusLockable->keyInstance != "") )
-      return zCOLOR( 255, 20, 20 );
-
-    if ( focusLockable->locked )
-      return zCOLOR( 255, 175, 0 );
+    if ( focusDoor->locked )
+      if ( focusDoor->keyInstance != "" )
+        return zCOLOR( 255, 20, 20 );
+      else
+        return zCOLOR( 255, 175, 0 );
 
     return colDefault;
+  }
+
+  zCOLOR FocusColor::ItemColor( oCItem* focusItem ) {
+#if ENGINE >= Engine_G2
+    if ( focusItem->HasFlag( ITM_FLAG_DROPPED ) )
+      return colDefault;
+#endif
+
+    if ( focusItem->IsOwnedByNpc( player->GetInstance() ) )
+      return colDefault;
+
+    if ( focusItem->IsOwnedByGuild( player->guild ) )
+      return colDefault;
+
+    // If room has GIL_PUBLIC this doesn't really matter
+    if ( CanTakeFromRoom( focusItem ) )
+      return colDefault;
+
+    return zCOLOR( 255, 200, 100 );
   }
 
   zCOLOR FocusColor::CheckFocus() {
@@ -135,11 +179,16 @@ namespace GOTHIC_ENGINE {
       if ( oCNpc* focusNpc = focusVob->CastTo<oCNpc>() )
         return NpcColor( focusNpc );
 
+    if ( bColorItems )
+      if ( oCItem* focusItem = focusVob->CastTo<oCItem>() )
+        return ItemColor( focusItem );
+
     return colDefault;
   }
 
   void FocusColor::FocusColorLoop() {
-    if ( !bColorNpcs && !bColorChests && !bColorDoors ) return;
+    if ( !bColorNpcs && !bColorChests && !bColorDoors && !bColorItems )
+      return;
 
     screen->SetFontColor( CheckFocus() );
   }
