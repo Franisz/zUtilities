@@ -20,7 +20,7 @@ namespace GOTHIC_ENGINE {
       npc->attribute[NPC_ATR_HITPOINTS] = 0;
 
       // Sound
-      if ( zCSoundFX* snd = zsound->LoadSoundFX( "MEA_Ambient" ); ) {
+      if ( zCSoundFX* snd = zsound->LoadSoundFX( "MEA_Ambient" ) ) {
         zsound->PlaySound( snd, 50 );
         snd->Release();
         snd = nullptr;
