@@ -15,13 +15,12 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    if ( npc->GetInstanceName().HasWord( "MEATBUG" ) && npc->attribute[NPC_ATR_HITPOINTSMAX] <= 25 ) {
+    if ( npc->guild == NPC_GIL_MEATBUG && npc->GetInstanceName().HasWord( "MEATBUG" ) && npc->attribute[NPC_ATR_HITPOINTSMAX] <= 25 ) {
       // Kill
       npc->attribute[NPC_ATR_HITPOINTS] = 0;
 
       // Sound
-      zCSoundFX* snd = zsound->LoadSoundFX( "MEA_Ambient" );
-      if ( snd ) {
+      if ( zCSoundFX* snd = zsound->LoadSoundFX( "MEA_Ambient" ); ) {
         zsound->PlaySound( snd, 50 );
         snd->Release();
         snd = nullptr;
