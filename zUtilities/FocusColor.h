@@ -7,8 +7,12 @@ namespace GOTHIC_ENGINE {
 
     zCOLOR colDefault = zCOLOR( 255, 255, 255 );
 
+    int TYPE_FRIEND;
+
+    void InitData();
     int GetAbsolutionLevel( oCNpc* slf );
     bool HasReasonToKill( oCNpc* slf );
+    bool CanStealNow( oCItem* item );
     bool CanTakeFromRoom( oCItem* item );
     zCOLOR CheckFocus();
     zCOLOR DoorColor( oCMobDoor* focusDoor );
