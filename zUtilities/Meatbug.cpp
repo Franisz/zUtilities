@@ -16,33 +16,22 @@ namespace GOTHIC_ENGINE {
     }
 
     if ( npc->guild == NPC_GIL_MEATBUG && npc->GetInstanceName().HasWord( "MEATBUG" ) && npc->attribute[NPC_ATR_HITPOINTSMAX] <= 25 ) {
-      // Kill
-      npc->attribute[NPC_ATR_HITPOINTS] = 0;
+      // Kill and Exp
+      npc->DoDie( this );
+      if( npc->attribute[NPC_ATR_HITPOINTS] > 0 )
+        npc->attribute[NPC_ATR_HITPOINTS] = 0;
 
       // Sound
-      if ( zCSoundFX* snd = zsound->LoadSoundFX( "MEA_Ambient" ) ) {
-        zsound->PlaySound( snd, 50 );
+      if ( zCSoundFX* snd = zsound->LoadSoundFX( "CS_IAM_ME_FL" ) ) {
+        zCSoundSystem::zTSound3DParams params;
+        zsound->GetSound3DProps( 0, params );
+        zsound->PlaySound3D( snd, vob, 0, &params );
         snd->Release();
         snd = nullptr;
       }
 
-      // Exp
-      int index, exp;
-#if ENGINE >= Engine_G2
-      if ( parser->GetSymbol( "XP_PER_VICTORY" ) )
-        exp = parser->GetSymbol( "XP_PER_VICTORY" )->single_intdata;
-
-      index = parser->GetIndex( "B_GivePlayerXP" );
-#else
-      if ( parser->GetSymbol( "XP_PER_LEVEL_DEAD" ) )
-        exp = parser->GetSymbol( "XP_PER_LEVEL_DEAD" )->single_intdata;
-
-      index = parser->GetIndex( "B_GiveXP" );
-#endif
-      if ( !exp ) exp = 10;
-
-      if ( index )
-        parser->CallFunc( index, npc->level * exp );
+      //// Blood
+      //oCVisualFX::CreateAndPlay( "BFX_PRESET2", npc, nullptr, 0, 0, 0, 0 );
     }
 
     THISCALL( Hook_oCNpc_OnTouch )(vob);
