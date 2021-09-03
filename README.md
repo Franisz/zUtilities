@@ -15,7 +15,7 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
   - Npcs: `Red - hostile / wants to kill you`, `Orange - angry / pissed off`, `Green - friendly`, `Slightly green - friendly guild`, `White - neutral / dead`, `Grey - dead and looted`.
   - Doors: `Red - locked on key`, `Orange - locked`, `White - open`.
   - Containers: `Red - locked on key`, `Orange - locked`, `Green - open with items`, `Grey - open and empty`.
-  - Items: `White - default / item can be taken`, `Slightly orange - item belongs to someone or a guild`.
+  - Items: `White - default / item can be taken`, `Slightly orange - someone will catch the hero stealing`.
   - Each group can be disabled separately in `gothic.ini` with `bColorNpcs`, `bColorChests`, `bColorDoors` and `bColorItems` options.
 
 - Stepping on meatbugs kills them and give player exp.
