@@ -3,3 +3,4 @@
 // User API for oCItem
 // Add your methods here
 
+void RenderItem_Union( zCWorld*, zCViewBase*, float );
