@@ -6,7 +6,7 @@ namespace GOTHIC_ENGINE {
 #define pluginName "ZUTILITIES"
 #define printWin(a) ogame->GetTextView()->Printwin(a);
 
-  int bColorNpcs, bColorChests, bColorDoors, bColorItems, bUseQuickSave, bTrampleMeatbugs;
+  int bColorNpcs, bColorChests, bColorDoors, bColorItems, bUseQuickSave, bTrampleMeatbugs, bRenderInvItems;
 
   void initOptions() {
     bColorNpcs = zoptions->ReadInt( pluginName, "bColorNpcs", TRUE );
@@ -15,6 +15,7 @@ namespace GOTHIC_ENGINE {
     bColorItems = zoptions->ReadInt( pluginName, "bColorItems", TRUE );
     bUseQuickSave = zoptions->ReadInt( pluginName, "bUseQuickSave", TRUE );
     bTrampleMeatbugs = zoptions->ReadInt( pluginName, "bTrampleMeatbugs", TRUE );
+    bRenderInvItems = zoptions->ReadInt( pluginName, "bRenderInvItems", TRUE );
   }
 
 }

@@ -18,7 +18,14 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
   - Items: `White - default / item can be taken`, `Slightly orange - someone will catch the hero stealing`.
   - Each group can be disabled separately in `gothic.ini` with `bColorNpcs`, `bColorChests`, `bColorDoors` and `bColorItems` options.
 
-- Stepping on meatbugs kills them and give player exp.
+- Renders selected inventory item in the center of the screen instead of in the item description box.
+
+  - Camera in inventory will be shifted a bit, so the item doesn't cover the hero.
+  - In Gothic 2 item will be animated only if item has `inv_animate` property set to true.
+  - In Gothic 1 item will be displayed on the left or right when trading.
+  - This can be disabled in `gothic.ini` with `bRenderInvItems` option.
+
+- Allows killing meatbugs by stepping on them.
 
   - This can be disabled in `gothic.ini` with `bTrampleMeatbugs` option.
 

@@ -2814,6 +2814,9 @@
     <ClInclude Include="FocusColor.cpp">
       <Filter>Plugin\Workspace\Features\FocusColor</Filter>
     </ClInclude>
+    <ClInclude Include="RenderItem.cpp">
+      <Filter>Plugin\Workspace\Features</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl">

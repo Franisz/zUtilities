@@ -18,7 +18,7 @@ namespace GOTHIC_ENGINE {
     if ( npc->guild == NPC_GIL_MEATBUG && npc->GetInstanceName().HasWord( "MEATBUG" ) && npc->attribute[NPC_ATR_HITPOINTSMAX] <= 25 ) {
       // Kill and Exp
       npc->DoDie( this );
-      if( npc->attribute[NPC_ATR_HITPOINTS] > 0 )
+      if ( npc->attribute[NPC_ATR_HITPOINTS] > 0 )
         npc->attribute[NPC_ATR_HITPOINTS] = 0;
 
       // Sound

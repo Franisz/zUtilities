@@ -7,6 +7,7 @@
 #include "FocusColor.cpp"
 #include "QuickSave.cpp"
 #include "Meatbug.cpp"
+#include "RenderItem.cpp"
 #include "Hello.cpp"
 #include "Plugin.cpp"
 #pragma endregion
