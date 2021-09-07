@@ -29,7 +29,7 @@ namespace GOTHIC_ENGINE {
 #endif
 
     if ( !ZS_Observe || !ZS_Clear )
-      return FALSE;
+      return false;
 
     auto list = ogame->GetGameWorld()->voblist_npcs->GetNextInList();
 
@@ -47,7 +47,7 @@ namespace GOTHIC_ENGINE {
 
 #if ENGINE < Engine_G2
       if ( npc->GetAivar( "AIV_ITEMSCHWEIN" ) && npc->HasVobDetected( player ) )
-        return FALSE;
+        return false;
 #endif
 
       if ( ogame->GetGuilds()->GetAttitude( npc->guild, player->guild ) == NPC_ATT_FRIENDLY ) continue;
@@ -55,7 +55,7 @@ namespace GOTHIC_ENGINE {
 
       if ( !npc->HasVobDetected( player ) ) {
         if ( npc->IsAIState( ZS_Clear ) || npc->IsAIState( ZS_Observe ) )
-          return FALSE;
+          return false;
 
         continue;
       }
@@ -65,39 +65,39 @@ namespace GOTHIC_ENGINE {
         continue;
 #endif
 
-      return FALSE;
+      return false;
     }
 
-    return TRUE;
+    return true;
   }
 
 #if ENGINE >= Engine_G2
   bool FocusColor::CanTakeFromRoom( oCItem* focusItem ) {
     oCPortalRoomManager* rooms = ogame->GetPortalRoomManager();
 
-    if ( !rooms ) return TRUE;
+    if ( !rooms ) return true;
 
     const zSTRING* portalName = focusItem->GetSectorNameVobIsIn();
 
-    if ( !portalName ) return TRUE;
+    if ( !portalName ) return true;
 
     int portalIndex = rooms->GetPortalRoomIndex( *portalName );
 
-    if ( portalIndex == Invalid ) return TRUE;
+    if ( portalIndex == Invalid ) return true;
 
     oCPortalRoom* portalRoom = rooms->portals[portalIndex];
 
-    if ( !portalRoom ) return TRUE;
+    if ( !portalRoom ) return true;
 
     int roomGuild = portalRoom->GetOwnerGuild();
 
-    if ( !roomGuild ) return TRUE;
+    if ( !roomGuild ) return true;
 
     int att = ogame->GetGuilds()->GetAttitude( roomGuild, player->guild );
 
-    if ( att == NPC_ATT_FRIENDLY ) return TRUE;
+    if ( att == NPC_ATT_FRIENDLY ) return true;
 
-    return FALSE;
+    return false;
   }
 
   int FocusColor::GetAbsolutionLevel( oCNpc* slf ) {
@@ -141,17 +141,17 @@ namespace GOTHIC_ENGINE {
   }
 
   bool FocusColor::HasReasonToKill( oCNpc* slf ) {
-    if ( slf->GetAivar( "AIV_NpcSawPlayerCommit" ) == 4 ) return TRUE;
+    if ( slf->GetAivar( "AIV_NpcSawPlayerCommit" ) == 4 ) return true;
     int AttackReason = slf->GetAivar( "AIV_ATTACKREASON" );
-    if ( AttackReason == 13 ) return TRUE;
-    if ( AttackReason == 14 ) return TRUE;
-    if ( AttackReason == 15 ) return TRUE;
-    if ( AttackReason == 17 ) return TRUE;
-    if ( AttackReason == 18 ) return TRUE;
-    if ( AttackReason == 19 ) return TRUE;
-    if ( slf->GetAivar( "AIV_DropDeadAndKill" ) ) return TRUE;
+    if ( AttackReason == 13 ) return true;
+    if ( AttackReason == 14 ) return true;
+    if ( AttackReason == 15 ) return true;
+    if ( AttackReason == 17 ) return true;
+    if ( AttackReason == 18 ) return true;
+    if ( AttackReason == 19 ) return true;
+    if ( slf->GetAivar( "AIV_DropDeadAndKill" ) ) return true;
 
-    return FALSE;
+    return false;
   }
 #endif
 

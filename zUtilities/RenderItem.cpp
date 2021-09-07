@@ -6,7 +6,7 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_CMovementTracker_UpdatePlayerPos PATCH( &zCMovementTracker::UpdatePlayerPos, &zCMovementTracker::UpdatePlayerPos_Union );
   void zCMovementTracker::UpdatePlayerPos_Union( zVEC3 const& position ) {
 
-    if ( player->inventory2.IsOpen() && !player->inventory2.GetNextContainerLeft( &player->inventory2 ) ) {
+    if ( bRenderInvItems && player->inventory2.IsOpen() && !player->inventory2.GetNextContainerLeft( &player->inventory2 ) ) {
       zVEC3 rightVector = camVob->GetRightVectorWorld() * 115.0f;
       THISCALL( Hook_CMovementTracker_UpdatePlayerPos )(position + rightVector);
       return;
@@ -23,7 +23,7 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    bool IsCenterItem = FALSE;
+    bool IsCenterItem = false;
     auto list = oCItemContainer::contList.GetNextInList();
 
     while ( list != nullptr ) {
@@ -33,7 +33,7 @@ namespace GOTHIC_ENGINE {
       if ( container->viewItemInfoItem != view ) continue;
 
       zCView* itemView = static_cast<zCView*>(view);
-      IsCenterItem = TRUE;
+      IsCenterItem = true;
 
       // Item scale
       float scale = 2.5;
