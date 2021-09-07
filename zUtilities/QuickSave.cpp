@@ -8,9 +8,9 @@ namespace GOTHIC_ENGINE {
     switch ( Union.GetSystemLanguage() )
     {
     case Lang_Rus:
-      sCantSave = "пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ!";
-      sCantLoad = "пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!";
-      sNoSave = "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!";
+      sCantSave = "Игра не может быть сохранена сейчас!";
+      sCantLoad = "Игра не может быть загружена!";
+      sNoSave = "Такого сохранения не существует!";
       break;
     case Lang_Eng:
       sCantSave = "The game cannot be saved now!";
@@ -23,8 +23,8 @@ namespace GOTHIC_ENGINE {
       sNoSave = "Ein solches Speichern gibt es nicht!";
       break;
     case Lang_Pol:
-      sCantSave = "Nie moпїЅna teraz zapisaпїЅ rozgrywki!";
-      sCantLoad = "Nie moпїЅna teraz wczytaпїЅ rozgrywki!";
+      sCantSave = "Nie moїna teraz zapisaж rozgrywki!";
+      sCantLoad = "Nie moїna teraz wczytaж rozgrywki!";
       sNoSave = "Taki zapis nie istnieje!";
       break;
     default:
