@@ -8,9 +8,9 @@ namespace GOTHIC_ENGINE {
     switch ( Union.GetSystemLanguage() )
     {
     case Lang_Rus:
-      sCantSave = "Игра не может быть сохранена сейчас!";
-      sCantLoad = "Игра не может быть загружена!";
-      sNoSave = "Такого сохранения не существует!";
+      sCantSave = "пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ!";
+      sCantLoad = "пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!";
+      sNoSave = "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!";
       break;
     case Lang_Eng:
       sCantSave = "The game cannot be saved now!";
@@ -23,8 +23,8 @@ namespace GOTHIC_ENGINE {
       sNoSave = "Ein solches Speichern gibt es nicht!";
       break;
     case Lang_Pol:
-      sCantSave = "Nie moїna teraz zapisaж rozgrywki!";
-      sCantLoad = "Nie moїna teraz wczytaж rozgrywki!";
+      sCantSave = "Nie moпїЅna teraz zapisaпїЅ rozgrywki!";
+      sCantLoad = "Nie moпїЅna teraz wczytaпїЅ rozgrywki!";
       sNoSave = "Taki zapis nie istnieje!";
       break;
     default:
@@ -54,23 +54,23 @@ namespace GOTHIC_ENGINE {
   }
 
   int QuickSave::InInteraction( PlayerHelper* playerHelper ) {
-    if ( playerHelper->IsSaving() ) return TRUE;
-    if ( playerHelper->IsBusy() ) return TRUE;
-    if ( player->bodyState == BS_TAKEITEM ) return TRUE;
-    if ( player->bodyState == BS_MOBINTERACT ) return TRUE;
-    if ( player->bodyState & BS_FLAG_INTERRUPTABLE && !(player->bodyState & BS_FLAG_FREEHANDS) ) return TRUE;
+    if ( playerHelper->IsSaving() ) return true;
+    if ( playerHelper->IsBusy() ) return true;
+    if ( player->bodyState == BS_TAKEITEM ) return true;
+    if ( player->bodyState == BS_MOBINTERACT ) return true;
+    if ( player->bodyState & BS_FLAG_INTERRUPTABLE && !(player->bodyState & BS_FLAG_FREEHANDS) ) return true;
 
-    return FALSE;
+    return false;
   }
 
   int QuickSave::CanSave( PlayerHelper* playerHelper ) {
-    if ( playerIsDead ) return FALSE;
-    if ( InInteraction( playerHelper ) ) return FALSE;
-    if ( player->GetAnictrl()->state != zCAIPlayer::zMV_STATE_STAND ) return FALSE;
-    //if ( ogame->game_testmode ) return FALSE;
-    //if ( !player->IsInFightMode_S(0) ) return FALSE;
+    if ( playerIsDead ) return false;
+    if ( InInteraction( playerHelper ) ) return false;
+    if ( player->GetAnictrl()->state != zCAIPlayer::zMV_STATE_STAND ) return false;
+    //if ( ogame->game_testmode ) return false;
+    //if ( !player->IsInFightMode_S(0) ) return false;
 
-    return TRUE;
+    return true;
   }
 
   void QuickSave::Save( PlayerHelper* playerHelper ) {
@@ -89,8 +89,8 @@ namespace GOTHIC_ENGINE {
     if ( iLastSaveSlot > iMaxSaveSlot )
       iLastSaveSlot = iMinSaveSlot;
 
-    zoptions->WriteInt( pluginName, "iLastSaveSlot", iLastSaveSlot, FALSE );
-    zoptions->WriteInt( pluginName, "iLastSaveNumber", iLastSaveNumber, FALSE );
+    zoptions->WriteInt( pluginName, "iLastSaveSlot", iLastSaveSlot, false );
+    zoptions->WriteInt( pluginName, "iLastSaveNumber", iLastSaveNumber, false );
     zoptions->Save( "Gothic.ini" );
 
     // Thumbnail
@@ -134,7 +134,7 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    ogame->LoadSavegame( iLastSaveSlot, TRUE );
+    ogame->LoadSavegame( iLastSaveSlot, true );
   }
 
   void QuickSave::QuickSaveLoop( PlayerHelper* playerHelper ) {

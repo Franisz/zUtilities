@@ -23,7 +23,7 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    bool IsCenterItem = FALSE;
+    bool IsCenterItem = false;
     auto list = oCItemContainer::contList.GetNextInList();
 
     while ( list != nullptr ) {
@@ -33,7 +33,7 @@ namespace GOTHIC_ENGINE {
       if ( container->viewItemInfoItem != view ) continue;
 
       zCView* itemView = static_cast<zCView*>(view);
-      IsCenterItem = TRUE;
+      IsCenterItem = true;
 
       // Item scale
       float scale = 2.5;

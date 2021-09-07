@@ -36,7 +36,7 @@ namespace GOTHIC_ENGINE {
 
     // Show a message on the screen
     showHelloView->PrintTimedCX( 1000, pluginFileName + " loaded to " + engineVersionName + " running on Union " + unionVersionName, 4000, &zCOLOR( 255, 100, 0 ) );
-    showHelloOnce = TRUE;
+    showHelloOnce = true;
   }
 #endif
 }
