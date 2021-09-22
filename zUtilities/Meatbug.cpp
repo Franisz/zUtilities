@@ -22,7 +22,7 @@ namespace GOTHIC_ENGINE {
         npc->attribute[NPC_ATR_HITPOINTS] = 0;
 
       // Sound
-      if ( zCSoundFX* snd = zsound->LoadSoundFX( "CS_IAM_ME_FL" ) ) {
+      if ( zCSoundFX* snd = zsound->LoadSoundFX( "CS_IAM_UD_FLX_0" + Z (rand() % 5 + 1) + ".WAV" ) ) {
         zCSoundSystem::zTSound3DParams params;
         zsound->GetSound3DProps( 0, params );
         zsound->PlaySound3D( snd, vob, 0, &params );
