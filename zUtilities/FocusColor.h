@@ -8,6 +8,7 @@ namespace GOTHIC_ENGINE {
     zCOLOR colDefault = zCOLOR( 255, 255, 255 );
 
     int TYPE_FRIEND;
+    int CRIME_MURDER;
 
     void InitData();
     int GetAbsolutionLevel( oCNpc* slf );

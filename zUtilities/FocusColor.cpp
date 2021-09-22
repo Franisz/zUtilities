@@ -15,7 +15,10 @@ namespace GOTHIC_ENGINE {
     zCPar_Symbol* sym = nullptr;
 
     sym = parser->GetSymbol( "NPCTYPE_FRIEND" );
-    TYPE_FRIEND = (sym) ? sym->single_intdata : Invalid;
+    TYPE_FRIEND = (sym) ? sym->single_intdata : Invalid;    
+    
+    sym = parser->GetSymbol( "CRIME_MURDER" );
+    CRIME_MURDER = (sym) ? sym->single_intdata : Invalid;
   }
 
   bool FocusColor::CanStealNow( oCItem* focusItem ) {
@@ -141,7 +144,7 @@ namespace GOTHIC_ENGINE {
   }
 
   bool FocusColor::HasReasonToKill( oCNpc* slf ) {
-    if ( slf->GetAivar( "AIV_NpcSawPlayerCommit" ) == 4 ) return true;
+    if ( slf->GetAivar( "AIV_NpcSawPlayerCommit" ) == CRIME_MURDER ) return true;
     int AttackReason = slf->GetAivar( "AIV_ATTACKREASON" );
     if ( AttackReason == 13 ) return true;
     if ( AttackReason == 14 ) return true;
@@ -179,7 +182,7 @@ namespace GOTHIC_ENGINE {
     ogame->GetTime( day, hour, min );
 
     if ( focusNpc->GetAivar( "AIV_NpcSawPlayerCommit" )
-      && !(focusNpc->GetAivar( "AIV_NpcSawPlayerCommit" ) <= 3 && focusNpc->GetAivar( "AIV_NpcSawPlayerCommitDay" ) < day - 2)
+      && !(focusNpc->GetAivar( "AIV_NpcSawPlayerCommit" ) < CRIME_MURDER && focusNpc->GetAivar( "AIV_NpcSawPlayerCommitDay" ) < day - 2)
       && !(focusNpc->GetAivar( "AIV_CrimeAbsolutionLevel" ) < GetAbsolutionLevel( focusNpc )) )
       return zCOLOR( 255, 180, 0 );
 
