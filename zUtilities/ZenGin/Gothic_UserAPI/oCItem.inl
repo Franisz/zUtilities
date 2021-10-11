@@ -4,3 +4,4 @@
 // Add your methods here
 
 void RenderItem_Union( zCWorld*, zCViewBase*, float );
+int GetHighestCond();

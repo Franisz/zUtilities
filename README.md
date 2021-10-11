@@ -23,10 +23,18 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
   - Camera in inventory will be shifted a bit, so the item doesn't cover the hero.
   - In Gothic 2 item will be animated only if item has `inv_animate` property set to true.
   - In Gothic 1 item will be displayed on the left or right when trading.
-  - This can be disabled in `gothic.ini` with `bRenderInvItems` option.
+  - This feature can be disabled in `gothic.ini` with `bRenderInvItems` option.
+
+- Renders labels for items in the inventory based on item parameters.
+
+  - All icons are made via [Game-icons.net](https://game-icons.net/) website.
+  - There is many possible icons to appear when item has right parameters. There are labels even for items that don't exist in original game like shields, helmets, armors requiring attribute and more.
+  - Label can be set to render behind item model, so it doesn't cover it. Set `bPutLabelBehind` option to `1` in order to do that.
+  - Label scale can be adjusted in `gothic.ini` with `fLabelScale` option.
+  - This feature can be disabled in `gothic.ini` with `bLabelItems` option.
 
 - Allows killing meatbugs by stepping on them.
 
-  - This can be disabled in `gothic.ini` with `bTrampleMeatbugs` option.
+  - This feature can be disabled in `gothic.ini` with `bTrampleMeatbugs` option.
 
 - Also on debug build plugin prints info on the screen about plugin and platform.

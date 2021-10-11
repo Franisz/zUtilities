@@ -6,7 +6,8 @@ namespace GOTHIC_ENGINE {
 #define pluginName "ZUTILITIES"
 #define printWin(a) ogame->GetTextView()->Printwin(a);
 
-  int bColorNpcs, bColorChests, bColorDoors, bColorItems, bUseQuickSave, bTrampleMeatbugs, bRenderInvItems;
+  int bColorNpcs, bColorChests, bColorDoors, bColorItems, bUseQuickSave, bTrampleMeatbugs, bRenderInvItems, bLabelItems, bPutLabelBehind;
+  float fLabelScale;
 
   void initOptions() {
     bColorNpcs = zoptions->ReadInt( pluginName, "bColorNpcs", true );
@@ -16,6 +17,9 @@ namespace GOTHIC_ENGINE {
     bUseQuickSave = zoptions->ReadInt( pluginName, "bUseQuickSave", true );
     bTrampleMeatbugs = zoptions->ReadInt( pluginName, "bTrampleMeatbugs", true );
     bRenderInvItems = zoptions->ReadInt( pluginName, "bRenderInvItems", true );
+    bLabelItems = zoptions->ReadInt( pluginName, "bLabelItems", true );
+    bPutLabelBehind = zoptions->ReadInt( pluginName, "bPutLabelBehind", false );
+    fLabelScale = zoptions->ReadReal( pluginName, "fLabelScale", 1.25f );
   }
 
 }

@@ -226,6 +226,9 @@
     <Filter Include="Plugin\Workspace\Features\FocusColor">
       <UniqueIdentifier>{3c13377e-9713-4827-8b63-b1019a256cb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\Workspace\Features\Inventory">
+      <UniqueIdentifier>{b6185e7f-3bd1-4173-8730-5fa889d54c5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2815,7 +2818,13 @@
       <Filter>Plugin\Workspace\Features\FocusColor</Filter>
     </ClInclude>
     <ClInclude Include="RenderItem.cpp">
-      <Filter>Plugin\Workspace\Features</Filter>
+      <Filter>Plugin\Workspace\Features\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemLabel.cpp">
+      <Filter>Plugin\Workspace\Features\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemLabel.h">
+      <Filter>Plugin\Workspace\Features\Inventory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

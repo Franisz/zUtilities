@@ -6,6 +6,7 @@
 #include "PlayerHelper.h"
 #include "FocusColor.h"
 #include "QuickSave.h"
+#include "ItemLabel.h"
 #include "Plugin.h"
 #pragma endregion
 
