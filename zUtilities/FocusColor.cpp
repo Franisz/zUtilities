@@ -15,8 +15,8 @@ namespace GOTHIC_ENGINE {
     zCPar_Symbol* sym = nullptr;
 
     sym = parser->GetSymbol( "NPCTYPE_FRIEND" );
-    TYPE_FRIEND = (sym) ? sym->single_intdata : Invalid;    
-    
+    TYPE_FRIEND = (sym) ? sym->single_intdata : Invalid;
+
     sym = parser->GetSymbol( "CRIME_MURDER" );
     CRIME_MURDER = (sym) ? sym->single_intdata : Invalid;
   }

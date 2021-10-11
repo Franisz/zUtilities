@@ -2,17 +2,13 @@
 // Union HEADER file
 
 namespace GOTHIC_ENGINE {
-
-#define playerIsDead player->attribute[NPC_ATR_HITPOINTS] <= 0
-#define invIsOpen player->inventory2.IsOpen()	
-
   class PlayerHelper
   {
   public:
     bool isSaving = false;
 
     bool IsBusy() {
-      return IsInInfo() || OnPause() || invIsOpen;
+      return IsInInfo() || OnPause() || player->inventory2.IsOpen();
     }
 
     bool IsInInfo() {
@@ -28,7 +24,7 @@ namespace GOTHIC_ENGINE {
     }
 
     bool IsInCombat() {
-      if ( playerIsDead )
+      if ( player->IsDead() )
         return false;
 
       if ( player->enemy )
@@ -37,5 +33,4 @@ namespace GOTHIC_ENGINE {
       return false;
     }
   };
-
 }
