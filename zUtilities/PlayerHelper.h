@@ -23,8 +23,12 @@ namespace GOTHIC_ENGINE {
       return isSaving;
     }
 
+    bool IsDead() {
+      return player->attribute[NPC_ATR_HITPOINTS] <= 0;
+    }
+
     bool IsInCombat() {
-      if ( player->IsDead() )
+      if ( IsDead() )
         return false;
 
       if ( player->enemy )

@@ -64,7 +64,7 @@ namespace GOTHIC_ENGINE {
   }
 
   int QuickSave::CanSave( PlayerHelper* playerHelper ) {
-    if ( player->IsDead() ) return false;
+    if ( playerHelper->IsDead() ) return false;
     if ( InInteraction( playerHelper ) ) return false;
     if ( player->GetAnictrl()->state != zCAIPlayer::zMV_STATE_STAND ) return false;
     //if ( ogame->game_testmode ) return false;
