@@ -266,7 +266,7 @@ namespace GOTHIC_ENGINE {
       }
   }
 
-  void ItemLabel::LabelItem( oCItem* renderedItem, zCViewBase* viewBase )
+  ItemLabel::ItemLabel( oCItem* renderedItem, zCViewBase* viewBase )
   {
     item = renderedItem;
     condAtr = item->GetHighestCond();

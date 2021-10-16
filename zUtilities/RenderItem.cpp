@@ -68,14 +68,13 @@ namespace GOTHIC_ENGINE {
 
     // Draw item label
     if ( bLabelItems && !IsCenterItem ) {
-      ItemLabel itemLabel;
       if ( bPutLabelBehind ) {
-        itemLabel.LabelItem( this, view );
+        new ItemLabel( this, view );
         THISCALL( Hook_oCItem_RenderItem )(wld, view, rotate);
       }
       else {
         THISCALL( Hook_oCItem_RenderItem )(wld, view, rotate);
-        itemLabel.LabelItem( this, view );
+        new ItemLabel( this, view );
       }
       return;
     }

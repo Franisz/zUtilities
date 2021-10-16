@@ -15,7 +15,7 @@ namespace GOTHIC_ENGINE {
 
   public:
 
-    void LabelItem( oCItem* item, zCViewBase* viewBase );
+    ItemLabel( oCItem* item, zCViewBase* viewBase );
 
   };
 }
