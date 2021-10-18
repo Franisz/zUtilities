@@ -15,15 +15,15 @@ namespace GOTHIC_ENGINE {
     zSTRING sNoSave;
     zSTRING sSaveName;
 
+    void SetStringsByLanguage();
     int CanSave( PlayerHelper* playerHelper );
     int InInteraction( PlayerHelper* playerHelper );
-    void Save( PlayerHelper* playerHelper );
-    void Load( PlayerHelper* playerHelper );
+    void CheckSave( PlayerHelper* playerHelper );
+    void CheckLoad( PlayerHelper* playerHelper );
 
   public:
 
     void ReadOptions();
-    void SetStringsByLanguage();
     void QuickSaveLoop( PlayerHelper* playerHelper );
 
   };

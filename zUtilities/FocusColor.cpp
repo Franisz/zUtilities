@@ -278,10 +278,10 @@ namespace GOTHIC_ENGINE {
 
   void FocusColor::FocusColorLoop() {
 
-    InitData();
-
     if ( !bColorNpcs && !bColorChests && !bColorDoors && !bColorItems )
       return;
+
+    InitData();
 
     screen->SetFontColor( CheckFocus() );
   }

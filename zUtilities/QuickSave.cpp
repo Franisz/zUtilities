@@ -51,6 +51,8 @@ namespace GOTHIC_ENGINE {
 #endif
     iLastSaveSlot = zoptions->ReadInt( pluginName, "iLastSaveSlot", iMinSaveSlot );
     iLastSaveNumber = zoptions->ReadInt( pluginName, "iLastSaveNumber", 0 );
+
+    SetStringsByLanguage();
   }
 
   int QuickSave::InInteraction( PlayerHelper* playerHelper ) {
@@ -73,7 +75,7 @@ namespace GOTHIC_ENGINE {
     return true;
   }
 
-  void QuickSave::Save( PlayerHelper* playerHelper ) {
+  void QuickSave::CheckSave( PlayerHelper* playerHelper ) {
 
     if ( !zinput->KeyToggled( KEY_F10 ) )
       return;
@@ -117,7 +119,7 @@ namespace GOTHIC_ENGINE {
     ogame->savegameManager->SetAndWriteSavegame( iLastSaveSlot, info );
   }
 
-  void QuickSave::Load( PlayerHelper* playerHelper ) {
+  void QuickSave::CheckLoad( PlayerHelper* playerHelper ) {
 
     if ( !zinput->KeyToggled( KEY_F12 ) )
       return;
@@ -139,9 +141,10 @@ namespace GOTHIC_ENGINE {
 
   void QuickSave::QuickSaveLoop( PlayerHelper* playerHelper ) {
 
-    Load( playerHelper );
-    Save( playerHelper );
+    if ( !bUseQuickSave ) return;
 
+    CheckLoad( playerHelper );
+    CheckSave( playerHelper );
   }
 }
 

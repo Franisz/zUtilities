@@ -28,13 +28,7 @@ namespace GOTHIC_ENGINE {
     }
 
     bool IsInCombat() {
-      if ( IsDead() )
-        return false;
-
-      if ( player->enemy )
-        return true;
-
-      return false;
+      return !IsDead() && player->enemy != nullptr;
     }
   };
 }

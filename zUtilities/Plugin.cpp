@@ -4,21 +4,15 @@
 
 namespace GOTHIC_ENGINE {
   PlayerHelper playerHelper;
-  QuickSave* quickSave;
-  FocusColor* focusColor;
+  FocusColor focusColor;
+  QuickSave quickSave;
 
   void Game_Entry() {
-    quickSave = new QuickSave();
-    focusColor = new FocusColor();
   }
 
   void Game_Init() {
     initOptions();
-
-    if ( quickSave && bUseQuickSave ) {
-      quickSave->SetStringsByLanguage();
-      quickSave->ReadOptions();
-    }
+    quickSave.ReadOptions();
   }
 
   void Game_Exit() {
@@ -28,17 +22,13 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_Loop() {
-
 #if _DEBUG
     showHello();
 #endif
 
-    if ( focusColor )
-      focusColor->FocusColorLoop();
 
-    if ( quickSave && bUseQuickSave )
-      quickSave->QuickSaveLoop( &playerHelper );
-
+    focusColor.FocusColorLoop();
+    quickSave.QuickSaveLoop( &playerHelper );
   }
 
   void Game_PostLoop() {
