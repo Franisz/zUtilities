@@ -4,7 +4,6 @@
 namespace GOTHIC_ENGINE {
   class ItemLabel {
   private:
-
     oCItem* item;
     int condAtr;
 
@@ -14,8 +13,6 @@ namespace GOTHIC_ENGINE {
     void SetLabelParams();
 
   public:
-
     ItemLabel( oCItem* item, zCViewBase* viewBase );
-
   };
 }

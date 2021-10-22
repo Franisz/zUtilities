@@ -22,7 +22,6 @@ namespace GOTHIC_ENGINE {
   }
 
   bool FocusColor::CanStealNow( oCItem* focusItem ) {
-
     int ZS_Clear = parser->GetIndex( "ZS_ClearRoom" );
 
 #if ENGINE >= Engine_G2
@@ -159,7 +158,6 @@ namespace GOTHIC_ENGINE {
 #endif
 
   zCOLOR FocusColor::NpcColor( oCNpc* focusNpc ) {
-
     if ( focusNpc->attribute[NPC_ATR_HITPOINTS] <= 0 ) {
       if ( !focusNpc->stealcontainer->contList.GetNumInList() )
         return zCOLOR( 175, 175, 175 );
@@ -277,7 +275,6 @@ namespace GOTHIC_ENGINE {
   }
 
   void FocusColor::FocusColorLoop() {
-
     if ( !bColorNpcs && !bColorChests && !bColorDoors && !bColorItems )
       return;
 

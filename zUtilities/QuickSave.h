@@ -4,7 +4,6 @@
 namespace GOTHIC_ENGINE {
   class QuickSave {
   private:
-
     int iMinSaveSlot;
     int iMaxSaveSlot;
     int iLastSaveSlot;
@@ -22,9 +21,7 @@ namespace GOTHIC_ENGINE {
     void CheckLoad( PlayerHelper* playerHelper );
 
   public:
-
     void ReadOptions();
     void QuickSaveLoop( PlayerHelper* playerHelper );
-
   };
 }

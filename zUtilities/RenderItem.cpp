@@ -2,10 +2,8 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-
   HOOK Hook_CMovementTracker_UpdatePlayerPos PATCH( &zCMovementTracker::UpdatePlayerPos, &zCMovementTracker::UpdatePlayerPos_Union );
   void zCMovementTracker::UpdatePlayerPos_Union( zVEC3 const& position ) {
-
     if ( bRenderInvItems && player->inventory2.IsOpen() && !player->inventory2.GetNextContainerLeft( &player->inventory2 ) ) {
       zVEC3 rightVector = camVob->GetRightVectorWorld() * 115.0f;
       THISCALL( Hook_CMovementTracker_UpdatePlayerPos )(position + rightVector);
@@ -17,7 +15,6 @@ namespace GOTHIC_ENGINE {
 
   HOOK Hook_oCItem_RenderItem PATCH( &oCItem::RenderItem, &oCItem::RenderItem_Union );
   void oCItem::RenderItem_Union( zCWorld* wld, zCViewBase* view, float rotate ) {
-
     if ( !bRenderInvItems ) {
       THISCALL( Hook_oCItem_RenderItem )(wld, view, rotate);
       return;

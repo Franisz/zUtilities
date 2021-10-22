@@ -4,7 +4,6 @@
 namespace GOTHIC_ENGINE {
   class FocusColor {
   private:
-
     zCOLOR colDefault = zCOLOR( 255, 255, 255 );
 
     int TYPE_FRIEND;
@@ -22,8 +21,6 @@ namespace GOTHIC_ENGINE {
     zCOLOR ItemColor( oCItem* focusItem );
 
   public:
-
     void FocusColorLoop();
-
   };
 }

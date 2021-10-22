@@ -4,7 +4,6 @@
 namespace GOTHIC_ENGINE {
 
   void QuickSave::SetStringsByLanguage() {
-
     switch ( Union.GetSystemLanguage() )
     {
     case Lang_Rus:
@@ -38,7 +37,6 @@ namespace GOTHIC_ENGINE {
     sCantLoad = zoptions->ReadString( pluginName, "sCantLoad", sCantLoad );
     sNoSave = zoptions->ReadString( pluginName, "sNoSave", sNoSave );
     sSaveName = zoptions->ReadString( pluginName, "sSaveName", "QuickSave" );
-
   }
 
   void QuickSave::ReadOptions() {
@@ -76,7 +74,6 @@ namespace GOTHIC_ENGINE {
   }
 
   void QuickSave::CheckSave( PlayerHelper* playerHelper ) {
-
     if ( !zinput->KeyToggled( KEY_F10 ) )
       return;
 
@@ -120,7 +117,6 @@ namespace GOTHIC_ENGINE {
   }
 
   void QuickSave::CheckLoad( PlayerHelper* playerHelper ) {
-
     if ( !zinput->KeyToggled( KEY_F12 ) )
       return;
 
@@ -140,7 +136,6 @@ namespace GOTHIC_ENGINE {
   }
 
   void QuickSave::QuickSaveLoop( PlayerHelper* playerHelper ) {
-
     if ( !bUseQuickSave ) return;
 
     CheckLoad( playerHelper );

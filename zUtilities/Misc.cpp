@@ -5,23 +5,20 @@
 #include <random>
 
 namespace GOTHIC_ENGINE {
-  float CoerceInRange( float start, float length, float minValue, float maxValue )
-  {
+  float CoerceInRange( float start, float length, float minValue, float maxValue ) {
     start -= max( 0, start + length - maxValue );
     start += max( 0, minValue - start );
     return start;
   }
 
-  bool Intersects( const tagRECT& a, const tagRECT& b )
-  {
+  bool Intersects( const tagRECT& a, const tagRECT& b ) {
     return (a.left <= b.right &&
       b.left <= a.right &&
       a.top <= b.bottom &&
       b.top <= a.bottom);
   }
 
-  int Random( int min, int max )
-  {
+  int Random( int min, int max ) {
     std::random_device rd;
     std::mt19937::result_type seed = rd() ^ (
       (std::mt19937::result_type)

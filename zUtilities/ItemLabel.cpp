@@ -2,14 +2,12 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-  int oCItem::GetHighestCond()
-  {
+  int oCItem::GetHighestCond() {
     int maxCond = 0;
     int maxIndex = -1;
 
     for ( int i = 0; i < ITM_COND_MAX; i++ )
-      if ( this->cond_value[i] > maxCond )
-      {
+      if ( this->cond_value[i] > maxCond ) {
         maxIndex = i;
         maxCond = this->cond_value[i];
       }
@@ -266,8 +264,7 @@ namespace GOTHIC_ENGINE {
       }
   }
 
-  ItemLabel::ItemLabel( oCItem* renderedItem, zCViewBase* viewBase )
-  {
+  ItemLabel::ItemLabel( oCItem* renderedItem, zCViewBase* viewBase ) {
     item = renderedItem;
     condAtr = item->GetHighestCond();
 
