@@ -7,6 +7,7 @@
 #include "FocusColor.h"
 #include "QuickSave.h"
 #include "ItemLabel.h"
+#include "DamagePopup.h"
 #include "Plugin.h"
 #pragma endregion
 

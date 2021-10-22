@@ -229,6 +229,9 @@
     <Filter Include="Plugin\Workspace\Features\Inventory">
       <UniqueIdentifier>{b6185e7f-3bd1-4173-8730-5fa889d54c5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\Workspace\Features\DamagePopup">
+      <UniqueIdentifier>{1f6adeb8-fa44-4d2f-94e1-075c6e7ba60d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2825,6 +2828,15 @@
     </ClInclude>
     <ClInclude Include="ItemLabel.h">
       <Filter>Plugin\Workspace\Features\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="DamagePopup.cpp">
+      <Filter>Plugin\Workspace\Features\DamagePopup</Filter>
+    </ClInclude>
+    <ClInclude Include="DamagePopup.h">
+      <Filter>Plugin\Workspace\Features\DamagePopup</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc.cpp">
+      <Filter>Plugin\Workspace\Helper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

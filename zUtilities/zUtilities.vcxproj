@@ -472,6 +472,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DllMain.cpp" />
+    <ClInclude Include="DamagePopup.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="DamagePopup.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="FocusColor.cpp">
       <SubType>
       </SubType>
@@ -489,6 +497,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Meatbug.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Misc.cpp">
       <SubType>
       </SubType>
     </ClInclude>

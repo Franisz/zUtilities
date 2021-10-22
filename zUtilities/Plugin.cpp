@@ -26,6 +26,8 @@ namespace GOTHIC_ENGINE {
     showHello();
 #endif
 
+    for ( uint i = 0; i < popups.GetNum(); i++ )
+      popups[i]->Update();
 
     focusColor.FocusColorLoop();
     quickSave.QuickSaveLoop( &playerHelper );
@@ -49,6 +51,8 @@ namespace GOTHIC_ENGINE {
   }
 
   void LoadBegin() {
+    for ( uint i = 0; i < popups.GetNum(); i++ )
+      delete popups[i];
   }
 
   void LoadEnd() {
