@@ -6,7 +6,7 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
 
 - Allows to quickly save / load game with `F10` and `F12` keys.
 
-  - Range of save slots used for quick save can be adjusted in `gothic.ini` with `iMinSaveSlot`, `iMaxSaveSlot` options. Default it's 5 bottom slots.
+  - Range of save slots used for quick save can be adjusted in `gothic.ini` with `iMinSaveSlot`, `iMaxSaveSlot` options. Default, it's 5 bottom slots.
   - Notice strings are set automatically depending on system language but still can be changed manually in `gothic.ini` with `sCantSave`, `sCantLoad` and `sNoSave` options.
   - This feature can be disabled in `gothic.ini` with `bUseQuickSave` option.
 
@@ -18,7 +18,7 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
   - Items: `White` - default / item can be taken, `Slightly orange` - someone will catch the hero stealing.
   - Each group can be disabled separately in `gothic.ini` with `bColorNpcs`, `bColorChests`, `bColorDoors` and `bColorItems` options.
 
-- Renders selected inventory item in the center of the screen instead of in the item description box.
+- Renders the selected inventory item in the center of the screen instead of in the item description box.
 
   - Camera in inventory will be shifted a bit, so the item doesn't cover the hero.
   - In Gothic 2 item will be animated only if item has `inv_animate` property set to true.
@@ -28,13 +28,21 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
 - Renders labels for items in the inventory based on item parameters.
 
   - All icons are made via [Game-icons.net](https://game-icons.net/) website.
-  - There is many possible icons to appear when item has right parameters. There are labels even for items that don't exist in original game like shields, helmets, armors requiring attribute and more.
+  - There are many possible icons to appear when item has right parameters. There are labels even for items that don't exist in original game like shields, helmets, armors requiring attribute and more.
   - Label can be set to render behind item model, so it doesn't cover it. Set `bPutLabelBehind` option to `1` in order to do that.
   - Label scale can be adjusted in `gothic.ini` with `fLabelScale` option.
   - This feature can be disabled in `gothic.ini` with `bLabelItems` option.
+
+- Displays a popup when dealing damage.
+
+  - This feature is inspired by [New World](https://www.newworld.com/)'s damage label and based on [AlterDamage](https://github.com/UnresolvedExternal/Union_AlterDamage) popup code.
+  - Set `iDamagePopupMode` option to `1` for _Alter Damage_ style, `2` for _New World_ style and `0` to disable this feature completely.
+  - Popup scale depends on the amount of damage dealt compared to the target's max hp, the fact if the hit was critical or not and `Scale` option from `SystemPack.ini`. Base scale can also be adjusted in `gothic.ini` with `fDamagePopupScale`.
+  - Icons and base colors are unique for every damage type and each can be separately disabled in `gothic.ini` with `bDamagePopupShowIcons` and,`bDamagePopupColorDmgTypes`options.
+  - By default the number has the same color as the icon, but it can be disabled in `gothic.ini` with `bDamagePopupColorOnlyIcon` option.
 
 - Allows killing meatbugs by stepping on them.
 
   - This feature can be disabled in `gothic.ini` with `bTrampleMeatbugs` option.
 
-- Also on debug build plugin prints info on the screen about plugin and platform.
+- Also on debug build, plugin prints info on the screen about plugin and platform.
