@@ -4,17 +4,22 @@
 namespace GOTHIC_ENGINE {
   Array<DamagePopup*> popups;
 
-#if ENGINE >= Engine_G2A
-  int _rand_hooked();
-  int dmgRand = Invalid;
+  bool IsCrit( oCNpc::oSDamageDescriptor& desc, int dmgRand = 0 ) {
+    if ( desc.pNpcAttacker == nullptr || desc.pItemWeapon == nullptr )
+      return false;
 
-  CInvoke<int( __cdecl* )()> rand_hook( ZenDef( 0x007795F8, 0x007BD3B8, 0x007C6AD8, 0x007D2F98 ), &_rand_hooked );
-  int _rand_hooked() {
-    int ret = rand_hook();
-    dmgRand = ret % 100;
-    return ret;
-  }
+    if ( !desc.pItemWeapon->HasFlag( ITM_CAT_NF ) )
+      return false;
+
+#if ENGINE >= Engine_G2
+    if ( desc.pItemWeapon->HasFlag( ITM_FLAG_2HD_SWD ) || desc.pItemWeapon->HasFlag( ITM_FLAG_2HD_AXE ) )
+      return dmgRand <= desc.pNpcAttacker->GetHitChance( NPC_HITCHANCE_2H );
+
+    return dmgRand <= desc.pNpcAttacker->GetHitChance( NPC_HITCHANCE_1H );
+#else
+    return desc.fDamageMultiplier > 1.0f;
 #endif
+  }
 
   HOOK Ivk_OnDamage_Hit_Union PATCH_IF( &oCNpc::OnDamage_Hit, &oCNpc::OnDamage_Hit_Union, true );
   void oCNpc::OnDamage_Hit_Union( oSDamageDescriptor& desc ) {
@@ -23,26 +28,37 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
+#if ENGINE >= Engine_G2
+    // To determine if hit was critical or not
+    using _DWORD = unsigned long;
+    // returns _tiddata pointer
+    auto _getptd = reinterpret_cast<_DWORD * (*)()>(ZenDef( 0x0077C9D1, 0x007C0791, 0x007C9DF1, 0x007D62B1 ));
+    //_tiddata
+    auto ptdData = _getptd();
+    //_tiddata::_holdrand
+    auto seed = *(_DWORD*)&ptdData[5];
+#endif
+
+    int isCrit = false;
     int initialHp = this->attribute[NPC_ATR_HITPOINTS];
 
     THISCALL( Ivk_OnDamage_Hit_Union )(desc);
 
     int hpDiff = initialHp - this->attribute[NPC_ATR_HITPOINTS];
 
-    new DamagePopup( this, desc, hpDiff );
-  }
 
-  bool DamagePopup::IsCrit() {
-    return desc->pItemWeapon
-      && desc->pItemWeapon->HasFlag( ITM_CAT_NF )
-#if ENGINE >= Engine_G2A
-      && dmgRand <= desc->pNpcAttacker->GetHitChance( NPC_HITCHANCE_1H )
-      && dmgRand <= desc->pNpcAttacker->GetHitChance( NPC_HITCHANCE_2H )
-      && dmgRand <= desc->pNpcAttacker->GetHitChance( NPC_HITCHANCE_BOW )
-      && dmgRand <= desc->pNpcAttacker->GetHitChance( NPC_HITCHANCE_CROSSBOW );
+#if ENGINE >= Engine_G2
+    if ( *(_DWORD*)&ptdData[5] != seed )
+    {
+      int nextRand = (((seed * 214013L + 2531011L) >> 16) & 0x7fff);
+      isCrit = IsCrit( desc, nextRand % 100 );
+    }
 #else
-      && desc->fDamageMultiplier > 1.0f;
+    isCrit = IsCrit( desc );
 #endif
+
+
+    new DamagePopup( this, desc, hpDiff, isCrit );
   }
 
   int DamagePopup::GetTopDmgIndex() {
@@ -172,9 +188,9 @@ namespace GOTHIC_ENGINE {
   }
 
   float DamagePopup::GetRandomDist( float start, int random, bool invertable ) {
-    float dist = start + (float)(Random( 0, random ));
+    float dist = start + (float)(randomizer.Random( 0, random ));
 
-    if ( invertable && Random( 0, 1 ) )
+    if ( invertable && randomizer.Random( 0, 1 ) )
       return -dist;
 
     return dist;
@@ -306,7 +322,7 @@ namespace GOTHIC_ENGINE {
     texture->Release();
   }
 
-  DamagePopup::DamagePopup( oCNpc* targetNpc, oCNpc::oSDamageDescriptor& desc, int dmgAmount ) {
+  DamagePopup::DamagePopup( oCNpc* targetNpc, oCNpc::oSDamageDescriptor& desc, int dmgAmount, bool isCrit ) {
     if ( desc.pNpcAttacker == nullptr || desc.pNpcAttacker != player && !desc.pNpcAttacker->GetAivar( "AIV_PARTYMEMBER" ) ) {
       delete this;
       return;
@@ -318,8 +334,8 @@ namespace GOTHIC_ENGINE {
     this->target = targetNpc;
     this->dmgAmount = dmgAmount;
     this->desc = &desc;
+    this->isCrit = isCrit;
 
-    isCrit = IsCrit();
     dmgIndex = GetTopDmgIndex();
     SetMoveMode();
     SetColor();

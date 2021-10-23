@@ -52,7 +52,7 @@ namespace GOTHIC_ENGINE {
     };
 
     void Update();
-    DamagePopup( oCNpc* targetNpc, oCNpc::oSDamageDescriptor& desc, int dmgAmount );
+    DamagePopup( oCNpc* targetNpc, oCNpc::oSDamageDescriptor& desc, int dmgAmount, bool isCrit );
     ~DamagePopup();
   };
 }

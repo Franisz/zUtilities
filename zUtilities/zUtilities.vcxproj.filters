@@ -2838,6 +2838,9 @@
     <ClInclude Include="Misc.cpp">
       <Filter>Plugin\Workspace\Helper</Filter>
     </ClInclude>
+    <ClInclude Include="Randomizer.h">
+      <Filter>Plugin\Workspace\Helper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl">
