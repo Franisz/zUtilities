@@ -3,8 +3,7 @@
 
 namespace GOTHIC_ENGINE {
 #if _DEBUG
-  int showHelloOnce;
-  zCView* showHelloView = NULL;
+  zCView* showHelloView = nullptr;
 
   string GetEngineVersionName( TEngineVersion version ) {
     switch ( version ) {
@@ -17,10 +16,9 @@ namespace GOTHIC_ENGINE {
   }
 
   void showHello() {
-    if ( showHelloOnce ) return;
+    if ( showHelloView != nullptr ) return;
 
-    if ( !showHelloView )
-      screen->InsertItem( showHelloView = zNEW( zCView )(0, 0, 8192, 8192) );
+    screen->InsertItem( showHelloView = zNEW( zCView )(0, 0, 8192, 8192) );
 
     // We get a pointer to the current plugin and get its name
     const CPlugin* plugin = CPlugin::GetCurrentPlugin();
@@ -35,8 +33,7 @@ namespace GOTHIC_ENGINE {
     string engineVersionName = GetEngineVersionName( engineVersion );
 
     // Show a message on the screen
-    showHelloView->PrintTimedCX( 1000, pluginFileName + " loaded to " + engineVersionName + " running on Union " + unionVersionName, 4000, &zCOLOR( 255, 100, 0 ) );
-    showHelloOnce = true;
+    showHelloView->PrintTimedCX( 1000, pluginFileName + " loaded to " + engineVersionName + " with Union " + unionVersionName, 4000, &zCOLOR( 255, 100, 0 ) );
   }
 #endif
 }

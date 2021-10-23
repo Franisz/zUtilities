@@ -4,7 +4,7 @@
 namespace GOTHIC_ENGINE {
 
 #define pluginName "ZUTILITIES"
-#define printWin(a) ogame->GetTextView()->Printwin(a);
+#define printWin(a) ogame->GetTextView()->Printwin(a)
 
   int bColorNpcs, bColorChests, bColorDoors, bColorItems, bUseQuickSave, bTrampleMeatbugs, bRenderInvItems, bLabelItems, bPutLabelBehind, bDamagePopupShowIcons, bDamagePopupColorDmgTypes, bDamagePopupColorOnlyIcon;
   float fLabelScale, fDamagePopupScale;

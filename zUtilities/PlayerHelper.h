@@ -2,8 +2,7 @@
 // Union HEADER file
 
 namespace GOTHIC_ENGINE {
-  class PlayerHelper
-  {
+  class PlayerHelper {
   public:
     bool isSaving = false;
 

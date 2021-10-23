@@ -16,6 +16,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void ItemLabel::SetLabelParams() {
+    int condAtr = item->GetHighestCond();
 
     // Colors https://flatuicolors.com
 
@@ -266,7 +267,6 @@ namespace GOTHIC_ENGINE {
 
   ItemLabel::ItemLabel( oCItem* renderedItem, zCViewBase* viewBase ) {
     item = renderedItem;
-    condAtr = item->GetHighestCond();
 
     zCView* itemView = dynamic_cast<zCView*>(viewBase);
     if ( !itemView )
@@ -279,7 +279,7 @@ namespace GOTHIC_ENGINE {
     int endPos = startPos + 2000 * fLabelScale;
 
     zCView labelView( startPos, startPos, endPos, endPos );
-    labelView.InsertBack( "LABEL_" + texture + ".tga" );
+    labelView.InsertBack( "LABEL_" + texture );
     labelView.SetAlphaBlendFunc( zRND_ALPHA_FUNC_BLEND );
     labelView.SetTransparency( 255 );
     labelView.SetColor( color );
