@@ -4,6 +4,9 @@
 namespace GOTHIC_ENGINE {
   class QuickSave {
   private:
+    bool oldShowStatus = false;
+    bool toggledShowStatus = false;
+
     int iMinSaveSlot;
     int iMaxSaveSlot;
     int iLastSaveSlot;
@@ -19,6 +22,7 @@ namespace GOTHIC_ENGINE {
     int InInteraction( PlayerHelper* playerHelper );
     void CheckSave( PlayerHelper* playerHelper );
     void CheckLoad( PlayerHelper* playerHelper );
+    void ToggleShowStatus();
 
   public:
     void ReadOptions();

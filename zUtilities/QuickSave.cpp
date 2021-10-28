@@ -97,6 +97,7 @@ namespace GOTHIC_ENGINE {
     zrenderer->Vid_GetFrontBufferCopy( *thumb );
 
     // SaveGame
+    ToggleShowStatus();
     ogame->WriteSavegame( iLastSaveSlot, true );
 
     // SaveInfo
@@ -132,11 +133,24 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
+    ToggleShowStatus();
     ogame->LoadSavegame( iLastSaveSlot, true );
+  }
+
+  void QuickSave::ToggleShowStatus() {
+    if ( !oldShowStatus ) return;
+
+    ogame->SetShowPlayerStatus( toggledShowStatus );
+    toggledShowStatus = !toggledShowStatus;
   }
 
   void QuickSave::QuickSaveLoop( PlayerHelper* playerHelper ) {
     if ( !bUseQuickSave ) return;
+
+    if ( !toggledShowStatus )
+      oldShowStatus = ogame->GetShowPlayerStatus();
+    else
+      ToggleShowStatus();
 
     CheckLoad( playerHelper );
     CheckSave( playerHelper );
