@@ -4,6 +4,26 @@
 namespace GOTHIC_ENGINE {
   Array<DamagePopup*> popups;
 
+#if ENGINE >= Engine_G2
+  typedef struct _tiddata {
+    static constexpr size_t _tiddata_size = 0x74; // 116
+    static constexpr size_t _holdrand_offset = 0x14; // 20
+#if ENGINE == Engine_G2
+    static constexpr size_t __getptd_address = 0x007C9DF1;
+#else
+    static constexpr size_t __getptd_address = 0x007D62B1;
+#endif
+
+    BYTE beginRawMemory[_holdrand_offset];
+    unsigned long _holdrand; // rand() seed value
+    BYTE endRawMemory[_tiddata_size - _holdrand_offset - sizeof( _holdrand )];
+  } *_ptiddata;
+
+  _ptiddata __getptd() {
+    XCALL( _tiddata::__getptd_address );
+  }
+#endif
+
   bool IsCrit( oCNpc::oSDamageDescriptor& desc, int dmgRand = 0 ) {
     if ( desc.pNpcAttacker == nullptr || desc.pItemWeapon == nullptr )
       return false;
@@ -29,14 +49,8 @@ namespace GOTHIC_ENGINE {
     }
 
 #if ENGINE >= Engine_G2
-    // To determine if hit was critical or not
-    using _DWORD = unsigned long;
-    // returns _tiddata pointer
-    auto _getptd = reinterpret_cast<_DWORD * (*)()>(ZenDef( 0x0077C9D1, 0x007C0791, 0x007C9DF1, 0x007D62B1 ));
-    //_tiddata
-    auto ptdData = _getptd();
-    //_tiddata::_holdrand
-    auto seed = *(_DWORD*)&ptdData[5];
+    _ptiddata ptd = __getptd();
+    unsigned long seed = ptd->_holdrand;
 #endif
 
     int isCrit = false;
@@ -46,17 +60,14 @@ namespace GOTHIC_ENGINE {
 
     int hpDiff = initialHp - this->attribute[NPC_ATR_HITPOINTS];
 
-
 #if ENGINE >= Engine_G2
-    if ( *(_DWORD*)&ptdData[5] != seed )
-    {
+    if ( ptd->_holdrand != seed ) {
       int nextRand = (((seed * 214013L + 2531011L) >> 16) & 0x7fff);
       isCrit = IsCrit( desc, nextRand % 100 );
     }
 #else
     isCrit = IsCrit( desc );
 #endif
-
 
     new DamagePopup( this, desc, hpDiff, isCrit );
   }

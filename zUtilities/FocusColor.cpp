@@ -2,7 +2,6 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-
   int oCNpc::GetAivar( zSTRING aivar ) {
     auto sym = parser->GetSymbol( aivar );
     if ( !sym )
