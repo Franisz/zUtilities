@@ -53,9 +53,9 @@ namespace GOTHIC_ENGINE {
     SetStringsByLanguage();
   }
 
-  int QuickSave::InInteraction( PlayerHelper* playerHelper ) {
-    if ( playerHelper->IsSaving() ) return true;
-    if ( playerHelper->IsBusy() ) return true;
+  int QuickSave::InInteraction() {
+    if ( playerHelper.IsSaving() ) return true;
+    if ( playerHelper.IsBusy() ) return true;
     if ( player->bodyState == BS_TAKEITEM ) return true;
     if ( player->bodyState == BS_MOBINTERACT ) return true;
     if ( player->bodyState & BS_FLAG_INTERRUPTABLE && !(player->bodyState & BS_FLAG_FREEHANDS) ) return true;
@@ -63,9 +63,9 @@ namespace GOTHIC_ENGINE {
     return false;
   }
 
-  int QuickSave::CanSave( PlayerHelper* playerHelper ) {
-    if ( playerHelper->IsDead() ) return false;
-    if ( InInteraction( playerHelper ) ) return false;
+  int QuickSave::CanSave() {
+    if ( playerHelper.IsDead() ) return false;
+    if ( InInteraction() ) return false;
     if ( player->GetAnictrl()->state != zCAIPlayer::zMV_STATE_STAND ) return false;
     //if ( ogame->game_testmode ) return false;
     //if ( !player->IsInFightMode_S(0) ) return false;
@@ -73,11 +73,11 @@ namespace GOTHIC_ENGINE {
     return true;
   }
 
-  void QuickSave::CheckSave( PlayerHelper* playerHelper ) {
+  void QuickSave::CheckSave() {
     if ( !zinput->KeyToggled( KEY_F10 ) )
       return;
 
-    if ( !CanSave( playerHelper ) ) {
+    if ( !CanSave() ) {
       ogame->GetTextView()->Printwin( sCantSave );
       return;
     }
@@ -117,11 +117,11 @@ namespace GOTHIC_ENGINE {
     ogame->savegameManager->SetAndWriteSavegame( iLastSaveSlot, info );
   }
 
-  void QuickSave::CheckLoad( PlayerHelper* playerHelper ) {
+  void QuickSave::CheckLoad() {
     if ( !zinput->KeyToggled( KEY_F12 ) )
       return;
 
-    if ( InInteraction( playerHelper ) ) {
+    if ( InInteraction() ) {
       ogame->GetTextView()->Printwin( sCantLoad );
       return;
     }
@@ -144,7 +144,7 @@ namespace GOTHIC_ENGINE {
     toggledShowStatus = !toggledShowStatus;
   }
 
-  void QuickSave::QuickSaveLoop( PlayerHelper* playerHelper ) {
+  void QuickSave::QuickSaveLoop() {
     if ( !bUseQuickSave ) return;
 
     if ( !toggledShowStatus )
@@ -152,8 +152,8 @@ namespace GOTHIC_ENGINE {
     else
       ToggleShowStatus();
 
-    CheckLoad( playerHelper );
-    CheckSave( playerHelper );
+    CheckLoad();
+    CheckSave();
   }
 }
 

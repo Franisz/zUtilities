@@ -27,4 +27,6 @@ namespace GOTHIC_ENGINE {
       return distrib( gen );
     }
   };
+
+  Randomizer randomizer;
 }

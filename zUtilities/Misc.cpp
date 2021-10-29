@@ -2,8 +2,6 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-  Randomizer randomizer;
-
   float CoerceInRange( float start, float length, float minValue, float maxValue ) {
     start -= max( 0, start + length - maxValue );
     start += max( 0, minValue - start );

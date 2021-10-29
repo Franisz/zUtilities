@@ -30,4 +30,6 @@ namespace GOTHIC_ENGINE {
       return !IsDead() && player->enemy != nullptr;
     }
   };
+
+  PlayerHelper playerHelper;
 }

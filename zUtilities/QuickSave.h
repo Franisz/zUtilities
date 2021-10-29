@@ -18,14 +18,14 @@ namespace GOTHIC_ENGINE {
     zSTRING sSaveName;
 
     void SetStringsByLanguage();
-    int CanSave( PlayerHelper* playerHelper );
-    int InInteraction( PlayerHelper* playerHelper );
-    void CheckSave( PlayerHelper* playerHelper );
-    void CheckLoad( PlayerHelper* playerHelper );
+    int CanSave();
+    int InInteraction();
+    void CheckSave();
+    void CheckLoad();
     void ToggleShowStatus();
 
   public:
     void ReadOptions();
-    void QuickSaveLoop( PlayerHelper* playerHelper );
+    void QuickSaveLoop();
   };
 }

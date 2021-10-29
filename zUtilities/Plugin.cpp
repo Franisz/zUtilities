@@ -3,16 +3,15 @@
 #include "resource.h"
 
 namespace GOTHIC_ENGINE {
-  PlayerHelper playerHelper;
-  FocusColor focusColor;
-  QuickSave quickSave;
+  QuickSave* quickSave;
 
   void Game_Entry() {
   }
 
   void Game_Init() {
     InitOptions();
-    quickSave.ReadOptions();
+    quickSave = new QuickSave();
+    quickSave->ReadOptions();
     RegisterCommands();
   }
 
@@ -27,7 +26,7 @@ namespace GOTHIC_ENGINE {
       popups[i]->Update();
 
     focusColor.FocusColorLoop();
-    quickSave.QuickSaveLoop( &playerHelper );
+    quickSave->QuickSaveLoop();
   }
 
   void Game_PostLoop() {

@@ -23,4 +23,6 @@ namespace GOTHIC_ENGINE {
   public:
     void FocusColorLoop();
   };
+
+  FocusColor focusColor;
 }
