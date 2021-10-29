@@ -10,7 +10,7 @@ namespace GOTHIC_ENGINE {
   float fLabelScale, fDamagePopupScale;
   int iDamagePopupMode;
 
-  void initOptions() {
+  void InitOptions() {
     bColorNpcs = zoptions->ReadInt( pluginName, "bColorNpcs", true );
     bColorChests = zoptions->ReadInt( pluginName, "bColorChests", true );
     bColorDoors = zoptions->ReadInt( pluginName, "bColorDoors", true );

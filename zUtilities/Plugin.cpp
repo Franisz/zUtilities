@@ -11,7 +11,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_Init() {
-    initOptions();
+    InitOptions();
     quickSave.ReadOptions();
   }
 
@@ -22,10 +22,6 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_Loop() {
-#if _DEBUG
-    showHello();
-#endif
-
     for ( uint i = 0; i < popups.GetNum(); i++ )
       popups[i]->Update();
 

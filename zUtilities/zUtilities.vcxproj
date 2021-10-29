@@ -488,10 +488,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Hello.cpp">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="ItemLabel.h">
       <SubType>
       </SubType>

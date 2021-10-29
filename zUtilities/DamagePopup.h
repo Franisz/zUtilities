@@ -31,7 +31,6 @@ namespace GOTHIC_ENGINE {
     float alpha = 255.0f;
     float scale;
 
-    bool IsCrit();
     int GetTopDmgIndex();
     void SetMoveMode();
     void SetColor();

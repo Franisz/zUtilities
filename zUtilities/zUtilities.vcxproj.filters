@@ -2796,9 +2796,6 @@
       <Filter>Plugin\Workspace\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Hello.cpp">
-      <Filter>Plugin\Workspace\Features</Filter>
-    </ClInclude>
     <ClInclude Include="Options.cpp">
       <Filter>Plugin\Workspace\Features</Filter>
     </ClInclude>
