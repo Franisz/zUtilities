@@ -13,6 +13,7 @@ namespace GOTHIC_ENGINE {
   void Game_Init() {
     InitOptions();
     quickSave.ReadOptions();
+    RegisterCommands();
   }
 
   void Game_Exit() {

@@ -3,6 +3,7 @@
 
 namespace GOTHIC_ENGINE {
 
+#define VERSION_NUMBER "0.13"
 #define pluginName "ZUTILITIES"
 #define printWin(a) ogame->GetTextView()->Printwin(a)
 

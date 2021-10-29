@@ -45,4 +45,4 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
 
   - This feature can be disabled in `gothic.ini` with `bTrampleMeatbugs` option.
 
-- Also on debug build, plugin prints info on the screen about plugin and platform.
+- Allows to check currently used plugin version through in game console with `zutilities version` command.
