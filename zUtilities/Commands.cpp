@@ -2,23 +2,37 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-  int ConsoleEval( const zSTRING& command, zSTRING& message )
-  {
-    zSTRING w1 = command.PickWord_Old( 1, " " );
-    zSTRING w2 = command.PickWord_Old( 2, " " );
+  int (*innerEvalFunc)(const zSTRING&, zSTRING&);
 
-    if ( w1 != "zUtilities" ) return 0;
+  int ConsoleEvalFunc( const zSTRING& inpstr, zSTRING& msg ) {
+    if ( innerEvalFunc && innerEvalFunc( inpstr, msg ) )
+      return true;
 
+    zSTRING w1 = inpstr.PickWord_Old( 1, " " );
+    if ( w1 != "zUtilities" ) return false;
+
+    zSTRING w2 = inpstr.PickWord_Old( 2, " " );
     if ( w2 == "Version" ) {
-      message = "Currently using zUtilities v" + Z VERSION_NUMBER;
-      return 1;
+      msg = "Currently using zUtilities v" + Z VERSION_NUMBER;
+      return true;
     }
 
-    return 0;
-  };
+    return false;
+  }
+
+  void RegisterEvalFunc() {
+    int evalNum = 0;
+
+    for ( int i = 1; i < zCON_MAX_EVAL; i++ )
+      if ( zcon->evalfunc[i] )
+        evalNum = i;
+
+    innerEvalFunc = zcon->evalfunc[evalNum];
+    zcon->evalfunc[evalNum] = &ConsoleEvalFunc;
+  }
 
   void RegisterCommands() {
+    RegisterEvalFunc();
     zcon->Register( "zUtilities Version", "Shows version number" );
-    zcon->AddEvalFunc( ConsoleEval );
   }
 }
