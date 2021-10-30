@@ -15,7 +15,7 @@ namespace GOTHIC_ENGINE {
     return (maxIndex != -1) ? this->cond_atr[maxIndex] : -1;
   }
 
-  bool ItemLabel::CanDrawLabel(zCViewBase* viewBase ) {
+  bool ItemLabel::CanDrawLabel( zCViewBase* viewBase ) {
     auto list = oCItemContainer::contList.GetNextInList();
     while ( list != nullptr ) {
       oCItemContainer* container = list->GetData();
@@ -283,7 +283,7 @@ namespace GOTHIC_ENGINE {
   ItemLabel::ItemLabel( oCItem* renderedItem, zCViewBase* viewBase ) {
     item = renderedItem;
 
-    if(!CanDrawLabel( viewBase ) )
+    if ( !CanDrawLabel( viewBase ) )
       return;
 
     zCView* itemView = dynamic_cast<zCView*>(viewBase);

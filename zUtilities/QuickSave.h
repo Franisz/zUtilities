@@ -18,6 +18,7 @@ namespace GOTHIC_ENGINE {
     zSTRING sSaveName;
 
     void SetStringsByLanguage();
+    void SetSaveSlotAndNr();
     int CanSave();
     int InInteraction();
     void CheckSave();
@@ -25,7 +26,7 @@ namespace GOTHIC_ENGINE {
     void ToggleShowStatus();
 
   public:
-    void ReadOptions();
     void QuickSaveLoop();
+    QuickSave();
   };
 }

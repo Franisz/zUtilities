@@ -10,9 +10,8 @@ namespace GOTHIC_ENGINE {
 
   void Game_Init() {
     InitOptions();
-    quickSave = new QuickSave();
-    quickSave->ReadOptions();
     RegisterCommands();
+    quickSave = new QuickSave();
   }
 
   void Game_Exit() {
