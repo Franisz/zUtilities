@@ -10,6 +10,7 @@ namespace GOTHIC_ENGINE {
     zSTRING texture = "UNKNOWN"; // https://game-icons.net/1x1/lorc/swap-bag.html
 
     void SetLabelParams();
+    bool CanDrawLabel( zCViewBase* viewBase );
 
   public:
     ItemLabel( oCItem* item, zCViewBase* viewBase );
