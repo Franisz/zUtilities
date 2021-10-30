@@ -358,3 +358,4 @@ MP Debug
 MP Release
 
 *.last
+*.bat
