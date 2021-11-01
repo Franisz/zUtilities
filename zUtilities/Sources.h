@@ -4,7 +4,6 @@
 // Automatically generated block
 #pragma region Includes
 #include "Misc.cpp"
-#include "Options.cpp"
 #include "Commands.cpp"
 #include "FocusColor.cpp"
 #include "QuickSave.cpp"

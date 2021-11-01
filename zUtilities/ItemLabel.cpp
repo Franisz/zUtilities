@@ -294,7 +294,7 @@ namespace GOTHIC_ENGINE {
 
     int startPos = (item == player->inventory2.GetSelectedItem()) ? 500 : 250;
 
-    int endPos = startPos + 2000 * fLabelScale;
+    int endPos = startPos + 2000 * Options::LabelScale;
 
     zCView labelView( startPos, startPos, endPos, endPos );
     labelView.InsertBack( "LABEL_" + texture );

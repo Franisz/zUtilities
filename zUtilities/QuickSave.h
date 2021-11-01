@@ -2,22 +2,66 @@
 // Union HEADER file
 
 namespace GOTHIC_ENGINE {
+  namespace Options {
+    int UseQuickSave, MinSaveSlot, MaxSaveSlot;
+    zSTRING CantSave, CantLoad, NoSave, SaveName;
+
+    void QuickSave() {
+      UseQuickSave = zoptions->ReadInt( PLUGIN_NAME, "UseQuickSave", true );
+
+#if ENGINE >= Engine_G2
+      MinSaveSlot = zoptions->ReadInt( PLUGIN_NAME, "MinSaveSlot", 15 );
+      MaxSaveSlot = zoptions->ReadInt( PLUGIN_NAME, "MaxSaveSlot", 20 );
+#else
+      MinSaveSlot = zoptions->ReadInt( PLUGIN_NAME, "MinSaveSlot", 10 );
+      MaxSaveSlot = zoptions->ReadInt( PLUGIN_NAME, "MaxSaveSlot", 15 );
+#endif
+
+
+      switch ( Union.GetSystemLanguage() )
+      {
+      case Lang_Rus:
+        CantSave = "Игра не может быть сохранена сейчас!";
+        CantLoad = "Игра не может быть загружена!";
+        NoSave = "Такого сохранения не существует!";
+        break;
+      case Lang_Eng:
+        CantSave = "The game cannot be saved now!";
+        CantLoad = "The game cannot be loaded now!";
+        NoSave = "Such a save does not exist!";
+        break;
+      case Lang_Ger:
+        CantSave = "Das Spiel kann jetzt nicht gespeichert werden!";
+        CantLoad = "Das Spiel kann jetzt nicht geladen werden!";
+        NoSave = "Ein solches Speichern gibt es nicht!";
+        break;
+      case Lang_Pol:
+        CantSave = "Nie moїna teraz zapisaж rozgrywki!";
+        CantLoad = "Nie moїna teraz wczytaж rozgrywki!";
+        NoSave = "Taki zapis nie istnieje!";
+        break;
+      default:
+        CantSave = "The game cannot be saved now!";
+        CantLoad = "The game cannot be loaded now!";
+        NoSave = "Such a save does not exist!";
+        break;
+      }
+
+      CantSave = zoptions->ReadString( PLUGIN_NAME, "CantSave", CantSave );
+      CantLoad = zoptions->ReadString( PLUGIN_NAME, "CantLoad", CantLoad );
+      NoSave = zoptions->ReadString( PLUGIN_NAME, "NoSave", NoSave );
+      SaveName = zoptions->ReadString( PLUGIN_NAME, "SaveName", "QuickSave" );
+    }
+  }
+
   class QuickSave {
   private:
     bool oldShowStatus = false;
     bool toggledShowStatus = false;
 
-    int iMinSaveSlot;
-    int iMaxSaveSlot;
     int iLastSaveSlot;
     int iLastSaveNumber;
 
-    zSTRING sCantSave;
-    zSTRING sCantLoad;
-    zSTRING sNoSave;
-    zSTRING sSaveName;
-
-    void SetStringsByLanguage();
     void SetSaveSlotAndNr();
     int CanSave();
     int InInteraction();
@@ -29,4 +73,6 @@ namespace GOTHIC_ENGINE {
     void QuickSaveLoop();
     QuickSave();
   };
+
+  QuickSave* quickSave;
 }

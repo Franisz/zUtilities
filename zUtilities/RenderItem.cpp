@@ -4,7 +4,7 @@
 namespace GOTHIC_ENGINE {
   HOOK Hook_CMovementTracker_UpdatePlayerPos PATCH( &zCMovementTracker::UpdatePlayerPos, &zCMovementTracker::UpdatePlayerPos_Union );
   void zCMovementTracker::UpdatePlayerPos_Union( zVEC3 const& position ) {
-    if ( bRenderInvItems && player->inventory2.IsOpen() && !player->inventory2.GetNextContainerLeft( &player->inventory2 ) ) {
+    if ( Options::CenterInvItems && player->inventory2.IsOpen() && !player->inventory2.GetNextContainerLeft( &player->inventory2 ) ) {
       zVEC3 rightVector = camVob->GetRightVectorWorld() * 115.0f;
       THISCALL( Hook_CMovementTracker_UpdatePlayerPos )(position + rightVector);
       return;
@@ -15,7 +15,7 @@ namespace GOTHIC_ENGINE {
 
   HOOK Hook_oCItem_RenderItem PATCH( &oCItem::RenderItem, &oCItem::RenderItem_Union );
   void oCItem::RenderItem_Union( zCWorld* wld, zCViewBase* view, float rotate ) {
-    if ( bRenderInvItems ) {
+    if ( Options::CenterInvItems ) {
       bool IsCenterItem = false;
       auto list = oCItemContainer::contList.GetNextInList();
 
@@ -61,8 +61,8 @@ namespace GOTHIC_ENGINE {
     }
 
     // Draw item label
-    if ( bLabelItems ) {
-      if ( !bPutLabelBehind ) {
+    if ( Options::LabelItems ) {
+      if ( !Options::PutLabelBehind ) {
         THISCALL( Hook_oCItem_RenderItem )(wld, view, rotate);
         new ItemLabel( this, view );
         return;

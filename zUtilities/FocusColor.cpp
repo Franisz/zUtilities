@@ -254,19 +254,19 @@ namespace GOTHIC_ENGINE {
 
     if ( !focusVob ) return colDefault;
 
-    if ( bColorChests )
+    if ( Options::ColorChests )
       if ( oCMobContainer* focusContainer = focusVob->CastTo<oCMobContainer>() )
         return ChestColor( focusContainer );
 
-    if ( bColorDoors )
+    if ( Options::ColorDoors )
       if ( oCMobDoor* focusDoor = focusVob->CastTo<oCMobDoor>() )
         return DoorColor( focusDoor );
 
-    if ( bColorNpcs )
+    if ( Options::ColorNpcs )
       if ( oCNpc* focusNpc = focusVob->CastTo<oCNpc>() )
         return NpcColor( focusNpc );
 
-    if ( bColorItems )
+    if ( Options::ColorItems )
       if ( oCItem* focusItem = focusVob->CastTo<oCItem>() )
         return ItemColor( focusItem );
 
@@ -274,7 +274,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void FocusColor::FocusColorLoop() {
-    if ( !bColorNpcs && !bColorChests && !bColorDoors && !bColorItems )
+    if ( !Options::ColorNpcs && !Options::ColorChests && !Options::ColorDoors && !Options::ColorItems )
       return;
 
     InitData();

@@ -4,6 +4,7 @@
 // Automatically generated block
 #pragma region Includes
 #include "Randomizer.h"
+#include "Options.h"
 #include "PlayerHelper.h"
 #include "FocusColor.h"
 #include "QuickSave.h"

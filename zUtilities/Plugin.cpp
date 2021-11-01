@@ -3,13 +3,16 @@
 #include "resource.h"
 
 namespace GOTHIC_ENGINE {
-  QuickSave* quickSave;
-
   void Game_Entry() {
   }
 
   void Game_Init() {
-    InitOptions();
+    Options::QuickSave();
+    Options::FocusColor();
+    Options::ItemLabel();
+    Options::DamagePopup();
+    Options::Misc();
+    Options::AddTrivias();
     RegisterCommands();
     quickSave = new QuickSave();
   }

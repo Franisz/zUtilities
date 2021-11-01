@@ -504,7 +504,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Options.cpp">
+    <ClInclude Include="Options.h">
       <SubType>
       </SubType>
     </ClInclude>

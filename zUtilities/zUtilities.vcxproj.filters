@@ -2796,9 +2796,6 @@
       <Filter>Plugin\Workspace\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Options.cpp">
-      <Filter>Plugin\Workspace\Features</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerHelper.h">
       <Filter>Plugin\Workspace\Helper</Filter>
     </ClInclude>
@@ -2839,6 +2836,9 @@
       <Filter>Plugin\Workspace\Helper</Filter>
     </ClInclude>
     <ClInclude Include="Commands.cpp">
+      <Filter>Plugin\Workspace\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="Options.h">
       <Filter>Plugin\Workspace\Features</Filter>
     </ClInclude>
   </ItemGroup>

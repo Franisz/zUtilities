@@ -2,43 +2,6 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-
-  void QuickSave::SetStringsByLanguage() {
-    switch ( Union.GetSystemLanguage() )
-    {
-    case Lang_Rus:
-      sCantSave = "Игра не может быть сохранена сейчас!";
-      sCantLoad = "Игра не может быть загружена!";
-      sNoSave = "Такого сохранения не существует!";
-      break;
-    case Lang_Eng:
-      sCantSave = "The game cannot be saved now!";
-      sCantLoad = "The game cannot be loaded now!";
-      sNoSave = "Such a save does not exist!";
-      break;
-    case Lang_Ger:
-      sCantSave = "Das Spiel kann jetzt nicht gespeichert werden!";
-      sCantLoad = "Das Spiel kann jetzt nicht geladen werden!";
-      sNoSave = "Ein solches Speichern gibt es nicht!";
-      break;
-    case Lang_Pol:
-      sCantSave = "Nie moїna teraz zapisaж rozgrywki!";
-      sCantLoad = "Nie moїna teraz wczytaж rozgrywki!";
-      sNoSave = "Taki zapis nie istnieje!";
-      break;
-    default:
-      sCantSave = "The game cannot be saved now!";
-      sCantLoad = "The game cannot be loaded now!";
-      sNoSave = "Such a save does not exist!";
-      break;
-    }
-
-    sCantSave = zoptions->ReadString( pluginName, "sCantSave", sCantSave );
-    sCantLoad = zoptions->ReadString( pluginName, "sCantLoad", sCantLoad );
-    sNoSave = zoptions->ReadString( pluginName, "sNoSave", sNoSave );
-    sSaveName = zoptions->ReadString( pluginName, "sSaveName", "QuickSave" );
-  }
-
   void QuickSave::SetSaveSlotAndNr() {
     zCArray<oCSavegameInfo*> saveList = gameMan->savegameManager->infoList;
 
@@ -46,13 +9,13 @@ namespace GOTHIC_ENGINE {
     int latestSaveSlot = Invalid;
 
     for ( int i = 0; i < saveList.GetNum(); i++ ) {
-      if ( saveList[i]->m_SlotNr < iMinSaveSlot || saveList[i]->m_SlotNr > iMaxSaveSlot )
+      if ( saveList[i]->m_SlotNr < Options::MinSaveSlot || saveList[i]->m_SlotNr > Options::MaxSaveSlot )
         continue;
 
-      if ( !saveList[i]->GetName().HasWord( sSaveName ) )
+      if ( !saveList[i]->GetName().HasWord( Options::SaveName ) )
         continue;
 
-      int nr = saveList[i]->GetName().Cut( 0, sSaveName.Length() ).ToInt32();
+      int nr = saveList[i]->GetName().Cut( 0, Options::SaveName.Length() ).ToInt32();
       if ( nr > latestNr ) {
         latestNr = nr;
         latestSaveSlot = saveList[i]->m_SlotNr;
@@ -88,14 +51,14 @@ namespace GOTHIC_ENGINE {
       return;
 
     if ( !CanSave() ) {
-      ogame->GetTextView()->Printwin( sCantSave );
+      ogame->GetTextView()->Printwin( Options::CantSave );
       return;
     }
 
     iLastSaveSlot++;
     iLastSaveNumber++;
-    if ( iLastSaveSlot > iMaxSaveSlot || iLastSaveSlot < iMinSaveSlot )
-      iLastSaveSlot = iMinSaveSlot;
+    if ( iLastSaveSlot > Options::MaxSaveSlot || iLastSaveSlot < Options::MinSaveSlot )
+      iLastSaveSlot = Options::MinSaveSlot;
 
     // Thumbnail
     zCTextureConvert* thumb = zrenderer->CreateTextureConvert();
@@ -108,7 +71,7 @@ namespace GOTHIC_ENGINE {
     // SaveInfo
     auto info = ogame->savegameManager->GetSavegame( iLastSaveSlot );
 
-    info->m_Name = sSaveName + Z iLastSaveNumber;
+    info->m_Name = Options::SaveName + Z iLastSaveNumber;
     info->m_WorldName = ogame->GetGameWorld()->GetWorldName();
     int day, hour, min;
     ogame->GetTime( day, hour, min );
@@ -127,12 +90,12 @@ namespace GOTHIC_ENGINE {
       return;
 
     if ( InInteraction() ) {
-      ogame->GetTextView()->Printwin( sCantLoad );
+      ogame->GetTextView()->Printwin( Options::CantLoad );
       return;
     }
 
     if ( !ogame->savegameManager->GetSavegame( iLastSaveSlot )->DoesSavegameExist() ) {
-      ogame->GetTextView()->Printwin( sNoSave + " (" + Z iLastSaveSlot + ")" );
+      ogame->GetTextView()->Printwin( Options::NoSave + " (" + Z iLastSaveSlot + ")" );
       return;
     }
 
@@ -148,7 +111,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void QuickSave::QuickSaveLoop() {
-    if ( !bUseQuickSave ) return;
+    if ( !Options::UseQuickSave ) return;
 
     if ( !toggledShowStatus )
       oldShowStatus = ogame->GetShowPlayerStatus();
@@ -160,15 +123,6 @@ namespace GOTHIC_ENGINE {
   }
 
   QuickSave::QuickSave() {
-#if ENGINE >= Engine_G2
-    iMinSaveSlot = zoptions->ReadInt( pluginName, "iMinSaveSlot", 15 );
-    iMaxSaveSlot = zoptions->ReadInt( pluginName, "iMaxSaveSlot", 20 );
-#else
-    iMinSaveSlot = zoptions->ReadInt( pluginName, "iMinSaveSlot", 10 );
-    iMaxSaveSlot = zoptions->ReadInt( pluginName, "iMaxSaveSlot", 15 );
-#endif
-
-    SetStringsByLanguage();
     SetSaveSlotAndNr();
   }
 }

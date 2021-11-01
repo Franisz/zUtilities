@@ -2,6 +2,17 @@
 // Union HEADER file
 
 namespace GOTHIC_ENGINE {
+  namespace Options {
+    int ColorNpcs, ColorChests, ColorDoors, ColorItems;
+
+    void FocusColor() {
+      ColorNpcs = zoptions->ReadInt( PLUGIN_NAME, "ColorNpcs", true );
+      ColorChests = zoptions->ReadInt( PLUGIN_NAME, "ColorChests", true );
+      ColorDoors = zoptions->ReadInt( PLUGIN_NAME, "ColorDoors", true );
+      ColorItems = zoptions->ReadInt( PLUGIN_NAME, "ColorItems", true );
+    }
+  }
+
   class FocusColor {
   private:
     zCOLOR colDefault = zCOLOR( 255, 255, 255 );

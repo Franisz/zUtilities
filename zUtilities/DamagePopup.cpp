@@ -43,7 +43,7 @@ namespace GOTHIC_ENGINE {
 
   HOOK Ivk_OnDamage_Hit_Union PATCH_IF( &oCNpc::OnDamage_Hit, &oCNpc::OnDamage_Hit_Union, true );
   void oCNpc::OnDamage_Hit_Union( oSDamageDescriptor& desc ) {
-    if ( !iDamagePopupMode ) {
+    if ( !Options::DamagePopupMode ) {
       THISCALL( Ivk_OnDamage_Hit_Union )(desc);
       return;
     }
@@ -110,7 +110,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void DamagePopup::SetColor() {
-    if ( bDamagePopupColorDmgTypes )
+    if ( Options::DamagePopupColorDmgTypes )
       switch ( dmgIndex )
       {
       case oEIndexDamage::oEDamageIndex_Edge:
@@ -188,7 +188,7 @@ namespace GOTHIC_ENGINE {
     float sysScale;
     Union.GetSysPackOption().Read( sysScale, "INTERFACE", "Scale", 1.0f );
     scale = (sysScale) ? 1.15f : 1.0f;
-    scale *= fDamagePopupScale;
+    scale *= Options::DamagePopupScale;
 
     if ( dmgAmount > 0 ) {
       scale += scale * (float)dmgAmount / (float)target->attribute[NPC_ATR_HITPOINTSMAX] / 1.75f;
@@ -233,7 +233,7 @@ namespace GOTHIC_ENGINE {
     float width = view->FontSize( text ) * scaling[0];
     float height = view->FontY() * scaling[1];
 
-    if ( bDamagePopupShowIcons )
+    if ( Options::DamagePopupShowIcons )
       width += height;
 
     viewPos[0] = CoerceInRange( viewPos[0] - width / 2, width, 0, 8191 );
@@ -299,7 +299,7 @@ namespace GOTHIC_ENGINE {
       return;
 
     color.alpha = alpha;
-    zCOLOR textColor = (bDamagePopupColorOnlyIcon) ? zCOLOR( 240, 220, 194, alpha ) : color;
+    zCOLOR textColor = (Options::DamagePopupColorOnlyIcon) ? zCOLOR( 240, 220, 194, alpha ) : color;
     zCOLOR iconColor = color;
 
     zSTRING text = dmgAmount;
@@ -323,7 +323,7 @@ namespace GOTHIC_ENGINE {
       x += fCharWidth + space;
     }
 
-    if ( !bDamagePopupShowIcons ) return;
+    if ( !Options::DamagePopupShowIcons ) return;
 
     x += space;
     zCTexture* texture = texture->Load( "DMGICON_" + icon, true );
@@ -341,7 +341,7 @@ namespace GOTHIC_ENGINE {
 
     popups.Insert( this );
 
-    mode = iDamagePopupMode;
+    mode = Options::DamagePopupMode;
     this->target = targetNpc;
     this->dmgAmount = dmgAmount;
     this->desc = &desc;
