@@ -142,7 +142,7 @@ namespace GOTHIC_ENGINE {
           color = zCOLOR( 231, 76, 60 );
       }
       else if ( desc->pNpcAttacker->GetAivar( "AIV_PARTYMEMBER" ) )
-        color = zCOLOR( 31, 255, 199 );
+        color = zCOLOR( 51, 235, 255 );
     }
 
     //if ( target == player )

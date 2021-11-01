@@ -46,12 +46,12 @@ namespace GOTHIC_ENGINE {
     zCOption* const& option = this;
     zCOptionSection* section = option->GetSectionByName( sectionName, true );
 
-    if( !section ) return;
+    if ( !section ) return;
 
     zCOptionEntry* entry = option->GetEntryByName( section, entryName, true );
 
     if ( !entry ) return;
-    
+
     zCOptionEntry* triviaEntry = new zCOptionEntry{ "", (A"; " + trivia + "\r\n\n") };
 
     int nextPos = section->entryList.Search( entry ) + 1;

@@ -182,9 +182,6 @@ namespace GOTHIC_ENGINE {
       && !(focusNpc->GetAivar( "AIV_NpcSawPlayerCommit" ) < CRIME_MURDER && focusNpc->GetAivar( "AIV_NpcSawPlayerCommitDay" ) < day - 2)
       && !(focusNpc->GetAivar( "AIV_CrimeAbsolutionLevel" ) < GetAbsolutionLevel( focusNpc )) )
       return zCOLOR( 255, 180, 0 );
-
-    if ( (focusNpc->IsFriendly( player ) || focusNpc->npcType == TYPE_FRIEND) && !inReact )
-      return zCOLOR( 0, 255, 0 );
 #else
     if ( (focusNpc->IsHostile( player ) && focusNpc->GetPermAttitude( player ) == NPC_ATT_HOSTILE)
       || (focusNpc->enemy == player && inAttack && focusNpc->GetAivar( "AIV_ATTACKREASON" )) )
@@ -192,12 +189,18 @@ namespace GOTHIC_ENGINE {
 
     if ( (focusNpc->IsAngry( player ) || focusNpc->enemy == player) && (inAttack || inReact) )
       return zCOLOR( 255, 180, 0 );
-
-    if ( focusNpc->IsFriendly( player ) || focusNpc->npcType == TYPE_FRIEND )
-      return zCOLOR( 0, 255, 0 );
 #endif
 
-    if ( ogame->GetGuilds()->GetAttitude( focusNpc->guild, player->guild ) == NPC_ATT_FRIENDLY && !inReact )
+    if ( inReact )
+      return colDefault;
+
+    if ( focusNpc->GetAivar( "AIV_PARTYMEMBER" ) )
+      return zCOLOR( 51, 235, 255 );
+
+    if ( (focusNpc->IsFriendly( player ) || focusNpc->npcType == TYPE_FRIEND) )
+      return zCOLOR( 0, 255, 0 );
+
+    if ( ogame->GetGuilds()->GetAttitude( focusNpc->guild, player->guild ) == NPC_ATT_FRIENDLY )
       return zCOLOR( 175, 255, 175 );
 
     return colDefault;
