@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZPOLY_STRIP_H__VER3__
 #define __ZPOLY_STRIP_H__VER3__
@@ -8,6 +8,7 @@
 
 namespace Gothic_II_Addon {
 
+  // sizeof B4h
   class zCPolyStrip : public zCVisual {
   public:
     zCLASS_DECLARATION( zCPolyStrip )
@@ -18,32 +19,32 @@ namespace Gothic_II_Addon {
       zCAM_ALIGN_POLY
     };
 
-    zCMaterial* material;
-    zCVertex* vertList;
-    zCPolygon* polyList;
-    int numPoly;
-    int numVert;
-    zVEC3* centerPointList;
-    float* alphaList;
-    float width;
-    zCVob* connectedVob;
-    zTBBox3D bbox3D;
-    zTCamAlign camAlign;
-    int heightCheck;
-    int everyFrameUpdate;
-    float heightBound;
-    int firstSeg;
-    int lastSeg;
-    int numSeg;
-    float visLastFrac;
-    float visFirstFrac;
-    float alphaFadeSpeed;
-    float newAlphaFadeSpeed;
-    float newAlpha;
-    int lastDirSeg;
-    zVEC3 lastDirNormal;
+    zCMaterial* material;         // sizeof 04h    offset 34h
+    zCVertex* vertList;           // sizeof 04h    offset 38h
+    zCPolygon* polyList;          // sizeof 04h    offset 3Ch
+    int numPoly;                  // sizeof 04h    offset 40h
+    int numVert;                  // sizeof 04h    offset 44h
+    zVEC3* centerPointList;       // sizeof 04h    offset 48h
+    float* alphaList;             // sizeof 04h    offset 4Ch
+    float width;                  // sizeof 04h    offset 50h
+    zCVob* connectedVob;          // sizeof 04h    offset 54h
+    zTBBox3D bbox3D;              // sizeof 18h    offset 58h
+    zTCamAlign camAlign;          // sizeof 04h    offset 70h
+    int heightCheck;              // sizeof 04h    offset 74h
+    int everyFrameUpdate;         // sizeof 04h    offset 78h
+    float heightBound;            // sizeof 04h    offset 7Ch
+    int firstSeg;                 // sizeof 04h    offset 80h
+    int lastSeg;                  // sizeof 04h    offset 84h
+    int numSeg;                   // sizeof 04h    offset 88h
+    float visLastFrac;            // sizeof 04h    offset 8Ch
+    float visFirstFrac;           // sizeof 04h    offset 90h
+    float alphaFadeSpeed;         // sizeof 04h    offset 94h
+    float newAlphaFadeSpeed;      // sizeof 04h    offset 98h
+    float newAlpha;               // sizeof 04h    offset 9Ch
+    int lastDirSeg;               // sizeof 04h    offset A0h
+    zVEC3 lastDirNormal;          // sizeof 0Ch    offset A4h
     group {
-      unsigned char localFOR : 1;
+      unsigned char localFOR : 1; // sizeof 01h    offset bit
     };
 
     void zCPolyStrip_OnInit()                                             zCall( 0x005BD300 );
@@ -76,11 +77,13 @@ namespace Gothic_II_Addon {
     #include "zCPolyStrip.inl"
   };
 
+  // sizeof F4h
   class zCLightning : public zCVisual {
   public:
+    // sizeof C0h
     class zCBolt    : public zCPolyStrip {
     public:
-      zCArray<zCBolt*> childList;
+      zCArray<zCBolt*> childList; // sizeof 0Ch    offset B4h
 
       zCBolt() {}
       void Generate_R( zVEC3 const&, zVEC3 const&, float ) zCall( 0x005BF430 );
@@ -91,7 +94,7 @@ namespace Gothic_II_Addon {
       #include "zCLightning_zCBolt.inl"
     };
 
-    zCBolt rootBolt;
+    zCBolt rootBolt; // sizeof C0h    offset 34h
 
     zCLightning() {}
     void SetProjectionSphere( zTBSphere3D const& ) zCall( 0x005BF3A0 );
@@ -101,6 +104,7 @@ namespace Gothic_II_Addon {
     #include "zCLightning.inl"
   };
 
+  // sizeof 88h
   class zCQuadMark : public zCVisual {
   public:
     zCLASS_DECLARATION( zCQuadMark )
@@ -113,11 +117,12 @@ namespace Gothic_II_Addon {
       zTEXANI_SCALEDOWN
     };
 
+    // sizeof 10h
     struct zTEffectParams {
-      zTTexAniType texAniType;
-      float texAniScaleStart;
-      float texAniSpeed;
-      float alphaFadeSpeed;
+      zTTexAniType texAniType; // sizeof 04h    offset 00h
+      float texAniScaleStart;  // sizeof 04h    offset 04h
+      float texAniSpeed;       // sizeof 04h    offset 08h
+      float alphaFadeSpeed;    // sizeof 04h    offset 0Ch
 
       zTEffectParams() {}
 
@@ -125,9 +130,10 @@ namespace Gothic_II_Addon {
       #include "zCQuadMark_zTEffectParams.inl"
     };
 
+    // sizeof 14h
     struct zTQuadMarkVert {
-      zVEC3 position;
-      zVEC2 texCoord;
+      zVEC3 position; // sizeof 0Ch    offset 00h
+      zVEC2 texCoord; // sizeof 08h    offset 0Ch
 
       zTQuadMarkVert() {}
 
@@ -135,8 +141,9 @@ namespace Gothic_II_Addon {
       #include "zCQuadMark_zTQuadMarkVert.inl"
     };
 
+    // sizeof 0Ch
     struct zTQuadMarkPoly {
-      zCArray<zTQuadMarkVert> vertex;
+      zCArray<zTQuadMarkVert> vertex; // sizeof 0Ch    offset 00h
 
       zTQuadMarkPoly() {}
       ~zTQuadMarkPoly() zCall( 0x005D0B70 );
@@ -145,17 +152,18 @@ namespace Gothic_II_Addon {
       #include "zCQuadMark_zTQuadMarkPoly.inl"
     };
 
+    // sizeof 30h
     struct zTQuadMarkAniState {
-      int firstPolyIndex;
-      int lastPolyIndex;
-      float scaleStart;
-      float scaleCur;
-      float scaleSpeed;
-      float scaleSpeedCur;
-      zVEC2 uvDelta;
-      zVEC2 uvScale;
-      zTTexAniType texAniType;
-      float alpha;
+      int firstPolyIndex;      // sizeof 04h    offset 00h
+      int lastPolyIndex;       // sizeof 04h    offset 04h
+      float scaleStart;        // sizeof 04h    offset 08h
+      float scaleCur;          // sizeof 04h    offset 0Ch
+      float scaleSpeed;        // sizeof 04h    offset 10h
+      float scaleSpeedCur;     // sizeof 04h    offset 14h
+      zVEC2 uvDelta;           // sizeof 08h    offset 18h
+      zVEC2 uvScale;           // sizeof 08h    offset 20h
+      zTTexAniType texAniType; // sizeof 04h    offset 28h
+      float alpha;             // sizeof 04h    offset 2Ch
 
       zTQuadMarkAniState() {}
 
@@ -163,19 +171,19 @@ namespace Gothic_II_Addon {
       #include "zCQuadMark_zTQuadMarkAniState.inl"
     };
 
-    zCMesh* quadMesh;
-    zCVob* connectedVob;
-    zCMaterial* material;
-    zCMaterial* actMaterial;
-    float alphaFadeSpeed;
-    int dontRepositionConnectedVob;
-    zCArray<zTQuadMarkAniState> quadMarkAniTracker;
-    zCPolygon** worldPolyList;
-    int numWorldPoly;
-    zCArray<zCPolygon*> visitedPolyList;
-    zTQuadMarkPoly firstQuadPoly;
-    zCPolygon* firstWorldPoly;
-    zVEC3 averageNormal;
+    zCMesh* quadMesh;                               // sizeof 04h    offset 34h
+    zCVob* connectedVob;                            // sizeof 04h    offset 38h
+    zCMaterial* material;                           // sizeof 04h    offset 3Ch
+    zCMaterial* actMaterial;                        // sizeof 04h    offset 40h
+    float alphaFadeSpeed;                           // sizeof 04h    offset 44h
+    int dontRepositionConnectedVob;                 // sizeof 04h    offset 48h
+    zCArray<zTQuadMarkAniState> quadMarkAniTracker; // sizeof 0Ch    offset 4Ch
+    zCPolygon** worldPolyList;                      // sizeof 04h    offset 58h
+    int numWorldPoly;                               // sizeof 04h    offset 5Ch
+    zCArray<zCPolygon*> visitedPolyList;            // sizeof 0Ch    offset 60h
+    zTQuadMarkPoly firstQuadPoly;                   // sizeof 0Ch    offset 6Ch
+    zCPolygon* firstWorldPoly;                      // sizeof 04h    offset 78h
+    zVEC3 averageNormal;                            // sizeof 0Ch    offset 7Ch
 
     void zCQuadMark_OnInit()                                                                        zCall( 0x005D0970 );
     zCQuadMark()                                                                                    zInit( zCQuadMark_OnInit() );

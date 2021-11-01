@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZOBJECT_H__VER2__
 #define __ZOBJECT_H__VER2__
@@ -11,9 +11,10 @@ namespace Gothic_II_Classic {
     zCLASS_FLAG_RESOURCE       = 1 << 2
   };
 
+  // sizeof 0Ch
   class zCLivingObjectsState {
   public:
-    zCArray<int> numList;
+    zCArray<int> numList; // sizeof 0Ch    offset 00h
 
     zCLivingObjectsState() {}
 
@@ -21,22 +22,23 @@ namespace Gothic_II_Classic {
     #include "zCLivingObjectsState.inl"
   };
 
+  // sizeof 6Ch
   class zCClassDef {
   public:
-    zSTRING className;
-    zSTRING baseClassName;
-    zSTRING scriptClassName;
-    zCClassDef* baseClassDef;
-    zCObject*( *createNewInstance )( void );
-    zCObject*( *createNewInstanceBackup )( void );
-    unsigned long classFlags;
-    unsigned long classSize;
-    int numLivingObjects;
-    int numCtorCalled;
-    zCObject** hashTable;
-    zCArray<zCObject*> objectList;
-    unsigned short archiveVersion;
-    unsigned short archiveVersionSum;
+    zSTRING className;                             // sizeof 14h    offset 00h
+    zSTRING baseClassName;                         // sizeof 14h    offset 14h
+    zSTRING scriptClassName;                       // sizeof 14h    offset 28h
+    zCClassDef* baseClassDef;                      // sizeof 04h    offset 3Ch
+    zCObject*( *createNewInstance )( void );       // sizeof 04h    offset 40h
+    zCObject*( *createNewInstanceBackup )( void ); // sizeof 04h    offset 44h
+    unsigned long classFlags;                      // sizeof 04h    offset 48h
+    unsigned long classSize;                       // sizeof 04h    offset 4Ch
+    int numLivingObjects;                          // sizeof 04h    offset 50h
+    int numCtorCalled;                             // sizeof 04h    offset 54h
+    zCObject** hashTable;                          // sizeof 04h    offset 58h
+    zCArray<zCObject*> objectList;                 // sizeof 0Ch    offset 5Ch
+    unsigned short archiveVersion;                 // sizeof 02h    offset 68h
+    unsigned short archiveVersionSum;              // sizeof 02h    offset 6Ah
 
     void zCClassDef_OnInit()                                                                                                                                 zCall( 0x005A4D80 );
     void zCClassDef_OnInit( zSTRING const&, zSTRING const&, zCObject*( __cdecl* )(), unsigned long, unsigned long, unsigned short, zSTRING const& )          zCall( 0x005A5380 );
@@ -90,14 +92,15 @@ namespace Gothic_II_Classic {
     return dynamic_cast<T*>( (zCObject*)pObject );
   }
 
+  // sizeof 24h
   class zCObject {
   public:
     zCLASS_DECLARATION( zCObject )
 
-    int refCtr;
-    unsigned short hashIndex;
-    zCObject* hashNext;
-    zSTRING objectName;
+    int refCtr;               // sizeof 04h    offset 04h
+    unsigned short hashIndex; // sizeof 02h    offset 08h
+    zCObject* hashNext;       // sizeof 04h    offset 0Ch
+    zSTRING objectName;       // sizeof 14h    offset 10h
 
     void zCObject_OnInit()                                              zCall( 0x00401D60 );
     zCObject()                                                          zInit( zCObject_OnInit() );
@@ -131,6 +134,7 @@ namespace Gothic_II_Classic {
     #include "zCObject.inl"
   };
 
+  // sizeof 24h
   class zCObjectFactory : public zCObject {
   public:
     zCLASS_DECLARATION( zCObjectFactory )

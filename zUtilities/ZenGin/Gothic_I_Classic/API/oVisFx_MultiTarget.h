@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIS_FX__MULTI_TARGET_H__VER0__
 #define __OVIS_FX__MULTI_TARGET_H__VER0__
@@ -7,11 +7,12 @@
 
 namespace Gothic_I_Classic {
 
+  // sizeof 5D4h
   class oCVisFX_MultiTarget : public oCVisualFX {
   public:
     zCLASS_DECLARATION( oCVisFX_MultiTarget )
 
-    zCArray<oCVisualFX*> visList;
+    zCArray<oCVisualFX*> visList; // sizeof 0Ch    offset 5C8h
 
     void oCVisFX_MultiTarget_OnInit()                                   zCall( 0x00497770 );
     oCVisFX_MultiTarget()                                               zInit( oCVisFX_MultiTarget_OnInit() );

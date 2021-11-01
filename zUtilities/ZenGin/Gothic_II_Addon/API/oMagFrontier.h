@@ -1,17 +1,18 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OMAG_FRONTIER_H__VER3__
 #define __OMAG_FRONTIER_H__VER3__
 
 namespace Gothic_II_Addon {
 
+  // sizeof 10h
   class oCMagFrontier {
   public:
-    oCVisualFX* warningFX;
-    oCVisualFX* shootFX;
-    oCNpc* npc;
-    unsigned char isWarning  : 1;
-    unsigned char isShooting : 1;
+    oCVisualFX* warningFX;        // sizeof 04h    offset 00h
+    oCVisualFX* shootFX;          // sizeof 04h    offset 04h
+    oCNpc* npc;                   // sizeof 04h    offset 08h
+    unsigned char isWarning  : 1; // sizeof 01h    offset bit
+    unsigned char isShooting : 1; // sizeof 01h    offset bit
 
     void oCMagFrontier_OnInit()                                   zCall( 0x004736A0 );
     oCMagFrontier()                                               zInit( oCMagFrontier_OnInit() );

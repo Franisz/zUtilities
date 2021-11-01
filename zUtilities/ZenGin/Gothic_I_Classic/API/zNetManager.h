@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZNET_MANAGER_H__VER0__
 #define __ZNET_MANAGER_H__VER0__
@@ -9,13 +9,14 @@
 
 namespace Gothic_I_Classic {
 
+  // sizeof 48h
   class zCNetManager : public zCObject {
   public:
     zCLASS_DECLARATION( zCNetManager )
 
-    zCTimer timer;
-    unsigned long timer_count_ping;
-    unsigned long timer_count_worldtime;
+    zCTimer timer;                       // sizeof 1Ch    offset 24h
+    unsigned long timer_count_ping;      // sizeof 04h    offset 40h
+    unsigned long timer_count_worldtime; // sizeof 04h    offset 44h
 
     void zCNetManager_OnInit()                                                                  zCall( 0x00456870 );
     int Temp_HandleNetMessage( zCNetMessage*&, zCWorld* )                                       zCall( 0x00456800 );

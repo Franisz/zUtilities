@@ -1,19 +1,20 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIDEO_PLAYER_H__VER2__
 #define __ZVIDEO_PLAYER_H__VER2__
 
 namespace Gothic_II_Classic {
 
+  // sizeof 30h
   class zCVideoPlayer {
   public:
-    zSTRING mVideoFilename;
-    int mLooping;
-    int mPaused;
-    int mPlaying;
-    int mSoundOn;
-    float mSoundVolume;
-    float mScaleValue;
+    zSTRING mVideoFilename; // sizeof 14h    offset 04h
+    int mLooping;           // sizeof 04h    offset 18h
+    int mPaused;            // sizeof 04h    offset 1Ch
+    int mPlaying;           // sizeof 04h    offset 20h
+    int mSoundOn;           // sizeof 04h    offset 24h
+    float mSoundVolume;     // sizeof 04h    offset 28h
+    float mScaleValue;      // sizeof 04h    offset 2Ch
 
     void zCVideoPlayer_OnInit()           zCall( 0x0046D850 );
     zSTRING GetVideoFilename()            zCall( 0x0043EA00 );

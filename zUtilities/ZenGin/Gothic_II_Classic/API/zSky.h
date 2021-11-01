@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSKY_H__VER2__
 #define __ZSKY_H__VER2__
@@ -10,9 +10,10 @@ namespace Gothic_II_Classic {
     zTWEATHER_RAIN
   };
 
+  // sizeof C4h
   class zCUnderwaterPFX : public zCParticleFX {
   public:
-    zVEC3 camPosLastFrame;
+    zVEC3 camPosLastFrame; // sizeof 0Ch    offset B8h
 
     zCUnderwaterPFX() {}
     void ProcessParticles()                zCall( 0x005D9B40 );
@@ -24,6 +25,7 @@ namespace Gothic_II_Classic {
     #include "zCUnderwaterPFX.inl"
   };
 
+  // sizeof 4Ch
   class zCSkyControler : public zCObject {
   public:
     zCLASS_DECLARATION( zCSkyControler )
@@ -34,16 +36,16 @@ namespace Gothic_II_Classic {
       zCAM_INSIDE_SECTOR_CAN_SEE_OUTSIDE
     };
 
-    zCOLOR* polyLightCLUTPtr;
-    float cloudShadowScale;
-    int m_bColorChanged;
-    zTWeather m_enuWeather;
-    zCOLOR backgroundColor;
-    int fillBackground;
-    zCTexture* backgroundTexture;
-    int relightCtr;
-    float lastRelightTime;
-    float m_fRelightTime;
+    zCOLOR* polyLightCLUTPtr;     // sizeof 04h    offset 24h
+    float cloudShadowScale;       // sizeof 04h    offset 28h
+    int m_bColorChanged;          // sizeof 04h    offset 2Ch
+    zTWeather m_enuWeather;       // sizeof 04h    offset 30h
+    zCOLOR backgroundColor;       // sizeof 04h    offset 34h
+    int fillBackground;           // sizeof 04h    offset 38h
+    zCTexture* backgroundTexture; // sizeof 04h    offset 3Ch
+    int relightCtr;               // sizeof 04h    offset 40h
+    float lastRelightTime;        // sizeof 04h    offset 44h
+    float m_fRelightTime;         // sizeof 04h    offset 48h
 
     void zCSkyControler_OnInit()                            zCall( 0x005D88F0 );
     zCSkyControler()                                        zInit( zCSkyControler_OnInit() );
@@ -91,22 +93,23 @@ namespace Gothic_II_Classic {
     #include "zCSkyControler.inl"
   };
 
+  // sizeof 7Ch
   class zCSkyControler_Mid : public zCSkyControler {
   public:
     zCLASS_DECLARATION( zCSkyControler_Mid )
 
-    int underwaterFX;
-    zCOLOR underwaterColor;
-    float underwaterFarZ;
-    float underwaterStartTime;
-    float oldFovX;
-    float oldFovY;
-    zCVob* vobUnderwaterPFX;
-    zCPolygon* scrPoly;
-    zCMesh* scrPolyMesh;
-    int scrPolyAlpha;
-    zCOLOR scrPolyColor;
-    zTRnd_AlphaBlendFunc scrPolyAlphaFunc;
+    int underwaterFX;                      // sizeof 04h    offset 4Ch
+    zCOLOR underwaterColor;                // sizeof 04h    offset 50h
+    float underwaterFarZ;                  // sizeof 04h    offset 54h
+    float underwaterStartTime;             // sizeof 04h    offset 58h
+    float oldFovX;                         // sizeof 04h    offset 5Ch
+    float oldFovY;                         // sizeof 04h    offset 60h
+    zCVob* vobUnderwaterPFX;               // sizeof 04h    offset 64h
+    zCPolygon* scrPoly;                    // sizeof 04h    offset 68h
+    zCMesh* scrPolyMesh;                   // sizeof 04h    offset 6Ch
+    int scrPolyAlpha;                      // sizeof 04h    offset 70h
+    zCOLOR scrPolyColor;                   // sizeof 04h    offset 74h
+    zTRnd_AlphaBlendFunc scrPolyAlphaFunc; // sizeof 04h    offset 78h
 
     void zCSkyControler_Mid_OnInit()                     zCall( 0x005D8E40 );
     zCSkyControler_Mid()                                 zInit( zCSkyControler_Mid_OnInit() );
@@ -140,13 +143,14 @@ namespace Gothic_II_Classic {
     #include "zCSkyControler_Mid.inl"
   };
 
+  // sizeof 88h
   class zCSkyControler_Indoor : public zCSkyControler_Mid {
   public:
     zCLASS_DECLARATION( zCSkyControler_Indoor )
 
-    float userFarZ;
-    float userFarZScalability;
-    float time;
+    float userFarZ;            // sizeof 04h    offset 7Ch
+    float userFarZScalability; // sizeof 04h    offset 80h
+    float time;                // sizeof 04h    offset 84h
 
     void zCSkyControler_Indoor_OnInit()          zCall( 0x005D9880 );
     zCSkyControler_Indoor()                      zInit( zCSkyControler_Indoor_OnInit() );

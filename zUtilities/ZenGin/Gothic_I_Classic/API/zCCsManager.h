@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCCS_MANAGER_H__VER0__
 #define __ZCCS_MANAGER_H__VER0__
@@ -11,21 +11,22 @@ namespace Gothic_I_Classic {
   const int zLIB_LOAD_ASCII  = 1;
   const int zLIB_LOAD_BIN    = 2;
 
+  // sizeof 70h
   class zCCSManager : public zCObject {
   public:
     zCLASS_DECLARATION( zCCSManager )
 
-    zCArray<zSTRING> libSvmModuleList;
-    zCCutscene* iteration;
-    zCCSBlockBase* iter;
-    int iterA;
-    int iterB;
-    zCArray<zCCSPoolItem*> csPool;
-    zCArray<zSTRING> commandStrings;
-    zCArray<zCCSPlayer*> csPlayerList;
-    zCCSLib* src_lib;
-    zCCSLib* library;
-    int iterator;
+    zCArray<zSTRING> libSvmModuleList; // sizeof 0Ch    offset 24h
+    zCCutscene* iteration;             // sizeof 04h    offset 30h
+    zCCSBlockBase* iter;               // sizeof 04h    offset 34h
+    int iterA;                         // sizeof 04h    offset 38h
+    int iterB;                         // sizeof 04h    offset 3Ch
+    zCArray<zCCSPoolItem*> csPool;     // sizeof 0Ch    offset 40h
+    zCArray<zSTRING> commandStrings;   // sizeof 0Ch    offset 4Ch
+    zCArray<zCCSPlayer*> csPlayerList; // sizeof 0Ch    offset 58h
+    zCCSLib* src_lib;                  // sizeof 04h    offset 64h
+    zCCSLib* library;                  // sizeof 04h    offset 68h
+    int iterator;                      // sizeof 04h    offset 6Ch
 
     void zCCSManager_OnInit()                                           zCall( 0x00419E70 );
     zCCSManager()                                                       zInit( zCCSManager_OnInit() );

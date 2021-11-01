@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVOB_H__VER2__
 #define __ZVOB_H__VER2__
@@ -46,6 +46,7 @@ namespace Gothic_II_Classic {
     zVOBLIGHT_QUAL_FASTEST
   };
 
+  // sizeof 2Ch
   class zCEventMessage : public zCObject {
   public:
     zCLASS_DECLARATION( zCEventMessage )
@@ -57,8 +58,8 @@ namespace Gothic_II_Classic {
       TBAssembled
     };
 
-    unsigned short int subType;
-    int inCutscene;
+    unsigned short int subType; // sizeof 02h    offset 24h
+    int inCutscene;             // sizeof 04h    offset 28h
 
     void zCEventMessage_OnInit()                                                    zCall( 0x00413B60 );
     void zCEventMessage_OnInit( unsigned short )                                    zCall( 0x005FE6D0 );
@@ -100,6 +101,7 @@ namespace Gothic_II_Classic {
     #include "zCEventMessage.inl"
   };
 
+  // sizeof 4Ch
   class zCEventCore : public zCEventMessage {
   public:
     zCLASS_DECLARATION( zCEventCore )
@@ -114,12 +116,12 @@ namespace Gothic_II_Classic {
       zEVENT_CORE_NUM_SUBTYPES
     };
 
-    zCVob* otherVob;
-    zCVob* vobInstigator;
-    float damage;
-    int damageType;
-    zCVob* inflictorVob;
-    zVEC3 hitLocation;
+    zCVob* otherVob;      // sizeof 04h    offset 2Ch
+    zCVob* vobInstigator; // sizeof 04h    offset 30h
+    float damage;         // sizeof 04h    offset 34h
+    int damageType;       // sizeof 04h    offset 38h
+    zCVob* inflictorVob;  // sizeof 04h    offset 3Ch
+    zVEC3 hitLocation;    // sizeof 0Ch    offset 40h
 
     zCEventCore() {}
     void Clear()                                      zCall( 0x005FF230 );
@@ -138,6 +140,7 @@ namespace Gothic_II_Classic {
     #include "zCEventCore.inl"
   };
 
+  // sizeof 120h
   class zCVob : public zCObject {
   public:
     zCLASS_DECLARATION( zCVob )
@@ -166,9 +169,10 @@ namespace Gothic_II_Classic {
       zDYN_SHADOW_TYPE_COUNT
     };
 
+    // sizeof 18h
     struct zTCollisionContext {
-      zCArray<zCCollisionObject*> otherCollObjectList;
-      zCArray<zCVob*> otherCollVobList;
+      zCArray<zCCollisionObject*> otherCollObjectList; // sizeof 0Ch    offset 00h
+      zCArray<zCVob*> otherCollVobList;                // sizeof 0Ch    offset 0Ch
 
       zTCollisionContext() {}
       ~zTCollisionContext() zCall( 0x00617D40 );
@@ -177,11 +181,12 @@ namespace Gothic_II_Classic {
       #include "zCVob_zTCollisionContext.inl"
     };
 
+    // sizeof 1Ch
     struct zTModelLimbColl {
-      zCVob* hitVob;
-      zCMaterial* hitMaterial;
-      zCList<zCModelNodeInst> hitModelNodeList;
-      zVEC3 approxCollisionPos;
+      zCVob* hitVob;                            // sizeof 04h    offset 00h
+      zCMaterial* hitMaterial;                  // sizeof 04h    offset 04h
+      zCList<zCModelNodeInst> hitModelNodeList; // sizeof 08h    offset 08h
+      zVEC3 approxCollisionPos;                 // sizeof 0Ch    offset 10h
 
       void zTModelLimbColl_OnInit() zCall( 0x005FCBA0 );
       zTModelLimbColl()             zInit( zTModelLimbColl_OnInit() );
@@ -191,57 +196,57 @@ namespace Gothic_II_Classic {
       #include "zCVob_zTModelLimbColl.inl"
     };
 
-    zCTree<zCVob>* globalVobTreeNode;
-    int lastTimeDrawn;
-    unsigned long lastTimeCollected;
-    zCArray<zCBspLeaf*> vobLeafList;
-    zMAT4 trafoObjToWorld;
-    zTBBox3D bbox3D;
-    zTBSphere3D bsphere3D;
-    zCArray<zCVob*> touchVobList;
-    zTVobType type;
-    unsigned long groundShadowSizePacked;
-    zCWorld* homeWorld;
-    zCPolygon* groundPoly;
-    zCAIBase* callback_ai;
-    zMAT4* trafo;
-    zCVisual* visual;
-    float visualAlpha;
-    float m_fVobFarClipZScale;
-    zTAnimationMode m_AniMode;
-    float m_aniModeStrength;
-    int m_zBias;
-    zCRigidBody* rigidBody;
-    zCOLOR lightColorStat;
-    zCOLOR lightColorDyn;
-    zVEC3 lightDirectionStat;
-    zSTRING* vobPresetName;
-    zCEventManager* eventManager;
-    float nextOnTimer;
+    zCTree<zCVob>* globalVobTreeNode;               // sizeof 04h    offset 24h
+    int lastTimeDrawn;                              // sizeof 04h    offset 28h
+    unsigned long lastTimeCollected;                // sizeof 04h    offset 2Ch
+    zCArray<zCBspLeaf*> vobLeafList;                // sizeof 0Ch    offset 30h
+    zMAT4 trafoObjToWorld;                          // sizeof 40h    offset 3Ch
+    zTBBox3D bbox3D;                                // sizeof 18h    offset 7Ch
+    zTBSphere3D bsphere3D;                          // sizeof 10h    offset 94h
+    zCArray<zCVob*> touchVobList;                   // sizeof 0Ch    offset A4h
+    zTVobType type;                                 // sizeof 04h    offset B0h
+    unsigned long groundShadowSizePacked;           // sizeof 04h    offset B4h
+    zCWorld* homeWorld;                             // sizeof 04h    offset B8h
+    zCPolygon* groundPoly;                          // sizeof 04h    offset BCh
+    zCAIBase* callback_ai;                          // sizeof 04h    offset C0h
+    zMAT4* trafo;                                   // sizeof 04h    offset C4h
+    zCVisual* visual;                               // sizeof 04h    offset C8h
+    float visualAlpha;                              // sizeof 04h    offset CCh
+    float m_fVobFarClipZScale;                      // sizeof 04h    offset D0h
+    zTAnimationMode m_AniMode;                      // sizeof 04h    offset D4h
+    float m_aniModeStrength;                        // sizeof 04h    offset D8h
+    int m_zBias;                                    // sizeof 04h    offset DCh
+    zCRigidBody* rigidBody;                         // sizeof 04h    offset E0h
+    zCOLOR lightColorStat;                          // sizeof 04h    offset E4h
+    zCOLOR lightColorDyn;                           // sizeof 04h    offset E8h
+    zVEC3 lightDirectionStat;                       // sizeof 0Ch    offset ECh
+    zSTRING* vobPresetName;                         // sizeof 04h    offset F8h
+    zCEventManager* eventManager;                   // sizeof 04h    offset FCh
+    float nextOnTimer;                              // sizeof 04h    offset 100h
     group {
-      unsigned char showVisual                : 1;
-      unsigned char drawBBox3D                : 1;
-      unsigned char visualAlphaEnabled        : 1;
-      unsigned char physicsEnabled            : 1;
-      unsigned char staticVob                 : 1;
-      unsigned char ignoredByTraceRay         : 1;
-      unsigned char collDetectionStatic       : 1;
-      unsigned char collDetectionDynamic      : 1;
-      unsigned char castDynShadow             : 2;
-      unsigned char lightColorStatDirty       : 1;
-      unsigned char lightColorDynDirty        : 1;
-      zTMovementMode isInMovementMode         : 2;
-      unsigned char sleepingMode              : 2;
-      unsigned char mbHintTrafoLocalConst     : 1;
-      unsigned char mbInsideEndMovementMethod : 1;
-      zTVisualCamAlign visualCamAlign         : 2;
-      unsigned char collButNoMove             : 4;
-      unsigned char dontWriteIntoArchive      : 1;
-      unsigned char bIsInWater                : 1;
-      unsigned char bIsAmbientVob             : 1;
+      unsigned char showVisual                : 1;  // sizeof 01h    offset bit
+      unsigned char drawBBox3D                : 1;  // sizeof 01h    offset bit
+      unsigned char visualAlphaEnabled        : 1;  // sizeof 01h    offset bit
+      unsigned char physicsEnabled            : 1;  // sizeof 01h    offset bit
+      unsigned char staticVob                 : 1;  // sizeof 01h    offset bit
+      unsigned char ignoredByTraceRay         : 1;  // sizeof 01h    offset bit
+      unsigned char collDetectionStatic       : 1;  // sizeof 01h    offset bit
+      unsigned char collDetectionDynamic      : 1;  // sizeof 01h    offset bit
+      unsigned char castDynShadow             : 2;  // sizeof 02h    offset bit
+      unsigned char lightColorStatDirty       : 1;  // sizeof 01h    offset bit
+      unsigned char lightColorDynDirty        : 1;  // sizeof 01h    offset bit
+      zTMovementMode isInMovementMode         : 2;  // sizeof 02h    offset bit
+      unsigned char sleepingMode              : 2;  // sizeof 02h    offset bit
+      unsigned char mbHintTrafoLocalConst     : 1;  // sizeof 01h    offset bit
+      unsigned char mbInsideEndMovementMethod : 1;  // sizeof 01h    offset bit
+      zTVisualCamAlign visualCamAlign         : 2;  // sizeof 02h    offset bit
+      unsigned char collButNoMove             : 4;  // sizeof 04h    offset bit
+      unsigned char dontWriteIntoArchive      : 1;  // sizeof 01h    offset bit
+      unsigned char bIsInWater                : 1;  // sizeof 01h    offset bit
+      unsigned char bIsAmbientVob             : 1;  // sizeof 01h    offset bit
     };
-    zCCollisionObjectDef* m_poCollisionObjectClass;
-    zCCollisionObject* m_poCollisionObject;
+    zCCollisionObjectDef* m_poCollisionObjectClass; // sizeof 04h    offset 118h
+    zCCollisionObject* m_poCollisionObject;         // sizeof 04h    offset 11Ch
 
     void zCVob_OnInit()                                                                                           zCall( 0x005F73F0 );
     zVEC3 GetPositionWorld() const                                                                                zCall( 0x0052AD40 );
@@ -436,31 +441,32 @@ namespace Gothic_II_Classic {
     #include "zCVob.inl"
   };
 
+  // sizeof 48h
   class zCVobLightData {
   public:
-    zCArray<float> rangeAniScaleList;
-    zCArray<zCOLOR> colorAniList;
-    int lensFlareFXNo;
-    zCLensFlareFX* lensFlareFX;
-    zCOLOR lightColor;
-    float range;
-    float rangeInv;
-    float rangeBackup;
-    float rangeAniActFrame;
-    float rangeAniFPS;
-    float colorAniActFrame;
-    float colorAniFPS;
-    float spotConeAngleDeg;
+    zCArray<float> rangeAniScaleList;   // sizeof 0Ch    offset 00h
+    zCArray<zCOLOR> colorAniList;       // sizeof 0Ch    offset 0Ch
+    int lensFlareFXNo;                  // sizeof 04h    offset 18h
+    zCLensFlareFX* lensFlareFX;         // sizeof 04h    offset 1Ch
+    zCOLOR lightColor;                  // sizeof 04h    offset 20h
+    float range;                        // sizeof 04h    offset 24h
+    float rangeInv;                     // sizeof 04h    offset 28h
+    float rangeBackup;                  // sizeof 04h    offset 2Ch
+    float rangeAniActFrame;             // sizeof 04h    offset 30h
+    float rangeAniFPS;                  // sizeof 04h    offset 34h
+    float colorAniActFrame;             // sizeof 04h    offset 38h
+    float colorAniFPS;                  // sizeof 04h    offset 3Ch
+    float spotConeAngleDeg;             // sizeof 04h    offset 40h
     group {
-      unsigned char isStatic       : 1;
-      unsigned char rangeAniSmooth : 1;
-      unsigned char rangeAniLoop   : 1;
-      unsigned char colorAniSmooth : 1;
-      unsigned char colorAniLoop   : 1;
-      unsigned char isTurnedOn     : 1;
-      unsigned char lightQuality   : 4;
-      unsigned char lightType      : 4;
-      unsigned char m_bCanMove     : 1;
+      unsigned char isStatic       : 1; // sizeof 01h    offset bit
+      unsigned char rangeAniSmooth : 1; // sizeof 01h    offset bit
+      unsigned char rangeAniLoop   : 1; // sizeof 01h    offset bit
+      unsigned char colorAniSmooth : 1; // sizeof 01h    offset bit
+      unsigned char colorAniLoop   : 1; // sizeof 01h    offset bit
+      unsigned char isTurnedOn     : 1; // sizeof 01h    offset bit
+      unsigned char lightQuality   : 4; // sizeof 04h    offset bit
+      unsigned char lightType      : 4; // sizeof 04h    offset bit
+      unsigned char m_bCanMove     : 1; // sizeof 01h    offset bit
     };
 
     void zCVobLightData_OnInit()               zCall( 0x006036B0 );
@@ -476,12 +482,13 @@ namespace Gothic_II_Classic {
     #include "zCVobLightData.inl"
   };
 
+  // sizeof 80h
   class zCVobLightPreset : public zCObject {
   public:
     zCLASS_DECLARATION( zCVobLightPreset )
 
-    zCVobLightData lightData;
-    zSTRING presetName;
+    zCVobLightData lightData; // sizeof 48h    offset 24h
+    zSTRING presetName;       // sizeof 14h    offset 6Ch
 
     zCVobLightPreset() {}
     static zCObject* _CreateNewInstance()    zCall( 0x005F6730 );
@@ -494,12 +501,13 @@ namespace Gothic_II_Classic {
     #include "zCVobLightPreset.inl"
   };
 
+  // sizeof 17Ch
   class zCVobLight : public zCVob {
   public:
     zCLASS_DECLARATION( zCVobLight )
 
-    zCVobLightData lightData;
-    zSTRING lightPresetInUse;
+    zCVobLightData lightData; // sizeof 48h    offset 120h
+    zSTRING lightPresetInUse; // sizeof 14h    offset 168h
 
     void zCVobLight_OnInit()                                                              zCall( 0x00600EF0 );
     zCVobLight()                                                                          zInit( zCVobLight_OnInit() );
@@ -528,6 +536,7 @@ namespace Gothic_II_Classic {
     #include "zCVobLight.inl"
   };
 
+  // sizeof 120h
   class zCVobLevelCompo : public zCVob {
   public:
     zCLASS_DECLARATION( zCVobLevelCompo )

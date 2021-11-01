@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OMENU__MAIN_H__VER2__
 #define __OMENU__MAIN_H__VER2__
@@ -7,6 +7,7 @@
 
 namespace Gothic_II_Classic {
 
+  // sizeof CC4h
   class oCMenu_ChgKeys : public zCMenu {
   public:
 
@@ -24,6 +25,7 @@ namespace Gothic_II_Classic {
     #include "oCMenu_ChgKeys.inl"
   };
 
+  // sizeof CC4h
   class oCMenu_Main : public zCMenu {
   public:
 

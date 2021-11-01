@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ONEWS_H__VER1__
 #define __ONEWS_H__VER1__
@@ -14,20 +14,21 @@ namespace Gothic_I_Addon {
     NEWS_SPREAD_NPC_SAME_GUILD_VICTIM
   } oTNewsSpreadType;
 
+  // sizeof 64h
   class oCNews {
   public:
-    int told;
-    float spread_time;
-    oTNewsSpreadType spreadType;
-    int news_id;
-    int gossip;
-    oCNpc* mNpcWitness;
-    oCNpc* mNpcOffender;
-    oCNpc* mNpcVictim;
-    zSTRING witnessName;
-    zSTRING offenderName;
-    zSTRING victimName;
-    int guildvictim;
+    int told;                    // sizeof 04h    offset 04h
+    float spread_time;           // sizeof 04h    offset 08h
+    oTNewsSpreadType spreadType; // sizeof 04h    offset 0Ch
+    int news_id;                 // sizeof 04h    offset 10h
+    int gossip;                  // sizeof 04h    offset 14h
+    oCNpc* mNpcWitness;          // sizeof 04h    offset 18h
+    oCNpc* mNpcOffender;         // sizeof 04h    offset 1Ch
+    oCNpc* mNpcVictim;           // sizeof 04h    offset 20h
+    zSTRING witnessName;         // sizeof 14h    offset 24h
+    zSTRING offenderName;        // sizeof 14h    offset 38h
+    zSTRING victimName;          // sizeof 14h    offset 4Ch
+    int guildvictim;             // sizeof 04h    offset 60h
 
     void oCNews_OnInit()                                              zCall( 0x006B8850 );
     void oCNews_OnInit( int, int, oCNpc*, oCNpc*, oCNpc*, int )       zCall( 0x006B8A10 );
@@ -54,9 +55,10 @@ namespace Gothic_I_Addon {
     #include "oCNews.inl"
   };
 
+  // sizeof 0Ch
   class oCNewsMemory {
   public:
-    zCList<oCNews> iknow;
+    zCList<oCNews> iknow; // sizeof 08h    offset 04h
 
     void oCNewsMemory_OnInit()             zCall( 0x006B7560 );
     oCNewsMemory()                         zInit( oCNewsMemory_OnInit() );
@@ -77,11 +79,12 @@ namespace Gothic_I_Addon {
     #include "oCNewsMemory.inl"
   };
 
+  // sizeof 58h
   class oCNewsManager {
   public:
-    int called_BAssessAndMem;
-    int sentry;
-    int spreadList[MAX_ENTRY];
+    int called_BAssessAndMem;  // sizeof 04h    offset 00h
+    int sentry;                // sizeof 04h    offset 04h
+    int spreadList[MAX_ENTRY]; // sizeof 50h    offset 08h
 
     void oCNewsManager_OnInit()                              zCall( 0x006B6BC0 );
     oCNewsManager()                                          zInit( oCNewsManager_OnInit() );

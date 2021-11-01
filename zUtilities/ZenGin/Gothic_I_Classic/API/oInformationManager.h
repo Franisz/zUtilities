@@ -1,10 +1,11 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OINFORMATION_MANAGER_H__VER0__
 #define __OINFORMATION_MANAGER_H__VER0__
 
 namespace Gothic_I_Classic {
 
+  // sizeof 58h
   class oCInformationManager {
   public:
     typedef enum zEInformationManagerMode {
@@ -14,28 +15,32 @@ namespace Gothic_I_Classic {
       INFO_MGR_MODE_TRADE
     } zTInfoMgrMode;
 
-    zSTRING LastMethod;
-    zCViewDialogChoice* DlgStatus;
-    oCViewDialogTrade* DlgTrade;
-    zCViewDialogChoice* DlgChoice;
-    oCNpc* Npc;
-    oCNpc* Player;
-    oCInfo* Info;
-    int IsDone;
-    int IsWaitingForEnd;
-    int IsWaitingForScript;
-    int IsWaitingForOpen;
-    int IsWaitingForClose;
-    int IsWaitingForSelection;
-    int MustOpen;
-    int IndexBye;
-    int ImportantCurrent;
-    int ImportantMax;
-    zTInfoMgrMode Mode;
+    zSTRING LastMethod;            // sizeof 14h    offset 00h
+    zCViewDialogChoice* DlgStatus; // sizeof 04h    offset 14h
+    oCViewDialogTrade* DlgTrade;   // sizeof 04h    offset 18h
+    zCViewDialogChoice* DlgChoice; // sizeof 04h    offset 1Ch
+    oCNpc* Npc;                    // sizeof 04h    offset 20h
+    oCNpc* Player;                 // sizeof 04h    offset 24h
+    oCInfo* Info;                  // sizeof 04h    offset 28h
+    int IsDone;                    // sizeof 04h    offset 2Ch
+    int IsWaitingForEnd;           // sizeof 04h    offset 30h
+    int IsWaitingForScript;        // sizeof 04h    offset 34h
+    int IsWaitingForOpen;          // sizeof 04h    offset 38h
+    int IsWaitingForClose;         // sizeof 04h    offset 3Ch
+    int IsWaitingForSelection;     // sizeof 04h    offset 40h
+    int MustOpen;                  // sizeof 04h    offset 44h
+    int IndexBye;                  // sizeof 04h    offset 48h
+    int ImportantCurrent;          // sizeof 04h    offset 4Ch
+    int ImportantMax;              // sizeof 04h    offset 50h
+    zTInfoMgrMode Mode;            // sizeof 04h    offset 54h
 
     void oCInformationManager_OnInit()                   zCall( 0x0072AD70 );
     void UpdateViewSettings()                            zCall( 0x0072AC20 );
+
+  private:
     oCInformationManager()                               zInit( oCInformationManager_OnInit() );
+
+  public:
     ~oCInformationManager()                              zCall( 0x0072B210 );
     void __fastcall ToggleStatus()                       zCall( 0x0072B360 );
     void __fastcall PrintStatus()                        zCall( 0x0072B3B0 );

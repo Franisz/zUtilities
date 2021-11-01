@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OPARTICLE_CONTROL_H__VER0__
 #define __OPARTICLE_CONTROL_H__VER0__
@@ -7,16 +7,17 @@
 
 namespace Gothic_I_Classic {
 
+  // sizeof 38h
   class oCParticleControl {
   public:
-    zCParticleFX* partFX;
-    zCVob* pfxVob;
-    unsigned long pfxVobID;
-    zSTRING pfxName;
-    zVEC3 startpos;
-    int IsInEditMode;
-    zCWorld* rnd_world;
-    zCConsole* part_edit;
+    zCParticleFX* partFX;   // sizeof 04h    offset 00h
+    zCVob* pfxVob;          // sizeof 04h    offset 04h
+    unsigned long pfxVobID; // sizeof 04h    offset 08h
+    zSTRING pfxName;        // sizeof 14h    offset 0Ch
+    zVEC3 startpos;         // sizeof 0Ch    offset 20h
+    int IsInEditMode;       // sizeof 04h    offset 2Ch
+    zCWorld* rnd_world;     // sizeof 04h    offset 30h
+    zCConsole* part_edit;   // sizeof 04h    offset 34h
 
     void oCParticleControl_OnInit()                           zCall( 0x006C8870 );
     void oCParticleControl_OnInit( zCWorld* )                 zCall( 0x006C8920 );

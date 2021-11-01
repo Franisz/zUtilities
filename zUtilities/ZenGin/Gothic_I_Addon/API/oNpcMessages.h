@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ONPC_MESSAGES_H__VER1__
 #define __ONPC_MESSAGES_H__VER1__
@@ -11,14 +11,15 @@
 
 namespace Gothic_I_Addon {
 
+  // sizeof 4Ch
   class oCNpcMessage : public zCEventMessage {
   public:
     zCLASS_DECLARATION( oCNpcMessage )
 
-    zSTRING targetVobName;
-    int highPriority;
-    int deleted;
-    int inUse;
+    zSTRING targetVobName; // sizeof 14h    offset 2Ch
+    int highPriority;      // sizeof 04h    offset 40h
+    int deleted;           // sizeof 04h    offset 44h
+    int inUse;             // sizeof 04h    offset 48h
 
     void oCNpcMessage_OnInit()                                          zCall( 0x006F2F60 );
     oCNpcMessage()                                                      zInit( oCNpcMessage_OnInit() );
@@ -41,6 +42,7 @@ namespace Gothic_I_Addon {
     #include "oCNpcMessage.inl"
   };
 
+  // sizeof 118h
   class oCMsgDamage : public oCNpcMessage {
   public:
     zCLASS_DECLARATION( oCMsgDamage )
@@ -51,7 +53,7 @@ namespace Gothic_I_Addon {
       EV_DAMAGE_MAX
     };
 
-    oCNpc::oSDamageDescriptor descDamage;
+    oCNpc::oSDamageDescriptor descDamage; // sizeof CCh    offset 4Ch
 
     void oCMsgDamage_OnInit()                                                   zCall( 0x006F3190 );
     void oCMsgDamage_OnInit( TDamageSubType )                                   zCall( 0x006F3290 );
@@ -77,6 +79,7 @@ namespace Gothic_I_Addon {
     #include "oCMsgDamage.inl"
   };
 
+  // sizeof 58h
   class oCMsgWeapon : public oCNpcMessage {
   public:
     zCLASS_DECLARATION( oCMsgWeapon )
@@ -99,13 +102,13 @@ namespace Gothic_I_Addon {
       EV_WEAPON_MAX
     };
 
-    int targetMode;
-    int duringRun       : 1;
-    int initDone        : 1;
-    int firstTime       : 1;
-    int useFist         : 1;
-    int showMagicCircle : 1;
-    int ani;
+    int targetMode;          // sizeof 04h    offset 4Ch
+    int duringRun       : 1; // sizeof 01h    offset bit
+    int initDone        : 1; // sizeof 01h    offset bit
+    int firstTime       : 1; // sizeof 01h    offset bit
+    int useFist         : 1; // sizeof 01h    offset bit
+    int showMagicCircle : 1; // sizeof 01h    offset bit
+    int ani;                 // sizeof 04h    offset 54h
 
     void oCMsgWeapon_OnInit()                                           zCall( 0x006F48A0 );
     void oCMsgWeapon_OnInit( TWeaponSubType, int, int )                 zCall( 0x006F4970 );
@@ -125,6 +128,7 @@ namespace Gothic_I_Addon {
     #include "oCMsgWeapon.inl"
   };
 
+  // sizeof 84h
   class oCMsgMovement : public oCNpcMessage {
   public:
     zCLASS_DECLARATION( oCMsgMovement )
@@ -151,14 +155,14 @@ namespace Gothic_I_Addon {
       EV_MOVE_MAX
     };
 
-    zSTRING targetName;
-    zCRoute* route;
-    zCVob* targetVob;
-    zVEC3 targetPos;
-    float angle;
-    float timer;
-    int targetMode;
-    int ani;
+    zSTRING targetName; // sizeof 14h    offset 4Ch
+    zCRoute* route;     // sizeof 04h    offset 60h
+    zCVob* targetVob;   // sizeof 04h    offset 64h
+    zVEC3 targetPos;    // sizeof 0Ch    offset 68h
+    float angle;        // sizeof 04h    offset 74h
+    float timer;        // sizeof 04h    offset 78h
+    int targetMode;     // sizeof 04h    offset 7Ch
+    int ani;            // sizeof 04h    offset 80h
 
     void oCMsgMovement_OnInit()                                              zCall( 0x006F37E0 );
     void oCMsgMovement_OnInit( TMovementSubType, zSTRING const& )            zCall( 0x006F38E0 );
@@ -191,6 +195,7 @@ namespace Gothic_I_Addon {
     #include "oCMsgMovement.inl"
   };
 
+  // sizeof 64h
   class oCMsgAttack : public oCNpcMessage {
   public:
     zCLASS_DECLARATION( oCMsgAttack )
@@ -212,13 +217,13 @@ namespace Gothic_I_Addon {
       EV_ATTACK_MAX
     };
 
-    int combo;
-    zCVob* target;
-    int hitAni;
-    int victAni;
-    float startFrame;
-    int enableNextHit : 1;
-    int reachedTarget : 1;
+    int combo;             // sizeof 04h    offset 4Ch
+    zCVob* target;         // sizeof 04h    offset 50h
+    int hitAni;            // sizeof 04h    offset 54h
+    int victAni;           // sizeof 04h    offset 58h
+    float startFrame;      // sizeof 04h    offset 5Ch
+    int enableNextHit : 1; // sizeof 01h    offset bit
+    int reachedTarget : 1; // sizeof 01h    offset bit
 
     void oCMsgAttack_OnInit()                                                zCall( 0x006F5060 );
     void oCMsgAttack_OnInit( TAttackSubType, int, int )                      zCall( 0x006F51D0 );
@@ -242,6 +247,7 @@ namespace Gothic_I_Addon {
     #include "oCMsgAttack.inl"
   };
 
+  // sizeof 58h
   class oCMsgUseItem : public oCNpcMessage {
   public:
     zCLASS_DECLARATION( oCMsgUseItem )
@@ -253,9 +259,9 @@ namespace Gothic_I_Addon {
       EV_USEITEM_MAX
     };
 
-    zCVob* vob;
-    int ani;
-    int state;
+    zCVob* vob; // sizeof 04h    offset 4Ch
+    int ani;    // sizeof 04h    offset 50h
+    int state;  // sizeof 04h    offset 54h
 
     void oCMsgUseItem_OnInit()                                          zCall( 0x006F5BC0 );
     void oCMsgUseItem_OnInit( TUseItemSubType, zCVob* )                 zCall( 0x006F5CB0 );
@@ -274,6 +280,7 @@ namespace Gothic_I_Addon {
     #include "oCMsgUseItem.inl"
   };
 
+  // sizeof 7Ch
   class oCMsgState : public oCNpcMessage {
   public:
     zCLASS_DECLARATION( oCMsgState )
@@ -287,15 +294,15 @@ namespace Gothic_I_Addon {
       EV_STATE_MAX
     };
 
-    int function;
-    int minutes;
-    int instance;
-    zSTRING wp;
-    float timer;
-    oCNpc* other;
-    oCNpc* victim;
-    int endOldState : 1;
-    int inRoutine   : 1;
+    int function;        // sizeof 04h    offset 4Ch
+    int minutes;         // sizeof 04h    offset 50h
+    int instance;        // sizeof 04h    offset 54h
+    zSTRING wp;          // sizeof 14h    offset 58h
+    float timer;         // sizeof 04h    offset 6Ch
+    oCNpc* other;        // sizeof 04h    offset 70h
+    oCNpc* victim;       // sizeof 04h    offset 74h
+    int endOldState : 1; // sizeof 01h    offset bit
+    int inRoutine   : 1; // sizeof 01h    offset bit
 
     void oCMsgState_OnInit()                                            zCall( 0x006F5F90 );
     void oCMsgState_OnInit( TStateSubType, float )                      zCall( 0x006F60A0 );
@@ -320,6 +327,7 @@ namespace Gothic_I_Addon {
     #include "oCMsgState.inl"
   };
 
+  // sizeof 84h
   class oCMsgManipulate : public oCNpcMessage {
   public:
     zCLASS_DECLARATION( oCMsgManipulate )
@@ -348,11 +356,11 @@ namespace Gothic_I_Addon {
       EV_REMFROMSLOT
     };
 
-    zSTRING name;
-    zSTRING slot;
-    zCVob* targetVob;
-    int flag;
-    float aniCombY;
+    zSTRING name;     // sizeof 14h    offset 4Ch
+    zSTRING slot;     // sizeof 14h    offset 60h
+    zCVob* targetVob; // sizeof 04h    offset 74h
+    int flag;         // sizeof 04h    offset 78h
+    float aniCombY;   // sizeof 04h    offset 7Ch
     union {
       int npcSlot;
       int targetState;
@@ -393,6 +401,7 @@ namespace Gothic_I_Addon {
     #include "oCMsgManipulate.inl"
   };
 
+  // sizeof A0h
   class oCMsgConversation : public oCNpcMessage {
   public:
     zCLASS_DECLARATION( oCMsgConversation )
@@ -423,21 +432,21 @@ namespace Gothic_I_Addon {
       EV_CONV_MAX
     };
 
-    zSTRING text;
-    zSTRING name;
-    zCVob* target;
-    zVEC3 targetPos;
-    int ani;
+    zSTRING text;    // sizeof 14h    offset 4Ch
+    zSTRING name;    // sizeof 14h    offset 60h
+    zCVob* target;   // sizeof 04h    offset 74h
+    zVEC3 targetPos; // sizeof 0Ch    offset 78h
+    int ani;         // sizeof 04h    offset 84h
     union {
       zCModelAni* cAni;
       zCEventMessage* watchMsg;
     };
 
-    int handle;
-    float timer;
-    int number;
-    int f_no;
-    int f_yes;
+    int handle;      // sizeof 04h    offset 8Ch
+    float timer;     // sizeof 04h    offset 90h
+    int number;      // sizeof 04h    offset 94h
+    int f_no;        // sizeof 04h    offset 98h
+    int f_yes;       // sizeof 04h    offset 9Ch
 
     void oCMsgConversation_OnInit()                                                       zCall( 0x006F7E50 );
     void oCMsgConversation_OnInit( TConversationSubType )                                 zCall( 0x006F7F60 );
@@ -472,6 +481,7 @@ namespace Gothic_I_Addon {
     #include "oCMsgConversation.inl"
   };
 
+  // sizeof 74h
   class oCMsgMagic : public oCNpcMessage {
   public:
     zCLASS_DECLARATION( oCMsgMagic )
@@ -491,14 +501,14 @@ namespace Gothic_I_Addon {
       EV_MAGIC_MAX
     };
 
-    int what;
-    int level;
-    int removeSymbol;
-    int manaInvested;
-    int energyLeft;
-    zCVob* target;
-    zVEC3 targetPos;
-    int activeSpell;
+    int what;         // sizeof 04h    offset 4Ch
+    int level;        // sizeof 04h    offset 50h
+    int removeSymbol; // sizeof 04h    offset 54h
+    int manaInvested; // sizeof 04h    offset 58h
+    int energyLeft;   // sizeof 04h    offset 5Ch
+    zCVob* target;    // sizeof 04h    offset 60h
+    zVEC3 targetPos;  // sizeof 0Ch    offset 64h
+    int activeSpell;  // sizeof 04h    offset 70h
 
     void oCMsgMagic_OnInit()                                            zCall( 0x006F92D0 );
     void oCMsgMagic_OnInit( TConversationSubType )                      zCall( 0x006F93A0 );

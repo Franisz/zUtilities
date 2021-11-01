@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZNET_VOB_CONTROL_H__VER3__
 #define __ZNET_VOB_CONTROL_H__VER3__
@@ -8,13 +8,14 @@
 namespace Gothic_II_Addon {
   const int zNET_VOBCTRL_TOLERANCE = 40000;
 
+  // sizeof 30h
   class zCNetVobControl : public zCObject {
   public:
     zCLASS_DECLARATION( zCNetVobControl )
 
-    zCVob* hostVob;
-    zCPlayerInfo* ctrlPlayer;
-    int isLocalChained;
+    zCVob* hostVob;           // sizeof 04h    offset 24h
+    zCPlayerInfo* ctrlPlayer; // sizeof 04h    offset 28h
+    int isLocalChained;       // sizeof 04h    offset 2Ch
 
     void zCNetVobControl_OnInit()                                                 zCall( 0x0045DD00 );
     zCNetVobControl()                                                             zInit( zCNetVobControl_OnInit() );

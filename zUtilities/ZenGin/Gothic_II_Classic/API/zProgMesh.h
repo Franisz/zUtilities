@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZPROG_MESH_H__VER2__
 #define __ZPROG_MESH_H__VER2__
@@ -28,23 +28,24 @@ namespace Gothic_II_Classic {
     zPM_BUILD_FLAG_CREATE_SUBDIV_DATA      = 32
   };
 
+  // sizeof C0h
   struct zTLazyMesh {
-    zCArray<int> wedgePermut;
-    zCArray<int> wedgeParent;
-    zCArray<unsigned short int> triMatIndexList;
-    zCArray<zVEC3> posList;
-    zCArray<zVEC3> posNormalList;
-    zCArray<zCMaterial*> matList;
-    zCArray<zTPMTriangle> triList;
-    zCArray<zTPMWedge> wedgeList;
-    zCArray<float> colorList;
-    zCArray<unsigned short int> wedgeMap;
-    zCArray<zTPMVertexUpdate> vertexUpdates;
-    zCArray<unsigned short int> triPlaneIndexList;
-    zCArray<zTPlane> triPlaneList;
-    zCArray<zTPMTriangleEdges> triEdgeList;
-    zCArray<zTPMEdge> edgeList;
-    zCArray<float> edgeScoreList;
+    zCArray<int> wedgePermut;                      // sizeof 0Ch    offset 00h
+    zCArray<int> wedgeParent;                      // sizeof 0Ch    offset 0Ch
+    zCArray<unsigned short int> triMatIndexList;   // sizeof 0Ch    offset 18h
+    zCArray<zVEC3> posList;                        // sizeof 0Ch    offset 24h
+    zCArray<zVEC3> posNormalList;                  // sizeof 0Ch    offset 30h
+    zCArray<zCMaterial*> matList;                  // sizeof 0Ch    offset 3Ch
+    zCArray<zTPMTriangle> triList;                 // sizeof 0Ch    offset 48h
+    zCArray<zTPMWedge> wedgeList;                  // sizeof 0Ch    offset 54h
+    zCArray<float> colorList;                      // sizeof 0Ch    offset 60h
+    zCArray<unsigned short int> wedgeMap;          // sizeof 0Ch    offset 6Ch
+    zCArray<zTPMVertexUpdate> vertexUpdates;       // sizeof 0Ch    offset 78h
+    zCArray<unsigned short int> triPlaneIndexList; // sizeof 0Ch    offset 84h
+    zCArray<zTPlane> triPlaneList;                 // sizeof 0Ch    offset 90h
+    zCArray<zTPMTriangleEdges> triEdgeList;        // sizeof 0Ch    offset 9Ch
+    zCArray<zTPMEdge> edgeList;                    // sizeof 0Ch    offset A8h
+    zCArray<float> edgeScoreList;                  // sizeof 0Ch    offset B4h
 
     void zTLazyMesh_OnInit() zCall( 0x005BDE40 );
     zTLazyMesh()             zInit( zTLazyMesh_OnInit() );
@@ -54,10 +55,11 @@ namespace Gothic_II_Classic {
     #include "zTLazyMesh.inl"
   };
 
+  // sizeof 18h
   struct zTPMWedge {
-    zVEC3 normal;
-    zVEC2 texUV;
-    unsigned short int position;
+    zVEC3 normal;                // sizeof 0Ch    offset 00h
+    zVEC2 texUV;                 // sizeof 08h    offset 0Ch
+    unsigned short int position; // sizeof 02h    offset 14h
 
     zTPMWedge() {}
 
@@ -65,8 +67,9 @@ namespace Gothic_II_Classic {
     #include "zTPMWedge.inl"
   };
 
+  // sizeof 06h
   struct zTPMTriangle {
-    unsigned short int wedge[3];
+    unsigned short int wedge[3]; // sizeof 06h    offset 00h
 
     zTPMTriangle() {}
 
@@ -74,8 +77,9 @@ namespace Gothic_II_Classic {
     #include "zTPMTriangle.inl"
   };
 
+  // sizeof 06h
   struct zTPMTriangleEdges {
-    unsigned short int edge[3];
+    unsigned short int edge[3]; // sizeof 06h    offset 00h
 
     zTPMTriangleEdges() {}
 
@@ -83,8 +87,9 @@ namespace Gothic_II_Classic {
     #include "zTPMTriangleEdges.inl"
   };
 
+  // sizeof 04h
   struct zTPMEdge {
-    unsigned short int wedge[2];
+    unsigned short int wedge[2]; // sizeof 04h    offset 00h
 
     zTPMEdge() {}
 
@@ -92,9 +97,10 @@ namespace Gothic_II_Classic {
     #include "zTPMEdge.inl"
   };
 
+  // sizeof 04h
   struct zTPMVertexUpdate {
-    unsigned short int numNewTri;
-    unsigned short int numNewWedge;
+    unsigned short int numNewTri;   // sizeof 02h    offset 00h
+    unsigned short int numNewWedge; // sizeof 02h    offset 02h
 
     zTPMVertexUpdate() {}
 
@@ -102,15 +108,17 @@ namespace Gothic_II_Classic {
     #include "zTPMVertexUpdate.inl"
   };
 
+  // sizeof D8h
   class zCProgMeshProto : public zCVisual {
   public:
     zCLASS_DECLARATION( zCProgMeshProto )
 
+    // sizeof 10h
     struct zTLODRenderArgs {
-      float vertPerc;
-      int numPos;
-      int numMinMorphPos;
-      float morphFrac;
+      float vertPerc;     // sizeof 04h    offset 00h
+      int numPos;         // sizeof 04h    offset 04h
+      int numMinMorphPos; // sizeof 04h    offset 08h
+      float morphFrac;    // sizeof 04h    offset 0Ch
 
       zTLODRenderArgs() {}
 
@@ -118,11 +126,12 @@ namespace Gothic_II_Classic {
       #include "zCProgMeshProto_zTLODRenderArgs.inl"
     };
 
+    // sizeof 10h
     struct zTLODParams {
-      float strength;
-      float zDisplace2;
-      float morphPerc;
-      int minVerts;
+      float strength;   // sizeof 04h    offset 00h
+      float zDisplace2; // sizeof 04h    offset 04h
+      float morphPerc;  // sizeof 04h    offset 08h
+      int minVerts;     // sizeof 04h    offset 0Ch
 
       zTLODParams() {}
 
@@ -130,20 +139,21 @@ namespace Gothic_II_Classic {
       #include "zCProgMeshProto_zTLODParams.inl"
     };
 
+    // sizeof 58h
     class zCSubMesh {
     public:
-      zCMaterial* material;
-      zCArrayAdapt<zTPMTriangle> triList;
-      zCArrayAdapt<zTPMWedge> wedgeList;
-      zCArrayAdapt<float> colorList;
-      zCArrayAdapt<unsigned short int> triPlaneIndexList;
-      zCArrayAdapt<zTPlane> triPlaneList;
-      zCArrayAdapt<zTPMTriangleEdges> triEdgeList;
-      zCArrayAdapt<zTPMEdge> edgeList;
-      zCArrayAdapt<float> edgeScoreList;
-      zCArrayAdapt<unsigned short int> wedgeMap;
-      zCArrayAdapt<zTPMVertexUpdate> vertexUpdates;
-      int vbStartIndex;
+      zCMaterial* material;                               // sizeof 04h    offset 00h
+      zCArrayAdapt<zTPMTriangle> triList;                 // sizeof 08h    offset 04h
+      zCArrayAdapt<zTPMWedge> wedgeList;                  // sizeof 08h    offset 0Ch
+      zCArrayAdapt<float> colorList;                      // sizeof 08h    offset 14h
+      zCArrayAdapt<unsigned short int> triPlaneIndexList; // sizeof 08h    offset 1Ch
+      zCArrayAdapt<zTPlane> triPlaneList;                 // sizeof 08h    offset 24h
+      zCArrayAdapt<zTPMTriangleEdges> triEdgeList;        // sizeof 08h    offset 2Ch
+      zCArrayAdapt<zTPMEdge> edgeList;                    // sizeof 08h    offset 34h
+      zCArrayAdapt<float> edgeScoreList;                  // sizeof 08h    offset 3Ch
+      zCArrayAdapt<unsigned short int> wedgeMap;          // sizeof 08h    offset 44h
+      zCArrayAdapt<zTPMVertexUpdate> vertexUpdates;       // sizeof 08h    offset 4Ch
+      int vbStartIndex;                                   // sizeof 04h    offset 54h
 
       void zCSubMesh_OnInit() zCall( 0x005C0EA0 );
       zCSubMesh()             zInit( zCSubMesh_OnInit() );
@@ -153,11 +163,12 @@ namespace Gothic_II_Classic {
       #include "zCProgMeshProto_zCSubMesh.inl"
     };
 
+    // sizeof 10h
     struct zTLODRenderArgsSubMesh {
-      int numTri;
-      int numWedge;
-      int numMinMorphWedge;
-      int numSubdivEdges;
+      int numTri;           // sizeof 04h    offset 00h
+      int numWedge;         // sizeof 04h    offset 04h
+      int numMinMorphWedge; // sizeof 04h    offset 08h
+      int numSubdivEdges;   // sizeof 04h    offset 0Ch
 
       zTLODRenderArgsSubMesh() {}
 
@@ -165,21 +176,21 @@ namespace Gothic_II_Classic {
       #include "zCProgMeshProto_zTLODRenderArgsSubMesh.inl"
     };
 
-    zCArrayAdapt<zVEC3> posList;
-    zCArrayAdapt<zVEC3> posNormalList;
-    zTBBox3D bbox3D;
-    zCOBBox3D obbox3D;
-    zCVertexBuffer* vertexBufferStatic;
-    zCSubMesh* subMeshList;
-    int numSubMeshes;
-    unsigned char* dataPool;
-    unsigned long dataSize;
-    float avgTriArea;
-    int m_bUsesAlphaTesting;
-    zTLODParams lodParams;
-    zTPMLightingMode lightingMode;
-    unsigned long pmeshID;
-    unsigned long renderSortKey;
+    zCArrayAdapt<zVEC3> posList;        // sizeof 08h    offset 34h
+    zCArrayAdapt<zVEC3> posNormalList;  // sizeof 08h    offset 3Ch
+    zTBBox3D bbox3D;                    // sizeof 18h    offset 44h
+    zCOBBox3D obbox3D;                  // sizeof 44h    offset 5Ch
+    zCVertexBuffer* vertexBufferStatic; // sizeof 04h    offset A0h
+    zCSubMesh* subMeshList;             // sizeof 04h    offset A4h
+    int numSubMeshes;                   // sizeof 04h    offset A8h
+    unsigned char* dataPool;            // sizeof 04h    offset ACh
+    unsigned long dataSize;             // sizeof 04h    offset B0h
+    float avgTriArea;                   // sizeof 04h    offset B4h
+    int m_bUsesAlphaTesting;            // sizeof 04h    offset B8h
+    zTLODParams lodParams;              // sizeof 10h    offset BCh
+    zTPMLightingMode lightingMode;      // sizeof 04h    offset CCh
+    unsigned long pmeshID;              // sizeof 04h    offset D0h
+    unsigned long renderSortKey;        // sizeof 04h    offset D4h
 
     void zCProgMeshProto_OnInit()                                                                                                              zCall( 0x005C0F70 );
     zCProgMeshProto()                                                                                                                          zInit( zCProgMeshProto_OnInit() );
@@ -250,6 +261,7 @@ namespace Gothic_II_Classic {
     #include "zCProgMeshProto.inl"
   };
 
+  // sizeof 01h
   class zCProgMeshBuilder {
   public:
 
@@ -269,15 +281,17 @@ namespace Gothic_II_Classic {
     #include "zCProgMeshBuilder.inl"
   };
 
+  // sizeof 104h
   class zCMeshSoftSkin : public zCProgMeshProto {
   public:
     zCLASS_DECLARATION( zCMeshSoftSkin )
 
 #pragma pack( push, 1 )
+    // sizeof 11h
     struct zTWeightEntry {
-      float weight;
-      zVEC3 vertPosOS;
-      unsigned char nodeIndex;
+      float weight;            // sizeof 04h    offset 00h
+      zVEC3 vertPosOS;         // sizeof 0Ch    offset 04h
+      unsigned char nodeIndex; // sizeof 01h    offset 10h
 
       void zTWeightEntry_OnInit() zCall( 0x00588690 );
       zTWeightEntry()             zInit( zTWeightEntry_OnInit() );
@@ -287,9 +301,10 @@ namespace Gothic_II_Classic {
     };
 #pragma pack( pop )
 
+    // sizeof 10h
     struct zTNodeWedgeNormal {
-      zVEC3 normal;
-      int nodeIndex;
+      zVEC3 normal;  // sizeof 0Ch    offset 00h
+      int nodeIndex; // sizeof 04h    offset 0Ch
 
       zTNodeWedgeNormal() {}
 
@@ -297,11 +312,11 @@ namespace Gothic_II_Classic {
       #include "zCMeshSoftSkin_zTNodeWedgeNormal.inl"
     };
 
-    zCArray<int> nodeIndexList;
-    zCArray<zCOBBox3D*> nodeOBBList;
-    zCArray<zTNodeWedgeNormal> nodeWedgeNormalList;
-    unsigned char* vertWeightStream;
-    unsigned char* iterator;
+    zCArray<int> nodeIndexList;                     // sizeof 0Ch    offset D8h
+    zCArray<zCOBBox3D*> nodeOBBList;                // sizeof 0Ch    offset E4h
+    zCArray<zTNodeWedgeNormal> nodeWedgeNormalList; // sizeof 0Ch    offset F0h
+    unsigned char* vertWeightStream;                // sizeof 04h    offset FCh
+    unsigned char* iterator;                        // sizeof 04h    offset 100h
 
     void zCMeshSoftSkin_OnInit()                                                                              zCall( 0x005C7C20 );
     zCMeshSoftSkin()                                                                                          zInit( zCMeshSoftSkin_OnInit() );
@@ -326,6 +341,7 @@ namespace Gothic_II_Classic {
     #include "zCMeshSoftSkin.inl"
   };
 
+  // sizeof 30h
   class zCProgMeshConvertFileHandler : public zCScanDirFileHandler {
   public:
 

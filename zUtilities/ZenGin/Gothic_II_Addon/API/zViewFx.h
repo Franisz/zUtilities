@@ -1,10 +1,11 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_FX_H__VER3__
 #define __ZVIEW_FX_H__VER3__
 
 namespace Gothic_II_Addon {
 
+  // sizeof ACh
   class zCViewFX : public zCViewDraw {
   public:
     zCLASS_DECLARATION( zCViewFX )
@@ -17,15 +18,15 @@ namespace Gothic_II_Addon {
       VIEW_FX_FORCE_DWORD = 0xffffffff
     } zTViewFX;
 
-    int HasOpened;
-    int HasClosed;
-    float TimeOpen;
-    float TimeClose;
-    float DurationOpen;
-    float DurationClose;
-    unsigned long ModeOpen;
-    unsigned long ModeClose;
-    zVEC2 TextureOffset[2];
+    int HasOpened;           // sizeof 04h    offset 7Ch
+    int HasClosed;           // sizeof 04h    offset 80h
+    float TimeOpen;          // sizeof 04h    offset 84h
+    float TimeClose;         // sizeof 04h    offset 88h
+    float DurationOpen;      // sizeof 04h    offset 8Ch
+    float DurationClose;     // sizeof 04h    offset 90h
+    unsigned long ModeOpen;  // sizeof 04h    offset 94h
+    unsigned long ModeClose; // sizeof 04h    offset 98h
+    zVEC2 TextureOffset[2];  // sizeof 10h    offset 9Ch
 
     void zCViewFX_OnInit()                                                                           zCall( 0x00690A60 );
     zCViewFX()                                                                                       zInit( zCViewFX_OnInit() );

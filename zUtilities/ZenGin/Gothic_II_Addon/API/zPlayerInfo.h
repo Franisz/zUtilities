@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZPLAYER_INFO_H__VER3__
 #define __ZPLAYER_INFO_H__VER3__
@@ -9,21 +9,22 @@
 
 namespace Gothic_II_Addon {
 
+  // sizeof 3Ch
   class zCPlayerInfo {
   public:
-    zCVob* hostVob;
-    zCNetHost* netHost;
-    zCBuffer* scriptBuffer;
-    zCWorldInfo* worldInfo;
-    zSTRING name;
-    unsigned long pingTime;
-    unsigned long pingTimeStart;
-    unsigned long pingLost;
+    zCVob* hostVob;                // sizeof 04h    offset 04h
+    zCNetHost* netHost;            // sizeof 04h    offset 08h
+    zCBuffer* scriptBuffer;        // sizeof 04h    offset 0Ch
+    zCWorldInfo* worldInfo;        // sizeof 04h    offset 10h
+    zSTRING name;                  // sizeof 14h    offset 14h
+    unsigned long pingTime;        // sizeof 04h    offset 28h
+    unsigned long pingTimeStart;   // sizeof 04h    offset 2Ch
+    unsigned long pingLost;        // sizeof 04h    offset 30h
     group {
-      unsigned char id       : 8;
-      int ready              : 1;
-      int deactivated        : 1;
-      unsigned long reserved : 22;
+      unsigned char id       : 8;  // sizeof 08h    offset bit
+      int ready              : 1;  // sizeof 01h    offset bit
+      int deactivated        : 1;  // sizeof 01h    offset bit
+      unsigned long reserved : 22; // sizeof 16h    offset bit
     };
 
     void zCPlayerInfo_OnInit()                          zCall( 0x00467820 );

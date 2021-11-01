@@ -1,10 +1,10 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSTRING_H__VER1__
 #define __ZSTRING_H__VER1__
 
 #define USING_UNION_STRING_METHODS True
-#define UNPROTECT_ZSTRING_METHODS  True
+#define UNPROTECT_ZSTRING_METHODS  False
 
 namespace Gothic_I_Addon {
 

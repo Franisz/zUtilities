@@ -1,10 +1,11 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZAI_PLAYER_H__VER1__
 #define __ZAI_PLAYER_H__VER1__
 
 namespace Gothic_I_Addon {
 
+  // sizeof 118h
   class zCAIPlayer : public zCAIBase {
   public:
     zCLASS_DECLARATION( zCAIPlayer )
@@ -22,23 +23,24 @@ namespace Gothic_I_Addon {
       zMV_STATE_DIVE
     };
 
+    // sizeof 40h
     struct zTConfig {
-      float zMV_MIN_SPACE_MOVE_FORWARD;
-      float zMV_DETECT_CHASM_SCAN_AT;
-      float zMV_STEP_HEIGHT;
-      float zMV_JUMP_UP_MIN_CEIL;
-      float zMV_WATER_DEPTH_KNEE;
-      float zMV_WATER_DEPTH_CHEST;
-      float zMV_YMAX_SWIM_CLIMB_OUT;
-      float zMV_FORCE_JUMP_UP;
-      float zMV_YMAX_JUMPLOW;
-      float zMV_YMAX_JUMPMID;
-      float zMV_MAX_GROUND_ANGLE_WALK;
-      float zMV_MAX_GROUND_ANGLE_SLIDE;
-      float zMV_MAX_GROUND_ANGLE_SLIDE2;
-      float zMV_DCUL_WALL_HEADING_ANGLE;
-      float zMV_DCUL_WALL_HORIZ_ANGLE;
-      float zMV_DCUL_GROUND_ANGLE;
+      float zMV_MIN_SPACE_MOVE_FORWARD;  // sizeof 04h    offset 00h
+      float zMV_DETECT_CHASM_SCAN_AT;    // sizeof 04h    offset 04h
+      float zMV_STEP_HEIGHT;             // sizeof 04h    offset 08h
+      float zMV_JUMP_UP_MIN_CEIL;        // sizeof 04h    offset 0Ch
+      float zMV_WATER_DEPTH_KNEE;        // sizeof 04h    offset 10h
+      float zMV_WATER_DEPTH_CHEST;       // sizeof 04h    offset 14h
+      float zMV_YMAX_SWIM_CLIMB_OUT;     // sizeof 04h    offset 18h
+      float zMV_FORCE_JUMP_UP;           // sizeof 04h    offset 1Ch
+      float zMV_YMAX_JUMPLOW;            // sizeof 04h    offset 20h
+      float zMV_YMAX_JUMPMID;            // sizeof 04h    offset 24h
+      float zMV_MAX_GROUND_ANGLE_WALK;   // sizeof 04h    offset 28h
+      float zMV_MAX_GROUND_ANGLE_SLIDE;  // sizeof 04h    offset 2Ch
+      float zMV_MAX_GROUND_ANGLE_SLIDE2; // sizeof 04h    offset 30h
+      float zMV_DCUL_WALL_HEADING_ANGLE; // sizeof 04h    offset 34h
+      float zMV_DCUL_WALL_HORIZ_ANGLE;   // sizeof 04h    offset 38h
+      float zMV_DCUL_GROUND_ANGLE;       // sizeof 04h    offset 3Ch
 
       zTConfig() {}
 
@@ -46,11 +48,12 @@ namespace Gothic_I_Addon {
       #include "zCAIPlayer_zTConfig.inl"
     };
 
+    // sizeof 28h
     struct zTLedgeInfo {
-      zVEC3 point;
-      zVEC3 normal;
-      zVEC3 cont;
-      float maxMoveForward;
+      zVEC3 point;          // sizeof 0Ch    offset 00h
+      zVEC3 normal;         // sizeof 0Ch    offset 0Ch
+      zVEC3 cont;           // sizeof 0Ch    offset 18h
+      float maxMoveForward; // sizeof 04h    offset 24h
 
       zTLedgeInfo() {}
 
@@ -58,9 +61,10 @@ namespace Gothic_I_Addon {
       #include "zCAIPlayer_zTLedgeInfo.inl"
     };
 
+    // sizeof 08h
     struct zTBloodVobTrack {
-      zCVob* bloodVob;
-      float alpha;
+      zCVob* bloodVob; // sizeof 04h    offset 00h
+      float alpha;     // sizeof 04h    offset 04h
 
       zTBloodVobTrack() {}
 
@@ -68,54 +72,54 @@ namespace Gothic_I_Addon {
       #include "zCAIPlayer_zTBloodVobTrack.inl"
     };
 
-    zTConfig config;
-    zCVob* vob;
-    zCModel* model;
-    zCWorld* world;
-    zVEC3 centerPos;
-    float feetY;
-    float headY;
-    float aboveFloor;
-    int waterLevel;
-    float velocityLen2;
-    zVEC3 velocity;
-    float fallDownDistanceY;
-    float fallDownStartY;
-    zVEC3 slidePolyNormal;
-    float checkWaterCollBodyLen;
-    zCModelNodeInst* modelHeadNode;
+    zTConfig config;                                                  // sizeof 40h    offset 24h
+    zCVob* vob;                                                       // sizeof 04h    offset 64h
+    zCModel* model;                                                   // sizeof 04h    offset 68h
+    zCWorld* world;                                                   // sizeof 04h    offset 6Ch
+    zVEC3 centerPos;                                                  // sizeof 0Ch    offset 70h
+    float feetY;                                                      // sizeof 04h    offset 7Ch
+    float headY;                                                      // sizeof 04h    offset 80h
+    float aboveFloor;                                                 // sizeof 04h    offset 84h
+    int waterLevel;                                                   // sizeof 04h    offset 88h
+    float velocityLen2;                                               // sizeof 04h    offset 8Ch
+    zVEC3 velocity;                                                   // sizeof 0Ch    offset 90h
+    float fallDownDistanceY;                                          // sizeof 04h    offset 9Ch
+    float fallDownStartY;                                             // sizeof 04h    offset A0h
+    zVEC3 slidePolyNormal;                                            // sizeof 0Ch    offset A4h
+    float checkWaterCollBodyLen;                                      // sizeof 04h    offset B0h
+    zCModelNodeInst* modelHeadNode;                                   // sizeof 04h    offset B4h
 #pragma pack( push, 1 )
     group {
-      unsigned char zMV_DO_SURFACE_ALIGN                         : 2;
-      unsigned char zMV_DO_DETECT_WALK_STOP_CHASM                : 1;
-      unsigned char zMV_DO_WALL_SLIDING                          : 1;
-      unsigned char zMV_DO_HEIGHT_CORRECTION                     : 1;
-      unsigned char cdStatOriginal                               : 1;
-      unsigned char cdStat                                       : 1;
-      unsigned char startFXModelLandDust                         : 1;
-      unsigned char forceModelHalt                               : 1;
-      unsigned char autoRollEnabled                              : 1;
-      unsigned char modelAnisInPlace                             : 1;
-      zTMovementState oldState                                   : 3;
-      zTMovementState state                                      : 3;
-      unsigned char oldWaterLevel                                : 2;
-      zCCollObjectCharacter::zEConfigState m_eCollObjectState    : 4;
-      zCCollObjectCharacter::zEConfigState m_eCollObjectStateOld : 4;
+      unsigned char zMV_DO_SURFACE_ALIGN                         : 2; // sizeof 02h    offset bit
+      unsigned char zMV_DO_DETECT_WALK_STOP_CHASM                : 1; // sizeof 01h    offset bit
+      unsigned char zMV_DO_WALL_SLIDING                          : 1; // sizeof 01h    offset bit
+      unsigned char zMV_DO_HEIGHT_CORRECTION                     : 1; // sizeof 01h    offset bit
+      unsigned char cdStatOriginal                               : 1; // sizeof 01h    offset bit
+      unsigned char cdStat                                       : 1; // sizeof 01h    offset bit
+      unsigned char startFXModelLandDust                         : 1; // sizeof 01h    offset bit
+      unsigned char forceModelHalt                               : 1; // sizeof 01h    offset bit
+      unsigned char autoRollEnabled                              : 1; // sizeof 01h    offset bit
+      unsigned char modelAnisInPlace                             : 1; // sizeof 01h    offset bit
+      zTMovementState oldState                                   : 3; // sizeof 03h    offset bit
+      zTMovementState state                                      : 3; // sizeof 03h    offset bit
+      unsigned char oldWaterLevel                                : 2; // sizeof 02h    offset bit
+      zCCollObjectCharacter::zEConfigState m_eCollObjectState    : 4; // sizeof 04h    offset bit
+      zCCollObjectCharacter::zEConfigState m_eCollObjectStateOld : 4; // sizeof 04h    offset bit
     };
 #pragma pack( pop )
-    zCArray<zTBloodVobTrack> bloodVobList;
-    float bleedingPerc;
-    zVEC3 bleedingLastPos;
-    float bleedingNextDist;
-    zCVob* weaponTrailVob;
-    zCVob* waterRingVob;
-    float waterRingTimer;
-    float autoRollPos;
-    float autoRollPosDest;
-    float autoRollSpeed;
-    float autoRollMaxAngle;
-    unsigned char dummyLastVar;
-    zSTRING bloodDefaultTexName;
+    zCArray<zTBloodVobTrack> bloodVobList;                            // sizeof 0Ch    offset C4h
+    float bleedingPerc;                                               // sizeof 04h    offset D0h
+    zVEC3 bleedingLastPos;                                            // sizeof 0Ch    offset D4h
+    float bleedingNextDist;                                           // sizeof 04h    offset E0h
+    zCVob* weaponTrailVob;                                            // sizeof 04h    offset E4h
+    zCVob* waterRingVob;                                              // sizeof 04h    offset E8h
+    float waterRingTimer;                                             // sizeof 04h    offset ECh
+    float autoRollPos;                                                // sizeof 04h    offset F0h
+    float autoRollPosDest;                                            // sizeof 04h    offset F4h
+    float autoRollSpeed;                                              // sizeof 04h    offset F8h
+    float autoRollMaxAngle;                                           // sizeof 04h    offset FCh
+    unsigned char dummyLastVar;                                       // sizeof 01h    offset 100h
+    zSTRING bloodDefaultTexName;                                      // sizeof 14h    offset 104h
 
     void zCAIPlayer_OnInit()                                            zCall( 0x0050FCB0 );
     zCAIPlayer()                                                        zInit( zCAIPlayer_OnInit() );

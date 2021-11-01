@@ -1,10 +1,11 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSYS_INFO_H__VER3__
 #define __ZSYS_INFO_H__VER3__
 
 namespace Gothic_II_Addon {
 
+  // sizeof 6Ch
   class zCSystemInfo {
   public:
     enum zTOperatingSystem {
@@ -29,16 +30,16 @@ namespace Gothic_II_Addon {
       CPU_OTHER
     };
 
-    zTOperatingSystem osType;
-    zSTRING osName;
-    zSTRING osServicePack;
-    zTCpuType cpuType;
-    zSTRING cpuID;
-    unsigned long cpuSpeed;
-    unsigned long memSize;
-    unsigned long memAvailable;
-    zSTRING graName;
-    unsigned long graMemSize;
+    zTOperatingSystem osType;   // sizeof 04h    offset 04h
+    zSTRING osName;             // sizeof 14h    offset 08h
+    zSTRING osServicePack;      // sizeof 14h    offset 1Ch
+    zTCpuType cpuType;          // sizeof 04h    offset 30h
+    zSTRING cpuID;              // sizeof 14h    offset 34h
+    unsigned long cpuSpeed;     // sizeof 04h    offset 48h
+    unsigned long memSize;      // sizeof 04h    offset 4Ch
+    unsigned long memAvailable; // sizeof 04h    offset 50h
+    zSTRING graName;            // sizeof 14h    offset 54h
+    unsigned long graMemSize;   // sizeof 04h    offset 68h
 
     void zCSystemInfo_OnInit() zCall( 0x0046D1B0 );
     zCSystemInfo()             zInit( zCSystemInfo_OnInit() );

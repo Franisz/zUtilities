@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZEVENT_MAN_H__VER2__
 #define __ZEVENT_MAN_H__VER2__
@@ -8,15 +8,16 @@
 
 namespace Gothic_II_Classic {
 
+  // sizeof 40h
   class zCEventManager : public zCObject {
   public:
     zCLASS_DECLARATION( zCEventManager )
 
-    int cleared;
-    int active;
-    zCCutscene* cutscene;
-    zCArray<zCEventMessage*>messageList;
-    zCVob* hostVob;
+    int cleared;                         // sizeof 04h    offset 24h
+    int active;                          // sizeof 04h    offset 28h
+    zCCutscene* cutscene;                // sizeof 04h    offset 2Ch
+    zCArray<zCEventMessage*>messageList; // sizeof 0Ch    offset 30h
+    zCVob* hostVob;                      // sizeof 04h    offset 3Ch
 
     void zCEventManager_OnInit()                                      zCall( 0x00726570 );
     void zCEventManager_OnInit( zCVob* )                              zCall( 0x007266C0 );

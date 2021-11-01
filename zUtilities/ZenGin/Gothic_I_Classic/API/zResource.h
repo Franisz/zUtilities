@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZRESOURCE_H__VER0__
 #define __ZRESOURCE_H__VER0__
@@ -14,17 +14,19 @@ namespace Gothic_I_Classic {
     zRES_CACHED_IN  = 3
   };
 
+  // sizeof 64h
   class zCResourceManager : public zCThread {
   public:
+    // sizeof 1Ch
     class zCClassCache {
     public:
-      zCClassDef* resClassDef;
-      zCResource* resListHead;
-      zCResource* resListTail;
-      unsigned long numRes;
-      int cacheSizeBytes;
-      int cacheSizeMaxBytes;
-      unsigned long cacheOutTimeMSec;
+      zCClassDef* resClassDef;        // sizeof 04h    offset 00h
+      zCResource* resListHead;        // sizeof 04h    offset 04h
+      zCResource* resListTail;        // sizeof 04h    offset 08h
+      unsigned long numRes;           // sizeof 04h    offset 0Ch
+      int cacheSizeBytes;             // sizeof 04h    offset 10h
+      int cacheSizeMaxBytes;          // sizeof 04h    offset 14h
+      unsigned long cacheOutTimeMSec; // sizeof 04h    offset 18h
 
       void zCClassCache_OnInit()    zCall( 0x005B6E10 );
       zCClassCache()                zInit( zCClassCache_OnInit() );
@@ -37,17 +39,17 @@ namespace Gothic_I_Classic {
       #include "zCResourceManager_zCClassCache.inl"
     };
 
-    zCArray<zCClassCache> classCacheList;
-    zCResource* cacheInQueueHead;
-    zCResource* cacheInQueueTail;
-    unsigned long currentTimeStamp;
-    int threadingEnabled;
-    zCCriticalSection cacheInQueueGuard;
-    int numQueued;
-    int numResCachedInThisFrame;
-    int showDebugInfo;
-    float cacheInImmediatelyMsec;
-    int goToSuspend;
+    zCArray<zCClassCache> classCacheList; // sizeof 0Ch    offset 18h
+    zCResource* cacheInQueueHead;         // sizeof 04h    offset 24h
+    zCResource* cacheInQueueTail;         // sizeof 04h    offset 28h
+    unsigned long currentTimeStamp;       // sizeof 04h    offset 2Ch
+    int threadingEnabled;                 // sizeof 04h    offset 30h
+    zCCriticalSection cacheInQueueGuard;  // sizeof 1Ch    offset 34h
+    int numQueued;                        // sizeof 04h    offset 50h
+    int numResCachedInThisFrame;          // sizeof 04h    offset 54h
+    int showDebugInfo;                    // sizeof 04h    offset 58h
+    float cacheInImmediatelyMsec;         // sizeof 04h    offset 5Ch
+    int goToSuspend;                      // sizeof 04h    offset 60h
 
     void zCResourceManager_OnInit()                    zCall( 0x005B55B0 );
     zCResourceManager()                                zInit( zCResourceManager_OnInit() );
@@ -80,20 +82,21 @@ namespace Gothic_I_Classic {
     #include "zCResourceManager.inl"
   };
 
+  // sizeof 54h
   class zCResource : public zCObject {
   public:
     zCLASS_DECLARATION( zCResource )
 
-    zCResource* nextRes;
-    zCResource* prevRes;
-    unsigned long timeStamp;
-    zCCriticalSection stateChangeGuard;
+    zCResource* nextRes;                   // sizeof 04h    offset 24h
+    zCResource* prevRes;                   // sizeof 04h    offset 28h
+    unsigned long timeStamp;               // sizeof 04h    offset 2Ch
+    zCCriticalSection stateChangeGuard;    // sizeof 1Ch    offset 30h
     group {
-      unsigned char cacheState       : 2;
-      unsigned char cacheOutLock     : 1;
-      unsigned char cacheClassIndex  : 8;
-      unsigned char managedByResMan  : 1;
-      unsigned short cacheInPriority : 16;
+      unsigned char cacheState       : 2;  // sizeof 02h    offset bit
+      unsigned char cacheOutLock     : 1;  // sizeof 01h    offset bit
+      unsigned char cacheClassIndex  : 8;  // sizeof 08h    offset bit
+      unsigned char managedByResMan  : 1;  // sizeof 01h    offset bit
+      unsigned short cacheInPriority : 16; // sizeof 10h    offset bit
     };
 
     void zCResource_OnInit()                                      zCall( 0x005B5160 );

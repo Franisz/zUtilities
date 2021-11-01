@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ODOC_H__VER3__
 #define __ODOC_H__VER3__
@@ -7,17 +7,18 @@
 
 namespace Gothic_II_Addon {
 
+  // sizeof 134h
   class oCDoc : public zCView {
   public:
-    zSTRING levelName;
-    float scalex;
-    float scaley;
-    float map_gameCoPerPixelx;
-    float map_gameStartx;
-    float map_gameCoPerPixely;
-    float map_gameStarty;
-    float pixelStartx;
-    float pixelStarty;
+    zSTRING levelName;         // sizeof 14h    offset 100h
+    float scalex;              // sizeof 04h    offset 114h
+    float scaley;              // sizeof 04h    offset 118h
+    float map_gameCoPerPixelx; // sizeof 04h    offset 11Ch
+    float map_gameStartx;      // sizeof 04h    offset 120h
+    float map_gameCoPerPixely; // sizeof 04h    offset 124h
+    float map_gameStarty;      // sizeof 04h    offset 128h
+    float pixelStartx;         // sizeof 04h    offset 12Ch
+    float pixelStarty;         // sizeof 04h    offset 130h
 
     oCDoc() {}
     void oCDoc_OnInit( zSTRING const& )                                               zCall( 0x006BDF80 );

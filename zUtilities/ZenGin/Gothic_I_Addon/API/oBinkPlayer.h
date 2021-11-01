@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OBINK_PLAYER_H__VER1__
 #define __OBINK_PLAYER_H__VER1__
@@ -8,10 +8,11 @@
 
 namespace Gothic_I_Addon {
 
+  // sizeof 88h
   class oCBinkPlayer : public zCBinkPlayer {
   public:
-    int extendedKeys;
-    int disallowInputHandling;
+    int extendedKeys;          // sizeof 04h    offset 80h
+    int disallowInputHandling; // sizeof 04h    offset 84h
 
     void oCBinkPlayer_OnInit()       zCall( 0x00424890 );
     oCBinkPlayer()                   zInit( oCBinkPlayer_OnInit() );

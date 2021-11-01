@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OGUILDS_H__VER1__
 #define __OGUILDS_H__VER1__
@@ -7,10 +7,11 @@
 
 namespace Gothic_I_Addon {
 
+  // sizeof 08h
   class oCGuilds {
   public:
-    int size;
-    unsigned char* attitude;
+    int size;                // sizeof 04h    offset 00h
+    unsigned char* attitude; // sizeof 04h    offset 04h
 
     void oCGuilds_OnInit()                      zCall( 0x0068FBB0 );
     oCGuilds()                                  zInit( oCGuilds_OnInit() );

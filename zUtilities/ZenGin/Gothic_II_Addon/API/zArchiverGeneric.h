@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZARCHIVER_GENERIC_H__VER3__
 #define __ZARCHIVER_GENERIC_H__VER3__
@@ -7,13 +7,15 @@
 
 namespace Gothic_II_Addon {
 
+  // sizeof BCh
   class zCArchiverGeneric : public zCArchiver {
   public:
     zCLASS_DECLARATION( zCArchiverGeneric )
 
+    // sizeof 08h
     struct zTWriteObjectEntry {
-      zCObject* object;
-      int objectIndex;
+      zCObject* object; // sizeof 04h    offset 00h
+      int objectIndex;  // sizeof 04h    offset 04h
 
       zTWriteObjectEntry() {}
 
@@ -21,27 +23,27 @@ namespace Gothic_II_Addon {
       #include "zCArchiverGeneric_zTWriteObjectEntry.inl"
     };
 
-    zFILE* file;
-    zCBuffer* cbuffer;
-    int owningMedium;
-    int inSaveGame;
-    int binaryMode;
-    zTAccessMode accessMode;
-    zCArray<zTChunkRecord> chunkStack;
-    zCArray<zCObject*> objectList;
-    unsigned long posNumObjects;
-    unsigned long posChecksum;
-    unsigned long posHeaderEnd;
-    int checksumEnabled;
-    int flags;
-    int debugMessagesOn;
-    int noReadSearchCycles;
-    zSTRING tmpResultValue;
-    int deleteFileOnClose;
-    zCSparseArray<zCObject*, zTWriteObjectEntry> writeObjectList;
-    int warnEntrysNotRead;
-    int warnEntryNotFound;
-    int warnWrongEntryOrder;
+    zFILE* file;                                                  // sizeof 04h    offset 2Ch
+    zCBuffer* cbuffer;                                            // sizeof 04h    offset 30h
+    int owningMedium;                                             // sizeof 04h    offset 34h
+    int inSaveGame;                                               // sizeof 04h    offset 38h
+    int binaryMode;                                               // sizeof 04h    offset 3Ch
+    zTAccessMode accessMode;                                      // sizeof 04h    offset 40h
+    zCArray<zTChunkRecord> chunkStack;                            // sizeof 0Ch    offset 44h
+    zCArray<zCObject*> objectList;                                // sizeof 0Ch    offset 50h
+    unsigned long posNumObjects;                                  // sizeof 04h    offset 5Ch
+    unsigned long posChecksum;                                    // sizeof 04h    offset 60h
+    unsigned long posHeaderEnd;                                   // sizeof 04h    offset 64h
+    int checksumEnabled;                                          // sizeof 04h    offset 68h
+    int flags;                                                    // sizeof 04h    offset 6Ch
+    int debugMessagesOn;                                          // sizeof 04h    offset 70h
+    int noReadSearchCycles;                                       // sizeof 04h    offset 74h
+    zSTRING tmpResultValue;                                       // sizeof 14h    offset 78h
+    int deleteFileOnClose;                                        // sizeof 04h    offset 8Ch
+    zCSparseArray<zCObject*, zTWriteObjectEntry> writeObjectList; // sizeof 20h    offset 90h
+    int warnEntrysNotRead;                                        // sizeof 04h    offset B0h
+    int warnEntryNotFound;                                        // sizeof 04h    offset B4h
+    int warnWrongEntryOrder;                                      // sizeof 04h    offset B8h
 
     void zCArchiverGeneric_OnInit()                                                                    zCall( 0x00521E30 );
     zCArchiverGeneric()                                                                                zInit( zCArchiverGeneric_OnInit() );

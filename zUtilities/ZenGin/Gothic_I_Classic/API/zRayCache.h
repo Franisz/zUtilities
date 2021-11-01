@@ -1,19 +1,20 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZRAY_CACHE_H__VER0__
 #define __ZRAY_CACHE_H__VER0__
 
 namespace Gothic_I_Classic {
 
+  // sizeof 38h
   class zCRayCacheElement {
   public:
-    zCPluecker last_cast_ray;
-    zCBspLeaf* leaf;
-    float* updatePolys;
-    float min_updatePolys;
-    char* hit;
-    zCArray<unsigned short> hit_list;
-    zCRayCacheElement* next;
+    zCPluecker last_cast_ray;         // sizeof 18h    offset 00h
+    zCBspLeaf* leaf;                  // sizeof 04h    offset 18h
+    float* updatePolys;               // sizeof 04h    offset 1Ch
+    float min_updatePolys;            // sizeof 04h    offset 20h
+    char* hit;                        // sizeof 04h    offset 24h
+    zCArray<unsigned short> hit_list; // sizeof 0Ch    offset 28h
+    zCRayCacheElement* next;          // sizeof 04h    offset 34h
 
     zCRayCacheElement() {}
     void zCRayCacheElement_OnInit( zCBspLeaf const*, zCRayCacheElement** ) zCall( 0x005AD960 );
@@ -25,10 +26,11 @@ namespace Gothic_I_Classic {
     #include "zCRayCacheElement.inl"
   };
 
+  // sizeof 08h
   class zCRayCache {
   public:
-    zCRayCacheElement* first;
-    zCRayCache* next;
+    zCRayCacheElement* first; // sizeof 04h    offset 00h
+    zCRayCache* next;         // sizeof 04h    offset 04h
 
     zCRayCache() {}
     char* Hit() const                                zCall( 0x005ADB30 );

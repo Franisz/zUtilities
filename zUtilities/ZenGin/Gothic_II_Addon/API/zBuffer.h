@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZBUFFER_H__VER3__
 #define __ZBUFFER_H__VER3__
@@ -11,20 +11,21 @@ namespace Gothic_II_Addon {
     READWRITE
   };
 
+  // sizeof 28h
   class zCBuffer {
   public:
-    zTBufferMode mode;
-    unsigned char* buffer;
-    unsigned long pos_byte;
-    unsigned long pos_bit;
-    unsigned long maxsize_byte;
-    unsigned long maxsize_bit;
-    unsigned long size_byte;
-    unsigned long size_bit;
-    unsigned char vobNr;
-    bool allocated;
-    bool bits_written;
-    bool buffer_error;
+    zTBufferMode mode;          // sizeof 04h    offset 04h
+    unsigned char* buffer;      // sizeof 04h    offset 08h
+    unsigned long pos_byte;     // sizeof 04h    offset 0Ch
+    unsigned long pos_bit;      // sizeof 04h    offset 10h
+    unsigned long maxsize_byte; // sizeof 04h    offset 14h
+    unsigned long maxsize_bit;  // sizeof 04h    offset 18h
+    unsigned long size_byte;    // sizeof 04h    offset 1Ch
+    unsigned long size_bit;     // sizeof 04h    offset 20h
+    unsigned char vobNr;        // sizeof 01h    offset 24h
+    bool allocated;             // sizeof 01h    offset 25h
+    bool bits_written;          // sizeof 01h    offset 26h
+    bool buffer_error;          // sizeof 01h    offset 27h
 
     void zCBuffer_OnInit()                                zCall( 0x00440AF0 );
     void zCBuffer_OnInit( unsigned long const& )          zCall( 0x00440B70 );

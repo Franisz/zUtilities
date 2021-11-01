@@ -1,15 +1,16 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCOLLISION_OBJECT_H__VER2__
 #define __ZCOLLISION_OBJECT_H__VER2__
 
 namespace Gothic_II_Classic {
 
+  // sizeof 0Ch
   class zCCollisionObjectDef {
   public:
-    zCCollisionObject*( *m_createNewInstance )( void );
-    int m_bIsVolatile;
-    int m_iIndex;
+    zCCollisionObject*( *m_createNewInstance )( void ); // sizeof 04h    offset 00h
+    int m_bIsVolatile;                                  // sizeof 04h    offset 04h
+    int m_iIndex;                                       // sizeof 04h    offset 08h
 
     zCCollisionObjectDef() {}
     void zCCollisionObjectDef_OnInit( int, zCCollisionObject*( __cdecl* )() ) zCall( 0x00548030 );
@@ -23,16 +24,17 @@ namespace Gothic_II_Classic {
     #include "zCCollisionObjectDef.inl"
   };
 
+  // sizeof 8Ch
   class zCCollisionObject {
   public:
     zCOLLISION_OBJECT_DECLARATION( zCCollisionObject )
 
-    zMAT4 m_oTrafoOld;
-    zMAT4 m_oTrafoNew;
-    void* m_pvClientData;
+    zMAT4 m_oTrafoOld;                      // sizeof 40h    offset 04h
+    zMAT4 m_oTrafoNew;                      // sizeof 40h    offset 44h
+    void* m_pvClientData;                   // sizeof 04h    offset 84h
     group {
-      unsigned char m_bHintTranslation : 1;
-      unsigned char m_bHintRotation    : 1;
+      unsigned char m_bHintTranslation : 1; // sizeof 01h    offset bit
+      unsigned char m_bHintRotation    : 1; // sizeof 01h    offset bit
     };
 
     zCCollisionObject() {}

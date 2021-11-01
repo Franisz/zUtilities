@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OMENU__STATUS_H__VER0__
 #define __OMENU__STATUS_H__VER0__
@@ -8,6 +8,7 @@
 
 namespace Gothic_I_Classic {
 
+  // sizeof 34h
   struct oSMenuInfoAttribute {
     enum oTMenuAttrib {
       ATTRIB_HP,
@@ -16,11 +17,11 @@ namespace Gothic_I_Classic {
       ATTRIB_STR
     };
 
-    zSTRING name;
-    zSTRING descr;
-    int actValue;
-    int maxValue;
-    oTMenuAttrib type;
+    zSTRING name;      // sizeof 14h    offset 00h
+    zSTRING descr;     // sizeof 14h    offset 14h
+    int actValue;      // sizeof 04h    offset 28h
+    int maxValue;      // sizeof 04h    offset 2Ch
+    oTMenuAttrib type; // sizeof 04h    offset 30h
 
     void oSMenuInfoAttribute_OnInit() zCall( 0x00478EB0 );
     ~oSMenuInfoAttribute()            zCall( 0x004788F0 );
@@ -30,6 +31,7 @@ namespace Gothic_I_Classic {
     #include "oSMenuInfoAttribute.inl"
   };
 
+  // sizeof 04h
   struct oSMenuInfoArmor {
     enum oTMenuArmor {
       ATTRIB_1H,
@@ -38,7 +40,7 @@ namespace Gothic_I_Classic {
       ATTRIB_CROSSBOW
     };
 
-    int actValue;
+    int actValue; // sizeof 04h    offset 00h
 
     oSMenuInfoArmor() {}
 
@@ -46,12 +48,13 @@ namespace Gothic_I_Classic {
     #include "oSMenuInfoArmor.inl"
   };
 
+  // sizeof 44h
   struct oSMenuInfoTalent {
-    zSTRING name;
-    zSTRING desc;
-    zSTRING skillEnum;
-    int value;
-    int skill;
+    zSTRING name;      // sizeof 14h    offset 00h
+    zSTRING desc;      // sizeof 14h    offset 14h
+    zSTRING skillEnum; // sizeof 14h    offset 28h
+    int value;         // sizeof 04h    offset 3Ch
+    int skill;         // sizeof 04h    offset 40h
 
     void oSMenuInfoTalent_OnInit() zCall( 0x00478EF0 );
     ~oSMenuInfoTalent()            zCall( 0x00478970 );
@@ -61,13 +64,14 @@ namespace Gothic_I_Classic {
     #include "oSMenuInfoTalent.inl"
   };
 
+  // sizeof CD8h
   class oCMenu_Log : public zCMenu {
   public:
-    zCMenuItemList* listItemAct;
-    zCMenuItemList* listItemOld;
-    zCMenuItemList* listItemFailed;
-    zCMenuItemList* listItemLog;
-    zCMenuItemText* contentViewer;
+    zCMenuItemList* listItemAct;    // sizeof 04h    offset CC4h
+    zCMenuItemList* listItemOld;    // sizeof 04h    offset CC8h
+    zCMenuItemList* listItemFailed; // sizeof 04h    offset CCCh
+    zCMenuItemList* listItemLog;    // sizeof 04h    offset CD0h
+    zCMenuItemText* contentViewer;  // sizeof 04h    offset CD4h
 
     oCMenu_Log() {}
     void oCMenu_Log_OnInit( zSTRING const& )          zCall( 0x004747F0 );
@@ -90,11 +94,12 @@ namespace Gothic_I_Classic {
     #include "oCMenu_Log.inl"
   };
 
+  // sizeof CE8h
   class oCMenu_Status : public zCMenu {
   public:
-    zCArray<oSMenuInfoAttribute> m_listAttributes;
-    zCArray<oSMenuInfoTalent> m_listTalents;
-    zCArray<oSMenuInfoArmor> m_listArmory;
+    zCArray<oSMenuInfoAttribute> m_listAttributes; // sizeof 0Ch    offset CC4h
+    zCArray<oSMenuInfoTalent> m_listTalents;       // sizeof 0Ch    offset CD0h
+    zCArray<oSMenuInfoArmor> m_listArmory;         // sizeof 0Ch    offset CDCh
 
     oCMenu_Status() {}
     void oCMenu_Status_OnInit( zSTRING const& )                       zCall( 0x004763D0 );
@@ -114,9 +119,10 @@ namespace Gothic_I_Classic {
     #include "oCMenu_Status.inl"
   };
 
+  // sizeof 08h
   class oCStatusScreen {
   public:
-    oCMenu_Status* m_pStatusMenu;
+    oCMenu_Status* m_pStatusMenu; // sizeof 04h    offset 04h
 
     void oCStatusScreen_OnInit() zCall( 0x00477380 );
     oCStatusScreen()             zInit( oCStatusScreen_OnInit() );
@@ -127,9 +133,10 @@ namespace Gothic_I_Classic {
     #include "oCStatusScreen.inl"
   };
 
+  // sizeof 08h
   class oCLogScreen {
   public:
-    oCMenu_Log* m_pLogMenu;
+    oCMenu_Log* m_pLogMenu; // sizeof 04h    offset 04h
 
     void oCLogScreen_OnInit() zCall( 0x00477A50 );
     oCLogScreen()             zInit( oCLogScreen_OnInit() );
@@ -140,6 +147,7 @@ namespace Gothic_I_Classic {
     #include "oCLogScreen.inl"
   };
 
+  // sizeof 04h
   class oCMapScreen {
   public:
 

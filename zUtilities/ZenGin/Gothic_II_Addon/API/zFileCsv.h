@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZFILE_CSV_H__VER3__
 #define __ZFILE_CSV_H__VER3__
@@ -7,16 +7,17 @@
 
 namespace Gothic_II_Addon {
 
+  // sizeof 228h
   class zCFileCSV : public zFILE_FILE {
   public:
-    zCArray<zSTRING> columnList;
-    bool headerProcessed;
-    zSTRING current_set;
-    bool csvHasHeader;
-    zSTRING csvFieldDelimiter;
-    zSTRING csvFieldFrame;
-    zSTRING csvCompleteDelimiter;
-    int column;
+    zCArray<zSTRING> columnList;  // sizeof 0Ch    offset 1C0h
+    bool headerProcessed;         // sizeof 01h    offset 1CCh
+    zSTRING current_set;          // sizeof 14h    offset 1D0h
+    bool csvHasHeader;            // sizeof 01h    offset 1E4h
+    zSTRING csvFieldDelimiter;    // sizeof 14h    offset 1E8h
+    zSTRING csvFieldFrame;        // sizeof 14h    offset 1FCh
+    zSTRING csvCompleteDelimiter; // sizeof 14h    offset 210h
+    int column;                   // sizeof 04h    offset 224h
 
     void zCFileCSV_OnInit( zSTRING const& )                zCall( 0x0044E930 );
     void zCFileCSV_OnInit()                                zCall( 0x0044EAF0 );

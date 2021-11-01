@@ -1,10 +1,11 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_BASE_H__VER3__
 #define __ZVIEW_BASE_H__VER3__
 
 namespace Gothic_II_Addon {
 
+  // sizeof 04h
   class zCViewBase {
   public:
 

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSKY_H__VER0__
 #define __ZSKY_H__VER0__
@@ -17,15 +17,16 @@ namespace Gothic_I_Classic {
     zSKY_STATE_EFFECT_CLOUDSHADOW
   };
 
+  // sizeof 40h
   class zCSkyLayerData {
   public:
-    zESkyLayerMode skyMode;
-    zCTexture* texBox[5];
-    zCTexture* tex;
-    zSTRING texName;
-    float texAlpha;
-    float texScale;
-    zVEC2 texSpeed;
+    zESkyLayerMode skyMode; // sizeof 04h    offset 00h
+    zCTexture* texBox[5];   // sizeof 14h    offset 04h
+    zCTexture* tex;         // sizeof 04h    offset 18h
+    zSTRING texName;        // sizeof 14h    offset 1Ch
+    float texAlpha;         // sizeof 04h    offset 30h
+    float texScale;         // sizeof 04h    offset 34h
+    zVEC2 texSpeed;         // sizeof 08h    offset 38h
 
     void zCSkyLayerData_OnInit() zCall( 0x005BB830 );
     zCSkyLayerData()             zInit( zCSkyLayerData_OnInit() );
@@ -35,17 +36,18 @@ namespace Gothic_I_Classic {
     #include "zCSkyLayerData.inl"
   };
 
+  // sizeof C0h
   class zCSkyState {
   public:
-    float time;
-    zVEC3 polyColor;
-    zVEC3 fogColor;
-    zVEC3 domeColor1;
-    zVEC3 domeColor0;
-    float fogDist;
-    int sunOn;
-    int cloudShadowOn;
-    zCSkyLayerData layer[zSKY_NUM_LAYER];
+    float time;                           // sizeof 04h    offset 00h
+    zVEC3 polyColor;                      // sizeof 0Ch    offset 04h
+    zVEC3 fogColor;                       // sizeof 0Ch    offset 10h
+    zVEC3 domeColor1;                     // sizeof 0Ch    offset 1Ch
+    zVEC3 domeColor0;                     // sizeof 0Ch    offset 28h
+    float fogDist;                        // sizeof 04h    offset 34h
+    int sunOn;                            // sizeof 04h    offset 38h
+    int cloudShadowOn;                    // sizeof 04h    offset 3Ch
+    zCSkyLayerData layer[zSKY_NUM_LAYER]; // sizeof 80h    offset 40h
 
     void zCSkyState_OnInit() zCall( 0x005BB960 );
     zCSkyState()             zInit( zCSkyState_OnInit() );
@@ -63,13 +65,14 @@ namespace Gothic_I_Classic {
     #include "zCSkyState.inl"
   };
 
+  // sizeof 18h
   class zCSkyLayer {
   public:
-    zCMesh* skyPolyMesh;
-    zCPolygon* skyPoly;
-    zVEC2 skyTexOffs;
-    zCMesh* skyBoxMesh;
-    zESkyLayerMode skyMode;
+    zCMesh* skyPolyMesh;    // sizeof 04h    offset 00h
+    zCPolygon* skyPoly;     // sizeof 04h    offset 04h
+    zVEC2 skyTexOffs;       // sizeof 08h    offset 08h
+    zCMesh* skyBoxMesh;     // sizeof 04h    offset 10h
+    zESkyLayerMode skyMode; // sizeof 04h    offset 14h
 
     void zCSkyLayer_OnInit()                 zCall( 0x005BEC80 );
     zCSkyLayer()                             zInit( zCSkyLayer_OnInit() );
@@ -87,14 +90,15 @@ namespace Gothic_I_Classic {
     #include "zCSkyLayer.inl"
   };
 
+  // sizeof 40h
   class zCSkyPlanet {
   public:
-    zCMesh* mesh;
-    zVEC4 color0;
-    zVEC4 color1;
-    float size;
-    zVEC3 pos;
-    zVEC3 rotAxis;
+    zCMesh* mesh;  // sizeof 04h    offset 00h
+    zVEC4 color0;  // sizeof 10h    offset 04h
+    zVEC4 color1;  // sizeof 10h    offset 14h
+    float size;    // sizeof 04h    offset 24h
+    zVEC3 pos;     // sizeof 0Ch    offset 28h
+    zVEC3 rotAxis; // sizeof 0Ch    offset 34h
 
     void zCSkyPlanet_OnInit() zCall( 0x005BC750 );
     zCSkyPlanet()             zInit( zCSkyPlanet_OnInit() );
@@ -104,9 +108,10 @@ namespace Gothic_I_Classic {
     #include "zCSkyPlanet.inl"
   };
 
+  // sizeof BCh
   class zCUnderwaterPFX : public zCParticleFX {
   public:
-    zVEC3 camPosLastFrame;
+    zVEC3 camPosLastFrame; // sizeof 0Ch    offset B0h
 
     zCUnderwaterPFX() {}
     void ProcessParticles()                zCall( 0x005BADC0 );
@@ -118,6 +123,7 @@ namespace Gothic_I_Classic {
     #include "zCUnderwaterPFX.inl"
   };
 
+  // sizeof 38h
   class zCSkyControler : public zCObject {
   public:
     zCLASS_DECLARATION( zCSkyControler )
@@ -128,11 +134,11 @@ namespace Gothic_I_Classic {
       zCAM_INSIDE_SECTOR_CAN_SEE_OUTSIDE
     };
 
-    zCOLOR* polyLightCLUTPtr;
-    float cloudShadowScale;
-    zCOLOR backgroundColor;
-    int fillBackground;
-    zCTexture* backgroundTexture;
+    zCOLOR* polyLightCLUTPtr;     // sizeof 04h    offset 24h
+    float cloudShadowScale;       // sizeof 04h    offset 28h
+    zCOLOR backgroundColor;       // sizeof 04h    offset 2Ch
+    int fillBackground;           // sizeof 04h    offset 30h
+    zCTexture* backgroundTexture; // sizeof 04h    offset 34h
 
     void zCSkyControler_OnInit()                            zCall( 0x005BA160 );
     zCSkyControler()                                        zInit( zCSkyControler_OnInit() );
@@ -167,22 +173,23 @@ namespace Gothic_I_Classic {
     #include "zCSkyControler.inl"
   };
 
+  // sizeof 68h
   class zCSkyControler_Mid : public zCSkyControler {
   public:
     zCLASS_DECLARATION( zCSkyControler_Mid )
 
-    int underwaterFX;
-    zCOLOR underwaterColor;
-    float underwaterFarZ;
-    float underwaterStartTime;
-    float oldFovX;
-    float oldFovY;
-    zCVob* vobUnderwaterPFX;
-    zCPolygon* scrPoly;
-    zCMesh* scrPolyMesh;
-    int scrPolyAlpha;
-    zCOLOR scrPolyColor;
-    zTRnd_AlphaBlendFunc scrPolyAlphaFunc;
+    int underwaterFX;                      // sizeof 04h    offset 38h
+    zCOLOR underwaterColor;                // sizeof 04h    offset 3Ch
+    float underwaterFarZ;                  // sizeof 04h    offset 40h
+    float underwaterStartTime;             // sizeof 04h    offset 44h
+    float oldFovX;                         // sizeof 04h    offset 48h
+    float oldFovY;                         // sizeof 04h    offset 4Ch
+    zCVob* vobUnderwaterPFX;               // sizeof 04h    offset 50h
+    zCPolygon* scrPoly;                    // sizeof 04h    offset 54h
+    zCMesh* scrPolyMesh;                   // sizeof 04h    offset 58h
+    int scrPolyAlpha;                      // sizeof 04h    offset 5Ch
+    zCOLOR scrPolyColor;                   // sizeof 04h    offset 60h
+    zTRnd_AlphaBlendFunc scrPolyAlphaFunc; // sizeof 04h    offset 64h
 
     void zCSkyControler_Mid_OnInit()                     zCall( 0x005BA5A0 );
     zCSkyControler_Mid()                                 zInit( zCSkyControler_Mid_OnInit() );
@@ -213,13 +220,14 @@ namespace Gothic_I_Classic {
     #include "zCSkyControler_Mid.inl"
   };
 
+  // sizeof 74h
   class zCSkyControler_Indoor : public zCSkyControler_Mid {
   public:
     zCLASS_DECLARATION( zCSkyControler_Indoor )
 
-    float userFarZ;
-    float userFarZScalability;
-    float time;
+    float userFarZ;            // sizeof 04h    offset 68h
+    float userFarZScalability; // sizeof 04h    offset 6Ch
+    float time;                // sizeof 04h    offset 70h
 
     void zCSkyControler_Indoor_OnInit()                                 zCall( 0x005BB5D0 );
     zCSkyControler_Indoor()                                             zInit( zCSkyControler_Indoor_OnInit() );
@@ -243,18 +251,20 @@ namespace Gothic_I_Classic {
     #include "zCSkyControler_Indoor.inl"
   };
 
+  // sizeof 680h
   class zCSkyControler_Outdoor : public zCSkyControler_Mid {
   public:
     zCLASS_DECLARATION( zCSkyControler_Outdoor )
 
+    // sizeof 1Ch
     struct zTRainFX {
-      zCOutdoorRainFX* outdoorRainFX;
-      zTCamLocationHint camLocationHint;
-      float outdoorRainFXWeight;
-      float soundVolume;
-      float timerInsideSectorCantSeeOutside;
-      float timeStartRain;
-      float timeStopRain;
+      zCOutdoorRainFX* outdoorRainFX;        // sizeof 04h    offset 00h
+      zTCamLocationHint camLocationHint;     // sizeof 04h    offset 04h
+      float outdoorRainFXWeight;             // sizeof 04h    offset 08h
+      float soundVolume;                     // sizeof 04h    offset 0Ch
+      float timerInsideSectorCantSeeOutside; // sizeof 04h    offset 10h
+      float timeStartRain;                   // sizeof 04h    offset 14h
+      float timeStopRain;                    // sizeof 04h    offset 18h
 
       zTRainFX() {}
 
@@ -262,36 +272,36 @@ namespace Gothic_I_Classic {
       #include "zCSkyControler_Outdoor_zTRainFX.inl"
     };
 
-    int initDone;
-    float masterTime;
-    float masterTimeLast;
-    zCSkyState masterState;
-    zCSkyState* state0;
-    zCSkyState* state1;
-    zCArray<zCSkyState*> stateList;
-    zCOLOR polyLightCLUT[256];
-    int relightCtr;
-    float lastRelightTime;
-    float dayCounter;
-    zCArray<zVEC3> fogColorDayVariations;
-    float resultFogScale;
-    float heightFogMinY;
-    float heightFogMaxY;
-    float userFogFar;
-    float resultFogNear;
-    float resultFogFar;
-    float resultFogSkyNear;
-    float resultFogSkyFar;
-    zCOLOR resultFogColor;
-    float userFarZScalability;
-    zCSkyState* skyLayerState[2];
-    zCSkyLayer skyLayer[2];
-    zCSkyLayer skyLayerRainClouds;
-    zCTexture* skyCloudLayerTex;
-    zCSkyPlanet planets[NUM_PLANETS];
-    zCVob* vobSkyPFX;
-    float skyPFXTimer;
-    zTRainFX rainFX;
+    int initDone;                         // sizeof 04h    offset 68h
+    float masterTime;                     // sizeof 04h    offset 6Ch
+    float masterTimeLast;                 // sizeof 04h    offset 70h
+    zCSkyState masterState;               // sizeof C0h    offset 74h
+    zCSkyState* state0;                   // sizeof 04h    offset 134h
+    zCSkyState* state1;                   // sizeof 04h    offset 138h
+    zCArray<zCSkyState*> stateList;       // sizeof 0Ch    offset 13Ch
+    zCOLOR polyLightCLUT[256];            // sizeof 400h   offset 148h
+    int relightCtr;                       // sizeof 04h    offset 548h
+    float lastRelightTime;                // sizeof 04h    offset 54Ch
+    float dayCounter;                     // sizeof 04h    offset 550h
+    zCArray<zVEC3> fogColorDayVariations; // sizeof 0Ch    offset 554h
+    float resultFogScale;                 // sizeof 04h    offset 560h
+    float heightFogMinY;                  // sizeof 04h    offset 564h
+    float heightFogMaxY;                  // sizeof 04h    offset 568h
+    float userFogFar;                     // sizeof 04h    offset 56Ch
+    float resultFogNear;                  // sizeof 04h    offset 570h
+    float resultFogFar;                   // sizeof 04h    offset 574h
+    float resultFogSkyNear;               // sizeof 04h    offset 578h
+    float resultFogSkyFar;                // sizeof 04h    offset 57Ch
+    zCOLOR resultFogColor;                // sizeof 04h    offset 580h
+    float userFarZScalability;            // sizeof 04h    offset 584h
+    zCSkyState* skyLayerState[2];         // sizeof 08h    offset 588h
+    zCSkyLayer skyLayer[2];               // sizeof 30h    offset 590h
+    zCSkyLayer skyLayerRainClouds;        // sizeof 18h    offset 5C0h
+    zCTexture* skyCloudLayerTex;          // sizeof 04h    offset 5D8h
+    zCSkyPlanet planets[NUM_PLANETS];     // sizeof 80h    offset 5DCh
+    zCVob* vobSkyPFX;                     // sizeof 04h    offset 65Ch
+    float skyPFXTimer;                    // sizeof 04h    offset 660h
+    zTRainFX rainFX;                      // sizeof 1Ch    offset 664h
 
     void zCSkyControler_Outdoor_OnInit()                                    zCall( 0x005BC440 );
     zCSkyControler_Outdoor()                                                zInit( zCSkyControler_Outdoor_OnInit() );

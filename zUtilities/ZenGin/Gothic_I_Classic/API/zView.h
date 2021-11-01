@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_H__VER0__
 #define __ZVIEW_H__VER0__
@@ -26,6 +26,7 @@ namespace Gothic_I_Classic {
     VIEW_ITEM
   };
 
+  // sizeof 04h
   class zCInputCallback {
   public:
 
@@ -46,17 +47,18 @@ namespace Gothic_I_Classic {
     #include "zCInputCallback.inl"
   };
 
+  // sizeof 38h
   class zCViewText {
   public:
-    int posx;
-    int posy;
-    zSTRING text;
-    zCFont* font;
-    float timer;
-    int inPrintWin;
-    zCOLOR color;
-    int timed;
-    int colored;
+    int posx;       // sizeof 04h    offset 04h
+    int posy;       // sizeof 04h    offset 08h
+    zSTRING text;   // sizeof 14h    offset 0Ch
+    zCFont* font;   // sizeof 04h    offset 20h
+    float timer;    // sizeof 04h    offset 24h
+    int inPrintWin; // sizeof 04h    offset 28h
+    zCOLOR color;   // sizeof 04h    offset 2Ch
+    int timed;      // sizeof 04h    offset 30h
+    int colored;    // sizeof 04h    offset 34h
 
     zCViewText() {}
     void zCViewText_OnInit( int, int, zSTRING const& )                                     zCall( 0x00702600 );
@@ -70,6 +72,7 @@ namespace Gothic_I_Classic {
     #include "zCViewText.inl"
   };
 
+  // sizeof FCh
   class zCView : public zCViewBase, public zCInputCallback {
   public:
     typedef enum zEViewFX {
@@ -78,53 +81,53 @@ namespace Gothic_I_Classic {
       VIEW_FX_MAX
     } zTViewFX;
 
-    zCView* next;
-    zTviewID viewID;
-    int flags;
-    int intflags;
-    int ondesk;
-    zTRnd_AlphaBlendFunc alphafunc;
-    zCOLOR color;
-    int alpha;
-    zList<zCView> childs;
-    zCView* owner;
-    zCTexture* backTex;
-    int vposx;
-    int vposy;
-    int vsizex;
-    int vsizey;
-    int pposx;
-    int pposy;
-    int psizex;
-    int psizey;
-    zCFont* font;
-    zCOLOR fontColor;
-    int px1;
-    int py1;
-    int px2;
-    int py2;
-    int winx;
-    int winy;
-    zCList<zCViewText> textLines;
-    float scrollMaxTime;
-    float scrollTimer;
-    zTViewFX fxOpen;
-    zTViewFX fxClose;
-    float timeDialog;
-    float timeOpen;
-    float timeClose;
-    float speedOpen;
-    float speedClose;
-    int isOpen;
-    int isClosed;
-    int continueOpen;
-    int continueClose;
-    int removeOnClose;
-    int resizeOnOpen;
-    int maxTextLength;
-    zSTRING textMaxLength;
-    zVEC2 posCurrent[2];
-    zVEC2 posOpenClose[2];
+    zCView* next;                   // sizeof 04h    offset 08h
+    zTviewID viewID;                // sizeof 04h    offset 0Ch
+    int flags;                      // sizeof 04h    offset 10h
+    int intflags;                   // sizeof 04h    offset 14h
+    int ondesk;                     // sizeof 04h    offset 18h
+    zTRnd_AlphaBlendFunc alphafunc; // sizeof 04h    offset 1Ch
+    zCOLOR color;                   // sizeof 04h    offset 20h
+    int alpha;                      // sizeof 04h    offset 24h
+    zList<zCView> childs;           // sizeof 10h    offset 28h
+    zCView* owner;                  // sizeof 04h    offset 38h
+    zCTexture* backTex;             // sizeof 04h    offset 3Ch
+    int vposx;                      // sizeof 04h    offset 40h
+    int vposy;                      // sizeof 04h    offset 44h
+    int vsizex;                     // sizeof 04h    offset 48h
+    int vsizey;                     // sizeof 04h    offset 4Ch
+    int pposx;                      // sizeof 04h    offset 50h
+    int pposy;                      // sizeof 04h    offset 54h
+    int psizex;                     // sizeof 04h    offset 58h
+    int psizey;                     // sizeof 04h    offset 5Ch
+    zCFont* font;                   // sizeof 04h    offset 60h
+    zCOLOR fontColor;               // sizeof 04h    offset 64h
+    int px1;                        // sizeof 04h    offset 68h
+    int py1;                        // sizeof 04h    offset 6Ch
+    int px2;                        // sizeof 04h    offset 70h
+    int py2;                        // sizeof 04h    offset 74h
+    int winx;                       // sizeof 04h    offset 78h
+    int winy;                       // sizeof 04h    offset 7Ch
+    zCList<zCViewText> textLines;   // sizeof 08h    offset 80h
+    float scrollMaxTime;            // sizeof 04h    offset 88h
+    float scrollTimer;              // sizeof 04h    offset 8Ch
+    zTViewFX fxOpen;                // sizeof 04h    offset 90h
+    zTViewFX fxClose;               // sizeof 04h    offset 94h
+    float timeDialog;               // sizeof 04h    offset 98h
+    float timeOpen;                 // sizeof 04h    offset 9Ch
+    float timeClose;                // sizeof 04h    offset A0h
+    float speedOpen;                // sizeof 04h    offset A4h
+    float speedClose;               // sizeof 04h    offset A8h
+    int isOpen;                     // sizeof 04h    offset ACh
+    int isClosed;                   // sizeof 04h    offset B0h
+    int continueOpen;               // sizeof 04h    offset B4h
+    int continueClose;              // sizeof 04h    offset B8h
+    int removeOnClose;              // sizeof 04h    offset BCh
+    int resizeOnOpen;               // sizeof 04h    offset C0h
+    int maxTextLength;              // sizeof 04h    offset C4h
+    zSTRING textMaxLength;          // sizeof 14h    offset C8h
+    zVEC2 posCurrent[2];            // sizeof 10h    offset DCh
+    zVEC2 posOpenClose[2];          // sizeof 10h    offset ECh
     
     void zCView_OnInit()                                                            zCall( 0x006FBB60 );
     void zCView_OnInit( int, int, int, int, zTviewID )                              zCall( 0x006FBC20 );

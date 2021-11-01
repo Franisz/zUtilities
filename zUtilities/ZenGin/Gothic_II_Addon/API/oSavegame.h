@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OSAVEGAME_H__VER3__
 #define __OSAVEGAME_H__VER3__
@@ -7,26 +7,27 @@
 
 namespace Gothic_II_Addon {
 
+  // sizeof B4h
   class oCSavegameInfo : public zCObject {
   public:
     zCLASS_DECLARATION( oCSavegameInfo )
 
-    zSTRING m_Dir;
-    zCTexture* m_ThumbTex;
-    int m_SlotNr;
-    zSTRING m_Name;
-    zSTRING m_WorldName;
-    int m_TimeDay;
-    int m_TimeHour;
-    int m_TimeMin;
-    zSTRING m_SaveDate;
-    int m_verMajor;
-    int m_verMinor;
-    int m_PlayTimeSeconds;
-    int m_verPoint;
-    int m_verInt;
-    zSTRING m_verName;
-    int m_notCompatible;
+    zSTRING m_Dir;         // sizeof 14h    offset 24h
+    zCTexture* m_ThumbTex; // sizeof 04h    offset 38h
+    int m_SlotNr;          // sizeof 04h    offset 3Ch
+    zSTRING m_Name;        // sizeof 14h    offset 40h
+    zSTRING m_WorldName;   // sizeof 14h    offset 54h
+    int m_TimeDay;         // sizeof 04h    offset 68h
+    int m_TimeHour;        // sizeof 04h    offset 6Ch
+    int m_TimeMin;         // sizeof 04h    offset 70h
+    zSTRING m_SaveDate;    // sizeof 14h    offset 74h
+    int m_verMajor;        // sizeof 04h    offset 88h
+    int m_verMinor;        // sizeof 04h    offset 8Ch
+    int m_PlayTimeSeconds; // sizeof 04h    offset 90h
+    int m_verPoint;        // sizeof 04h    offset 94h
+    int m_verInt;          // sizeof 04h    offset 98h
+    zSTRING m_verName;     // sizeof 14h    offset 9Ch
+    int m_notCompatible;   // sizeof 04h    offset B0h
 
     void oCSavegameInfo_OnInit()             zCall( 0x00436BA0 );
     void oCSavegameInfo_OnInit( int )        zCall( 0x00436D70 );
@@ -53,11 +54,12 @@ namespace Gothic_II_Addon {
     #include "oCSavegameInfo.inl"
   };
 
+  // sizeof 18h
   class oCSavegameManager {
   public:
-    zCArray<oCSavegameInfo*> infoList;
-    oCSavegameInfo* localInfo;
-    bool initialized;
+    zCArray<oCSavegameInfo*> infoList; // sizeof 0Ch    offset 04h
+    oCSavegameInfo* localInfo;         // sizeof 04h    offset 10h
+    bool initialized;                  // sizeof 01h    offset 14h
 
     void oCSavegameManager_OnInit()                  zCall( 0x004386F0 );
     oCSavegameManager()                              zInit( oCSavegameManager_OnInit() );

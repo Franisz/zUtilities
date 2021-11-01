@@ -1,14 +1,15 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OCOLLISION_OBJECT_MISC_CHAR_H__VER1__
 #define __OCOLLISION_OBJECT_MISC_CHAR_H__VER1__
 
 namespace Gothic_I_Addon {
 
+  // sizeof 144h
   class oCCollObjectCharacter : public zCCollObjectCharacter {
   public:
-    int comeNearerCounter;
-    const zCVob* mustNotComeNearer;
+    int comeNearerCounter;          // sizeof 04h    offset 13Ch
+    const zCVob* mustNotComeNearer; // sizeof 04h    offset 140h
 
     void oCCollObjectCharacter_OnInit()                    zCall( 0x0079D430 );
     oCCollObjectCharacter()                                zInit( oCCollObjectCharacter_OnInit() );

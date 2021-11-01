@@ -1,10 +1,11 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMEMORY__GENERIC_H__VER1__
 #define __ZMEMORY__GENERIC_H__VER1__
 
 namespace Gothic_I_Addon {
 
+  // sizeof 04h
   class zCMallocGeneric : public zCMalloc {
   public:
 

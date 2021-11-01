@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCOLLISION_DETECTOR_H__VER0__
 #define __ZCOLLISION_DETECTOR_H__VER0__
@@ -6,14 +6,15 @@
 namespace Gothic_I_Classic {
   const int zNUM_COLL_REPORTS = 16;
 
+  // sizeof 34h
   class zCCollisionReport {
   public:
-    float m_fTimeStamp;
-    zVEC3 m_oContactPoint;
-    zVEC3 m_oCollNormal0;
-    zVEC3 m_oCollNormal1;
-    zCCollisionObject* m_poCollObject0;
-    zCCollisionObject* m_poCollObject1;
+    float m_fTimeStamp;                 // sizeof 04h    offset 04h
+    zVEC3 m_oContactPoint;              // sizeof 0Ch    offset 08h
+    zVEC3 m_oCollNormal0;               // sizeof 0Ch    offset 14h
+    zVEC3 m_oCollNormal1;               // sizeof 0Ch    offset 20h
+    zCCollisionObject* m_poCollObject0; // sizeof 04h    offset 2Ch
+    zCCollisionObject* m_poCollObject1; // sizeof 04h    offset 30h
 
     void zCCollisionReport_OnInit() zCall( 0x00537FD0 );
     zCCollisionReport()             zInit( zCCollisionReport_OnInit() );
@@ -23,11 +24,12 @@ namespace Gothic_I_Classic {
     #include "zCCollisionReport.inl"
   };
 
+  // sizeof 0Ch
   class zCCollisionDetector {
   public:
 
-    zTStaticIntersectionTest** m_apStaticTestFuncMatrix;
-    zTDynamicIntersectionTest** m_apDynamicTestFuncMatrix;
+    zTStaticIntersectionTest** m_apStaticTestFuncMatrix;   // sizeof 04h    offset 04h
+    zTDynamicIntersectionTest** m_apDynamicTestFuncMatrix; // sizeof 04h    offset 08h
 
     void zCCollisionDetector_OnInit()                                                                                                                                                                                        zCall( 0x00538060 );
     zCCollisionDetector()                                                                                                                                                                                                    zInit( zCCollisionDetector_OnInit() );

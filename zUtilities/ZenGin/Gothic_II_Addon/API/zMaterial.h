@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMATERIAL_H__VER3__
 #define __ZMATERIAL_H__VER3__
@@ -31,13 +31,14 @@ namespace Gothic_II_Addon {
     zWAVEANI_WIND
   };
 
+  // sizeof 14h
   class zCTexAniCtrl {
   public:
-    int aniChannel;
-    float actFrame;
-    float aniFPS;
-    unsigned long frameCtr;
-    int bOneShotAni;
+    int aniChannel;         // sizeof 04h    offset 00h
+    float actFrame;         // sizeof 04h    offset 04h
+    float aniFPS;           // sizeof 04h    offset 08h
+    unsigned long frameCtr; // sizeof 04h    offset 0Ch
+    int bOneShotAni;        // sizeof 04h    offset 10h
 
     void zCTexAniCtrl_OnInit()    zCall( 0x00565D30 );
     zCTexAniCtrl()                zInit( zCTexAniCtrl_OnInit() );
@@ -50,6 +51,7 @@ namespace Gothic_II_Addon {
     #include "zCTexAniCtrl.inl"
   };
 
+  // sizeof ACh
   class zCMaterial : public zCObject {
   public:
     zCLASS_DECLARATION( zCMaterial )
@@ -59,42 +61,42 @@ namespace Gothic_II_Addon {
       zMAT_USAGE_OTHER
     };
 
-    zCArray<zCPolygon*> polyList;
-    unsigned long polyListTimeStamp;
-    zCTexture* texture;
-    zCOLOR color;
-    float smoothAngle;
-    zTMat_Group matGroup;
-    zCBspSector* bspSectorFront;
-    zCBspSector* bspSectorBack;
-    zCTexAniCtrl texAniCtrl;
-    zSTRING* detailObjectVisualName;
-    float kambient;
-    float kdiffuse;
-    float m_bEnvironmentalMappingStrength;
+    zCArray<zCPolygon*> polyList;                 // sizeof 0Ch    offset 24h
+    unsigned long polyListTimeStamp;              // sizeof 04h    offset 30h
+    zCTexture* texture;                           // sizeof 04h    offset 34h
+    zCOLOR color;                                 // sizeof 04h    offset 38h
+    float smoothAngle;                            // sizeof 04h    offset 3Ch
+    zTMat_Group matGroup;                         // sizeof 04h    offset 40h
+    zCBspSector* bspSectorFront;                  // sizeof 04h    offset 44h
+    zCBspSector* bspSectorBack;                   // sizeof 04h    offset 48h
+    zCTexAniCtrl texAniCtrl;                      // sizeof 14h    offset 4Ch
+    zSTRING* detailObjectVisualName;              // sizeof 04h    offset 60h
+    float kambient;                               // sizeof 04h    offset 64h
+    float kdiffuse;                               // sizeof 04h    offset 68h
+    float m_bEnvironmentalMappingStrength;        // sizeof 04h    offset 6Ch
     group {
-      unsigned char smooth                   : 1;
-      unsigned char dontUseLightmaps         : 1;
-      unsigned char texAniMap                : 1;
-      unsigned char lodDontCollapse          : 1;
-      unsigned char noCollDet                : 1;
-      unsigned char forceOccluder            : 1;
-      unsigned char m_bEnvironmentalMapping  : 1;
-      unsigned char polyListNeedsSort        : 1;
-      unsigned char matUsage                 : 8;
-      unsigned char libFlag                  : 8;
-      zTRnd_AlphaBlendFunc rndAlphaBlendFunc : 8;
-      unsigned char m_bIgnoreSun             : 1;
+      unsigned char smooth                   : 1; // sizeof 01h    offset bit
+      unsigned char dontUseLightmaps         : 1; // sizeof 01h    offset bit
+      unsigned char texAniMap                : 1; // sizeof 01h    offset bit
+      unsigned char lodDontCollapse          : 1; // sizeof 01h    offset bit
+      unsigned char noCollDet                : 1; // sizeof 01h    offset bit
+      unsigned char forceOccluder            : 1; // sizeof 01h    offset bit
+      unsigned char m_bEnvironmentalMapping  : 1; // sizeof 01h    offset bit
+      unsigned char polyListNeedsSort        : 1; // sizeof 01h    offset bit
+      unsigned char matUsage                 : 8; // sizeof 08h    offset bit
+      unsigned char libFlag                  : 8; // sizeof 08h    offset bit
+      zTRnd_AlphaBlendFunc rndAlphaBlendFunc : 8; // sizeof 08h    offset bit
+      unsigned char m_bIgnoreSun             : 1; // sizeof 01h    offset bit
     };
-    zTWaveAniMode m_enuWaveMode;
-    zTFFT m_enuWaveSpeed;
-    float m_fWaveMaxAmplitude;
-    float m_fWaveGridSize;
-    zCTexture* detailTexture;
-    float detailTextureScale;
-    zVEC2 texAniMapDelta;
-    zVEC2 default_mapping;
-    zVEC2 texScale;
+    zTWaveAniMode m_enuWaveMode;                  // sizeof 04h    offset 7Ch
+    zTFFT m_enuWaveSpeed;                         // sizeof 04h    offset 80h
+    float m_fWaveMaxAmplitude;                    // sizeof 04h    offset 84h
+    float m_fWaveGridSize;                        // sizeof 04h    offset 88h
+    zCTexture* detailTexture;                     // sizeof 04h    offset 8Ch
+    float detailTextureScale;                     // sizeof 04h    offset 90h
+    zVEC2 texAniMapDelta;                         // sizeof 08h    offset 94h
+    zVEC2 default_mapping;                        // sizeof 08h    offset 9Ch
+    zVEC2 texScale;                               // sizeof 08h    offset A4h
 
     void zCMaterial_OnInit()                               zCall( 0x00563E00 );
     void zCMaterial_OnInit( zSTRING const& )               zCall( 0x00563EE0 );

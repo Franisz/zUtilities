@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZAI_CAMERA__MOVEMENT_H__VER1__
 #define __ZAI_CAMERA__MOVEMENT_H__VER1__
@@ -39,6 +39,7 @@ namespace Gothic_I_Addon {
     zPLAYER_BEAMED         = 1 << 15
   };
 
+  // sizeof 1F98h
   class zCMovementTracker {
   public:
     enum zTWayPoint {
@@ -49,92 +50,96 @@ namespace Gothic_I_Addon {
       zWAYPOINT_HIP_RIGHT
     };
 
-    unsigned long movement;
-    zCArray<zCPositionKey*>targetKFList;
-    float frameTime;
-    zVEC3 sampledPlayerPos;
-    zVEC3 sampledPlayerPosRing;
-    zVEC3 playerPos;
-    zVEC3 playerPosRing;
-    zVEC3 POI_Player;
-    zVEC3 camPos;
-    zVEC3 camPosRing;
-    zVEC3 oldSampledPlayerPosRing;
-    zVEC3 oldSampledPlayerPos;
-    zVEC3 offsetPos;
-    zVEC3 playerFuturePos;
-    float playerFuturePosDT;
-    int numPreSamplesPlayerPos;
-    int numSamplesCam;
-    int numSamplesPlayer;
-    zCPose rotPoseTargetFOR;
-    zCPose headPose;
-    zCPose sampledPlayerPose;
-    zVEC3 wayPointHead[NUM_WAYPOINTS];
-    zVEC3 wayPointHipLeft[NUM_WAYPOINTS];
-    zVEC3 wayPointHipRight[NUM_WAYPOINTS];
-    zVEC3 wayPointCam[NUM_WAYPOINTS];
-    int actWayPointHead;
-    int actWayPointHipLeft;
-    int actWayPointHipRight;
-    int actWayPointCam;
-    float wayTimeHead;
-    float wayTimeHipLeft;
-    float wayTimeHipRight;
-    float wayTimeCam;
-    zVEC3 playerHead;
-    zVEC3 playerHipLeft;
-    zVEC3 playerHipRight;
-    zVEC3 playerPosMovement;
-    zVEC3 playerPosMovementRing;
-    zVEC3 playerPosMovementLocal;
-    zVEC3 playerPosMovementLocalCam;
-    zVEC3 oldPlayerPosMovement;
-    zVEC3 oldPlayerPos;
-    zVEC3 oldCamPos;
-    float oldDistToPlayer;
-    float inertiaTrans;
-    float inertiaHead;
-    float inertiaRotTargetFOR;
-    float inertiaTargetTrans;
-    float inertiaTargetRot;
-    float actAzi;
-    float actElev;
-    float distToPlayer;
-    float playerVeloRange;
-    float oldAzi;
-    float oldElev;
-    zMAT4 trafoWStoTS;
-    zMAT4 trafoTStoWS;
-    zMAT4 trafoWStoCS;
-    zMAT4 trafoCStoWS;
-    zMAT4 oldTrafoWStoTS;
-    zMAT4 oldTrafoWStoCS;
-    zMAT4 oldTrafoRotOffsetWStoCS;
-    zMAT4 lastValidCamTrafo;
-    zCQuat startRot;
-    zCQuat endRot;
-    zCQuat maxAziRot;
-    zCQuat minAziRot;
-    zCQuat idealRot;
-    zCQuat idealRotTrans;
-    zCQuat actRot;
-    zCQuat idealRotLocal;
-    zMAT4 initialPoseRotFreeze;
-    float timeSamples;
-    float standTimer;
-    int standing;
-    int rotate;
-    int bMouseUsed;
-    float playerAziSideSign;
-    float playerElevSideSign;
-    zCVob* target;
-    zCVob* camVob;
-    zCAICamera* camai;
-    zCPathSearch* pathSearch;
+    unsigned long movement;                // sizeof 04h    offset 00h
+    zCArray<zCPositionKey*>targetKFList;   // sizeof 0Ch    offset 04h
+    float frameTime;                       // sizeof 04h    offset 10h
+    zVEC3 sampledPlayerPos;                // sizeof 0Ch    offset 14h
+    zVEC3 sampledPlayerPosRing;            // sizeof 0Ch    offset 20h
+    zVEC3 playerPos;                       // sizeof 0Ch    offset 2Ch
+    zVEC3 playerPosRing;                   // sizeof 0Ch    offset 38h
+    zVEC3 POI_Player;                      // sizeof 0Ch    offset 44h
+    zVEC3 camPos;                          // sizeof 0Ch    offset 50h
+    zVEC3 camPosRing;                      // sizeof 0Ch    offset 5Ch
+    zVEC3 oldSampledPlayerPosRing;         // sizeof 0Ch    offset 68h
+    zVEC3 oldSampledPlayerPos;             // sizeof 0Ch    offset 74h
+    zVEC3 offsetPos;                       // sizeof 0Ch    offset 80h
+    zVEC3 playerFuturePos;                 // sizeof 0Ch    offset 8Ch
+    float playerFuturePosDT;               // sizeof 04h    offset 98h
+    int numPreSamplesPlayerPos;            // sizeof 04h    offset 9Ch
+    int numSamplesCam;                     // sizeof 04h    offset A0h
+    int numSamplesPlayer;                  // sizeof 04h    offset A4h
+    zCPose rotPoseTargetFOR;               // sizeof 8E4h   offset A8h
+    zCPose headPose;                       // sizeof 8E4h   offset 98Ch
+    zCPose sampledPlayerPose;              // sizeof 8E4h   offset 1270h
+    zVEC3 wayPointHead[NUM_WAYPOINTS];     // sizeof 24h    offset 1B54h
+    zVEC3 wayPointHipLeft[NUM_WAYPOINTS];  // sizeof 24h    offset 1B78h
+    zVEC3 wayPointHipRight[NUM_WAYPOINTS]; // sizeof 24h    offset 1B9Ch
+    zVEC3 wayPointCam[NUM_WAYPOINTS];      // sizeof 24h    offset 1BC0h
+    int actWayPointHead;                   // sizeof 04h    offset 1BE4h
+    int actWayPointHipLeft;                // sizeof 04h    offset 1BE8h
+    int actWayPointHipRight;               // sizeof 04h    offset 1BECh
+    int actWayPointCam;                    // sizeof 04h    offset 1BF0h
+    float wayTimeHead;                     // sizeof 04h    offset 1BF4h
+    float wayTimeHipLeft;                  // sizeof 04h    offset 1BF8h
+    float wayTimeHipRight;                 // sizeof 04h    offset 1BFCh
+    float wayTimeCam;                      // sizeof 04h    offset 1C00h
+    zVEC3 playerHead;                      // sizeof 0Ch    offset 1C04h
+    zVEC3 playerHipLeft;                   // sizeof 0Ch    offset 1C10h
+    zVEC3 playerHipRight;                  // sizeof 0Ch    offset 1C1Ch
+    zVEC3 playerPosMovement;               // sizeof 0Ch    offset 1C28h
+    zVEC3 playerPosMovementRing;           // sizeof 0Ch    offset 1C34h
+    zVEC3 playerPosMovementLocal;          // sizeof 0Ch    offset 1C40h
+    zVEC3 playerPosMovementLocalCam;       // sizeof 0Ch    offset 1C4Ch
+    zVEC3 oldPlayerPosMovement;            // sizeof 0Ch    offset 1C58h
+    zVEC3 oldPlayerPos;                    // sizeof 0Ch    offset 1C64h
+    zVEC3 oldCamPos;                       // sizeof 0Ch    offset 1C70h
+    float oldDistToPlayer;                 // sizeof 04h    offset 1C7Ch
+    float inertiaTrans;                    // sizeof 04h    offset 1C80h
+    float inertiaHead;                     // sizeof 04h    offset 1C84h
+    float inertiaRotTargetFOR;             // sizeof 04h    offset 1C88h
+    float inertiaTargetTrans;              // sizeof 04h    offset 1C8Ch
+    float inertiaTargetRot;                // sizeof 04h    offset 1C90h
+    float actAzi;                          // sizeof 04h    offset 1C94h
+    float actElev;                         // sizeof 04h    offset 1C98h
+    float distToPlayer;                    // sizeof 04h    offset 1C9Ch
+    float playerVeloRange;                 // sizeof 04h    offset 1CA0h
+    float oldAzi;                          // sizeof 04h    offset 1CA4h
+    float oldElev;                         // sizeof 04h    offset 1CA8h
+    zMAT4 trafoWStoTS;                     // sizeof 40h    offset 1CACh
+    zMAT4 trafoTStoWS;                     // sizeof 40h    offset 1CECh
+    zMAT4 trafoWStoCS;                     // sizeof 40h    offset 1D2Ch
+    zMAT4 trafoCStoWS;                     // sizeof 40h    offset 1D6Ch
+    zMAT4 oldTrafoWStoTS;                  // sizeof 40h    offset 1DACh
+    zMAT4 oldTrafoWStoCS;                  // sizeof 40h    offset 1DECh
+    zMAT4 oldTrafoRotOffsetWStoCS;         // sizeof 40h    offset 1E2Ch
+    zMAT4 lastValidCamTrafo;               // sizeof 40h    offset 1E6Ch
+    zCQuat startRot;                       // sizeof 10h    offset 1EACh
+    zCQuat endRot;                         // sizeof 10h    offset 1EBCh
+    zCQuat maxAziRot;                      // sizeof 10h    offset 1ECCh
+    zCQuat minAziRot;                      // sizeof 10h    offset 1EDCh
+    zCQuat idealRot;                       // sizeof 10h    offset 1EECh
+    zCQuat idealRotTrans;                  // sizeof 10h    offset 1EFCh
+    zCQuat actRot;                         // sizeof 10h    offset 1F0Ch
+    zCQuat idealRotLocal;                  // sizeof 10h    offset 1F1Ch
+    zMAT4 initialPoseRotFreeze;            // sizeof 40h    offset 1F2Ch
+    float timeSamples;                     // sizeof 04h    offset 1F6Ch
+    float standTimer;                      // sizeof 04h    offset 1F70h
+    int standing;                          // sizeof 04h    offset 1F74h
+    int rotate;                            // sizeof 04h    offset 1F78h
+    int bMouseUsed;                        // sizeof 04h    offset 1F7Ch
+    float playerAziSideSign;               // sizeof 04h    offset 1F80h
+    float playerElevSideSign;              // sizeof 04h    offset 1F84h
+    zCVob* target;                         // sizeof 04h    offset 1F88h
+    zCVob* camVob;                         // sizeof 04h    offset 1F8Ch
+    zCAICamera* camai;                     // sizeof 04h    offset 1F90h
+    zCPathSearch* pathSearch;              // sizeof 04h    offset 1F94h
 
     void zCMovementTracker_OnInit()                                           zCall( 0x004B9AD0 );
+
+  private:
     zCMovementTracker()                                                       zInit( zCMovementTracker_OnInit() );
+
+  public:
     ~zCMovementTracker()                                                      zCall( 0x004B9FD0 );
     float GetAzimuth()                                                        zCall( 0x004BA050 );
     float GetElevation()                                                      zCall( 0x004BA060 );

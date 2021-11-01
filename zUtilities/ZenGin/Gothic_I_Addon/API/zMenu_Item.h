@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMENU__ITEM_H__VER1__
 #define __ZMENU__ITEM_H__VER1__
@@ -69,56 +69,57 @@ namespace Gothic_I_Addon {
     SEL_ACTION_EXECCOMMANDS
   };
 
+  // sizeof 3D4h
   class zCMenuItem : public zCView {
   public:
-    zSTRING m_parFontName;
-    zSTRING m_parText[MAX_USERSTRINGS];
-    zSTRING m_parBackPic;
-    zSTRING m_parAlphaMode;
-    int m_parAlpha;
-    int m_parType;
-    int m_parOnSelAction[MAX_SEL_ACTIONS];
-    zSTRING m_parOnSelAction_S[MAX_SEL_ACTIONS];
-    zSTRING m_parOnChgSetOption;
-    zSTRING m_parOnChgSetOptionSection;
-    int m_parOnEventAction[MAX_EVENTS];
-    int m_parPosX;
-    int m_parPosY;
-    int m_parDimX;
-    int m_parDimY;
-    float m_parSizeStartScale;
-    int m_parItemFlags;
-    float m_parOpenDelayTime;
-    float m_parOpenDuration;
-    float m_parUserFloat[MAX_USERVARS];
-    zSTRING m_parUserString[MAX_USERVARS];
-    int m_parFrameSizeX;
-    int m_parFrameSizeY;
-    int m_iRefCtr;
-    zCView* m_pInnerWindow;
-    zCFont* m_pFont;
-    zCFont* m_pFontHi;
-    zCFont* m_pFontSel;
-    zCFont* m_pFontDis;
-    int m_bViewInitialized;
-    int m_bLeaveItem;
-    int m_bVisible;
-    zCArray<zSTRING>m_listLines;
-    zSTRING id;
-    int inserted;
-    int changed;
-    int active;
-    int open;
-    int close;
-    int opened;
-    int closed;
-    int disabled;
-    zCView* orgWin;
-    float fxTimer;
-    float openDelayTimer;
-    float activeTimer;
-    int registeredCPP;
-    int firstTimeInserted;
+    zSTRING m_parFontName;                       // sizeof 14h    offset FCh
+    zSTRING m_parText[MAX_USERSTRINGS];          // sizeof C8h    offset 110h
+    zSTRING m_parBackPic;                        // sizeof 14h    offset 1D8h
+    zSTRING m_parAlphaMode;                      // sizeof 14h    offset 1ECh
+    int m_parAlpha;                              // sizeof 04h    offset 200h
+    int m_parType;                               // sizeof 04h    offset 204h
+    int m_parOnSelAction[MAX_SEL_ACTIONS];       // sizeof 14h    offset 208h
+    zSTRING m_parOnSelAction_S[MAX_SEL_ACTIONS]; // sizeof 64h    offset 21Ch
+    zSTRING m_parOnChgSetOption;                 // sizeof 14h    offset 280h
+    zSTRING m_parOnChgSetOptionSection;          // sizeof 14h    offset 294h
+    int m_parOnEventAction[MAX_EVENTS];          // sizeof 28h    offset 2A8h
+    int m_parPosX;                               // sizeof 04h    offset 2D0h
+    int m_parPosY;                               // sizeof 04h    offset 2D4h
+    int m_parDimX;                               // sizeof 04h    offset 2D8h
+    int m_parDimY;                               // sizeof 04h    offset 2DCh
+    float m_parSizeStartScale;                   // sizeof 04h    offset 2E0h
+    int m_parItemFlags;                          // sizeof 04h    offset 2E4h
+    float m_parOpenDelayTime;                    // sizeof 04h    offset 2E8h
+    float m_parOpenDuration;                     // sizeof 04h    offset 2ECh
+    float m_parUserFloat[MAX_USERVARS];          // sizeof 10h    offset 2F0h
+    zSTRING m_parUserString[MAX_USERVARS];       // sizeof 50h    offset 300h
+    int m_parFrameSizeX;                         // sizeof 04h    offset 350h
+    int m_parFrameSizeY;                         // sizeof 04h    offset 354h
+    int m_iRefCtr;                               // sizeof 04h    offset 358h
+    zCView* m_pInnerWindow;                      // sizeof 04h    offset 35Ch
+    zCFont* m_pFont;                             // sizeof 04h    offset 360h
+    zCFont* m_pFontHi;                           // sizeof 04h    offset 364h
+    zCFont* m_pFontSel;                          // sizeof 04h    offset 368h
+    zCFont* m_pFontDis;                          // sizeof 04h    offset 36Ch
+    int m_bViewInitialized;                      // sizeof 04h    offset 370h
+    int m_bLeaveItem;                            // sizeof 04h    offset 374h
+    int m_bVisible;                              // sizeof 04h    offset 378h
+    zCArray<zSTRING>m_listLines;                 // sizeof 0Ch    offset 37Ch
+    zSTRING id;                                  // sizeof 14h    offset 388h
+    int inserted;                                // sizeof 04h    offset 39Ch
+    int changed;                                 // sizeof 04h    offset 3A0h
+    int active;                                  // sizeof 04h    offset 3A4h
+    int open;                                    // sizeof 04h    offset 3A8h
+    int close;                                   // sizeof 04h    offset 3ACh
+    int opened;                                  // sizeof 04h    offset 3B0h
+    int closed;                                  // sizeof 04h    offset 3B4h
+    int disabled;                                // sizeof 04h    offset 3B8h
+    zCView* orgWin;                              // sizeof 04h    offset 3BCh
+    float fxTimer;                               // sizeof 04h    offset 3C0h
+    float openDelayTimer;                        // sizeof 04h    offset 3C4h
+    float activeTimer;                           // sizeof 04h    offset 3C8h
+    int registeredCPP;                           // sizeof 04h    offset 3CCh
+    int firstTimeInserted;                       // sizeof 04h    offset 3D0h
 
     void zCMenuItem_OnInit( zSTRING const& )            zCall( 0x004E27F0 );
     void zCMenuItem_OnInit()                            zCall( 0x004E29C0 );
@@ -190,11 +191,12 @@ namespace Gothic_I_Addon {
     #include "zCMenuItem.inl"
   };
 
+  // sizeof 3F0h
   class zCMenuItemInput : public zCMenuItem {
   public:
-    zSTRING value;
-    unsigned short curPos;
-    int canceled;
+    zSTRING value;         // sizeof 14h    offset 3D4h
+    unsigned short curPos; // sizeof 02h    offset 3E8h
+    int canceled;          // sizeof 04h    offset 3ECh
 
     zCMenuItemInput() {}
     void zCMenuItemInput_OnInit( zSTRING const& ) zCall( 0x004E5A10 );
@@ -216,6 +218,7 @@ namespace Gothic_I_Addon {
     #include "zCMenuItemInput.inl"
   };
 
+  // sizeof 400h
   class zCMenuItemText : public zCMenuItem {
   public:
     enum zCMenuItemTextEnum3 {
@@ -224,13 +227,13 @@ namespace Gothic_I_Addon {
       MODE_MULTILINE
     };
 
-    zCMenuItemTextEnum3 m_mode;
-    zSTRING m_fullText;
-    int m_numOptions;
-    int m_topLine;
-    int m_viewLines;
-    int m_numLines;
-    int m_unformated;
+    zCMenuItemTextEnum3 m_mode; // sizeof 04h    offset 3D4h
+    zSTRING m_fullText;         // sizeof 14h    offset 3D8h
+    int m_numOptions;           // sizeof 04h    offset 3ECh
+    int m_topLine;              // sizeof 04h    offset 3F0h
+    int m_viewLines;            // sizeof 04h    offset 3F4h
+    int m_numLines;             // sizeof 04h    offset 3F8h
+    int m_unformated;           // sizeof 04h    offset 3FCh
 
     zCMenuItemText() {}
     void zCMenuItemText_OnInit( zSTRING const& )     zCall( 0x004E62D0 );
@@ -251,12 +254,13 @@ namespace Gothic_I_Addon {
     #include "zCMenuItemText.inl"
   };
 
+  // sizeof 3E4h
   class zCMenuItemSlider : public zCMenuItem {
   public:
-    zCViewWindow* slider;
-    int slideStep;
-    float sliderValue;
-    int sliderDimX;
+    zCViewWindow* slider; // sizeof 04h    offset 3D4h
+    int slideStep;        // sizeof 04h    offset 3D8h
+    float sliderValue;    // sizeof 04h    offset 3DCh
+    int sliderDimX;       // sizeof 04h    offset 3E0h
 
     zCMenuItemSlider() {}
     void zCMenuItemSlider_OnInit( zSTRING const& ) zCall( 0x004E74D0 );
@@ -277,10 +281,11 @@ namespace Gothic_I_Addon {
     #include "zCMenuItemSlider.inl"
   };
 
+  // sizeof 3ECh
   class zCMenuItemButton : public zCMenuItem {
   public:
-    zSTRING pic;
-    int active;
+    zSTRING pic; // sizeof 14h    offset 3D4h
+    int active;  // sizeof 04h    offset 3E8h
 
     zCMenuItemButton() {}
     void zCMenuItemButton_OnInit( zSTRING const& ) zCall( 0x004E9080 );
@@ -298,12 +303,13 @@ namespace Gothic_I_Addon {
     #include "zCMenuItemButton.inl"
   };
 
+  // sizeof 3E4h
   class zCMenuItemChoice : public zCMenuItem {
   public:
-    zCView* winCursor;
-    int option;
-    int optionStart;
-    int curStep;
+    zCView* winCursor; // sizeof 04h    offset 3D4h
+    int option;        // sizeof 04h    offset 3D8h
+    int optionStart;   // sizeof 04h    offset 3DCh
+    int curStep;       // sizeof 04h    offset 3E0h
 
     zCMenuItemChoice() {}
     void zCMenuItemChoice_OnInit( zSTRING const& ) zCall( 0x004E7D00 );
@@ -327,10 +333,11 @@ namespace Gothic_I_Addon {
     #include "zCMenuItemChoice.inl"
   };
 
+  // sizeof 2Ch
   struct zTMenuItemListElement {
-    zSTRING title;
-    zSTRING content;
-    zCMenuItem* contentViewer;
+    zSTRING title;             // sizeof 14h    offset 00h
+    zSTRING content;           // sizeof 14h    offset 14h
+    zCMenuItem* contentViewer; // sizeof 04h    offset 28h
 
     void zTMenuItemListElement_OnInit() zCall( 0x004EB190 );
     ~zTMenuItemListElement()            zCall( 0x0047ECC0 );
@@ -340,14 +347,15 @@ namespace Gothic_I_Addon {
     #include "zTMenuItemListElement.inl"
   };
 
+  // sizeof 3F4h
   class zCMenuItemList : public zCMenuItem {
   public:
-    zCArray<zTMenuItemListElement> m_list;
-    int m_cur_element;
-    int m_top_element;
-    zCView* m_pInnerWindow2;
-    zCView* m_pViewArrowUp;
-    zCView* m_pViewArrowDn;
+    zCArray<zTMenuItemListElement> m_list; // sizeof 0Ch    offset 3D4h
+    int m_cur_element;                     // sizeof 04h    offset 3E0h
+    int m_top_element;                     // sizeof 04h    offset 3E4h
+    zCView* m_pInnerWindow2;               // sizeof 04h    offset 3E8h
+    zCView* m_pViewArrowUp;                // sizeof 04h    offset 3ECh
+    zCView* m_pViewArrowDn;                // sizeof 04h    offset 3F0h
 
     zCMenuItemList() {}
     void zCMenuItemList_OnInit( zSTRING const& ) zCall( 0x004E9B30 );

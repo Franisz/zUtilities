@@ -1,10 +1,11 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIEW_DIALOG_ITEM_CONTAINER_H__VER3__
 #define __OVIEW_DIALOG_ITEM_CONTAINER_H__VER3__
 
 namespace Gothic_II_Addon {
 
+  // sizeof 110h
   class oCViewDialogItemContainer : public zCViewDialog {
   public:
     zCLASS_DECLARATION( oCViewDialogItemContainer )
@@ -14,12 +15,12 @@ namespace Gothic_II_Addon {
       oEItemContainerAlignment_Right
     };
 
-    oEItemContainerAlignment oTItemContainerAlignment;
-    oEItemContainerAlignment oTAlignmentItemContainer;
-    oCItemContainer* ItemContainer;
-    oEItemContainerAlignment Alignment;
-    unsigned long Value;
-    float ValueMultiplier;
+    oEItemContainerAlignment oTItemContainerAlignment; // sizeof 04h    offset F8h
+    oEItemContainerAlignment oTAlignmentItemContainer; // sizeof 04h    offset FCh
+    oCItemContainer* ItemContainer;                    // sizeof 04h    offset 100h
+    oEItemContainerAlignment Alignment;                // sizeof 04h    offset 104h
+    unsigned long Value;                               // sizeof 04h    offset 108h
+    float ValueMultiplier;                             // sizeof 04h    offset 10Ch
 
     void oCViewDialogItemContainer_OnInit()                  zCall( 0x00689A50 );
     oCViewDialogItemContainer()                              zInit( oCViewDialogItemContainer_OnInit() );

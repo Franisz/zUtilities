@@ -1,14 +1,15 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OSVM_H__VER0__
 #define __OSVM_H__VER0__
 
 namespace Gothic_I_Classic {
 
+  // sizeof 08h
   class oCSVMManager {
   public:
-    int svm_max;
-    oCSVM* sv_module;
+    int svm_max;      // sizeof 04h    offset 00h
+    oCSVM* sv_module; // sizeof 04h    offset 04h
 
     void oCSVMManager_OnInit()       zCall( 0x006D1240 );
     oCSVMManager()                   zInit( oCSVMManager_OnInit() );
@@ -19,11 +20,12 @@ namespace Gothic_I_Classic {
     #include "oCSVMManager.inl"
   };
 
+  // sizeof 0Ch
   class oCSVM {
   public:
-    int number;
-    int classindex;
-    zSTRING* entry;
+    int number;     // sizeof 04h    offset 00h
+    int classindex; // sizeof 04h    offset 04h
+    zSTRING* entry; // sizeof 04h    offset 08h
 
     void oCSVM_OnInit()         zCall( 0x006D18B0 );
     oCSVM()                     zInit( oCSVM_OnInit() );

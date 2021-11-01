@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OMENU_SAVEGAME_H__VER0__
 #define __OMENU_SAVEGAME_H__VER0__
@@ -8,6 +8,7 @@
 
 namespace Gothic_I_Classic {
 
+  // sizeof CF0h
   class oCMenuSavegame : public oCMenu_Main {
   public:
     enum oTMenuSavegameMode {
@@ -15,17 +16,17 @@ namespace Gothic_I_Classic {
       LOAD
     };
 
-    oTMenuSavegameMode mode;
-    oCSavegameManager* savegameManager;
-    int m_selSlot;
-    int m_selSlotItemIndex;
-    zCTexture* m_thumbPic;
-    zCMenuItem* m_item_PlayTime;
-    zCMenuItem* m_item_DateTime;
-    zCMenuItem* m_item_WorldName;
-    zCMenuItem* m_item_GameTime;
-    zCMenuItem* m_item_Thumbpic;
-    zCView* m_item_Thumbpic2;
+    oTMenuSavegameMode mode;            // sizeof 04h    offset CC4h
+    oCSavegameManager* savegameManager; // sizeof 04h    offset CC8h
+    int m_selSlot;                      // sizeof 04h    offset CCCh
+    int m_selSlotItemIndex;             // sizeof 04h    offset CD0h
+    zCTexture* m_thumbPic;              // sizeof 04h    offset CD4h
+    zCMenuItem* m_item_PlayTime;        // sizeof 04h    offset CD8h
+    zCMenuItem* m_item_DateTime;        // sizeof 04h    offset CDCh
+    zCMenuItem* m_item_WorldName;       // sizeof 04h    offset CE0h
+    zCMenuItem* m_item_GameTime;        // sizeof 04h    offset CE4h
+    zCMenuItem* m_item_Thumbpic;        // sizeof 04h    offset CE8h
+    zCView* m_item_Thumbpic2;           // sizeof 04h    offset CECh
 
     oCMenuSavegame() {}
     void oCMenuSavegame_OnInit( zSTRING const&, oTMenuSavegameMode ) zCall( 0x0042C2D0 );

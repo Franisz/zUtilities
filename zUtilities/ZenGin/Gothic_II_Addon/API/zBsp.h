@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZBSP_H__VER3__
 #define __ZBSP_H__VER3__
@@ -33,6 +33,7 @@ namespace Gothic_II_Addon {
     zBSP_TYPE_LEAFY_BSP
   };
 
+  // sizeof 48h
   class zCMeshOctreeNode {
   public:
     enum zEOctreeChild {
@@ -48,12 +49,12 @@ namespace Gothic_II_Addon {
       zEOctreeChild_Max
     };
 
-    zCMeshOctreeNode* m_parrChildren[8];
-    zTBBox3D m_Box;
-    unsigned char m_bIsRoot : 1;
-    unsigned char m_bIsNode : 1;
-    unsigned char m_bIsLeaf : 1;
-    zCArray<zCPolygon*> m_arrPolys;
+    zCMeshOctreeNode* m_parrChildren[8]; // sizeof 20h    offset 00h
+    zTBBox3D m_Box;                      // sizeof 18h    offset 20h
+    unsigned char m_bIsRoot : 1;         // sizeof 01h    offset bit
+    unsigned char m_bIsNode : 1;         // sizeof 01h    offset bit
+    unsigned char m_bIsLeaf : 1;         // sizeof 01h    offset bit
+    zCArray<zCPolygon*> m_arrPolys;      // sizeof 0Ch    offset 3Ch
 
     zCMeshOctreeNode() {}
     void zCMeshOctreeNode_OnInit( int )                                                                    zCall( 0x0053B190 );
@@ -67,10 +68,11 @@ namespace Gothic_II_Addon {
     #include "zCMeshOctreeNode.inl"
   };
 
+  // sizeof 4Ch
   class zCRayTurbo {
   public:
-    const zCBspNode* m_BspNode;
-    zCMeshOctreeNode m_MeshOctreeRoot;
+    const zCBspNode* m_BspNode;        // sizeof 04h    offset 00h
+    zCMeshOctreeNode m_MeshOctreeRoot; // sizeof 48h    offset 04h
 
     zCRayTurbo() {}
     void zCRayTurbo_OnInit( zCBspNode const& )                         zCall( 0x0053ADE0 );
@@ -83,13 +85,18 @@ namespace Gothic_II_Addon {
     #include "zCRayTurbo.inl"
   };
 
+  // sizeof 0Ch
   class zCRayTurboAdmin {
   public:
 
-    zTRayTurboValMap<zCBspNode*, zCRayTurbo*> m_mapRayTurbos;
+    zTRayTurboValMap<zCBspNode*, zCRayTurbo*> m_mapRayTurbos; // sizeof 0Ch    offset 00h
 
     void zCRayTurboAdmin_OnInit()                         zCall( 0x0053A650 );
+
+  private:
     zCRayTurboAdmin()                                     zInit( zCRayTurboAdmin_OnInit() );
+
+  public:
     ~zCRayTurboAdmin()                                    zCall( 0x0053A7C0 );
     zCRayTurbo* GetRayTurboItem( zCBspNode const* ) const zCall( 0x0053A9C0 );
     zCRayTurbo* CreateRayTurboItem( zCBspNode const* )    zCall( 0x0053AA00 );
@@ -107,13 +114,14 @@ namespace Gothic_II_Addon {
     #include "zCRayTurboAdmin.inl"
   };
 
+  // sizeof 28h
   class zCBspBase {
   public:
-    zCBspNode* parent;
-    zTBBox3D bbox3D;
-    zCPolygon** polyList;
-    int numPolys;
-    zTBspNodeType nodeType;
+    zCBspNode* parent;      // sizeof 04h    offset 00h
+    zTBBox3D bbox3D;        // sizeof 18h    offset 04h
+    zCPolygon** polyList;   // sizeof 04h    offset 1Ch
+    int numPolys;           // sizeof 04h    offset 20h
+    zTBspNodeType nodeType; // sizeof 04h    offset 24h
 
     zCBspBase() {}
     void DescribeTree( int )                                                                               zCall( 0x00529A10 );
@@ -150,14 +158,15 @@ namespace Gothic_II_Addon {
     #include "zCBspBase.inl"
   };
 
+  // sizeof 4Ch
   class zCBspNode : public zCBspBase {
   public:
-    zTPlane plane;
-    zCBspBase* front;
-    zCBspBase* back;
-    zCBspLeaf* leafList;
-    int numLeafs;
-    unsigned char planeSignbits;
+    zTPlane plane;               // sizeof 10h    offset 28h
+    zCBspBase* front;            // sizeof 04h    offset 38h
+    zCBspBase* back;             // sizeof 04h    offset 3Ch
+    zCBspLeaf* leafList;         // sizeof 04h    offset 40h
+    int numLeafs;                // sizeof 04h    offset 44h
+    unsigned char planeSignbits; // sizeof 01h    offset 48h
 
     void zCBspNode_OnInit()              zCall( 0x0052C6A0 );
     zCBspNode()                          zInit( zCBspNode_OnInit() );
@@ -167,17 +176,18 @@ namespace Gothic_II_Addon {
     #include "zCBspNode.inl"
   };
 
+  // sizeof 5Ch
   class zCBspLeaf : public zCBspBase {
   public:
 
-    int lastTimeLighted;
-    zCArray<zCVob*> leafVobList;
-    zCArray<zCVobLight*> lightVobList;
-    int lastTimeActivated;
-    unsigned short sectorIndex;
-    unsigned short polyPlueckerRefCtr;
-    zCPluecker* polyPluecker;
-    zVEC3 lightPosition;
+    int lastTimeLighted;               // sizeof 04h    offset 28h
+    zCArray<zCVob*> leafVobList;       // sizeof 0Ch    offset 2Ch
+    zCArray<zCVobLight*> lightVobList; // sizeof 0Ch    offset 38h
+    int lastTimeActivated;             // sizeof 04h    offset 44h
+    unsigned short sectorIndex;        // sizeof 02h    offset 48h
+    unsigned short polyPlueckerRefCtr; // sizeof 02h    offset 4Ah
+    zCPluecker* polyPluecker;          // sizeof 04h    offset 4Ch
+    zVEC3 lightPosition;               // sizeof 0Ch    offset 50h
 
     void zCBspLeaf_OnInit()                                                             zCall( 0x0052BC50 );
     zCBspLeaf()                                                                         zInit( zCBspLeaf_OnInit() );
@@ -194,34 +204,35 @@ namespace Gothic_II_Addon {
     #include "zCBspLeaf.inl"
   };
 
+  // sizeof 94h
   class zCBspTree {
   public:
-    zCBspNode* actNodePtr;
-    zCBspLeaf* actLeafPtr;
-    zCBspBase* bspRoot;
-    zCMesh* mesh;
-    zCPolygon** treePolyList;
-    zCBspNode* nodeList;
-    zCBspLeaf* leafList;
-    int numNodes;
-    int numLeafs;
-    int numPolys;
-    zCArray<zCVob*> renderVobList;
-    zCArray<zCVobLight*> renderLightList;
-    zCArray<zCBspSector*> sectorList;
-    zCArray<zCPolygon*> portalList;
-    zTBspTreeMode bspTreeMode;
-    zTWld_RenderMode worldRenderMode;
-    float vobFarClipZ;
-    zTPlane vobFarPlane;
-    int vobFarPlaneSignbits;
-    int drawVobBBox3D;
-    int leafsRendered;
-    int vobsRendered;
-    int m_bRenderedFirstTime;
-    int masterFrameCtr;
-    zCPolygon** actPolyPtr;
-    int compiled;
+    zCBspNode* actNodePtr;                // sizeof 04h    offset 00h
+    zCBspLeaf* actLeafPtr;                // sizeof 04h    offset 04h
+    zCBspBase* bspRoot;                   // sizeof 04h    offset 08h
+    zCMesh* mesh;                         // sizeof 04h    offset 0Ch
+    zCPolygon** treePolyList;             // sizeof 04h    offset 10h
+    zCBspNode* nodeList;                  // sizeof 04h    offset 14h
+    zCBspLeaf* leafList;                  // sizeof 04h    offset 18h
+    int numNodes;                         // sizeof 04h    offset 1Ch
+    int numLeafs;                         // sizeof 04h    offset 20h
+    int numPolys;                         // sizeof 04h    offset 24h
+    zCArray<zCVob*> renderVobList;        // sizeof 0Ch    offset 28h
+    zCArray<zCVobLight*> renderLightList; // sizeof 0Ch    offset 34h
+    zCArray<zCBspSector*> sectorList;     // sizeof 0Ch    offset 40h
+    zCArray<zCPolygon*> portalList;       // sizeof 0Ch    offset 4Ch
+    zTBspTreeMode bspTreeMode;            // sizeof 04h    offset 58h
+    zTWld_RenderMode worldRenderMode;     // sizeof 04h    offset 5Ch
+    float vobFarClipZ;                    // sizeof 04h    offset 60h
+    zTPlane vobFarPlane;                  // sizeof 10h    offset 64h
+    int vobFarPlaneSignbits;              // sizeof 04h    offset 74h
+    int drawVobBBox3D;                    // sizeof 04h    offset 78h
+    int leafsRendered;                    // sizeof 04h    offset 7Ch
+    int vobsRendered;                     // sizeof 04h    offset 80h
+    int m_bRenderedFirstTime;             // sizeof 04h    offset 84h
+    int masterFrameCtr;                   // sizeof 04h    offset 88h
+    zCPolygon** actPolyPtr;               // sizeof 04h    offset 8Ch
+    int compiled;                         // sizeof 04h    offset 90h
 
     void zCBspTree_OnInit()                                                                                zCall( 0x0052B9E0 );
     zCBspTree()                                                                                            zInit( zCBspTree_OnInit() );
@@ -267,12 +278,13 @@ namespace Gothic_II_Addon {
     #include "zCBspTree.inl"
   };
 
+  // sizeof 10h
   class zTPolyNode {
   public:
-    zCPolygon* poly;
-    zTPolyNode* next;
-    int marked;
-    char isCompleteInside;
+    zCPolygon* poly;       // sizeof 04h    offset 00h
+    zTPolyNode* next;      // sizeof 04h    offset 04h
+    int marked;            // sizeof 04h    offset 08h
+    char isCompleteInside; // sizeof 01h    offset 0Ch
 
     zTPolyNode() {}
 
@@ -280,15 +292,16 @@ namespace Gothic_II_Addon {
     #include "zTPolyNode.inl"
   };
 
+  // sizeof 54h
   class zCCBspNode {
   public:
-    zTPlane plane;
-    zCCBspNode* front;
-    zCCBspNode* back;
-    zCCBspNode* parent;
-    zTBBox3D bbox3D;
-    zTBBox3D bbox3DCell;
-    zCList2<zTPolyNode> polyList;
+    zTPlane plane;                // sizeof 10h    offset 00h
+    zCCBspNode* front;            // sizeof 04h    offset 10h
+    zCCBspNode* back;             // sizeof 04h    offset 14h
+    zCCBspNode* parent;           // sizeof 04h    offset 18h
+    zTBBox3D bbox3D;              // sizeof 18h    offset 1Ch
+    zTBBox3D bbox3DCell;          // sizeof 18h    offset 34h
+    zCList2<zTPolyNode> polyList; // sizeof 08h    offset 4Ch
 
     zCCBspNode() {}
     void zCCBspNode_OnInit( zCCBspNode* )                                                       zCall( 0x00540E60 );
@@ -330,6 +343,7 @@ namespace Gothic_II_Addon {
     #include "zCCBspNode.inl"
   };
 
+  // sizeof 8Ch
   class zCCBspTree {
   public:
     enum zTSpanningMode {
@@ -338,19 +352,19 @@ namespace Gothic_II_Addon {
       zSPANNING_PUSHBOTH
     };
 
-    zCCBspNode bspRoot;
-    zCMesh* mesh;
-    zTBspTreeMode bspTreeMode;
-    zCArray<zCBspSector*> sectorList;
-    zTSpanningMode cfg_spanningMode;
-    int cfg_useAllPolys;
-    int cfg_octree;
-    zTBspBuildType cfg_bspType;
-    float cfg_optimize;
-    float cfg_wbalance;
-    float cfg_wsplit;
-    float cfg_wplanar;
-    int cfg_portalize;
+    zCCBspNode bspRoot;               // sizeof 54h    offset 00h
+    zCMesh* mesh;                     // sizeof 04h    offset 54h
+    zTBspTreeMode bspTreeMode;        // sizeof 04h    offset 58h
+    zCArray<zCBspSector*> sectorList; // sizeof 0Ch    offset 5Ch
+    zTSpanningMode cfg_spanningMode;  // sizeof 04h    offset 68h
+    int cfg_useAllPolys;              // sizeof 04h    offset 6Ch
+    int cfg_octree;                   // sizeof 04h    offset 70h
+    zTBspBuildType cfg_bspType;       // sizeof 04h    offset 74h
+    float cfg_optimize;               // sizeof 04h    offset 78h
+    float cfg_wbalance;               // sizeof 04h    offset 7Ch
+    float cfg_wsplit;                 // sizeof 04h    offset 80h
+    float cfg_wplanar;                // sizeof 04h    offset 84h
+    int cfg_portalize;                // sizeof 04h    offset 88h
 
     void zCCBspTree_OnInit()                                 zCall( 0x0053CF10 );
     zCBspSector* GetBspSectorByName( zSTRING const& ) const  zCall( 0x005350D0 );
@@ -369,11 +383,13 @@ namespace Gothic_II_Addon {
     #include "zCCBspTree.inl"
   };
 
+  // sizeof 64h
   class zCBspSector {
   public:
+    // sizeof 02h
     struct zTPortalInfo {
-      unsigned char visible;
-      unsigned char alpha;
+      unsigned char visible; // sizeof 01h    offset 00h
+      unsigned char alpha;   // sizeof 01h    offset 01h
 
       zTPortalInfo() {}
 
@@ -381,16 +397,16 @@ namespace Gothic_II_Addon {
       #include "zCBspSector_zTPortalInfo.inl"
     };
 
-    zSTRING sectorName;
-    zCArray<zCBspBase*> sectorNodes;
-    unsigned long sectorIndex;
-    zCArray<zCPolygon*> sectorPortals;
-    zCArray<zTPortalInfo> sectorPortalInfo;
-    int activated;
-    int rendered;
-    zTBBox2D activePortal;
-    zVEC3 sectorCenter;
-    char hasBigNoFade;
+    zSTRING sectorName;                     // sizeof 14h    offset 00h
+    zCArray<zCBspBase*> sectorNodes;        // sizeof 0Ch    offset 14h
+    unsigned long sectorIndex;              // sizeof 04h    offset 20h
+    zCArray<zCPolygon*> sectorPortals;      // sizeof 0Ch    offset 24h
+    zCArray<zTPortalInfo> sectorPortalInfo; // sizeof 0Ch    offset 30h
+    int activated;                          // sizeof 04h    offset 3Ch
+    int rendered;                           // sizeof 04h    offset 40h
+    zTBBox2D activePortal;                  // sizeof 10h    offset 44h
+    zVEC3 sectorCenter;                     // sizeof 0Ch    offset 54h
+    char hasBigNoFade;                      // sizeof 01h    offset 60h
 
     zCBspSector() {}
     void CalcCenterByPortals()                                         zCall( 0x005292B0 );
@@ -414,14 +430,15 @@ namespace Gothic_II_Addon {
     #include "zCBspSector.inl"
   };
 
+  // sizeof 4Ch
   class zCBuildPortal {
   public:
-    zCPolygon* portalPoly;
-    zCPolygon* portalPolyBack;
-    zCArray<zCPolygon*> borderPolyList;
-    zCArray<zCPolygon*> polyBucket[2];
-    zCArray<zCBuildPortal*> portalBucket[2];
-    zCBspSector* sector[2];
+    zCPolygon* portalPoly;                   // sizeof 04h    offset 00h
+    zCPolygon* portalPolyBack;               // sizeof 04h    offset 04h
+    zCArray<zCPolygon*> borderPolyList;      // sizeof 0Ch    offset 08h
+    zCArray<zCPolygon*> polyBucket[2];       // sizeof 18h    offset 14h
+    zCArray<zCBuildPortal*> portalBucket[2]; // sizeof 18h    offset 2Ch
+    zCBspSector* sector[2];                  // sizeof 08h    offset 44h
 
     void zCBuildPortal_OnInit() zCall( 0x00541CE0 );
     zCBuildPortal()             zInit( zCBuildPortal_OnInit() );

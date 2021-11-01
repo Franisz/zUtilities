@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZPARTICLE_H__VER2__
 #define __ZPARTICLE_H__VER2__
@@ -48,121 +48,123 @@ namespace Gothic_II_Classic {
     zPFX_FLOCK_WIND_RAND
   };
 
+  // sizeof 64h
   typedef struct zSParticle {
   public:
-    zSParticle* next;
-    zVEC3 position;
-    zVEC3 positionWS;
-    zVEC3 vel;
-    float lifeSpan;
-    float alpha;
-    float alphaVel;
-    zVEC2 size;
-    zVEC2 sizeVel;
-    zVEC3 color;
-    zVEC3 colorVel;
-    float flockFreeWillTime;
-    zCPolyStrip* polyStrip;
+    zSParticle* next;        // sizeof 04h    offset 00h
+    zVEC3 position;          // sizeof 0Ch    offset 04h
+    zVEC3 positionWS;        // sizeof 0Ch    offset 10h
+    zVEC3 vel;               // sizeof 0Ch    offset 1Ch
+    float lifeSpan;          // sizeof 04h    offset 28h
+    float alpha;             // sizeof 04h    offset 2Ch
+    float alphaVel;          // sizeof 04h    offset 30h
+    zVEC2 size;              // sizeof 08h    offset 34h
+    zVEC2 sizeVel;           // sizeof 08h    offset 3Ch
+    zVEC3 color;             // sizeof 0Ch    offset 44h
+    zVEC3 colorVel;          // sizeof 0Ch    offset 50h
+    float flockFreeWillTime; // sizeof 04h    offset 5Ch
+    zCPolyStrip* polyStrip;  // sizeof 04h    offset 60h
 
     void zSParticle_OnInit() zCall( 0x005A7820 );
     zSParticle()             zInit( zSParticle_OnInit() );
   } zTParticle;
 
+  // sizeof 364h
   class zCParticleEmitter {
   public:
-    float ppsValue;
-    zSTRING ppsScaleKeys_S;
-    int ppsIsLooping;
-    int ppsIsSmooth;
-    float ppsFPS;
-    zSTRING ppsCreateEm_S;
-    float ppsCreateEmDelay;
-    zSTRING shpType_S;
-    zSTRING shpFOR_S;
-    zSTRING shpOffsetVec_S;
-    zSTRING shpDistribType_S;
-    float shpDistribWalkSpeed;
-    int shpIsVolume;
-    zSTRING shpDim_S;
-    zSTRING shpMesh_S;
-    int shpMeshRender_B;
-    zSTRING shpScaleKeys_S;
-    int shpScaleIsLooping;
-    int shpScaleIsSmooth;
-    float shpScaleFPS;
-    zSTRING dirMode_S;
-    zSTRING dirFOR_S;
-    zSTRING dirModeTargetFOR_S;
-    zSTRING dirModeTargetPos_S;
-    float dirAngleHead;
-    float dirAngleHeadVar;
-    float dirAngleElev;
-    float dirAngleElevVar;
-    float velAvg;
-    float velVar;
-    float lspPartAvg;
-    float lspPartVar;
-    zSTRING flyGravity_S;
-    int flyCollDet_B;
-    zSTRING visName_S;
-    zSTRING visOrientation_S;
-    int visTexIsQuadPoly;
-    float visTexAniFPS;
-    int visTexAniIsLooping;
-    zSTRING visTexColorStart_S;
-    zSTRING visTexColorEnd_S;
-    zSTRING visSizeStart_S;
-    float visSizeEndScale;
-    zSTRING visAlphaFunc_S;
-    float visAlphaStart;
-    float visAlphaEnd;
-    float trlFadeSpeed;
-    zSTRING trlTexture_S;
-    float trlWidth;
-    float mrkFadeSpeed;
-    zSTRING mrkTexture_S;
-    float mrkSize;
-    zSTRING m_flockMode_S;
-    float m_fFlockWeight;
-    int m_bSlowLocalFOR;
-    zSTRING m_timeStartEnd_S;
-    int m_bIsAmbientPFX;
-    int endOfDScriptPart;
-    zSTRING particleFXName;
-    zCArray<float> ppsScaleKeys;
-    zCParticleEmitter* ppsCreateEmitter;
-    zTPFX_EmitterShape shpType;
-    float shpCircleSphereRadius;
-    zVEC3 shpLineBoxDim;
-    zCMesh* shpMesh;
-    zCPolygon* shpMeshLastPoly;
-    zTPFX_EmitterFOR shpFOR;
-    zTPFX_DistribType shpDistribType;
-    zVEC3 shpOffsetVec;
-    zCArray<float> shpScaleKeys;
-    zTPFX_EmitterDirMode dirMode;
-    zTPFX_EmitterFOR dirFOR;
-    zTPFX_EmitterFOR dirModeTargetFOR;
-    zVEC3 dirModeTargetPos;
-    zTBBox3D dirAngleBox;
-    zVEC3 dirAngleBoxDim;
-    zVEC3 flyGravity;
-    zCTexture* visTexture;
-    zCMesh* visMesh;
-    zTPFX_EmitterVisOrient visOrientation;
-    zVEC2 visSizeStart;
-    zVEC3 visTexColorRGBAStart;
-    zVEC3 visTexColorRGBAEnd;
-    zTRnd_AlphaBlendFunc visAlphaFunc;
-    zCTexture* trlTexture;
-    zCTexture* mrkTexture;
-    int isOneShotFX;
-    float dirAngleHeadVarRad;
-    float dirAngleElevVarRad;
-    zTPFX_FlockMode m_flockMode;
-    float m_ooAlphaDist;
-    float m_startTime;
-    float m_endTime;
+    float ppsValue;                        // sizeof 04h    offset 00h
+    zSTRING ppsScaleKeys_S;                // sizeof 14h    offset 04h
+    int ppsIsLooping;                      // sizeof 04h    offset 18h
+    int ppsIsSmooth;                       // sizeof 04h    offset 1Ch
+    float ppsFPS;                          // sizeof 04h    offset 20h
+    zSTRING ppsCreateEm_S;                 // sizeof 14h    offset 24h
+    float ppsCreateEmDelay;                // sizeof 04h    offset 38h
+    zSTRING shpType_S;                     // sizeof 14h    offset 3Ch
+    zSTRING shpFOR_S;                      // sizeof 14h    offset 50h
+    zSTRING shpOffsetVec_S;                // sizeof 14h    offset 64h
+    zSTRING shpDistribType_S;              // sizeof 14h    offset 78h
+    float shpDistribWalkSpeed;             // sizeof 04h    offset 8Ch
+    int shpIsVolume;                       // sizeof 04h    offset 90h
+    zSTRING shpDim_S;                      // sizeof 14h    offset 94h
+    zSTRING shpMesh_S;                     // sizeof 14h    offset A8h
+    int shpMeshRender_B;                   // sizeof 04h    offset BCh
+    zSTRING shpScaleKeys_S;                // sizeof 14h    offset C0h
+    int shpScaleIsLooping;                 // sizeof 04h    offset D4h
+    int shpScaleIsSmooth;                  // sizeof 04h    offset D8h
+    float shpScaleFPS;                     // sizeof 04h    offset DCh
+    zSTRING dirMode_S;                     // sizeof 14h    offset E0h
+    zSTRING dirFOR_S;                      // sizeof 14h    offset F4h
+    zSTRING dirModeTargetFOR_S;            // sizeof 14h    offset 108h
+    zSTRING dirModeTargetPos_S;            // sizeof 14h    offset 11Ch
+    float dirAngleHead;                    // sizeof 04h    offset 130h
+    float dirAngleHeadVar;                 // sizeof 04h    offset 134h
+    float dirAngleElev;                    // sizeof 04h    offset 138h
+    float dirAngleElevVar;                 // sizeof 04h    offset 13Ch
+    float velAvg;                          // sizeof 04h    offset 140h
+    float velVar;                          // sizeof 04h    offset 144h
+    float lspPartAvg;                      // sizeof 04h    offset 148h
+    float lspPartVar;                      // sizeof 04h    offset 14Ch
+    zSTRING flyGravity_S;                  // sizeof 14h    offset 150h
+    int flyCollDet_B;                      // sizeof 04h    offset 164h
+    zSTRING visName_S;                     // sizeof 14h    offset 168h
+    zSTRING visOrientation_S;              // sizeof 14h    offset 17Ch
+    int visTexIsQuadPoly;                  // sizeof 04h    offset 190h
+    float visTexAniFPS;                    // sizeof 04h    offset 194h
+    int visTexAniIsLooping;                // sizeof 04h    offset 198h
+    zSTRING visTexColorStart_S;            // sizeof 14h    offset 19Ch
+    zSTRING visTexColorEnd_S;              // sizeof 14h    offset 1B0h
+    zSTRING visSizeStart_S;                // sizeof 14h    offset 1C4h
+    float visSizeEndScale;                 // sizeof 04h    offset 1D8h
+    zSTRING visAlphaFunc_S;                // sizeof 14h    offset 1DCh
+    float visAlphaStart;                   // sizeof 04h    offset 1F0h
+    float visAlphaEnd;                     // sizeof 04h    offset 1F4h
+    float trlFadeSpeed;                    // sizeof 04h    offset 1F8h
+    zSTRING trlTexture_S;                  // sizeof 14h    offset 1FCh
+    float trlWidth;                        // sizeof 04h    offset 210h
+    float mrkFadeSpeed;                    // sizeof 04h    offset 214h
+    zSTRING mrkTexture_S;                  // sizeof 14h    offset 218h
+    float mrkSize;                         // sizeof 04h    offset 22Ch
+    zSTRING m_flockMode_S;                 // sizeof 14h    offset 230h
+    float m_fFlockWeight;                  // sizeof 04h    offset 244h
+    int m_bSlowLocalFOR;                   // sizeof 04h    offset 248h
+    zSTRING m_timeStartEnd_S;              // sizeof 14h    offset 24Ch
+    int m_bIsAmbientPFX;                   // sizeof 04h    offset 260h
+    int endOfDScriptPart;                  // sizeof 04h    offset 264h
+    zSTRING particleFXName;                // sizeof 14h    offset 268h
+    zCArray<float> ppsScaleKeys;           // sizeof 0Ch    offset 27Ch
+    zCParticleEmitter* ppsCreateEmitter;   // sizeof 04h    offset 288h
+    zTPFX_EmitterShape shpType;            // sizeof 04h    offset 28Ch
+    float shpCircleSphereRadius;           // sizeof 04h    offset 290h
+    zVEC3 shpLineBoxDim;                   // sizeof 0Ch    offset 294h
+    zCMesh* shpMesh;                       // sizeof 04h    offset 2A0h
+    zCPolygon* shpMeshLastPoly;            // sizeof 04h    offset 2A4h
+    zTPFX_EmitterFOR shpFOR;               // sizeof 04h    offset 2A8h
+    zTPFX_DistribType shpDistribType;      // sizeof 04h    offset 2ACh
+    zVEC3 shpOffsetVec;                    // sizeof 0Ch    offset 2B0h
+    zCArray<float> shpScaleKeys;           // sizeof 0Ch    offset 2BCh
+    zTPFX_EmitterDirMode dirMode;          // sizeof 04h    offset 2C8h
+    zTPFX_EmitterFOR dirFOR;               // sizeof 04h    offset 2CCh
+    zTPFX_EmitterFOR dirModeTargetFOR;     // sizeof 04h    offset 2D0h
+    zVEC3 dirModeTargetPos;                // sizeof 0Ch    offset 2D4h
+    zTBBox3D dirAngleBox;                  // sizeof 18h    offset 2E0h
+    zVEC3 dirAngleBoxDim;                  // sizeof 0Ch    offset 2F8h
+    zVEC3 flyGravity;                      // sizeof 0Ch    offset 304h
+    zCTexture* visTexture;                 // sizeof 04h    offset 310h
+    zCMesh* visMesh;                       // sizeof 04h    offset 314h
+    zTPFX_EmitterVisOrient visOrientation; // sizeof 04h    offset 318h
+    zVEC2 visSizeStart;                    // sizeof 08h    offset 31Ch
+    zVEC3 visTexColorRGBAStart;            // sizeof 0Ch    offset 324h
+    zVEC3 visTexColorRGBAEnd;              // sizeof 0Ch    offset 330h
+    zTRnd_AlphaBlendFunc visAlphaFunc;     // sizeof 04h    offset 33Ch
+    zCTexture* trlTexture;                 // sizeof 04h    offset 340h
+    zCTexture* mrkTexture;                 // sizeof 04h    offset 344h
+    int isOneShotFX;                       // sizeof 04h    offset 348h
+    float dirAngleHeadVarRad;              // sizeof 04h    offset 34Ch
+    float dirAngleElevVarRad;              // sizeof 04h    offset 350h
+    zTPFX_FlockMode m_flockMode;           // sizeof 04h    offset 354h
+    float m_ooAlphaDist;                   // sizeof 04h    offset 358h
+    float m_startTime;                     // sizeof 04h    offset 35Ch
+    float m_endTime;                       // sizeof 04h    offset 360h
 
     void zCParticleEmitter_OnInit( zCParticleEmitter const& )  zCall( 0x005A8A70 );
     void zCParticleEmitter_OnInit()                            zCall( 0x005AD200 );
@@ -186,15 +188,16 @@ namespace Gothic_II_Classic {
     #include "zCParticleEmitter.inl"
   };
 
+  // sizeof 1Ch
   class zCParticleEmitterVars {
   public:
-    float ppsScaleKeysActFrame;
-    float ppsNumParticlesFraction;
-    float ppsTotalLifeTime;
-    int ppsDependentEmitterCreated;
-    float shpScaleKeysActFrame;
-    float uniformValue;
-    float uniformDelta;
+    float ppsScaleKeysActFrame;     // sizeof 04h    offset 00h
+    float ppsNumParticlesFraction;  // sizeof 04h    offset 04h
+    float ppsTotalLifeTime;         // sizeof 04h    offset 08h
+    int ppsDependentEmitterCreated; // sizeof 04h    offset 0Ch
+    float shpScaleKeysActFrame;     // sizeof 04h    offset 10h
+    float uniformValue;             // sizeof 04h    offset 14h
+    float uniformDelta;             // sizeof 04h    offset 18h
 
     zCParticleEmitterVars() {}
 
@@ -202,15 +205,17 @@ namespace Gothic_II_Classic {
     #include "zCParticleEmitterVars.inl"
   };
 
+  // sizeof B8h
   class zCParticleFX : public zCVisual {
   public:
     zCLASS_DECLARATION( zCParticleFX )
 
+    // sizeof 0Ch
     class zCStaticPfxList {
     public:
-      zCParticleFX* pfxListHead;
-      zCParticleFX* pfxListTail;
-      int numInList;
+      zCParticleFX* pfxListHead; // sizeof 04h    offset 00h
+      zCParticleFX* pfxListTail; // sizeof 04h    offset 04h
+      int numInList;             // sizeof 04h    offset 08h
 
       zCStaticPfxList() {}
       void InsertPfxHead( zCParticleFX* ) zCall( 0x005A7C00 );
@@ -223,30 +228,30 @@ namespace Gothic_II_Classic {
       #include "zCParticleFX_zCStaticPfxList.inl"
     };
 
-    zTParticle* firstPart;
-    zCParticleEmitterVars emitterVars;
-    zCParticleEmitter* emitter;
-    zTBBox3D bbox3DWorld;
-    zCVob* connectedVob;
-    int bboxUpdateCtr;
+    zTParticle* firstPart;                     // sizeof 04h    offset 34h
+    zCParticleEmitterVars emitterVars;         // sizeof 1Ch    offset 38h
+    zCParticleEmitter* emitter;                // sizeof 04h    offset 54h
+    zTBBox3D bbox3DWorld;                      // sizeof 18h    offset 58h
+    zCVob* connectedVob;                       // sizeof 04h    offset 70h
+    int bboxUpdateCtr;                         // sizeof 04h    offset 74h
     group {
-      unsigned char emitterIsOwned        : 1;
-      unsigned char dontKillPFXWhenDone   : 1;
-      unsigned char dead                  : 1;
-      unsigned char isOneShotFX           : 1;
-      unsigned char forceEveryFrameUpdate : 1;
-      unsigned char renderUnderWaterOnly  : 1;
+      unsigned char emitterIsOwned        : 1; // sizeof 01h    offset bit
+      unsigned char dontKillPFXWhenDone   : 1; // sizeof 01h    offset bit
+      unsigned char dead                  : 1; // sizeof 01h    offset bit
+      unsigned char isOneShotFX           : 1; // sizeof 01h    offset bit
+      unsigned char forceEveryFrameUpdate : 1; // sizeof 01h    offset bit
+      unsigned char renderUnderWaterOnly  : 1; // sizeof 01h    offset bit
     };
-    zCParticleFX* nextPfx;
-    zCParticleFX* prevPfx;
-    float privateTotalTime;
-    float lastTimeRendered;
-    float timeScale;
-    float localFrameTimeF;
-    zCQuadMark* quadMark;
-    zTBBox3D quadMarkBBox3DWorld;
-    float m_BboxYRangeInv;
-    int m_bVisualNeverDies;
+    zCParticleFX* nextPfx;                     // sizeof 04h    offset 7Ch
+    zCParticleFX* prevPfx;                     // sizeof 04h    offset 80h
+    float privateTotalTime;                    // sizeof 04h    offset 84h
+    float lastTimeRendered;                    // sizeof 04h    offset 88h
+    float timeScale;                           // sizeof 04h    offset 8Ch
+    float localFrameTimeF;                     // sizeof 04h    offset 90h
+    zCQuadMark* quadMark;                      // sizeof 04h    offset 94h
+    zTBBox3D quadMarkBBox3DWorld;              // sizeof 18h    offset 98h
+    float m_BboxYRangeInv;                     // sizeof 04h    offset B0h
+    int m_bVisualNeverDies;                    // sizeof 04h    offset B4h
 
     void zCParticleFX_OnInit()                                        zCall( 0x005A78F0 );
     zCParticleFX()                                                    zInit( zCParticleFX_OnInit() );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSND_MSS_H__VER3__
 #define __ZSND_MSS_H__VER3__
@@ -12,19 +12,20 @@
 namespace Gothic_II_Addon {
   const int MAX_PROVIDER = 20;
 
+  // sizeof 220h
   class zCDrvProperties_MSS {
   public:
-    float volume;
-    int bitResolution;
-    int sampleRate;
-    int useStereo;
-    int numSFXChannels;
-    zSTRING use3dProvider;
-    unsigned char dScriptEnd;
-    PCMWAVEFORMAT waveFormat;
-    long * providers[MAX_PROVIDER];
-    zSTRING provNames[MAX_PROVIDER];
-    int numProviders;
+    float volume;                    // sizeof 04h    offset 00h
+    int bitResolution;               // sizeof 04h    offset 04h
+    int sampleRate;                  // sizeof 04h    offset 08h
+    int useStereo;                   // sizeof 04h    offset 0Ch
+    int numSFXChannels;              // sizeof 04h    offset 10h
+    zSTRING use3dProvider;           // sizeof 14h    offset 14h
+    unsigned char dScriptEnd;        // sizeof 01h    offset 28h
+    PCMWAVEFORMAT waveFormat;        // sizeof 10h    offset 29h
+    long * providers[MAX_PROVIDER];  // sizeof 50h    offset 3Ch
+    zSTRING provNames[MAX_PROVIDER]; // sizeof 190h   offset 8Ch
+    int numProviders;                // sizeof 04h    offset 21Ch
 
     void zCDrvProperties_MSS_OnInit() zCall( 0x004EA080 );
     zCDrvProperties_MSS()             zInit( zCDrvProperties_MSS_OnInit() );
@@ -34,39 +35,40 @@ namespace Gothic_II_Addon {
     #include "zCDrvProperties_MSS.inl"
   };
 
+  // sizeof 60h
   class zCActiveSnd {
   public:
-    int handle;
-    void* sample;
-    void* sample3D;
-    unsigned long age;
-    zCSoundSystem::zTLoopType loopType;
-    float radius;
-    float reverbLevel;
-    float pitchOffset;
-    float volWeight;
-    float obstruction;
-    float obstructionToGo;
-    float volumeToGo;
-    int autoObstructTimer;
+    int handle;                         // sizeof 04h    offset 00h
+    void* sample;                       // sizeof 04h    offset 04h
+    void* sample3D;                     // sizeof 04h    offset 08h
+    unsigned long age;                  // sizeof 04h    offset 0Ch
+    zCSoundSystem::zTLoopType loopType; // sizeof 04h    offset 10h
+    float radius;                       // sizeof 04h    offset 14h
+    float reverbLevel;                  // sizeof 04h    offset 18h
+    float pitchOffset;                  // sizeof 04h    offset 1Ch
+    float volWeight;                    // sizeof 04h    offset 20h
+    float obstruction;                  // sizeof 04h    offset 24h
+    float obstructionToGo;              // sizeof 04h    offset 28h
+    float volumeToGo;                   // sizeof 04h    offset 2Ch
+    int autoObstructTimer;              // sizeof 04h    offset 30h
     group {
-      unsigned char active    : 1;
-      unsigned char looping   : 1;
-      unsigned char isAmbient : 1;
-      unsigned char is3D      : 1;
-      unsigned char allocated : 1;
-      unsigned char vobSlot   : 3;
+      unsigned char active    : 1;      // sizeof 01h    offset bit
+      unsigned char looping   : 1;      // sizeof 01h    offset bit
+      unsigned char isAmbient : 1;      // sizeof 01h    offset bit
+      unsigned char is3D      : 1;      // sizeof 01h    offset bit
+      unsigned char allocated : 1;      // sizeof 01h    offset bit
+      unsigned char vobSlot   : 3;      // sizeof 03h    offset bit
     };
-    unsigned char pan;
-    unsigned char volume;
-    unsigned short rate;
-    int muteTime;
-    int frameCtr;
-    zVEC3 lastPos;
-    float lastTime;
-    zCVob* sourceVob;
-    zCSndFrame* sourceFrm;
-    zCSndFX_MSS* sourceSnd;
+    unsigned char pan;                  // sizeof 01h    offset 35h
+    unsigned char volume;               // sizeof 01h    offset 36h
+    unsigned short rate;                // sizeof 02h    offset 38h
+    int muteTime;                       // sizeof 04h    offset 3Ch
+    int frameCtr;                       // sizeof 04h    offset 40h
+    zVEC3 lastPos;                      // sizeof 0Ch    offset 44h
+    float lastTime;                     // sizeof 04h    offset 50h
+    zCVob* sourceVob;                   // sizeof 04h    offset 54h
+    zCSndFrame* sourceFrm;              // sizeof 04h    offset 58h
+    zCSndFX_MSS* sourceSnd;             // sizeof 04h    offset 5Ch
 
     void zCActiveSnd_OnInit()                             zCall( 0x004F68F0 );
     zCActiveSnd()                                         zInit( zCActiveSnd_OnInit() );
@@ -115,12 +117,13 @@ namespace Gothic_II_Addon {
     #include "zCActiveSnd.inl"
   };
 
+  // sizeof 18h
   class zCSndChannel {
   public:
-    int actFrame;
-    int refCtr;
-    int loaded;
-    zCArray<zCSndFrame*> frameList;
+    int actFrame;                   // sizeof 04h    offset 00h
+    int refCtr;                     // sizeof 04h    offset 04h
+    int loaded;                     // sizeof 04h    offset 08h
+    zCArray<zCSndFrame*> frameList; // sizeof 0Ch    offset 0Ch
 
     void zCSndChannel_OnInit() zCall( 0x004F96B0 );
     zCSndChannel()             zInit( zCSndChannel_OnInit() );
@@ -130,23 +133,24 @@ namespace Gothic_II_Addon {
     #include "zCSndChannel.inl"
   };
 
+  // sizeof 6Ch
   class zCSndFrame {
   public:
-    zSTRING fileName;
-    float pitchOffset;
-    float pitchVariance;
-    int defVolume;
-    int looping;
-    int loopStartOffset;
-    int loopEndOffset;
-    float reverbLevel;
-    zSTRING pfxName;
-    unsigned char dScriptEnd;
-    zSTRING instance;
-    int actVolume;
-    int actRate;
-    int actPan;
-    zCWaveData* wav;
+    zSTRING fileName;         // sizeof 14h    offset 00h
+    float pitchOffset;        // sizeof 04h    offset 14h
+    float pitchVariance;      // sizeof 04h    offset 18h
+    int defVolume;            // sizeof 04h    offset 1Ch
+    int looping;              // sizeof 04h    offset 20h
+    int loopStartOffset;      // sizeof 04h    offset 24h
+    int loopEndOffset;        // sizeof 04h    offset 28h
+    float reverbLevel;        // sizeof 04h    offset 2Ch
+    zSTRING pfxName;          // sizeof 14h    offset 30h
+    unsigned char dScriptEnd; // sizeof 01h    offset 44h
+    zSTRING instance;         // sizeof 14h    offset 48h
+    int actVolume;            // sizeof 04h    offset 5Ch
+    int actRate;              // sizeof 04h    offset 60h
+    int actPan;               // sizeof 04h    offset 64h
+    zCWaveData* wav;          // sizeof 04h    offset 68h
 
     void zCSndFrame_OnInit()      zCall( 0x004F9A30 );
     zCSndFrame()                  zInit( zCSndFrame_OnInit() );
@@ -161,16 +165,17 @@ namespace Gothic_II_Addon {
     #include "zCSndFrame.inl"
   };
 
+  // sizeof 30h
   class zCWaveData {
   public:
-    int size;
-    void* memAddr;
-    float msLength;
-    void* info;
-    zSTRING fileName;
-    int refCtr;
-    int cacheInCount;
-    int adpcmCompressed;
+    int size;            // sizeof 04h    offset 00h
+    void* memAddr;       // sizeof 04h    offset 04h
+    float msLength;      // sizeof 04h    offset 08h
+    void* info;          // sizeof 04h    offset 0Ch
+    zSTRING fileName;    // sizeof 14h    offset 10h
+    int refCtr;          // sizeof 04h    offset 24h
+    int cacheInCount;    // sizeof 04h    offset 28h
+    int adpcmCompressed; // sizeof 04h    offset 2Ch
 
     void zCWaveData_OnInit()           zCall( 0x004F5D10 );
     void zCWaveData_OnInit( zSTRING& ) zCall( 0x004FB520 );
@@ -189,11 +194,12 @@ namespace Gothic_II_Addon {
     #include "zCWaveData.inl"
   };
 
+  // sizeof 14h
   class zCSndSys_MSS : public zCSoundSystem {
   public:
-    zTSpeakerType speakerType;
-    int globalReverbPreset;
-    int m_bReverbEnabled;
+    zTSpeakerType speakerType; // sizeof 04h    offset 08h
+    int globalReverbPreset;    // sizeof 04h    offset 0Ch
+    int m_bReverbEnabled;      // sizeof 04h    offset 10h
 
     void zCSndSys_MSS_OnInit()                                                              zCall( 0x004EAAF0 );
     zCSndSys_MSS()                                                                          zInit( zCSndSys_MSS_OnInit() );
@@ -253,18 +259,19 @@ namespace Gothic_II_Addon {
     #include "zCSndSys_MSS.inl"
   };
 
+  // sizeof 84h
   class zCSndFX_MSS : public zCSoundFX {
   public:
-    float volume;
-    float pan;
-    int rate;
-    int autoDelete;
-    float startPlayTime;
-    int m_bIsFixed;
-    int actChannel;
-    int actFrame;
-    int actChannelFrame;
-    zCArray<zCSndChannel*> channelList;
+    float volume;                       // sizeof 04h    offset 54h
+    float pan;                          // sizeof 04h    offset 58h
+    int rate;                           // sizeof 04h    offset 5Ch
+    int autoDelete;                     // sizeof 04h    offset 60h
+    float startPlayTime;                // sizeof 04h    offset 64h
+    int m_bIsFixed;                     // sizeof 04h    offset 68h
+    int actChannel;                     // sizeof 04h    offset 6Ch
+    int actFrame;                       // sizeof 04h    offset 70h
+    int actChannelFrame;                // sizeof 04h    offset 74h
+    zCArray<zCSndChannel*> channelList; // sizeof 0Ch    offset 78h
 
     void zCSndFX_MSS_OnInit()                      zCall( 0x004F4D10 );
     zCSndFX_MSS()                                  zInit( zCSndFX_MSS_OnInit() );
@@ -302,10 +309,11 @@ namespace Gothic_II_Addon {
     #include "zCSndFX_MSS.inl"
   };
 
+  // sizeof 18h
   class zCHandleManager {
   public:
-    zCArray<void*>free3DSamples;
-    zCArray<void*>freeSamples;
+    zCArray<void*>free3DSamples; // sizeof 0Ch    offset 00h
+    zCArray<void*>freeSamples;   // sizeof 0Ch    offset 0Ch
 
     void zCHandleManager_OnInit() zCall( 0x004EAA30 );
     ~zCHandleManager()            zCall( 0x004EA9D0 );

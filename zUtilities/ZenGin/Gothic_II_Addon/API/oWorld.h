@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OWORLD_H__VER3__
 #define __OWORLD_H__VER3__
@@ -12,15 +12,16 @@ namespace Gothic_II_Addon {
   const float WLD_TICKSPERSEC  = WLD_TICKSPERMIN / 60.0f;
   const float WLD_TICKSPERDAY  = WLD_TICKSPERHOUR * 24.0f;
 
+  // sizeof 628Ch
   class oCWorld : public zCWorld {
   public:
     zCLASS_DECLARATION( oCWorld )
 
-    zSTRING worldFilename;
-    zSTRING worldName;
-    zCListSort<zCVob>* voblist;
-    zCListSort<oCNpc>* voblist_npcs;
-    zCListSort<oCItem>* voblist_items;
+    zSTRING worldFilename;             // sizeof 14h    offset 6258h
+    zSTRING worldName;                 // sizeof 14h    offset 626Ch
+    zCListSort<zCVob>* voblist;        // sizeof 04h    offset 6280h
+    zCListSort<oCNpc>* voblist_npcs;   // sizeof 04h    offset 6284h
+    zCListSort<oCItem>* voblist_items; // sizeof 04h    offset 6288h
 
     void oCWorld_OnInit()                                                zCall( 0x0077ED80 );
     zSTRING GetWorldName()                                               zCall( 0x0042A6B0 );
@@ -56,10 +57,11 @@ namespace Gothic_II_Addon {
     #include "oCWorld.inl"
   };
 
+  // sizeof 08h
   class oCWorldTimer {
   public:
-    float worldTime;
-    int day;
+    float worldTime; // sizeof 04h    offset 00h
+    int day;         // sizeof 04h    offset 04h
 
     void oCWorldTimer_OnInit()                  zCall( 0x00780D60 );
     oCWorldTimer()                              zInit( oCWorldTimer_OnInit() );

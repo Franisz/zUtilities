@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZARCHIVER2_H__VER0__
 #define __ZARCHIVER2_H__VER0__
@@ -21,33 +21,34 @@ namespace Gothic_I_Classic {
     zARC2_ID_ENUM
   };
 
+  // sizeof 20A4h
   class zCArchiverBinSafe : public zCArchiver {
   public:
     zCLASS_DECLARATION( zCArchiverBinSafe )
 
-    zFILE* file;
-    zCBuffer* cbuffer;
-    int owningMedium;
-    int inSaveGame;
-    zTAccessMode accessMode;
-    zCArray<zTChunkRecord> chunkStack;
-    zCArray<zCObject*> objectList;
-    unsigned long posNumObjects;
-    unsigned long posChecksum;
-    unsigned long posHeaderEnd;
-    int checksumEnabled;
-    int flags;
-    int debugMessagesOn;
-    int noReadSearchCycles;
-    zSTRING tmpResultValue;
-    int deleteFileOnClose;
-    int warnEntrysNotRead;
-    int warnEntryNotFound;
-    int warnWrongEntryOrder;
-    void* stringHashMap;
-    unsigned long dummyVal;
-    unsigned long posChunkList;
-    char m_readTextBuffer[READ_BUFFER_SIZE];
+    zFILE* file;                             // sizeof 04h    offset 2Ch
+    zCBuffer* cbuffer;                       // sizeof 04h    offset 30h
+    int owningMedium;                        // sizeof 04h    offset 34h
+    int inSaveGame;                          // sizeof 04h    offset 38h
+    zTAccessMode accessMode;                 // sizeof 04h    offset 3Ch
+    zCArray<zTChunkRecord> chunkStack;       // sizeof 0Ch    offset 40h
+    zCArray<zCObject*> objectList;           // sizeof 0Ch    offset 4Ch
+    unsigned long posNumObjects;             // sizeof 04h    offset 58h
+    unsigned long posChecksum;               // sizeof 04h    offset 5Ch
+    unsigned long posHeaderEnd;              // sizeof 04h    offset 60h
+    int checksumEnabled;                     // sizeof 04h    offset 64h
+    int flags;                               // sizeof 04h    offset 68h
+    int debugMessagesOn;                     // sizeof 04h    offset 6Ch
+    int noReadSearchCycles;                  // sizeof 04h    offset 70h
+    zSTRING tmpResultValue;                  // sizeof 14h    offset 74h
+    int deleteFileOnClose;                   // sizeof 04h    offset 88h
+    int warnEntrysNotRead;                   // sizeof 04h    offset 8Ch
+    int warnEntryNotFound;                   // sizeof 04h    offset 90h
+    int warnWrongEntryOrder;                 // sizeof 04h    offset 94h
+    void* stringHashMap;                     // sizeof 04h    offset 98h
+    unsigned long dummyVal;                  // sizeof 04h    offset 9Ch
+    unsigned long posChunkList;              // sizeof 04h    offset A0h
+    char m_readTextBuffer[READ_BUFFER_SIZE]; // sizeof 2000h  offset A4h
 
     void zCArchiverBinSafe_OnInit()                                                                    zCall( 0x0050BDA0 );
     void __fastcall RestoreString( zSTRING& )                                                          zCall( 0x0050B3B0 );

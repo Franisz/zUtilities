@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCCS_POOL_H__VER3__
 #define __ZCCS_POOL_H__VER3__
@@ -9,16 +9,17 @@ namespace Gothic_II_Addon {
   const int CS_PLAYING = 1<<0;
   const int CS_PLAYED  = 1<<1;
 
+  // sizeof 50h
   class zCCSPoolItem : public zSTRING, public zCObject {
   public:
     zCLASS_DECLARATION( zCCSPoolItem )
 
-    int deactivated;
-    int runBehaviourValue;
-    zCCSProps::zTCSRunBehaviour runBehaviour;
-    int numPlayed;
-    int playCounter;
-    int flags;
+    int deactivated;                          // sizeof 04h    offset 38h
+    int runBehaviourValue;                    // sizeof 04h    offset 3Ch
+    zCCSProps::zTCSRunBehaviour runBehaviour; // sizeof 04h    offset 40h
+    int numPlayed;                            // sizeof 04h    offset 44h
+    int playCounter;                          // sizeof 04h    offset 48h
+    int flags;                                // sizeof 04h    offset 4Ch
 
     void zCCSPoolItem_OnInit()                                zCall( 0x00421230 );
     void zCCSPoolItem_OnInit( zCCSCutsceneContext* )          zCall( 0x00421390 );

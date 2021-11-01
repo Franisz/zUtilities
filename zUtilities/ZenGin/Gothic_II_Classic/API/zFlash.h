@@ -1,23 +1,25 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZFLASH_H__VER2__
 #define __ZFLASH_H__VER2__
 
 namespace Gothic_II_Classic {
 
+  // sizeof 84h
   class zCFlash  : public zCVisual {
   public:
+    // sizeof ECh
     class zCBolt : public zCPolyStrip {
     public:
-      zCArray<zCBolt*> childList;
-      int isRootBolt;
-      int isChildOne;
-      int isChildTwo;
-      int numberOfChilds;
-      float roughness;
-      int boltIndex;
-      zTBSphere3D projectionSphere;
-      float aniPhase;
+      zCArray<zCBolt*> childList;   // sizeof 0Ch    offset B4h
+      int isRootBolt;               // sizeof 04h    offset C0h
+      int isChildOne;               // sizeof 04h    offset C4h
+      int isChildTwo;               // sizeof 04h    offset C8h
+      int numberOfChilds;           // sizeof 04h    offset CCh
+      float roughness;              // sizeof 04h    offset D0h
+      int boltIndex;                // sizeof 04h    offset D4h
+      zTBSphere3D projectionSphere; // sizeof 10h    offset D8h
+      float aniPhase;               // sizeof 04h    offset E8h
 
       void zCBolt_OnInit()                                      zCall( 0x004C7F30 );
       zCBolt()                                                  zInit( zCBolt_OnInit() );
@@ -33,16 +35,16 @@ namespace Gothic_II_Classic {
       #include "zCFlash_zCBolt.inl"
     };
 
-    float timeAlive;
-    zVEC3 step;
-    int recalcStep;
-    zCBolt* rootBolt;
-    zCBolt* splitBolt;
-    zVEC3 boltStartPos;
-    zVEC3 boltEndPos;
-    float boltRoughness;
-    zSTRING textureName;
-    float LastUpdateTime;
+    float timeAlive;      // sizeof 04h    offset 34h
+    zVEC3 step;           // sizeof 0Ch    offset 38h
+    int recalcStep;       // sizeof 04h    offset 44h
+    zCBolt* rootBolt;     // sizeof 04h    offset 48h
+    zCBolt* splitBolt;    // sizeof 04h    offset 4Ch
+    zVEC3 boltStartPos;   // sizeof 0Ch    offset 50h
+    zVEC3 boltEndPos;     // sizeof 0Ch    offset 5Ch
+    float boltRoughness;  // sizeof 04h    offset 68h
+    zSTRING textureName;  // sizeof 14h    offset 6Ch
+    float LastUpdateTime; // sizeof 04h    offset 80h
 
     void zCFlash_OnInit()                                              zCall( 0x004C7940 );
     zCFlash()                                                          zInit( zCFlash_OnInit() );

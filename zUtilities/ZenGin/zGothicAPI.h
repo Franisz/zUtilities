@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZGOTHIC_API_H__
 #define __ZGOTHIC_API_H__

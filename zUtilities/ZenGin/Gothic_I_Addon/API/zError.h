@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZERROR_H__VER1__
 #define __ZERROR_H__VER1__
@@ -50,28 +50,30 @@ namespace Gothic_I_Addon {
     zERR_END   = 1 << 1
   };
 
+  // sizeof 18h
   struct ASSERT_FAIL_INFO {
   public:
-    char* HeaderText;
-    char* AssertText;
-    char* File;
-    unsigned long Line;
-    char* Reason;
-    void* extInfo;
+    char* HeaderText;   // sizeof 04h    offset 00h
+    char* AssertText;   // sizeof 04h    offset 04h
+    char* File;         // sizeof 04h    offset 08h
+    unsigned long Line; // sizeof 04h    offset 0Ch
+    char* Reason;       // sizeof 04h    offset 10h
+    void* extInfo;      // sizeof 04h    offset 14h
   };
 
+  // sizeof 3Ch
   class zERROR {
   public:
-    void( *onexit )( );
-    zSTRING filter_authors;
-    unsigned int filter_flag;
-    signed char filter_level;
-    int target;
-    int ack_type;
-    zFILE* log_file;
-    unsigned char indent_depth;
-    HWND spyHandle;
-    zCMutex* spyMutex;
+    void( *onexit )( );         // sizeof 04h    offset 04h
+    zSTRING filter_authors;     // sizeof 14h    offset 08h
+    unsigned int filter_flag;   // sizeof 04h    offset 1Ch
+    signed char filter_level;   // sizeof 01h    offset 20h
+    int target;                 // sizeof 04h    offset 24h
+    int ack_type;               // sizeof 04h    offset 28h
+    zFILE* log_file;            // sizeof 04h    offset 2Ch
+    unsigned char indent_depth; // sizeof 01h    offset 30h
+    HWND spyHandle;             // sizeof 04h    offset 34h
+    zCMutex* spyMutex;          // sizeof 04h    offset 38h
 
     void zERROR_OnInit()                                                                          zCall( 0x0044D6D0 );
     zERROR()                                                                                      zInit( zERROR_OnInit() );

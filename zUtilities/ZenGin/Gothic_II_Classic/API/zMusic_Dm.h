@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMUSIC__DM_H__VER2__
 #define __ZMUSIC__DM_H__VER2__
@@ -8,9 +8,10 @@
 namespace Gothic_II_Classic {
   const int NUM_MOTIFS = 16;
 
+  // sizeof 4Ch
   class zCMusicTheme_DM : public zCMusicTheme {
   public:
-    void* seg;
+    void* seg; // sizeof 04h    offset 48h
 
     zCMusicTheme_DM() {}
     virtual ~zCMusicTheme_DM()   zCall( 0x004E4930 );
@@ -20,6 +21,7 @@ namespace Gothic_II_Classic {
     #include "zCMusicTheme_DM.inl"
   };
 
+  // sizeof 40h
   class zCMusicJingle_DM : public zCMusicJingle {
   public:
 
@@ -29,24 +31,26 @@ namespace Gothic_II_Classic {
     #include "zCMusicJingle_DM.inl"
   };
 
+  // sizeof 1Ch
   class CMusDrvProperties {
   public:
-    float volume;
-    int bitResolution;
-    int globalReverbEnabled;
-    int sampleRate;
-    int numChannels;
-    int reverbBufferSize;
-    unsigned char dScriptEnd;
+    float volume;             // sizeof 04h    offset 00h
+    int bitResolution;        // sizeof 04h    offset 04h
+    int globalReverbEnabled;  // sizeof 04h    offset 08h
+    int sampleRate;           // sizeof 04h    offset 0Ch
+    int numChannels;          // sizeof 04h    offset 10h
+    int reverbBufferSize;     // sizeof 04h    offset 14h
+    unsigned char dScriptEnd; // sizeof 01h    offset 18h
 
     CMusDrvProperties() {}
   };
 
+  // sizeof 30h
   class zCMusicSys_DirectMusic : public zCMusicSystem {
   public:
-    CMusDrvProperties prefs;
-    zCMusicTheme* actTheme;
-    zCMusicTheme* defTheme;
+    CMusDrvProperties prefs; // sizeof 1Ch    offset 0Ch
+    zCMusicTheme* actTheme;  // sizeof 04h    offset 28h
+    zCMusicTheme* defTheme;  // sizeof 04h    offset 2Ch
 
     void zCMusicSys_DirectMusic_OnInit()                                                                     zCall( 0x004E4AD0 );
     zCMusicSys_DirectMusic()                                                                                 zInit( zCMusicSys_DirectMusic_OnInit() );

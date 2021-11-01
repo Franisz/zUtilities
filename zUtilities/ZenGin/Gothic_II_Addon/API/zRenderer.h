@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZRENDERER_H__VER3__
 #define __ZRENDERER_H__VER3__
@@ -198,17 +198,18 @@ namespace Gothic_II_Addon {
     zLIGHT_TYPE_AMBIENT
   };
 
+  // sizeof 4Ch
   class zCRenderLight {
   public:
-    zTRenderLightType lightType;
-    zVEC3 colorDiffuse;
-    zVEC3 position;
-    zVEC3 direction;
-    float range;
-    float rangeInv;
-    zVEC3 positionLS;
-    zVEC3 directionLS;
-    float dir_approxFalloff;
+    zTRenderLightType lightType; // sizeof 04h    offset 00h
+    zVEC3 colorDiffuse;          // sizeof 0Ch    offset 04h
+    zVEC3 position;              // sizeof 0Ch    offset 10h
+    zVEC3 direction;             // sizeof 0Ch    offset 1Ch
+    float range;                 // sizeof 04h    offset 28h
+    float rangeInv;              // sizeof 04h    offset 2Ch
+    zVEC3 positionLS;            // sizeof 0Ch    offset 30h
+    zVEC3 directionLS;           // sizeof 0Ch    offset 3Ch
+    float dir_approxFalloff;     // sizeof 04h    offset 48h
 
     void zCRenderLight_OnInit() zCall( 0x0057A7C0 );
     zCRenderLight()             zInit( zCRenderLight_OnInit() );
@@ -217,10 +218,11 @@ namespace Gothic_II_Addon {
     #include "zCRenderLight.inl"
   };
 
+  // sizeof 0Ch
   class zCRndAlphaSortObject {
   public:
-    zCRndAlphaSortObject* nextSortObject;
-    float zvalue;
+    zCRndAlphaSortObject* nextSortObject; // sizeof 04h    offset 04h
+    float zvalue;                         // sizeof 04h    offset 08h
 
     zCRndAlphaSortObject() {}
     virtual ~zCRndAlphaSortObject() zCall( 0x00528C80 );
@@ -231,16 +233,17 @@ namespace Gothic_II_Addon {
     #include "zCRndAlphaSortObject.inl"
   };
 
+  // sizeof 24h
   struct zTRnd_TexFormatInfo {
-    float bytesPerPixel;
-    int rPos;
-    int gPos;
-    int bPos;
-    int aPos;
-    int rSize;
-    int gSize;
-    int bSize;
-    int aSize;
+    float bytesPerPixel; // sizeof 04h    offset 00h
+    int rPos;            // sizeof 04h    offset 04h
+    int gPos;            // sizeof 04h    offset 08h
+    int bPos;            // sizeof 04h    offset 0Ch
+    int aPos;            // sizeof 04h    offset 10h
+    int rSize;           // sizeof 04h    offset 14h
+    int gSize;           // sizeof 04h    offset 18h
+    int bSize;           // sizeof 04h    offset 1Ch
+    int aSize;           // sizeof 04h    offset 20h
 
     zTRnd_TexFormatInfo() {}
 
@@ -248,8 +251,9 @@ namespace Gothic_II_Addon {
     #include "zTRnd_TexFormatInfo.inl"
   };
 
+  // sizeof 14h
   struct zTRnd_DeviceInfo {
-    zSTRING deviceName;
+    zSTRING deviceName; // sizeof 14h    offset 00h
 
     void zTRnd_DeviceInfo_OnInit() zCall( 0x00638F80 );
     ~zTRnd_DeviceInfo()            zCall( 0x004275C0 );
@@ -259,11 +263,12 @@ namespace Gothic_II_Addon {
     #include "zTRnd_DeviceInfo.inl"
   };
 
+  // sizeof 10h
   struct zTRnd_VidModeInfo {
-    int xdim;
-    int ydim;
-    int bpp;
-    int fullscreenOnly;
+    int xdim;           // sizeof 04h    offset 00h
+    int ydim;           // sizeof 04h    offset 04h
+    int bpp;            // sizeof 04h    offset 08h
+    int fullscreenOnly; // sizeof 04h    offset 0Ch
 
     zTRnd_VidModeInfo() {}
 
@@ -271,16 +276,17 @@ namespace Gothic_II_Addon {
     #include "zTRnd_VidModeInfo.inl"
   };
 
+  // sizeof 24h
   struct zTRnd_Stats {
-    int texMemUsed;
-    int texMemFetched;
-    int numTexturesFetched;
-    int numTexturesUsed;
-    int numLightmapsUsed;
-    int numPolysRendered;
-    int numTrisRendered;
-    int numAlphaPolys;
-    int numAlphaPolyBatches;
+    int texMemUsed;          // sizeof 04h    offset 00h
+    int texMemFetched;       // sizeof 04h    offset 04h
+    int numTexturesFetched;  // sizeof 04h    offset 08h
+    int numTexturesUsed;     // sizeof 04h    offset 0Ch
+    int numLightmapsUsed;    // sizeof 04h    offset 10h
+    int numPolysRendered;    // sizeof 04h    offset 14h
+    int numTrisRendered;     // sizeof 04h    offset 18h
+    int numAlphaPolys;       // sizeof 04h    offset 1Ch
+    int numAlphaPolyBatches; // sizeof 04h    offset 20h
 
     zTRnd_Stats() {}
 
@@ -288,11 +294,12 @@ namespace Gothic_II_Addon {
     #include "zTRnd_Stats.inl"
   };
 
+  // sizeof 18h
   struct zTRndSimpleVertex {
-    zVEC2 pos;
-    float z;
-    zVEC2 uv;
-    zCOLOR color;
+    zVEC2 pos;    // sizeof 08h    offset 00h
+    float z;      // sizeof 04h    offset 08h
+    zVEC2 uv;     // sizeof 08h    offset 0Ch
+    zCOLOR color; // sizeof 04h    offset 14h
 
     void zTRndSimpleVertex_OnInit() zCall( 0x005D45F0 );
     zTRndSimpleVertex()             zInit( zTRndSimpleVertex_OnInit() );
@@ -301,15 +308,16 @@ namespace Gothic_II_Addon {
     #include "zTRndSimpleVertex.inl"
   };
 
+  // sizeof 20h
   struct zTRndSurfaceDesc {
-    void* pSurface;
-    unsigned long bytePitch;
-    unsigned long pixelWidth;
-    unsigned long pixelHeight;
-    unsigned long bitRGBCount;
-    unsigned long bitRMask;
-    unsigned long bitGMask;
-    unsigned long bitBMask;
+    void* pSurface;            // sizeof 04h    offset 00h
+    unsigned long bytePitch;   // sizeof 04h    offset 04h
+    unsigned long pixelWidth;  // sizeof 04h    offset 08h
+    unsigned long pixelHeight; // sizeof 04h    offset 0Ch
+    unsigned long bitRGBCount; // sizeof 04h    offset 10h
+    unsigned long bitRMask;    // sizeof 04h    offset 14h
+    unsigned long bitGMask;    // sizeof 04h    offset 18h
+    unsigned long bitBMask;    // sizeof 04h    offset 1Ch
 
     zTRndSurfaceDesc() {}
 
@@ -317,11 +325,13 @@ namespace Gothic_II_Addon {
     #include "zTRndSurfaceDesc.inl"
   };
 
+  // sizeof 34h
   class zCRenderer {
   public:
+    // sizeof 20h
     struct zTMaterial {
-      zVEC4 diffuseRGBA;
-      zVEC4 ambientRGBA;
+      zVEC4 diffuseRGBA; // sizeof 10h    offset 00h
+      zVEC4 ambientRGBA; // sizeof 10h    offset 10h
 
       zTMaterial() {}
 
@@ -329,18 +339,18 @@ namespace Gothic_II_Addon {
       #include "zCRenderer_zTMaterial.inl"
     };
 
-    zTRnd_PolySortMode polySortMode;
-    zTRnd_PolyDrawMode polyDrawMode;
-    int vid_xdim;
-    int vid_ydim;
-    int vid_bpp;
-    int vid_pitch;
-    int vid_rpos;
-    int vid_gpos;
-    int vid_bpos;
-    int vid_rsize;
-    int vid_gsize;
-    int vid_bsize;
+    zTRnd_PolySortMode polySortMode; // sizeof 04h    offset 04h
+    zTRnd_PolyDrawMode polyDrawMode; // sizeof 04h    offset 08h
+    int vid_xdim;                    // sizeof 04h    offset 0Ch
+    int vid_ydim;                    // sizeof 04h    offset 10h
+    int vid_bpp;                     // sizeof 04h    offset 14h
+    int vid_pitch;                   // sizeof 04h    offset 18h
+    int vid_rpos;                    // sizeof 04h    offset 1Ch
+    int vid_gpos;                    // sizeof 04h    offset 20h
+    int vid_bpos;                    // sizeof 04h    offset 24h
+    int vid_rsize;                   // sizeof 04h    offset 28h
+    int vid_gsize;                   // sizeof 04h    offset 2Ch
+    int vid_bsize;                   // sizeof 04h    offset 30h
 
     zCRenderer() {}
     zTRnd_AlphaBlendFunc AlphaBlendFuncStringToType( zSTRING const& ) const                            zCall( 0x005D38B0 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZNET_HOST_H__VER3__
 #define __ZNET_HOST_H__VER3__
@@ -8,14 +8,15 @@
 
 namespace Gothic_II_Addon {
 
+  // sizeof 44h
   class zCNetHost {
   public:
-    unsigned char id;
-    zSTRING hostName;
-    zTNetAddress hostStreamAddr;
-    zTNetAddress hostPacketAddr;
-    int valid;
-    void* stream_handle;
+    unsigned char id;            // sizeof 01h    offset 04h
+    zSTRING hostName;            // sizeof 14h    offset 08h
+    zTNetAddress hostStreamAddr; // sizeof 10h    offset 1Ch
+    zTNetAddress hostPacketAddr; // sizeof 10h    offset 2Ch
+    int valid;                   // sizeof 04h    offset 3Ch
+    void* stream_handle;         // sizeof 04h    offset 40h
 
     zCNetHost() {}
     void zCNetHost_OnInit( void* )                  zCall( 0x0045A650 );

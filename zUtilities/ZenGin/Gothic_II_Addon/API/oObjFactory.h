@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OOBJ_FACTORY_H__VER3__
 #define __OOBJ_FACTORY_H__VER3__
@@ -7,6 +7,7 @@
 
 namespace Gothic_II_Addon {
 
+  // sizeof 24h
   class oCObjectFactory : public zCObjectFactory {
   public:
     zCLASS_DECLARATION( oCObjectFactory )

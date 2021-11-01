@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZOPTION_H__VER2__
 #define __ZOPTION_H__VER2__
@@ -35,14 +35,15 @@ namespace Gothic_II_Classic {
     NUM_ENTRIES
   };
 
+  // sizeof 50h
   class zCOptionEntry {
   public:
-    int changed;
-    zCArray<bool32(*)( zCOptionEntry& )> ccbList;
-    zSTRING varName;
-    zSTRING varValue;
-    zSTRING varValueTemp;
-    int varFlag;
+    int changed;                                  // sizeof 04h    offset 00h
+    zCArray<bool32(*)( zCOptionEntry& )> ccbList; // sizeof 0Ch    offset 04h
+    zSTRING varName;                              // sizeof 14h    offset 10h
+    zSTRING varValue;                             // sizeof 14h    offset 24h
+    zSTRING varValueTemp;                         // sizeof 14h    offset 38h
+    int varFlag;                                  // sizeof 04h    offset 4Ch
 
     zCOptionEntry() {}
     void zCOptionEntry_OnInit( zSTRING const&, zSTRING const& ) zCall( 0x0045F5F0 );
@@ -53,10 +54,11 @@ namespace Gothic_II_Classic {
     #include "zCOptionEntry.inl"
   };
 
+  // sizeof 20h
   class zCOptionSection {
   public:
-    zSTRING secName;
-    zCArray<zCOptionEntry*> entryList;
+    zSTRING secName;                   // sizeof 14h    offset 00h
+    zCArray<zCOptionEntry*> entryList; // sizeof 0Ch    offset 14h
 
     zCOptionSection() {}
     void zCOptionSection_OnInit( zSTRING const& ) zCall( 0x0045F870 );
@@ -67,13 +69,14 @@ namespace Gothic_II_Classic {
     #include "zCOptionSection.inl"
   };
 
+  // sizeof 298h
   class zCOption {
   public:
-    int m_bReadTemp;
-    zCArray<zCOptionSection*> sectionList;
-    zFILE*( directory )[NUM_ENTRIES];
-    zSTRING dir_string[NUM_ENTRIES];
-    zSTRING commandline;
+    int m_bReadTemp;                       // sizeof 04h    offset 04h
+    zCArray<zCOptionSection*> sectionList; // sizeof 0Ch    offset 08h
+    zFILE*( directory )[NUM_ENTRIES];      // sizeof 68h    offset 14h
+    zSTRING dir_string[NUM_ENTRIES];       // sizeof 208h   offset 7Ch
+    zSTRING commandline;                   // sizeof 14h    offset 284h
 
     void zCOption_OnInit()                                                                    zCall( 0x0045FB40 );
     zCOption()                                                                                zInit( zCOption_OnInit() );

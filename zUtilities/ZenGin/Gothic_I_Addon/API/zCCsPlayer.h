@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCCS_PLAYER_H__VER1__
 #define __ZCCS_PLAYER_H__VER1__
@@ -9,20 +9,21 @@
 
 namespace Gothic_I_Addon {
 
+  // sizeof 68h
   class zCCSPlayer : public zCObject, public zCCSDebugger {
   public:
     zCLASS_DECLARATION( zCCSPlayer )
 
-    int lastProcessDay;
-    int lastProcessHour;
-    zCList<zCCSCutsceneContext>* processingListItem;
-    int processingCtr;
-    int debugInfoOnScreen;
-    zCView* debugInfoScreen;
-    float timerCtr;
-    zCList<zCCSCutsceneContext> playList;
-    zCCSManager* ownerManager;
-    zCWorld* ownerWorld;
+    int lastProcessDay;                              // sizeof 04h    offset 3Ch
+    int lastProcessHour;                             // sizeof 04h    offset 40h
+    zCList<zCCSCutsceneContext>* processingListItem; // sizeof 04h    offset 44h
+    int processingCtr;                               // sizeof 04h    offset 48h
+    int debugInfoOnScreen;                           // sizeof 04h    offset 4Ch
+    zCView* debugInfoScreen;                         // sizeof 04h    offset 50h
+    float timerCtr;                                  // sizeof 04h    offset 54h
+    zCList<zCCSCutsceneContext> playList;            // sizeof 08h    offset 58h
+    zCCSManager* ownerManager;                       // sizeof 04h    offset 60h
+    zCWorld* ownerWorld;                             // sizeof 04h    offset 64h
 
     void zCCSPlayer_OnInit()                                                   zCall( 0x0041E430 );
     zCCSPlayer()                                                               zInit( zCCSPlayer_OnInit() );

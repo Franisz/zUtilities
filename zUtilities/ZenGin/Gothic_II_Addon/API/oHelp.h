@@ -1,23 +1,24 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OHELP_H__VER3__
 #define __OHELP_H__VER3__
 
 namespace Gothic_II_Addon {
 
+  // sizeof 5Ch
   class oCHelp {
   public:
-    zCView* win;
-    int dx;
-    int dy;
-    int sx;
-    int sy;
-    int x[4];
-    int y[4];
-    int index[4];
-    int led[2];
-    int ledx[2];
-    int ledy[2];
+    zCView* win;  // sizeof 04h    offset 00h
+    int dx;       // sizeof 04h    offset 04h
+    int dy;       // sizeof 04h    offset 08h
+    int sx;       // sizeof 04h    offset 0Ch
+    int sy;       // sizeof 04h    offset 10h
+    int x[4];     // sizeof 10h    offset 14h
+    int y[4];     // sizeof 10h    offset 24h
+    int index[4]; // sizeof 10h    offset 34h
+    int led[2];   // sizeof 08h    offset 44h
+    int ledx[2];  // sizeof 08h    offset 4Ch
+    int ledy[2];  // sizeof 08h    offset 54h
 
     void oCHelp_OnInit()  zCall( 0x007015D0 );
     oCHelp()              zInit( oCHelp_OnInit() );

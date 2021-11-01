@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ODIALOG_H__VER2__
 #define __ODIALOG_H__VER2__
@@ -7,15 +7,16 @@
 
 namespace Gothic_II_Classic {
 
+  // sizeof 48h
   class oCAskBox : public zCAIBase {
   public:
-    int fadeout;
-    int answer;
-    int alpha;
-    zCVob* askvob;
-    oCNpc* npc1;
-    oCNpc* npc2;
-    zCDecal* thumb[3];
+    int fadeout;       // sizeof 04h    offset 24h
+    int answer;        // sizeof 04h    offset 28h
+    int alpha;         // sizeof 04h    offset 2Ch
+    zCVob* askvob;     // sizeof 04h    offset 30h
+    oCNpc* npc1;       // sizeof 04h    offset 34h
+    oCNpc* npc2;       // sizeof 04h    offset 38h
+    zCDecal* thumb[3]; // sizeof 0Ch    offset 3Ch
 
     void oCAskBox_OnInit()            zCall( 0x0065F2F0 );
     oCAskBox()                        zInit( oCAskBox_OnInit() );

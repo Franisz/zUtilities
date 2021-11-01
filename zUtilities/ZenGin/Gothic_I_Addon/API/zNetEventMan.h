@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZNET_EVENT_MAN_H__VER1__
 #define __ZNET_EVENT_MAN_H__VER1__
@@ -8,11 +8,12 @@
 
 namespace Gothic_I_Addon {
 
+  // sizeof 44h
   class zCNetEventManager : public zCEventManager {
   public:
     zCLASS_DECLARATION( zCNetEventManager )
 
-    zCNetVobControl* netVobCtrl;
+    zCNetVobControl* netVobCtrl; // sizeof 04h    offset 40h
 
     void zCNetEventManager_OnInit()                                        zCall( 0x00459E90 );
     void zCNetEventManager_OnInit( zCVob* )                                zCall( 0x00459EE0 );

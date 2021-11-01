@@ -1,19 +1,20 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_DIALOG_CHOICE_H__VER0__
 #define __ZVIEW_DIALOG_CHOICE_H__VER0__
 
 namespace Gothic_I_Classic {
 
+  // sizeof 10Ch
   class zCViewDialogChoice : public zCViewDialog {
   public:
     zCLASS_DECLARATION( zCViewDialogChoice )
 
-    zCOLOR ColorSelected;
-    zCOLOR ColorGrayed;
-    int ChoiceSelected;
-    int Choices;
-    int LineStart;
+    zCOLOR ColorSelected; // sizeof 04h    offset F8h
+    zCOLOR ColorGrayed;   // sizeof 04h    offset FCh
+    int ChoiceSelected;   // sizeof 04h    offset 100h
+    int Choices;          // sizeof 04h    offset 104h
+    int LineStart;        // sizeof 04h    offset 108h
 
     void zCViewDialogChoice_OnInit()                                    zCall( 0x00758920 );
     zCViewDialogChoice()                                                zInit( zCViewDialogChoice_OnInit() );

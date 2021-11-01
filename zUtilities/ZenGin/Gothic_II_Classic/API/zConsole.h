@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCONSOLE_H__VER2__
 #define __ZCONSOLE_H__VER2__
@@ -15,15 +15,16 @@ namespace Gothic_II_Classic {
     zCON_TYPE_STRINGP
   };
 
+  // sizeof 3Ch
   class zCConDat {
   public:
-    zSTRING hint;
-    zSTRING name;
-    int type;
-    void* adr;
-    int ele;
-    int var;
-    zCConDat* next;
+    zSTRING hint;   // sizeof 14h    offset 00h
+    zSTRING name;   // sizeof 14h    offset 14h
+    int type;       // sizeof 04h    offset 28h
+    void* adr;      // sizeof 04h    offset 2Ch
+    int ele;        // sizeof 04h    offset 30h
+    int var;        // sizeof 04h    offset 34h
+    zCConDat* next; // sizeof 04h    offset 38h
 
     zCConDat() {}
     void zCConDat_OnInit( zSTRING const&, zSTRING const&, int, void*, int )    zCall( 0x00721F50 );
@@ -36,31 +37,32 @@ namespace Gothic_II_Classic {
     #include "zCConDat.inl"
   };
 
+  // sizeof DCh
   class zCConsole : public zCInputCallback {
   public:
-    zSTRING id;
-    zSTRING instr;
-    zSTRING savemsg;
-    zCArray<zSTRING> lastcommand;
-    int lastCommandPos;
-    int px;
-    int py;
-    int lx;
-    int ly;
-    int showmax;
-    int skip;
-    int dynsize;
-    int var;
-    int autocomplete;
-    zList<zCConDat> list;
-    zCView* conview;
-    int evalcount;
-    int( *evalfunc[zCON_MAX_EVAL] )( const zSTRING &s, zSTRING &msg );
-    void( *changedfunc )( const zSTRING &s );
-    zCWorld* world;
-    zCParser* cparser;
-    int edit_index;
-    void* edit_adr;
+    zSTRING id;                                                        // sizeof 14h    offset 04h
+    zSTRING instr;                                                     // sizeof 14h    offset 18h
+    zSTRING savemsg;                                                   // sizeof 14h    offset 2Ch
+    zCArray<zSTRING> lastcommand;                                      // sizeof 0Ch    offset 40h
+    int lastCommandPos;                                                // sizeof 04h    offset 4Ch
+    int px;                                                            // sizeof 04h    offset 50h
+    int py;                                                            // sizeof 04h    offset 54h
+    int lx;                                                            // sizeof 04h    offset 58h
+    int ly;                                                            // sizeof 04h    offset 5Ch
+    int showmax;                                                       // sizeof 04h    offset 60h
+    int skip;                                                          // sizeof 04h    offset 64h
+    int dynsize;                                                       // sizeof 04h    offset 68h
+    int var;                                                           // sizeof 04h    offset 6Ch
+    int autocomplete;                                                  // sizeof 04h    offset 70h
+    zList<zCConDat> list;                                              // sizeof 10h    offset 74h
+    zCView* conview;                                                   // sizeof 04h    offset 84h
+    int evalcount;                                                     // sizeof 04h    offset 88h
+    int( *evalfunc[zCON_MAX_EVAL] )( const zSTRING &s, zSTRING &msg ); // sizeof 3Ch    offset 8Ch
+    void( *changedfunc )( const zSTRING &s );                          // sizeof 04h    offset C8h
+    zCWorld* world;                                                    // sizeof 04h    offset CCh
+    zCParser* cparser;                                                 // sizeof 04h    offset D0h
+    int edit_index;                                                    // sizeof 04h    offset D4h
+    void* edit_adr;                                                    // sizeof 04h    offset D8h
 
     void zCConsole_OnInit()                                           zCall( 0x00722460 );
     void zCConsole_OnInit( int, int, zSTRING const& )                 zCall( 0x00722670 );

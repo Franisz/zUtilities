@@ -1,10 +1,11 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZPRIME_H__VER0__
 #define __ZPRIME_H__VER0__
 
 namespace Gothic_I_Classic {
 
+  // sizeof 01h
   class zCPrime {
   public:
 

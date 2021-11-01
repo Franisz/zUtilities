@@ -1,13 +1,14 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIEW_DOCUMENT_H__VER1__
 #define __OVIEW_DOCUMENT_H__VER1__
 
 namespace Gothic_I_Addon {
 
+  // sizeof FCh
   class oCViewDocument : public zCViewDialog {
   public:
-    int Pages;
+    int Pages; // sizeof 04h    offset F8h
 
     void oCViewDocument_OnInit( zSTRING& )                           zCall( 0x00762080 );
     void oCViewDocument_OnInit()                                     zCall( 0x007623E0 );

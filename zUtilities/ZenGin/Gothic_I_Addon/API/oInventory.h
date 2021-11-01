@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OINVENTORY_H__VER1__
 #define __OINVENTORY_H__VER1__
@@ -22,6 +22,7 @@ namespace Gothic_I_Addon {
     INV_MAX
   };
 
+  // sizeof 9Ch
   class oCItemContainer : public zCInputCallback {
   public:
     enum oTItemListMode {
@@ -30,40 +31,40 @@ namespace Gothic_I_Addon {
       ONE
     };
 
-    zCListSort<oCItem>* contents;
-    oCNpc* npc;
-    int selectedItem;
-    int offset;
-    int drawItemMax;
-    oTItemListMode itemListMode;
-    int frame;
-    int right;
-    int ownList;
-    int prepared;
-    int passive;
-    short TransferCount;
-    zCView* viewCat;
-    zCView* viewItem;
-    zCView* viewItemActive;
-    zCView* viewItemHightlighted;
-    zCView* viewItemActiveHighlighted;
-    zCView* viewItemFocus;
-    zCView* viewItemActiveFocus;
-    zCView* viewItemHightlightedFocus;
-    zCView* viewItemActiveHighlightedFocus;
-    zCView* viewItemInfo;
-    zCView* viewItemInfoItem;
-    zCView* textView;
-    zCView* viewArrowAtTop;
-    zCView* viewArrowAtBottom;
-    zCWorld* rndWorld;
-    int posx;
-    int posy;
-    zSTRING textCategoryStatic;
-    int m_bManipulateItemsDisabled;
-    int m_bCanTransferMoreThanOneItem;
-    zCOLOR image_chroma;
-    zCOLOR blit_chroma;
+    zCListSort<oCItem>* contents;           // sizeof 04h    offset 04h
+    oCNpc* npc;                             // sizeof 04h    offset 08h
+    int selectedItem;                       // sizeof 04h    offset 0Ch
+    int offset;                             // sizeof 04h    offset 10h
+    int drawItemMax;                        // sizeof 04h    offset 14h
+    oTItemListMode itemListMode;            // sizeof 04h    offset 18h
+    int frame;                              // sizeof 04h    offset 1Ch
+    int right;                              // sizeof 04h    offset 20h
+    int ownList;                            // sizeof 04h    offset 24h
+    int prepared;                           // sizeof 04h    offset 28h
+    int passive;                            // sizeof 04h    offset 2Ch
+    short TransferCount;                    // sizeof 02h    offset 30h
+    zCView* viewCat;                        // sizeof 04h    offset 34h
+    zCView* viewItem;                       // sizeof 04h    offset 38h
+    zCView* viewItemActive;                 // sizeof 04h    offset 3Ch
+    zCView* viewItemHightlighted;           // sizeof 04h    offset 40h
+    zCView* viewItemActiveHighlighted;      // sizeof 04h    offset 44h
+    zCView* viewItemFocus;                  // sizeof 04h    offset 48h
+    zCView* viewItemActiveFocus;            // sizeof 04h    offset 4Ch
+    zCView* viewItemHightlightedFocus;      // sizeof 04h    offset 50h
+    zCView* viewItemActiveHighlightedFocus; // sizeof 04h    offset 54h
+    zCView* viewItemInfo;                   // sizeof 04h    offset 58h
+    zCView* viewItemInfoItem;               // sizeof 04h    offset 5Ch
+    zCView* textView;                       // sizeof 04h    offset 60h
+    zCView* viewArrowAtTop;                 // sizeof 04h    offset 64h
+    zCView* viewArrowAtBottom;              // sizeof 04h    offset 68h
+    zCWorld* rndWorld;                      // sizeof 04h    offset 6Ch
+    int posx;                               // sizeof 04h    offset 70h
+    int posy;                               // sizeof 04h    offset 74h
+    zSTRING textCategoryStatic;             // sizeof 14h    offset 78h
+    int m_bManipulateItemsDisabled;         // sizeof 04h    offset 8Ch
+    int m_bCanTransferMoreThanOneItem;      // sizeof 04h    offset 90h
+    zCOLOR image_chroma;                    // sizeof 04h    offset 94h
+    zCOLOR blit_chroma;                     // sizeof 04h    offset 98h
 
     void oCItemContainer_OnInit()                              zCall( 0x00693B90 );
     oCItemContainer* GetNextContainerLeft( oCItemContainer* )  zCall( 0x00693A70 );
@@ -130,9 +131,10 @@ namespace Gothic_I_Addon {
     #include "oCItemContainer.inl"
   };
 
+  // sizeof A0h
   class oCStealContainer : public oCItemContainer {
   public:
-    oCNpc* owner;
+    oCNpc* owner; // sizeof 04h    offset 9Ch
 
     void oCStealContainer_OnInit()  zCall( 0x00697DA0 );
     oCStealContainer()              zInit( oCStealContainer_OnInit() );
@@ -146,6 +148,7 @@ namespace Gothic_I_Addon {
     #include "oCStealContainer.inl"
   };
 
+  // sizeof A0h
   class oCNpcContainer : public oCStealContainer {
   public:
 
@@ -161,16 +164,17 @@ namespace Gothic_I_Addon {
     #include "oCNpcContainer.inl"
   };
 
+  // sizeof 234h
   class oCNpcInventory : public oCItemContainer {
   public:
-    oCNpc* owner;
-    int packAbility;
-    zCListSort<oCItem> inventory[INV_MAX];
-    zSTRING packString[INV_MAX];
-    int _offset[INV_MAX];
-    int _itemnr[INV_MAX];
-    int maxSlots[INV_MAX];
-    int invnr;
+    oCNpc* owner;                          // sizeof 04h    offset 9Ch
+    int packAbility;                       // sizeof 04h    offset A0h
+    zCListSort<oCItem> inventory[INV_MAX]; // sizeof 6Ch    offset A4h
+    zSTRING packString[INV_MAX];           // sizeof B4h    offset 110h
+    int _offset[INV_MAX];                  // sizeof 24h    offset 1C4h
+    int _itemnr[INV_MAX];                  // sizeof 24h    offset 1E8h
+    int maxSlots[INV_MAX];                 // sizeof 24h    offset 20Ch
+    int invnr;                             // sizeof 04h    offset 230h
 
     void oCNpcInventory_OnInit()                             zCall( 0x00812FBB );
     oCNpcInventory()                                         zInit( oCNpcInventory_OnInit() );

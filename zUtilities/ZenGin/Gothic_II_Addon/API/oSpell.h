@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OSPELL_H__VER3__
 #define __OSPELL_H__VER3__
@@ -145,46 +145,47 @@ namespace Gothic_II_Addon {
     TARGET_FLAG_LIVING = 64
   };
 
+  // sizeof B0h
   class oCSpell : public zCObject {
   public:
     zCLASS_DECLARATION( oCSpell )
 
-    int keyNo;
-    oCVisualFX* effect;
-    oCVisualFX* controlWarnFX;
-    zCVob* spellCaster;
-    oCNpc* spellCasterNpc;
-    zCVob* spellTarget;
-    oCNpc* spellTargetNpc;
-    oCNpc* saveNpc;
-    float manaTimer;
-    int manaInvested;
-    int spellLevel;
-    int spellStatus;
-    int spellID;
-    int spellInfo;
-    int spellEnabled;
-    int spellInitDone;
-    int timerEffect;
-    int canBeDeleted;
-    float up;
-    float hoverY;
-    float hoverOld;
-    float hoverDir;
-    int spellEnergy;
+    int keyNo;                         // sizeof 04h    offset 24h
+    oCVisualFX* effect;                // sizeof 04h    offset 28h
+    oCVisualFX* controlWarnFX;         // sizeof 04h    offset 2Ch
+    zCVob* spellCaster;                // sizeof 04h    offset 30h
+    oCNpc* spellCasterNpc;             // sizeof 04h    offset 34h
+    zCVob* spellTarget;                // sizeof 04h    offset 38h
+    oCNpc* spellTargetNpc;             // sizeof 04h    offset 3Ch
+    oCNpc* saveNpc;                    // sizeof 04h    offset 40h
+    float manaTimer;                   // sizeof 04h    offset 44h
+    int manaInvested;                  // sizeof 04h    offset 48h
+    int spellLevel;                    // sizeof 04h    offset 4Ch
+    int spellStatus;                   // sizeof 04h    offset 50h
+    int spellID;                       // sizeof 04h    offset 54h
+    int spellInfo;                     // sizeof 04h    offset 58h
+    int spellEnabled;                  // sizeof 04h    offset 5Ch
+    int spellInitDone;                 // sizeof 04h    offset 60h
+    int timerEffect;                   // sizeof 04h    offset 64h
+    int canBeDeleted;                  // sizeof 04h    offset 68h
+    float up;                          // sizeof 04h    offset 6Ch
+    float hoverY;                      // sizeof 04h    offset 70h
+    float hoverOld;                    // sizeof 04h    offset 74h
+    float hoverDir;                    // sizeof 04h    offset 78h
+    int spellEnergy;                   // sizeof 04h    offset 7Ch
     group {
-      float manaInvestTime;
-      int damagePerLevel;
-      int damageType;
-      int spellType;
-      int canTurnDuringInvest;
-      int canChangeTargetDuringInvest;
-      int isMultiEffect;
-      int targetCollectAlgo;
-      int targetCollectType;
-      int targetCollectRange;
-      int targetCollectAzi;
-      int targetCollectElev;
+      float manaInvestTime;            // sizeof 04h    offset 80h
+      int damagePerLevel;              // sizeof 04h    offset 84h
+      int damageType;                  // sizeof 04h    offset 88h
+      int spellType;                   // sizeof 04h    offset 8Ch
+      int canTurnDuringInvest;         // sizeof 04h    offset 90h
+      int canChangeTargetDuringInvest; // sizeof 04h    offset 94h
+      int isMultiEffect;               // sizeof 04h    offset 98h
+      int targetCollectAlgo;           // sizeof 04h    offset 9Ch
+      int targetCollectType;           // sizeof 04h    offset A0h
+      int targetCollectRange;          // sizeof 04h    offset A4h
+      int targetCollectAzi;            // sizeof 04h    offset A8h
+      int targetCollectElev;           // sizeof 04h    offset ACh
     };
 
     void oCSpell_OnInit()                       zCall( 0x00483C20 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZAI_CAMERA_H__VER3__
 #define __ZAI_CAMERA_H__VER3__
@@ -10,69 +10,70 @@
 namespace Gothic_II_Addon {
   const int MAX_CTRL_VOBS = 80;
 
+  // sizeof 29Ch
   class zCAICamera : public zCAIBase {
   public:
     zCLASS_DECLARATION( zCAICamera )
 
-    int d_showDots;
-    int pathDetectCollision;
-    float bestRange;
-    float minRange;
-    float maxRange;
-    float bestRotX;
-    float minRotX;
-    float maxRotX;
-    float bestRotY;
-    float minRotY;
-    float maxRotY;
-    float bestRotZ;
-    float minRotZ;
-    float maxRotZ;
-    float rotOffsetX;
-    float rotOffsetY;
-    float rotOffsetZ;
-    float focusOffsetX;
-    float focusOffsetY;
-    float focusOffsetZ;
-    float veloTrans;
-    float veloRot;
-    int translate;
-    int rotate;
-    int collision;
-    unsigned char endOfDScript;
-    zCArray<zCVob*> targetVobList;
-    zCVob* camVob;
-    zCVob* target;
-    float targetAlpha;
-    int numTargets;
-    zSTRING oldCamSys;
-    int sysChanged;
-    int playerIsMovable;
-    int followIdealPos;
-    float dialogCamDuration;
-    int numOUsSpoken;
-    int numDialogCamTakes;
-    int lastNumDialogCamTakes;
-    int lastDialogCamSide;
-    int firstSpeakerWasPC;
-    zCCSCamera* dialogCam;
-    zSTRING lastPresetName;
-    int raysCasted;
-    int underWater;
-    int inCutsceneMode;
-    zSTRING debugS;
-    int showPath;
-    zCVob* focusVob;
-    zCVob* ctrlDot[MAX_CTRL_VOBS];
-    zCPathSearch* pathSearch;
-    zCMovementTracker* moveTracker;
-    zSPathSearchResult* evasionSearchReport;
-    zSTRING curcammode;
-    float npcVolumeRangeOffset;
-    float camDistOffset;
-    zVEC3 camSysFirstPos;
-    int firstPerson;
-    int targetInPortalRoom;
+    int d_showDots;                          // sizeof 04h    offset 24h
+    int pathDetectCollision;                 // sizeof 04h    offset 28h
+    float bestRange;                         // sizeof 04h    offset 2Ch
+    float minRange;                          // sizeof 04h    offset 30h
+    float maxRange;                          // sizeof 04h    offset 34h
+    float bestRotX;                          // sizeof 04h    offset 38h
+    float minRotX;                           // sizeof 04h    offset 3Ch
+    float maxRotX;                           // sizeof 04h    offset 40h
+    float bestRotY;                          // sizeof 04h    offset 44h
+    float minRotY;                           // sizeof 04h    offset 48h
+    float maxRotY;                           // sizeof 04h    offset 4Ch
+    float bestRotZ;                          // sizeof 04h    offset 50h
+    float minRotZ;                           // sizeof 04h    offset 54h
+    float maxRotZ;                           // sizeof 04h    offset 58h
+    float rotOffsetX;                        // sizeof 04h    offset 5Ch
+    float rotOffsetY;                        // sizeof 04h    offset 60h
+    float rotOffsetZ;                        // sizeof 04h    offset 64h
+    float focusOffsetX;                      // sizeof 04h    offset 68h
+    float focusOffsetY;                      // sizeof 04h    offset 6Ch
+    float focusOffsetZ;                      // sizeof 04h    offset 70h
+    float veloTrans;                         // sizeof 04h    offset 74h
+    float veloRot;                           // sizeof 04h    offset 78h
+    int translate;                           // sizeof 04h    offset 7Ch
+    int rotate;                              // sizeof 04h    offset 80h
+    int collision;                           // sizeof 04h    offset 84h
+    unsigned char endOfDScript;              // sizeof 01h    offset 88h
+    zCArray<zCVob*> targetVobList;           // sizeof 0Ch    offset 8Ch
+    zCVob* camVob;                           // sizeof 04h    offset 98h
+    zCVob* target;                           // sizeof 04h    offset 9Ch
+    float targetAlpha;                       // sizeof 04h    offset A0h
+    int numTargets;                          // sizeof 04h    offset A4h
+    zSTRING oldCamSys;                       // sizeof 14h    offset A8h
+    int sysChanged;                          // sizeof 04h    offset BCh
+    int playerIsMovable;                     // sizeof 04h    offset C0h
+    int followIdealPos;                      // sizeof 04h    offset C4h
+    float dialogCamDuration;                 // sizeof 04h    offset C8h
+    int numOUsSpoken;                        // sizeof 04h    offset CCh
+    int numDialogCamTakes;                   // sizeof 04h    offset D0h
+    int lastNumDialogCamTakes;               // sizeof 04h    offset D4h
+    int lastDialogCamSide;                   // sizeof 04h    offset D8h
+    int firstSpeakerWasPC;                   // sizeof 04h    offset DCh
+    zCCSCamera* dialogCam;                   // sizeof 04h    offset E0h
+    zSTRING lastPresetName;                  // sizeof 14h    offset E4h
+    int raysCasted;                          // sizeof 04h    offset F8h
+    int underWater;                          // sizeof 04h    offset FCh
+    int inCutsceneMode;                      // sizeof 04h    offset 100h
+    zSTRING debugS;                          // sizeof 14h    offset 104h
+    int showPath;                            // sizeof 04h    offset 118h
+    zCVob* focusVob;                         // sizeof 04h    offset 11Ch
+    zCVob* ctrlDot[MAX_CTRL_VOBS];           // sizeof 140h   offset 120h
+    zCPathSearch* pathSearch;                // sizeof 04h    offset 260h
+    zCMovementTracker* moveTracker;          // sizeof 04h    offset 264h
+    zSPathSearchResult* evasionSearchReport; // sizeof 04h    offset 268h
+    zSTRING curcammode;                      // sizeof 14h    offset 26Ch
+    float npcVolumeRangeOffset;              // sizeof 04h    offset 280h
+    float camDistOffset;                     // sizeof 04h    offset 284h
+    zVEC3 camSysFirstPos;                    // sizeof 0Ch    offset 288h
+    int firstPerson;                         // sizeof 04h    offset 294h
+    int targetInPortalRoom;                  // sizeof 04h    offset 298h
 
     void zCAICamera_OnInit()                                                          zCall( 0x0049FD30 );
     zCAICamera()                                                                      zInit( zCAICamera_OnInit() );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OCS_TRIGGER_H__VER2__
 #define __OCS_TRIGGER_H__VER2__
@@ -7,6 +7,7 @@
 
 namespace Gothic_II_Classic {
 
+  // sizeof 168h
   class oCCSTrigger : public zCTrigger {
   public:
     zCLASS_DECLARATION( oCCSTrigger )

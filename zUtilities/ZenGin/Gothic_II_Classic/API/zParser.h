@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZPARSER_H__VER2__
 #define __ZPARSER_H__VER2__
@@ -9,20 +9,21 @@
 namespace Gothic_II_Classic {
   const int zPAR_INDEX_UNDEF = -1;
 
+  // sizeof 30h
   class zCPar_TreeNode {
   public:
-    zSTRING name;
-    unsigned char token;
+    zSTRING name;          // sizeof 14h    offset 00h
+    unsigned char token;   // sizeof 01h    offset 14h
     union {
       int value;
       float fvalue;
     };
 
-    int info;
-    zCPar_TreeNode* left;
-    zCPar_TreeNode* right;
-    zCPar_TreeNode* next;
-    int cNr;
+    int info;              // sizeof 04h    offset 1Ch
+    zCPar_TreeNode* left;  // sizeof 04h    offset 20h
+    zCPar_TreeNode* right; // sizeof 04h    offset 24h
+    zCPar_TreeNode* next;  // sizeof 04h    offset 28h
+    int cNr;               // sizeof 04h    offset 2Ch
 
     void zCPar_TreeNode_OnInit()                                                   zCall( 0x00737F40 );
     void zCPar_TreeNode_OnInit( int, int )                                         zCall( 0x00737F80 );
@@ -42,15 +43,16 @@ namespace Gothic_II_Classic {
     #include "zCPar_TreeNode.inl"
   };
 
+  // sizeof 2Ch
   class zCPar_File {
   public:
-    int fileid;
-    zSTRING name;
-    char* begin_adr;
-    int size;
-    int labels;
-    int treeload;
-    zCPar_TreeNode* tree;
+    int fileid;           // sizeof 04h    offset 00h
+    zSTRING name;         // sizeof 14h    offset 04h
+    char* begin_adr;      // sizeof 04h    offset 18h
+    int size;             // sizeof 04h    offset 1Ch
+    int labels;           // sizeof 04h    offset 20h
+    int treeload;         // sizeof 04h    offset 24h
+    zCPar_TreeNode* tree; // sizeof 04h    offset 28h
 
     void zCPar_File_OnInit()                         zCall( 0x0072D5E0 );
     zCPar_File()                                     zInit( zCPar_File_OnInit() );
@@ -79,58 +81,59 @@ namespace Gothic_II_Classic {
     #include "zCPar_File.inl"
   };
 
+  // sizeof 11C4h
   class zCParser {
   public:
-    void( *msgfunc )( zSTRING );
-    zCArray<zCPar_File*> file;
-    zCPar_SymbolTable symtab;
-    zCPar_StringTable stringtab;
-    zCPar_Stack stack;
-    zCPar_DataStack datastack;
-    zCPar_Symbol* self;
-    zSTRING fname;
-    zSTRING mainfile;
-    int compiled;
-    int treesave;
-    int datsave;
-    int parse_changed;
-    int treeload;
-    int mergemode;
-    int linkingnr;
-    int linec;
-    int line_start;
-    int ext_parse;
-    char* pc_start;
-    char* pc;
-    char* oldpc;
-    char* pc_stop;
-    char* oldpc_stop;
-    int params;
-    int in_funcnr;
-    int in_classnr;
-    int stringcount;
-    zCPar_Symbol* in_func;
-    zCPar_Symbol* in_class;
-    int error;
-    int stop_on_error;
-    int errorline;
-    char* prevword_index[16];
-    int prevline_index[16];
-    int prevword_nr;
-    zSTRING aword;
-    int instance;
-    int instance_help;
-    zCViewProgressBar* progressBar;
-    zCPar_TreeNode* tree;
-    zCPar_TreeNode* treenode;
-    zCView* win_code;
-    int debugmode;
-    int curfuncnr;
-    int labelcount;
-    int* labelpos;
-    zCList<zSTRING>* add_funclist;
-    zSTRING add_filename;
-    int add_created;
+    void( *msgfunc )( zSTRING );    // sizeof 04h    offset 00h
+    zCArray<zCPar_File*> file;      // sizeof 0Ch    offset 04h
+    zCPar_SymbolTable symtab;       // sizeof 2Ch    offset 10h
+    zCPar_StringTable stringtab;    // sizeof 0Ch    offset 3Ch
+    zCPar_Stack stack;              // sizeof 10h    offset 48h
+    zCPar_DataStack datastack;      // sizeof 1004h  offset 58h
+    zCPar_Symbol* self;             // sizeof 04h    offset 105Ch
+    zSTRING fname;                  // sizeof 14h    offset 1060h
+    zSTRING mainfile;               // sizeof 14h    offset 1074h
+    int compiled;                   // sizeof 04h    offset 1088h
+    int treesave;                   // sizeof 04h    offset 108Ch
+    int datsave;                    // sizeof 04h    offset 1090h
+    int parse_changed;              // sizeof 04h    offset 1094h
+    int treeload;                   // sizeof 04h    offset 1098h
+    int mergemode;                  // sizeof 04h    offset 109Ch
+    int linkingnr;                  // sizeof 04h    offset 10A0h
+    int linec;                      // sizeof 04h    offset 10A4h
+    int line_start;                 // sizeof 04h    offset 10A8h
+    int ext_parse;                  // sizeof 04h    offset 10ACh
+    char* pc_start;                 // sizeof 04h    offset 10B0h
+    char* pc;                       // sizeof 04h    offset 10B4h
+    char* oldpc;                    // sizeof 04h    offset 10B8h
+    char* pc_stop;                  // sizeof 04h    offset 10BCh
+    char* oldpc_stop;               // sizeof 04h    offset 10C0h
+    int params;                     // sizeof 04h    offset 10C4h
+    int in_funcnr;                  // sizeof 04h    offset 10C8h
+    int in_classnr;                 // sizeof 04h    offset 10CCh
+    int stringcount;                // sizeof 04h    offset 10D0h
+    zCPar_Symbol* in_func;          // sizeof 04h    offset 10D4h
+    zCPar_Symbol* in_class;         // sizeof 04h    offset 10D8h
+    int error;                      // sizeof 04h    offset 10DCh
+    int stop_on_error;              // sizeof 04h    offset 10E0h
+    int errorline;                  // sizeof 04h    offset 10E4h
+    char* prevword_index[16];       // sizeof 40h    offset 10E8h
+    int prevline_index[16];         // sizeof 40h    offset 1128h
+    int prevword_nr;                // sizeof 04h    offset 1168h
+    zSTRING aword;                  // sizeof 14h    offset 116Ch
+    int instance;                   // sizeof 04h    offset 1180h
+    int instance_help;              // sizeof 04h    offset 1184h
+    zCViewProgressBar* progressBar; // sizeof 04h    offset 1188h
+    zCPar_TreeNode* tree;           // sizeof 04h    offset 118Ch
+    zCPar_TreeNode* treenode;       // sizeof 04h    offset 1190h
+    zCView* win_code;               // sizeof 04h    offset 1194h
+    int debugmode;                  // sizeof 04h    offset 1198h
+    int curfuncnr;                  // sizeof 04h    offset 119Ch
+    int labelcount;                 // sizeof 04h    offset 11A0h
+    int* labelpos;                  // sizeof 04h    offset 11A4h
+    zCList<zSTRING>* add_funclist;  // sizeof 04h    offset 11A8h
+    zSTRING add_filename;           // sizeof 14h    offset 11ACh
+    int add_created;                // sizeof 04h    offset 11C0h
 
     zCParser() {}
     void zCParser_OnInit( int )                                                     zCall( 0x0072E490 );
@@ -264,8 +267,6 @@ namespace Gothic_II_Classic {
     int FindInstanceVar( zSTRING& )                                                 zCall( 0x00740FB0 );
     int GetLastInstance()                                                           zCall( 0x00741190 );
     int FindIndex( zSTRING& )                                                       zCall( 0x007411A0 );
-    void DoEvent( const zSTRING& eventName );
-    int GetEventIndex( const zSTRING& eventName );
     static void SetVersion( unsigned char )                                         zCall( 0x0072D5C0 );
     static unsigned char GetVersion()                                               zCall( 0x0072D5D0 );
     static zCParser* GetParser()                                                    zCall( 0x0072E480 );
@@ -277,30 +278,6 @@ namespace Gothic_II_Classic {
     // user API
     #include "zCParser.inl"
   };
-
-  inline void zCParser::DoEvent( const zSTRING& eventName ) {
-    int index = GetEventIndex( eventName );
-    if( index == Invalid )
-      return;
-
-    int indexSort = symtab.tablesort.Search( index );
-    while( true ) {
-      index = symtab.tablesort[++indexSort];
-      zCPar_Symbol* sym = GetSymbol( index );
-      if( sym == Null )
-        break;
-
-      if( !sym->name.HasWord( "EVENT." + eventName + "." ) )
-        break;
-
-      CallFunc( index );
-    }
-  }
-
-  inline int zCParser::GetEventIndex( const zSTRING& eventName ) {
-    int index = GetIndex( "EVENT." + eventName + ".START" );
-    return index;
-  }
 
 } // namespace Gothic_II_Classic
 

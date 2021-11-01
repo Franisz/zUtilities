@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZBINK_PLAYER_H__VER2__
 #define __ZBINK_PLAYER_H__VER2__
@@ -8,19 +8,20 @@
 
 namespace Gothic_II_Classic {
 
+  // sizeof 80h
   class zCBinkPlayer : public zCVideoPlayer {
   public:
-    void* mVideoHandle;
-    long mCopyMode;
-    short mXpos;
-    short mYpos;
-    int mDoBlit;
-    int mDoHandleEvents;
-    int mDoFullscreen;
-    zSTRING mBackTexture;
-    zCView* mBackView;
-    RECT mSourceRect;
-    RECT mTargetRect;
+    void* mVideoHandle;   // sizeof 04h    offset 30h
+    long mCopyMode;       // sizeof 04h    offset 34h
+    short mXpos;          // sizeof 02h    offset 38h
+    short mYpos;          // sizeof 02h    offset 3Ah
+    int mDoBlit;          // sizeof 04h    offset 3Ch
+    int mDoHandleEvents;  // sizeof 04h    offset 40h
+    int mDoFullscreen;    // sizeof 04h    offset 44h
+    zSTRING mBackTexture; // sizeof 14h    offset 48h
+    zCView* mBackView;    // sizeof 04h    offset 5Ch
+    RECT mSourceRect;     // sizeof 10h    offset 60h
+    RECT mTargetRect;     // sizeof 10h    offset 70h
 
     void zCBinkPlayer_OnInit()               zCall( 0x0043D800 );
     zCBinkPlayer()                           zInit( zCBinkPlayer_OnInit() );

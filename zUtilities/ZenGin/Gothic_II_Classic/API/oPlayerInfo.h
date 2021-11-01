@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OPLAYER_INFO_H__VER2__
 #define __OPLAYER_INFO_H__VER2__
@@ -18,9 +18,10 @@ namespace Gothic_II_Classic {
     PC_PSIONIC
   };
 
+  // sizeof 40h
   class oCPlayerInfo : public zCPlayerInfo {
   public:
-    TPlayerInstance instance;
+    TPlayerInstance instance; // sizeof 04h    offset 3Ch
 
     void oCPlayerInfo_OnInit()                          zCall( 0x00435EE0 );
     oCPlayerInfo()                                      zInit( oCPlayerInfo_OnInit() );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZTEXTURE_H__VER0__
 #define __ZTEXTURE_H__VER0__
@@ -32,10 +32,11 @@ namespace Gothic_I_Classic {
     zTEX_LOCK_WRITE = 2
   };
 
+  // sizeof 03h
   struct zTTexPalette {
-    unsigned char r;
-    unsigned char g;
-    unsigned char b;
+    unsigned char r; // sizeof 01h    offset 00h
+    unsigned char g; // sizeof 01h    offset 01h
+    unsigned char b; // sizeof 01h    offset 02h
 
     zTTexPalette() {}
 
@@ -43,15 +44,16 @@ namespace Gothic_I_Classic {
     #include "zTTexPalette.inl"
   };
 
+  // sizeof 1Ch
   class zCTextureInfo {
   public:
-    zTRnd_TextureFormat texFormat;
-    int sizeX;
-    int sizeY;
-    int numMipMap;
-    int refSizeX;
-    int refSizeY;
-    zCOLOR averageColor;
+    zTRnd_TextureFormat texFormat; // sizeof 04h    offset 00h
+    int sizeX;                     // sizeof 04h    offset 04h
+    int sizeY;                     // sizeof 04h    offset 08h
+    int numMipMap;                 // sizeof 04h    offset 0Ch
+    int refSizeX;                  // sizeof 04h    offset 10h
+    int refSizeY;                  // sizeof 04h    offset 14h
+    zCOLOR averageColor;           // sizeof 04h    offset 18h
 
     zCTextureInfo() { ZeroMemory( this, sizeof( zCTextureInfo ) ); }
 
@@ -59,6 +61,7 @@ namespace Gothic_I_Classic {
     #include "zCTextureInfo.inl"
   };
 
+  // sizeof 24h
   class zCTextureFileFormat : public zCObject {
   public:
     zCLASS_DECLARATION( zCTextureFileFormat )
@@ -78,46 +81,48 @@ namespace Gothic_I_Classic {
     #include "zCTextureFileFormat.inl"
   };
 
+  // sizeof 84h
   class zCTextureFileFormatTGA : public zCTextureFileFormat {
   public:
     zCLASS_DECLARATION( zCTextureFileFormatTGA )
 
 #pragma pack( push, 1 )
+    // sizeof 12h
     struct zTTgaHeader {
     public:
-      unsigned char IDLength;
-      unsigned char CMapType;
-      unsigned char ImgType;
-      unsigned char CMapStartLo;
-      unsigned char CMapStartHi;
-      unsigned char CMapLengthLo;
-      unsigned char CMapLengthHi;
-      unsigned char CMapDepth;
-      unsigned short XOffSet;
-      unsigned short YOffSet;
-      unsigned char WidthLo;
-      unsigned char WidthHi;
-      unsigned char HeightLo;
-      unsigned char HeightHi;
-      unsigned char PixelDepth;
-      unsigned char ImageDescriptor;
+      unsigned char IDLength;        // sizeof 01h    offset 00h
+      unsigned char CMapType;        // sizeof 01h    offset 01h
+      unsigned char ImgType;         // sizeof 01h    offset 02h
+      unsigned char CMapStartLo;     // sizeof 01h    offset 03h
+      unsigned char CMapStartHi;     // sizeof 01h    offset 04h
+      unsigned char CMapLengthLo;    // sizeof 01h    offset 05h
+      unsigned char CMapLengthHi;    // sizeof 01h    offset 06h
+      unsigned char CMapDepth;       // sizeof 01h    offset 07h
+      unsigned short XOffSet;        // sizeof 02h    offset 08h
+      unsigned short YOffSet;        // sizeof 02h    offset 0Ah
+      unsigned char WidthLo;         // sizeof 01h    offset 0Ch
+      unsigned char WidthHi;         // sizeof 01h    offset 0Dh
+      unsigned char HeightLo;        // sizeof 01h    offset 0Eh
+      unsigned char HeightHi;        // sizeof 01h    offset 0Fh
+      unsigned char PixelDepth;      // sizeof 01h    offset 10h
+      unsigned char ImageDescriptor; // sizeof 01h    offset 11h
 
       // user API
       #include "zCTextureFileFormatTGA_zTTgaHeader.inl"
     };
 #pragma pack( pop )
 
-    zTTgaHeader tgaHeader;
-    zTRnd_TextureFormat texFormat;
-    zCTextureInfo texInfo;
-    unsigned char* palette;
-    unsigned char* data;
-    unsigned char* dataBase;
-    int pitchXBytes;
-    int tgaRLE;
-    int tgaRLEflag;
-    int tgaRLEcount;
-    int tgaRLEsav[4];
+    zTTgaHeader tgaHeader;         // sizeof 12h    offset 24h
+    zTRnd_TextureFormat texFormat; // sizeof 04h    offset 38h
+    zCTextureInfo texInfo;         // sizeof 1Ch    offset 3Ch
+    unsigned char* palette;        // sizeof 04h    offset 58h
+    unsigned char* data;           // sizeof 04h    offset 5Ch
+    unsigned char* dataBase;       // sizeof 04h    offset 60h
+    int pitchXBytes;               // sizeof 04h    offset 64h
+    int tgaRLE;                    // sizeof 04h    offset 68h
+    int tgaRLEflag;                // sizeof 04h    offset 6Ch
+    int tgaRLEcount;               // sizeof 04h    offset 70h
+    int tgaRLEsav[4];              // sizeof 10h    offset 74h
 
     void zCTextureFileFormatTGA_OnInit()                                zCall( 0x005C61A0 );
     zCTextureFileFormatTGA()                                            zInit( zCTextureFileFormatTGA_OnInit() );
@@ -141,14 +146,15 @@ namespace Gothic_I_Classic {
     #include "zCTextureFileFormatTGA.inl"
   };
 
+  // sizeof 4Ch
   class zCTextureFileFormatInternal : public zCTextureFileFormat {
   public:
     zCLASS_DECLARATION( zCTextureFileFormatInternal )
 
-    zCTextureInfo texInfo;
-    int numHigherThanRef;
-    int maxPixelDim;
-    int showSpyMessages;
+    zCTextureInfo texInfo; // sizeof 1Ch    offset 24h
+    int numHigherThanRef;  // sizeof 04h    offset 40h
+    int maxPixelDim;       // sizeof 04h    offset 44h
+    int showSpyMessages;   // sizeof 04h    offset 48h
 
     void zCTextureFileFormatInternal_OnInit()                           zCall( 0x005C7890 );
     zCTextureFileFormatInternal()                                       zInit( zCTextureFileFormatInternal_OnInit() );
@@ -171,6 +177,7 @@ namespace Gothic_I_Classic {
     #include "zCTextureFileFormatInternal.inl"
   };
 
+  // sizeof 04h
   class zCTextureExchange {
   public:
 
@@ -194,6 +201,7 @@ namespace Gothic_I_Classic {
     #include "zCTextureExchange.inl"
   };
 
+  // sizeof 04h
   class zCTextureConvert : public zCTextureExchange {
   public:
 
@@ -215,6 +223,7 @@ namespace Gothic_I_Classic {
     #include "zCTextureConvert.inl"
   };
 
+  // sizeof 8Ch
   class zCTexture : public zCResource, public zCTextureExchange {
   public:
     zCLASS_DECLARATION( zCTexture )
@@ -227,15 +236,15 @@ namespace Gothic_I_Classic {
       zTEX_FILE_DESIRED_BPP_COUNT
     };
 
-    zCTexture* nextAni[zTEX_MAX_ANIS];
-    zCTexture* prevAni[zTEX_MAX_ANIS];
-    int actAniFrame[zTEX_MAX_ANIS];
-    int numAniFrames[zTEX_MAX_ANIS];
+    zCTexture* nextAni[zTEX_MAX_ANIS];    // sizeof 0Ch    offset 58h
+    zCTexture* prevAni[zTEX_MAX_ANIS];    // sizeof 0Ch    offset 64h
+    int actAniFrame[zTEX_MAX_ANIS];       // sizeof 0Ch    offset 70h
+    int numAniFrames[zTEX_MAX_ANIS];      // sizeof 0Ch    offset 7Ch
     group {
-      unsigned char hasAlpha         : 1;
-      unsigned char isAnimated       : 1;
-      unsigned char changingRealtime : 1;
-      unsigned char isTextureTile    : 1;
+      unsigned char hasAlpha         : 1; // sizeof 01h    offset bit
+      unsigned char isAnimated       : 1; // sizeof 01h    offset bit
+      unsigned char changingRealtime : 1; // sizeof 01h    offset bit
+      unsigned char isTextureTile    : 1; // sizeof 01h    offset bit
     };
 
     void zCTexture_OnInit()                                                                        zCall( 0x005C87E0 );
@@ -300,14 +309,15 @@ namespace Gothic_I_Classic {
     #include "zCTexture.inl"
   };
 
+  // sizeof 4Ch
   class zCLightMap : public zCObject {
   public:
     zCLASS_DECLARATION( zCLightMap )
 
-    zVEC3 lightmapOrigin;
-    zVEC3 lightmapUVUp;
-    zVEC3 lightmapUVRight;
-    zCTexture* tex;
+    zVEC3 lightmapOrigin;  // sizeof 0Ch    offset 24h
+    zVEC3 lightmapUVUp;    // sizeof 0Ch    offset 30h
+    zVEC3 lightmapUVRight; // sizeof 0Ch    offset 3Ch
+    zCTexture* tex;        // sizeof 04h    offset 48h
 
     void zCLightMap_OnInit()                                                   zCall( 0x005CDD70 );
     zCLightMap()                                                               zInit( zCLightMap_OnInit() );
@@ -321,6 +331,7 @@ namespace Gothic_I_Classic {
     #include "zCLightMap.inl"
   };
 
+  // sizeof 30h
   class zCTextureFileHandler : public zCScanDirFileHandler {
   public:
 

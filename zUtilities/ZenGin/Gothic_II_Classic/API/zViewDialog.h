@@ -1,16 +1,17 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_DIALOG_H__VER2__
 #define __ZVIEW_DIALOG_H__VER2__
 
 namespace Gothic_II_Classic {
 
+  // sizeof F8h
   class zCViewDialog : public zCViewPrint, public zCInputCallback {
   public:
     zCLASS_DECLARATION( zCViewDialog )
 
-    int IsDone;
-    int IsActivated;
+    int IsDone;      // sizeof 04h    offset F0h
+    int IsActivated; // sizeof 04h    offset F4h
 
     void zCViewDialog_OnInit()               zCall( 0x007A5310 );
     zCViewDialog()                           zInit( zCViewDialog_OnInit() );

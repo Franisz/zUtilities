@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OMISSION_H__VER2__
 #define __OMISSION_H__VER2__
@@ -17,9 +17,10 @@ namespace Gothic_II_Classic {
   const int MIS_CANCELED    = 6;
   const int MIS_FAILED      = 7;
 
+  // sizeof 14h
   class oCMissionManager {
   public:
-    zCArraySort<oCMission*> missionList;
+    zCArraySort<oCMission*> missionList; // sizeof 10h    offset 04h
 
     void oCMissionManager_OnInit()                             zCall( 0x006B6F40 );
     oCMissionManager()                                         zInit( oCMissionManager_OnInit() );
@@ -42,41 +43,43 @@ namespace Gothic_II_Classic {
     #include "oCMissionManager.inl"
   };
 
+  // sizeof 80h
   class oCMission {
   public:
+    // sizeof 0Ch
     struct TMisStatus {
     public:
-      unsigned long vobID;
-      int status;
-      float startTime;
+      unsigned long vobID; // sizeof 04h    offset 00h
+      int status;          // sizeof 04h    offset 04h
+      float startTime;     // sizeof 04h    offset 08h
 
       // user API
       #include "oCMission_TMisStatus.inl"
     };
 
     group {
-      zSTRING name;
-      zSTRING description;
-      int duration;
-      int important;
-      int offerConditions;
-      int offerFunc;
-      int successConditions;
-      int successFunc;
-      int failureConditions;
-      int failureFunc;
-      int obsoleteConditions;
-      int obsoleteFunc;
-      int runningFunc;
+      zSTRING name;                  // sizeof 14h    offset 04h
+      zSTRING description;           // sizeof 14h    offset 18h
+      int duration;                  // sizeof 04h    offset 2Ch
+      int important;                 // sizeof 04h    offset 30h
+      int offerConditions;           // sizeof 04h    offset 34h
+      int offerFunc;                 // sizeof 04h    offset 38h
+      int successConditions;         // sizeof 04h    offset 3Ch
+      int successFunc;               // sizeof 04h    offset 40h
+      int failureConditions;         // sizeof 04h    offset 44h
+      int failureFunc;               // sizeof 04h    offset 48h
+      int obsoleteConditions;        // sizeof 04h    offset 4Ch
+      int obsoleteFunc;              // sizeof 04h    offset 50h
+      int runningFunc;               // sizeof 04h    offset 54h
     };
-    int instance;
-    oCNpc* npc;
-    oCNpc* player;
-    unsigned long curID;
-    int available;
-    zCArray<TMisStatus*> statusList;
-    TMisStatus* status;
-    int deleted;
+    int instance;                    // sizeof 04h    offset 58h
+    oCNpc* npc;                      // sizeof 04h    offset 5Ch
+    oCNpc* player;                   // sizeof 04h    offset 60h
+    unsigned long curID;             // sizeof 04h    offset 64h
+    int available;                   // sizeof 04h    offset 68h
+    zCArray<TMisStatus*> statusList; // sizeof 0Ch    offset 6Ch
+    TMisStatus* status;              // sizeof 04h    offset 78h
+    int deleted;                     // sizeof 04h    offset 7Ch
 
     oCMission() {}
     void oCMission_OnInit( int )                zCall( 0x006B8300 );

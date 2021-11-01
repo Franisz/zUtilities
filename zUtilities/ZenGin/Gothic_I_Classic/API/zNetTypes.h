@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZNET_TYPES_H__VER0__
 #define __ZNET_TYPES_H__VER0__

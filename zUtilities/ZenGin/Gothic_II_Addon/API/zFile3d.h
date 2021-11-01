@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZFILE3D_H__VER3__
 #define __ZFILE3D_H__VER3__
@@ -8,6 +8,7 @@
 
 namespace Gothic_II_Addon {
 
+  // sizeof 01h
   class zCFile3DS {
   public:
 
@@ -19,9 +20,10 @@ namespace Gothic_II_Addon {
     #include "zCFile3DS.inl"
   };
 
+  // sizeof 04h
   class zCFileQuakeBSP {
   public:
-    zFILE* file;
+    zFILE* file; // sizeof 04h    offset 00h
 
     void zCFileQuakeBSP_OnInit()                           zCall( 0x00560BE0 );
     zCFileQuakeBSP()                                       zInit( zCFileQuakeBSP_OnInit() );
@@ -32,12 +34,13 @@ namespace Gothic_II_Addon {
     #include "zCFileQuakeBSP.inl"
   };
 
+  // sizeof 10h
   class zCFileBIN {
   public:
-    int lastStart;
-    int nextStart;
-    int externalFile;
-    zFILE* file;
+    int lastStart;    // sizeof 04h    offset 00h
+    int nextStart;    // sizeof 04h    offset 04h
+    int externalFile; // sizeof 04h    offset 08h
+    zFILE* file;      // sizeof 04h    offset 0Ch
 
     void zCFileBIN_OnInit()               zCall( 0x00567F50 );
     zCFileBIN()                           zInit( zCFileBIN_OnInit() );

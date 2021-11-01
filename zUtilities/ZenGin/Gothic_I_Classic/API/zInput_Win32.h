@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZINPUT__WIN32_H__VER0__
 #define __ZINPUT__WIN32_H__VER0__
@@ -8,15 +8,16 @@
 
 namespace Gothic_I_Classic {
 
+  // sizeof 48h
   class zCInput_Win32 : public zCInput {
   public:
-    zCTimer m_kbdTimer;
-    float m_fKeyRepeatDelay;
-    float m_fKeyRepeatTime;
-    float m_fKeyRepeatTimeMod;
-    float m_fKeyRepeatCounter;
-    float m_fKeyRepeatCounterDelay;
-    unsigned short m_iLastKey;
+    zCTimer m_kbdTimer;             // sizeof 1Ch    offset 14h
+    float m_fKeyRepeatDelay;        // sizeof 04h    offset 30h
+    float m_fKeyRepeatTime;         // sizeof 04h    offset 34h
+    float m_fKeyRepeatTimeMod;      // sizeof 04h    offset 38h
+    float m_fKeyRepeatCounter;      // sizeof 04h    offset 3Ch
+    float m_fKeyRepeatCounterDelay; // sizeof 04h    offset 40h
+    unsigned short m_iLastKey;      // sizeof 02h    offset 44h
 
     zCInput_Win32() {}
     void zCInput_Win32_OnInit( HWND__** )               zCall( 0x004C8170 );

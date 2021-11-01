@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZWORLD_INFO_H__VER0__
 #define __ZWORLD_INFO_H__VER0__
@@ -7,12 +7,13 @@
 
 namespace Gothic_I_Classic {
 
+  // sizeof 28h
   class zCWorldInfo {
   public:
-    int isRunning;
-    zSTRING name;
-    zCPlayerGroup* playerGroup_Level;
-    zCList<zCPlayerInfo> historyList;
+    int isRunning;                    // sizeof 04h    offset 04h
+    zSTRING name;                     // sizeof 14h    offset 08h
+    zCPlayerGroup* playerGroup_Level; // sizeof 04h    offset 1Ch
+    zCList<zCPlayerInfo> historyList; // sizeof 08h    offset 20h
 
     zCWorldInfo() {}
     void zCWorldInfo_OnInit( zSTRING const& ) zCall( 0x0046A4E0 );

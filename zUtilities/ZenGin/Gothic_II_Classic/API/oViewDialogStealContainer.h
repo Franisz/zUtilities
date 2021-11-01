@@ -1,10 +1,11 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIEW_DIALOG_STEAL_CONTAINER_H__VER2__
 #define __OVIEW_DIALOG_STEAL_CONTAINER_H__VER2__
 
 namespace Gothic_II_Classic {
 
+  // sizeof 110h
   class oCViewDialogStealContainer : public zCViewDialog {
   public:
     zCLASS_DECLARATION( oCViewDialogStealContainer )
@@ -14,12 +15,12 @@ namespace Gothic_II_Classic {
       oEStealContainerAlignment_Right
     };
 
-    oEStealContainerAlignment oTStealContainerAlignment;
-    oEStealContainerAlignment oTAlignmentStealContainer;
-    oCStealContainer* StealContainer;
-    oEStealContainerAlignment Alignment;
-    unsigned long Value;
-    float ValueMultiplier;
+    oEStealContainerAlignment oTStealContainerAlignment; // sizeof 04h    offset F8h
+    oEStealContainerAlignment oTAlignmentStealContainer; // sizeof 04h    offset FCh
+    oCStealContainer* StealContainer;                    // sizeof 04h    offset 100h
+    oEStealContainerAlignment Alignment;                 // sizeof 04h    offset 104h
+    unsigned long Value;                                 // sizeof 04h    offset 108h
+    float ValueMultiplier;                               // sizeof 04h    offset 10Ch
 
     void oCViewDialogStealContainer_OnInit()                  zCall( 0x007745B0 );
     oCViewDialogStealContainer()                              zInit( oCViewDialogStealContainer_OnInit() );

@@ -1,18 +1,19 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSESSION_H__VER3__
 #define __ZSESSION_H__VER3__
 
 namespace Gothic_II_Addon {
 
+  // sizeof 1Ch
   class zCSession : public zCInputCallback {
   public:
-    zCCSManager* csMan;
-    zCWorld* world;
-    zCCamera* camera;
-    zCAICamera* aiCam;
-    zCVob* camVob;
-    zCView* viewport;
+    zCCSManager* csMan; // sizeof 04h    offset 04h
+    zCWorld* world;     // sizeof 04h    offset 08h
+    zCCamera* camera;   // sizeof 04h    offset 0Ch
+    zCAICamera* aiCam;  // sizeof 04h    offset 10h
+    zCVob* camVob;      // sizeof 04h    offset 14h
+    zCView* viewport;   // sizeof 04h    offset 18h
 
     void zCSession_OnInit()                                                      zCall( 0x005DE750 );
     zCSession()                                                                  zInit( zCSession_OnInit() );

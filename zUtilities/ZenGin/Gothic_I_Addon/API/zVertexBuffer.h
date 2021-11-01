@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVERTEX_BUFFER_H__VER1__
 #define __ZVERTEX_BUFFER_H__VER1__
@@ -48,29 +48,32 @@ namespace Gothic_I_Addon {
     zVBUFFER_VERTTYPE_T_L
   };
 
+  // sizeof 68h
   class zCVertexBuffer : public zCObject {
   public:
     zCLASS_DECLARATION( zCVertexBuffer )
 
+    // sizeof 24h
     struct zCVertexBufferDummy0 {
-      unsigned char* basePtr;
-      zVEC3* XYZPtr;
-      zVEC4* XYZRHWPtr;
-      zVEC3* normalPtr;
-      zCOLOR* colorPtr;
+      unsigned char* basePtr; // sizeof 04h    offset 00h
+      zVEC3* XYZPtr;          // sizeof 04h    offset 04h
+      zVEC4* XYZRHWPtr;       // sizeof 04h    offset 08h
+      zVEC3* normalPtr;       // sizeof 04h    offset 0Ch
+      zCOLOR* colorPtr;       // sizeof 04h    offset 10h
       union {
         group {
-          zVEC2* texUV0Ptr;
-          zVEC2* texUV1Ptr;
-          zVEC2* texUV2Ptr;
-          zVEC2* texUV3Ptr;
+          zVEC2* texUV0Ptr;   // sizeof 04h    offset 14h
+          zVEC2* texUV1Ptr;   // sizeof 04h    offset 18h
+          zVEC2* texUV2Ptr;   // sizeof 04h    offset 1Ch
+          zVEC2* texUV3Ptr;   // sizeof 04h    offset 20h
         };
       };
     };
 
+    // sizeof 08h
     struct zTCallbackData {
-      void* recreateLostVBCallback;
-      void* recreateLostVBCallbackData;
+      void* recreateLostVBCallback;     // sizeof 04h    offset 00h
+      void* recreateLostVBCallbackData; // sizeof 04h    offset 04h
 
       zTCallbackData() {}
 
@@ -78,13 +81,13 @@ namespace Gothic_I_Addon {
       #include "zCVertexBuffer_zTCallbackData.inl"
     };
 
-    unsigned long numVertex;
-    unsigned long arrayStride;
-    zCVertexBufferDummy0 array;
-    int numVertsFilled;
-    unsigned long createFlags;
-    zCArray<zTCallbackData> callbackList;
-    unsigned long vertexBufferID;
+    unsigned long numVertex;              // sizeof 04h    offset 24h
+    unsigned long arrayStride;            // sizeof 04h    offset 28h
+    zCVertexBufferDummy0 array;           // sizeof 24h    offset 2Ch
+    int numVertsFilled;                   // sizeof 04h    offset 50h
+    unsigned long createFlags;            // sizeof 04h    offset 54h
+    zCArray<zTCallbackData> callbackList; // sizeof 0Ch    offset 58h
+    unsigned long vertexBufferID;         // sizeof 04h    offset 64h
 
     void zCVertexBuffer_OnInit()                                                          zCall( 0x005EFD90 );
     zCVertexBuffer()                                                                      zInit( zCVertexBuffer_OnInit() );
@@ -116,6 +119,7 @@ namespace Gothic_I_Addon {
     #include "zCVertexBuffer.inl"
   };
 
+  // sizeof 1Ch
   class zCVertexBufferDyn {
   public:
     enum LOCK_FLAGS {
@@ -123,13 +127,13 @@ namespace Gothic_I_Addon {
       LOCKFLAGS_APPEND = zVBUFFER_LOCK_FLAG_NOSYSLOCK | zVBUFFER_LOCK_FLAG_WRITEONLY | zVBUFFER_LOCK_FLAG_NOOVERWRITE
     };
 
-    zCVertexBuffer* vertexBuffer;
-    unsigned long vertexFormat;
-    unsigned long numVert;
-    unsigned long vertexSizeBytes;
-    unsigned long currentPos;
-    int locked;
-    int flush;
+    zCVertexBuffer* vertexBuffer;  // sizeof 04h    offset 00h
+    unsigned long vertexFormat;    // sizeof 04h    offset 04h
+    unsigned long numVert;         // sizeof 04h    offset 08h
+    unsigned long vertexSizeBytes; // sizeof 04h    offset 0Ch
+    unsigned long currentPos;      // sizeof 04h    offset 10h
+    int locked;                    // sizeof 04h    offset 14h
+    int flush;                     // sizeof 04h    offset 18h
 
     zCVertexBufferDyn() {}
     void zCVertexBufferDyn_OnInit( unsigned long, unsigned long ) zCall( 0x005F0310 );
@@ -142,6 +146,7 @@ namespace Gothic_I_Addon {
     #include "zCVertexBufferDyn.inl"
   };
 
+  // sizeof 1Ch
   class zCVertexBufferDyn2 {
   public:
     enum LOCK_FLAGS {
@@ -149,13 +154,13 @@ namespace Gothic_I_Addon {
       LOCKFLAGS_APPEND = zVBUFFER_LOCK_FLAG_NOSYSLOCK | zVBUFFER_LOCK_FLAG_WRITEONLY | zVBUFFER_LOCK_FLAG_NOOVERWRITE
     };
 
-    zCVertexBuffer* vertexBuffer;
-    unsigned long vertexFormat;
-    unsigned long numVert;
-    unsigned long vertexSizeBytes;
-    unsigned long currentPos;
-    int locked;
-    int flush;
+    zCVertexBuffer* vertexBuffer;  // sizeof 04h    offset 00h
+    unsigned long vertexFormat;    // sizeof 04h    offset 04h
+    unsigned long numVert;         // sizeof 04h    offset 08h
+    unsigned long vertexSizeBytes; // sizeof 04h    offset 0Ch
+    unsigned long currentPos;      // sizeof 04h    offset 10h
+    int locked;                    // sizeof 04h    offset 14h
+    int flush;                     // sizeof 04h    offset 18h
 
     zCVertexBufferDyn2() {}
     void zCVertexBufferDyn2_OnInit( unsigned long, unsigned long ) zCall( 0x005F0510 );
@@ -169,11 +174,12 @@ namespace Gothic_I_Addon {
     #include "zCVertexBufferDyn2.inl"
   };
 
+  // sizeof 1Ch
   class zCVertexBufferManager {
   public:
-    zCArray<zCVertexBuffer*> openVBList;
-    zCArray<zCVertexBuffer*> closedVBList;
-    int changeWorldHintSet;
+    zCArray<zCVertexBuffer*> openVBList;   // sizeof 0Ch    offset 00h
+    zCArray<zCVertexBuffer*> closedVBList; // sizeof 0Ch    offset 0Ch
+    int changeWorldHintSet;                // sizeof 04h    offset 18h
 
     void zCVertexBufferManager_OnInit()                                                                     zCall( 0x005F0690 );
     zCVertexBufferManager()                                                                                 zInit( zCVertexBufferManager_OnInit() );

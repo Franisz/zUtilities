@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZARCHIVER_H__VER0__
 #define __ZARCHIVER_H__VER0__
@@ -18,6 +18,7 @@ namespace Gothic_I_Classic {
     zARC_FLAG_NO_SPY_MESSAGES    = 2
   };
 
+  // sizeof 04h
   class zCArchiverFactory {
   public:
 
@@ -42,6 +43,7 @@ namespace Gothic_I_Classic {
     #include "zCArchiverFactory.inl"
   };
 
+  // sizeof 2Ch
   class zCArchiver : public zCObject {
   public:
     zCLASS_DECLARATION( zCArchiver )
@@ -57,13 +59,14 @@ namespace Gothic_I_Classic {
       zARC_WRITE
     };
 
+    // sizeof 38h
     struct zTChunkRecord {
-      unsigned long startPos;
-      unsigned long size;
-      unsigned short version;
-      unsigned long objectIndex;
-      zSTRING name;
-      zSTRING className;
+      unsigned long startPos;    // sizeof 04h    offset 00h
+      unsigned long size;        // sizeof 04h    offset 04h
+      unsigned short version;    // sizeof 02h    offset 08h
+      unsigned long objectIndex; // sizeof 04h    offset 0Ch
+      zSTRING name;              // sizeof 14h    offset 10h
+      zSTRING className;         // sizeof 14h    offset 24h
 
       void zTChunkRecord_OnInit()                       zCall( 0x00510FA0 );
       ~zTChunkRecord()                                  zCall( 0x0050DF80 );
@@ -74,8 +77,8 @@ namespace Gothic_I_Classic {
       #include "zCArchiver_zTChunkRecord.inl"
     };
 
-    zTArchiveMedium medium;
-    zTArchiveMode mode;
+    zTArchiveMedium medium; // sizeof 04h    offset 24h
+    zTArchiveMode mode;     // sizeof 04h    offset 28h
 
     zCArchiver() {}
     virtual zCClassDef* _GetClassDef() const                                                           zCall( 0x0050BED0 );

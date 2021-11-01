@@ -1,15 +1,16 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OPORTALS_H__VER3__
 #define __OPORTALS_H__VER3__
 
 namespace Gothic_II_Addon {
 
+  // sizeof 2Ch
   class oCPortalRoom {
   public:
-    zSTRING portalName;
-    zSTRING ownerNpc;
-    int ownerGuild;
+    zSTRING portalName; // sizeof 14h    offset 00h
+    zSTRING ownerNpc;   // sizeof 14h    offset 14h
+    int ownerGuild;     // sizeof 04h    offset 28h
 
     void oCPortalRoom_OnInit()                 zCall( 0x00771F00 );
     void oCPortalRoom_OnInit( zSTRING const& ) zCall( 0x00772080 );
@@ -27,13 +28,14 @@ namespace Gothic_II_Addon {
     #include "oCPortalRoom.inl"
   };
 
+  // sizeof 20h
   class oCPortalRoomManager {
   public:
-    zSTRING* oldPlayerPortal;
-    zSTRING* curPlayerPortal;
-    oCPortalRoom* oldPlayerRoom;
-    oCPortalRoom* curPlayerRoom;
-    zCArraySort<oCPortalRoom*> portals;
+    zSTRING* oldPlayerPortal;           // sizeof 04h    offset 00h
+    zSTRING* curPlayerPortal;           // sizeof 04h    offset 04h
+    oCPortalRoom* oldPlayerRoom;        // sizeof 04h    offset 08h
+    oCPortalRoom* curPlayerRoom;        // sizeof 04h    offset 0Ch
+    zCArraySort<oCPortalRoom*> portals; // sizeof 10h    offset 10h
 
     void oCPortalRoomManager_OnInit()                        zCall( 0x00772690 );
     oCPortalRoomManager()                                    zInit( oCPortalRoomManager_OnInit() );

@@ -1,10 +1,11 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZLENSFLARE_H__VER3__
 #define __ZLENSFLARE_H__VER3__
 
 namespace Gothic_II_Addon {
 
+  // sizeof 38h
   class zCLensFlareFX : public zCObject {
   public:
     zCLASS_DECLARATION( zCLensFlareFX )
@@ -15,6 +16,7 @@ namespace Gothic_II_Addon {
       FM_NO_GLOW
     };
 
+    // sizeof 20h
     class zTVobLightLensFlare {
     public:
       enum zTFlareType {
@@ -23,14 +25,14 @@ namespace Gothic_II_Addon {
         FT_FLARE
       };
 
-      zCMaterial* lensFlareMaterial;
-      zTFlareType flareType;
-      float size;
-      float alpha;
-      float rangeMin;
-      float rangeMax;
-      float posScale;
-      float fadeScale;
+      zCMaterial* lensFlareMaterial; // sizeof 04h    offset 00h
+      zTFlareType flareType;         // sizeof 04h    offset 04h
+      float size;                    // sizeof 04h    offset 08h
+      float alpha;                   // sizeof 04h    offset 0Ch
+      float rangeMin;                // sizeof 04h    offset 10h
+      float rangeMax;                // sizeof 04h    offset 14h
+      float posScale;                // sizeof 04h    offset 18h
+      float fadeScale;               // sizeof 04h    offset 1Ch
 
       void zTVobLightLensFlare_OnInit() zCall( 0x00563020 );
       zTVobLightLensFlare()             zInit( zTVobLightLensFlare_OnInit() );
@@ -39,9 +41,9 @@ namespace Gothic_II_Addon {
       #include "zCLensFlareFX_zTVobLightLensFlare.inl"
     };
 
-    zCArray<zTVobLightLensFlare> lensFlareList;
-    zCLensFlareFXEnum1 flareMix;
-    float fadeScale;
+    zCArray<zTVobLightLensFlare> lensFlareList; // sizeof 0Ch    offset 24h
+    zCLensFlareFXEnum1 flareMix;                // sizeof 04h    offset 30h
+    float fadeScale;                            // sizeof 04h    offset 34h
 
     zCLensFlareFX() {}
     void RenderLensFlares( zCVob* )          zCall( 0x00563040 );

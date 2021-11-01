@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZTOOLS_H__VER1__
 #define __ZTOOLS_H__VER1__
@@ -7,16 +7,17 @@ namespace Gothic_I_Addon {
   const int zRAND_MAX = RAND_MAX;
   const float _PI     = 3.14159265358979323846f;
 
+  // sizeof 20h
   class zCTimer {
   public:
-    float factorMotion;
-    float frameTimeFloat;
-    float totalTimeFloat;
-    unsigned long lastTimer;
-    unsigned long frameTime;
-    unsigned long totalTime;
-    unsigned long minFrameTime;
-    unsigned long FrameControlMaxVal;
+    float factorMotion;               // sizeof 04h    offset 00h
+    float frameTimeFloat;             // sizeof 04h    offset 04h
+    float totalTimeFloat;             // sizeof 04h    offset 08h
+    unsigned long lastTimer;          // sizeof 04h    offset 0Ch
+    unsigned long frameTime;          // sizeof 04h    offset 10h
+    unsigned long totalTime;          // sizeof 04h    offset 14h
+    unsigned long minFrameTime;       // sizeof 04h    offset 18h
+    unsigned long FrameControlMaxVal; // sizeof 04h    offset 1Ch
 
     void zCTimer_OnInit()         zCall( 0x005ED2C0 );
     zCTimer()                     zInit( zCTimer_OnInit() );
@@ -30,9 +31,10 @@ namespace Gothic_I_Addon {
     #include "zCTimer.inl"
   };
 
+  // sizeof 04h
   class zCChecksum {
   public:
-    unsigned long checksum;
+    unsigned long checksum; // sizeof 04h    offset 00h
 
     zCChecksum() {}
     void BeginChecksum()                                                                zCall( 0x005ED5F0 );
@@ -46,9 +48,10 @@ namespace Gothic_I_Addon {
     #include "zCChecksum.inl"
   };
 
+  // sizeof 02h
   class zCChecksum16 {
   public:
-    unsigned short checksum;
+    unsigned short checksum; // sizeof 02h    offset 00h
 
     zCChecksum16() {}
     void BeginChecksum()                                                                  zCall( 0x005ED8B0 );
@@ -60,10 +63,11 @@ namespace Gothic_I_Addon {
     #include "zCChecksum16.inl"
   };
 
+  // sizeof 08h
   class zCFPUControler {
   public:
-    unsigned long savedControlWord;
-    unsigned long defaultControlWord;
+    unsigned long savedControlWord;   // sizeof 04h    offset 00h
+    unsigned long defaultControlWord; // sizeof 04h    offset 04h
 
     void zCFPUControler_OnInit()          zCall( 0x005ED950 );
     zCFPUControler()                      zInit( zCFPUControler_OnInit() );

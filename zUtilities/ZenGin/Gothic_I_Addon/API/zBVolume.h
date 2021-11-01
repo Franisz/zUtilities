@@ -1,13 +1,14 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZBVOLUME_H__VER1__
 #define __ZBVOLUME_H__VER1__
 
 namespace Gothic_I_Addon {
 
+  // sizeof 10h
   struct zTBSphere3D {
-    zVEC3 center;
-    float radius;
+    zVEC3 center; // sizeof 0Ch    offset 00h
+    float radius; // sizeof 04h    offset 0Ch
 
     zTBSphere3D() {}
     int IsIntersecting( zVEC3 const&, zVEC3 const& ) const zCall( 0x00546C10 );
@@ -18,9 +19,10 @@ namespace Gothic_I_Addon {
     #include "zTBSphere3D.inl"
   };
 
+  // sizeof 10h
   struct zTBBox2D {
-    zVEC2 mins;
-    zVEC2 maxs;
+    zVEC2 mins; // sizeof 08h    offset 00h
+    zVEC2 maxs; // sizeof 08h    offset 08h
 
     void zTBBox2D_OnInit()                zCall( 0x0053A0F0 );
     zTBBox2D()                            zInit( zTBBox2D_OnInit() );
@@ -32,9 +34,10 @@ namespace Gothic_I_Addon {
     #include "zTBBox2D.inl"
   };
 
+  // sizeof 18h
   struct zTBBox3D {
-    zVEC3 mins;
-    zVEC3 maxs;
+    zVEC3 mins; // sizeof 0Ch    offset 00h
+    zVEC3 maxs; // sizeof 0Ch    offset 0Ch
 
     void zTBBox3D_OnInit( zTBBox3D const& )                                                    zCall( 0x00532B30 );
     void zTBBox3D_OnInit()                                                                     zCall( 0x00558D70 );
@@ -79,10 +82,11 @@ namespace Gothic_I_Addon {
     #include "zTBBox3D.inl"
   };
 
+  // sizeof 14h
   struct zTBCylinder3D {
-    zVEC3 center;
-    float radius;
-    float heightY;
+    zVEC3 center;  // sizeof 0Ch    offset 00h
+    float radius;  // sizeof 04h    offset 0Ch
+    float heightY; // sizeof 04h    offset 10h
 
     zTBCylinder3D() {}
     int IsIntersecting( zTBCylinder3D const& ) const zCall( 0x00546A40 );
@@ -93,12 +97,13 @@ namespace Gothic_I_Addon {
     #include "zTBCylinder3D.inl"
   };
 
+  // sizeof 44h
   class zCOBBox3D {
   public:
-    zVEC3 center;
-    zVEC3 axis[3];
-    zVEC3 extent;
-    zCList<zCOBBox3D> childs;
+    zVEC3 center;             // sizeof 0Ch    offset 00h
+    zVEC3 axis[3];            // sizeof 24h    offset 0Ch
+    zVEC3 extent;             // sizeof 0Ch    offset 30h
+    zCList<zCOBBox3D> childs; // sizeof 08h    offset 3Ch
 
     zCOBBox3D() {}
     ~zCOBBox3D()                                                     zCall( 0x005497E0 );

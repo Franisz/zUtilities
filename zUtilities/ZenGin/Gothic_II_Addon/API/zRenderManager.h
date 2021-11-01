@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZRENDER_MANAGER_H__VER3__
 #define __ZRENDER_MANAGER_H__VER3__
@@ -99,16 +99,17 @@ namespace Gothic_II_Addon {
     zSHD_FX_SPECULAR
   };
 
+  // sizeof 2Ch
   class zCRenderManager {
   public:
 
-    unsigned long frameCtr;
-    zCArray<zCMaterial*> sceneMaterialList;
-    zCArray<zCPolygon*> sceneSimpleAlphaPolyList;
-    int overrideAlphaValue;
-    zTRnd_AlphaBlendFunc overrideAlphaBlendFunc;
-    int hintLightning;
-    int rendererMaterialModified;
+    unsigned long frameCtr;                       // sizeof 04h    offset 00h
+    zCArray<zCMaterial*> sceneMaterialList;       // sizeof 0Ch    offset 04h
+    zCArray<zCPolygon*> sceneSimpleAlphaPolyList; // sizeof 0Ch    offset 10h
+    int overrideAlphaValue;                       // sizeof 04h    offset 1Ch
+    zTRnd_AlphaBlendFunc overrideAlphaBlendFunc;  // sizeof 04h    offset 20h
+    int hintLightning;                            // sizeof 04h    offset 24h
+    int rendererMaterialModified;                 // sizeof 04h    offset 28h
 
     void zCRenderManager_OnInit()                                                                                   zCall( 0x005D73D0 );
     zCRenderManager()                                                                                               zInit( zCRenderManager_OnInit() );
@@ -148,19 +149,20 @@ namespace Gothic_II_Addon {
     #include "zCRenderManager.inl"
   };
 
+  // sizeof 30h
   class zCShaderStage {
   public:
-    zTShaderFXMode shaderFXMode;
-    zCTexture* texture;
-    zTRnd_AlphaBlendFunc alphaFunc;
-    zCOLOR colorFactor;
-    zCOLOR avgTextureColor;
-    zTShaderAlphaGen alphaGen;
-    zTShaderRGBGen rgbGen;
-    zTShaderTCGen tcGen;
-    zTShaderTCMod tcMod;
-    float tcModParams[2];
-    int multiTextureNext;
+    zTShaderFXMode shaderFXMode;    // sizeof 04h    offset 00h
+    zCTexture* texture;             // sizeof 04h    offset 04h
+    zTRnd_AlphaBlendFunc alphaFunc; // sizeof 04h    offset 08h
+    zCOLOR colorFactor;             // sizeof 04h    offset 0Ch
+    zCOLOR avgTextureColor;         // sizeof 04h    offset 10h
+    zTShaderAlphaGen alphaGen;      // sizeof 04h    offset 14h
+    zTShaderRGBGen rgbGen;          // sizeof 04h    offset 18h
+    zTShaderTCGen tcGen;            // sizeof 04h    offset 1Ch
+    zTShaderTCMod tcMod;            // sizeof 04h    offset 20h
+    float tcModParams[2];           // sizeof 08h    offset 24h
+    int multiTextureNext;           // sizeof 04h    offset 2Ch
 
     void zCShaderStage_OnInit() zCall( 0x005D6EB0 );
     zCShaderStage()             zInit( zCShaderStage_OnInit() );
@@ -169,15 +171,16 @@ namespace Gothic_II_Addon {
     #include "zCShaderStage.inl"
   };
 
+  // sizeof 24h
   class zCShader {
   public:
 
-    int numStages;
-    zCShaderStage* stageList[MAX_STAGES];
-    int hasLightmap;
-    int hasTcGenEnv;
-    int inSector;
-    int baseTexCachedIn;
+    int numStages;                        // sizeof 04h    offset 00h
+    zCShaderStage* stageList[MAX_STAGES]; // sizeof 10h    offset 04h
+    int hasLightmap;                      // sizeof 04h    offset 14h
+    int hasTcGenEnv;                      // sizeof 04h    offset 18h
+    int inSector;                         // sizeof 04h    offset 1Ch
+    int baseTexCachedIn;                  // sizeof 04h    offset 20h
 
     void zCShader_OnInit()                  zCall( 0x005D6E50 );
     void Clear()                            zCall( 0x005CCDD0 );
@@ -189,11 +192,13 @@ namespace Gothic_II_Addon {
     #include "zCShader.inl"
   };
 
+  // sizeof 01h
   class zCMapDetailTexture {
   public:
+    // sizeof 18h
     struct zTMapDetailTextureEntry {
-      zSTRING detailTextureName;
-      float detailTextureScale;
+      zSTRING detailTextureName; // sizeof 14h    offset 00h
+      float detailTextureScale;  // sizeof 04h    offset 14h
 
       zTMapDetailTextureEntry() {}
       ~zTMapDetailTextureEntry() zCall( 0x005DB210 );

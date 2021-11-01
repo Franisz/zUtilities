@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMOVING_H__VER0__
 #define __ZMOVING_H__VER0__
@@ -10,6 +10,7 @@
 namespace Gothic_I_Classic {
   const int DEF_NUM_SAMPLES=256;
 
+  // sizeof 34h
   class zCMoveRecorder {
   public:
 
@@ -19,8 +20,9 @@ namespace Gothic_I_Classic {
       MOR_RECORD
     };
 
+    // sizeof 40h
     struct zTMOR_Sample {
-      zMAT4 trafoObjToWorld;
+      zMAT4 trafoObjToWorld; // sizeof 40h    offset 00h
 
       zTMOR_Sample() {}
 
@@ -28,13 +30,13 @@ namespace Gothic_I_Classic {
       #include "zCMoveRecorder_zTMOR_Sample.inl"
     };
 
-    zSTRING name;
-    zCVob* vob;
-    zCArray<zTMOR_Sample> samples;
-    int state;
-    int ctr;
-    int looping;
-    float startTime;
+    zSTRING name;                  // sizeof 14h    offset 00h
+    zCVob* vob;                    // sizeof 04h    offset 14h
+    zCArray<zTMOR_Sample> samples; // sizeof 0Ch    offset 18h
+    int state;                     // sizeof 04h    offset 24h
+    int ctr;                       // sizeof 04h    offset 28h
+    int looping;                   // sizeof 04h    offset 2Ch
+    float startTime;               // sizeof 04h    offset 30h
 
     zCMoveRecorder() {}
 
@@ -42,20 +44,21 @@ namespace Gothic_I_Classic {
     #include "zCMoveRecorder.inl"
   };
 
+  // sizeof 58h
   class CMov_Movement {
   public:
-    unsigned long oldtime;
-    unsigned long now;
-    double time_corr;
-    zCVob* vob;
-    double force_x;
-    double force_y;
-    double force_z;
-    double force_rot;
-    double xspeed;
-    double yspeed;
-    double zspeed;
-    double rotspeed;
+    unsigned long oldtime; // sizeof 04h    offset 00h
+    unsigned long now;     // sizeof 04h    offset 04h
+    double time_corr;      // sizeof 08h    offset 08h
+    zCVob* vob;            // sizeof 04h    offset 10h
+    double force_x;        // sizeof 08h    offset 18h
+    double force_y;        // sizeof 08h    offset 20h
+    double force_z;        // sizeof 08h    offset 28h
+    double force_rot;      // sizeof 08h    offset 30h
+    double xspeed;         // sizeof 08h    offset 38h
+    double yspeed;         // sizeof 08h    offset 40h
+    double zspeed;         // sizeof 08h    offset 48h
+    double rotspeed;       // sizeof 08h    offset 50h
 
     CMov_Movement() {}
     void CMov_Movement_OnInit( zCVob* ) zCall( 0x005885C0 );

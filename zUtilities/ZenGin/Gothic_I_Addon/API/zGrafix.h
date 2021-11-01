@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZGRAFIX_H__VER1__
 #define __ZGRAFIX_H__VER1__
@@ -9,22 +9,24 @@
 
 namespace Gothic_I_Addon {
 
+  // sizeof 18h
   struct TGfx_Gfx {
   public:
-    zSTRING* id;
-    int bpp;
-    int sx;
-    int sy;
-    int count;
-    unsigned char* scr;
+    zSTRING* id;        // sizeof 04h    offset 00h
+    int bpp;            // sizeof 04h    offset 04h
+    int sx;             // sizeof 04h    offset 08h
+    int sy;             // sizeof 04h    offset 0Ch
+    int count;          // sizeof 04h    offset 10h
+    unsigned char* scr; // sizeof 04h    offset 14h
 
     TGfx_Gfx() {}
   };
 
+  // sizeof 08h
   class zCGfx {
   public:
-    TGfx_Gfx* data;
-    zCGfx* next;
+    TGfx_Gfx* data; // sizeof 04h    offset 00h
+    zCGfx* next;    // sizeof 04h    offset 04h
 
     zCGfx() {}
     void zCGfx_OnInit( zSTRING const& )                zCall( 0x00719800 );

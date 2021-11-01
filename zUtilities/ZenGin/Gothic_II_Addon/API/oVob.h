@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVOB_H__VER3__
 #define __OVOB_H__VER3__
@@ -19,6 +19,7 @@ namespace Gothic_II_Addon {
     SND_MAT_GLAS
   };
 
+  // sizeof 120h
   class oCVob : public zCVob {
   public:
     zCLASS_DECLARATION( oCVob )
@@ -60,6 +61,7 @@ namespace Gothic_II_Addon {
     #include "oCVob.inl"
   };
 
+  // sizeof 134h
   class oCTouchDamage : public zCTouchDamage {
   public:
     zCLASS_DECLARATION( oCTouchDamage )

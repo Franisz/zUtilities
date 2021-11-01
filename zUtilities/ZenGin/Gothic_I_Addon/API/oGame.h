@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OGAME_H__VER1__
 #define __OGAME_H__VER1__
@@ -12,6 +12,7 @@
 
 namespace Gothic_I_Addon {
 
+  // sizeof 180h
   class oCGame : public zCSession {
   public:
     typedef enum oEGameDialogView {
@@ -24,13 +25,14 @@ namespace Gothic_I_Addon {
       GAME_VIEW_MAX
     } oTGameDialogView;
 
+    // sizeof 24h
     struct TObjectRoutine {
     public:
-      zSTRING objName;
-      int stateNum;
-      int hour1;
-      int min1;
-      int type;
+      zSTRING objName; // sizeof 14h    offset 00h
+      int stateNum;    // sizeof 04h    offset 14h
+      int hour1;       // sizeof 04h    offset 18h
+      int min1;        // sizeof 04h    offset 1Ch
+      int type;        // sizeof 04h    offset 20h
 
       TObjectRoutine() {}
       void Release()    zCall( 0x0065C5C0 );
@@ -40,64 +42,64 @@ namespace Gothic_I_Addon {
       #include "oCGame_TObjectRoutine.inl"
     };
 
-    float cliprange;
-    float fogrange;
-    int inScriptStartup;
-    int inLoadSaveGame;
-    int inLevelChange;
-    zCView* array_view[GAME_VIEW_MAX];
-    int array_view_visible[GAME_VIEW_MAX];
-    int array_view_enabled[GAME_VIEW_MAX];
-    oCSavegameManager* savegameManager;
-    zCView* game_text;
-    zCView* load_screen;
-    zCView* save_screen;
-    zCView* pause_screen;
-    oCViewStatusBar* hpBar;
-    oCViewStatusBar* swimBar;
-    oCViewStatusBar* manaBar;
-    oCViewStatusBar* focusBar;
-    int showPlayerStatus;
-    int game_drawall;
-    int game_frameinfo;
-    int game_showaniinfo;
-    int game_showwaynet;
-    int game_testmode;
-    int game_editwaynet;
-    int game_showtime;
-    int drawWayBoxes;
-    int scriptStartup;
-    int showFreePoints;
-    oCNpc* showRoutineNpc;
-    int loadNextLevel;
-    zSTRING loadNextLevelName;
-    zSTRING loadNextLevelStart;
-    zVEC3 startpos;
-    oCGameInfo* gameInfo;
-    zCVobLight* pl_light;
-    float pl_lightval;
-    oCWorldTimer* wldTimer;
-    float timeStep;
-    int singleStep;
-    oCGuilds* guilds;
-    oCInfoManager* infoman;
-    oCNewsManager* newsman;
-    oCSVMManager* svmman;
-    oCTradeManager* trademan;
-    oCPortalRoomManager* portalman;
-    oCSpawnManager* spawnman;
-    float music_delay;
-    oCNpc* watchnpc;
-    int initial_hour;
-    int initial_minute;
-    zCArray<zCVob*> debugInstances;
-    int debugChannels;
-    int debugAllInstances;
-    int oldRoutineDay;
-    zCListSort<TObjectRoutine> objRoutineList;
-    zCListSort<TObjectRoutine>* currentObjectRoutine;
-    zCViewProgressBar* progressBar;
-    zCArray<zCVisual*> visualList;
+    float cliprange;                                  // sizeof 04h    offset 1Ch
+    float fogrange;                                   // sizeof 04h    offset 20h
+    int inScriptStartup;                              // sizeof 04h    offset 24h
+    int inLoadSaveGame;                               // sizeof 04h    offset 28h
+    int inLevelChange;                                // sizeof 04h    offset 2Ch
+    zCView* array_view[GAME_VIEW_MAX];                // sizeof 18h    offset 30h
+    int array_view_visible[GAME_VIEW_MAX];            // sizeof 18h    offset 48h
+    int array_view_enabled[GAME_VIEW_MAX];            // sizeof 18h    offset 60h
+    oCSavegameManager* savegameManager;               // sizeof 04h    offset 78h
+    zCView* game_text;                                // sizeof 04h    offset 7Ch
+    zCView* load_screen;                              // sizeof 04h    offset 80h
+    zCView* save_screen;                              // sizeof 04h    offset 84h
+    zCView* pause_screen;                             // sizeof 04h    offset 88h
+    oCViewStatusBar* hpBar;                           // sizeof 04h    offset 8Ch
+    oCViewStatusBar* swimBar;                         // sizeof 04h    offset 90h
+    oCViewStatusBar* manaBar;                         // sizeof 04h    offset 94h
+    oCViewStatusBar* focusBar;                        // sizeof 04h    offset 98h
+    int showPlayerStatus;                             // sizeof 04h    offset 9Ch
+    int game_drawall;                                 // sizeof 04h    offset A0h
+    int game_frameinfo;                               // sizeof 04h    offset A4h
+    int game_showaniinfo;                             // sizeof 04h    offset A8h
+    int game_showwaynet;                              // sizeof 04h    offset ACh
+    int game_testmode;                                // sizeof 04h    offset B0h
+    int game_editwaynet;                              // sizeof 04h    offset B4h
+    int game_showtime;                                // sizeof 04h    offset B8h
+    int drawWayBoxes;                                 // sizeof 04h    offset BCh
+    int scriptStartup;                                // sizeof 04h    offset C0h
+    int showFreePoints;                               // sizeof 04h    offset C4h
+    oCNpc* showRoutineNpc;                            // sizeof 04h    offset C8h
+    int loadNextLevel;                                // sizeof 04h    offset CCh
+    zSTRING loadNextLevelName;                        // sizeof 14h    offset D0h
+    zSTRING loadNextLevelStart;                       // sizeof 14h    offset E4h
+    zVEC3 startpos;                                   // sizeof 0Ch    offset F8h
+    oCGameInfo* gameInfo;                             // sizeof 04h    offset 104h
+    zCVobLight* pl_light;                             // sizeof 04h    offset 108h
+    float pl_lightval;                                // sizeof 04h    offset 10Ch
+    oCWorldTimer* wldTimer;                           // sizeof 04h    offset 110h
+    float timeStep;                                   // sizeof 04h    offset 114h
+    int singleStep;                                   // sizeof 04h    offset 118h
+    oCGuilds* guilds;                                 // sizeof 04h    offset 11Ch
+    oCInfoManager* infoman;                           // sizeof 04h    offset 120h
+    oCNewsManager* newsman;                           // sizeof 04h    offset 124h
+    oCSVMManager* svmman;                             // sizeof 04h    offset 128h
+    oCTradeManager* trademan;                         // sizeof 04h    offset 12Ch
+    oCPortalRoomManager* portalman;                   // sizeof 04h    offset 130h
+    oCSpawnManager* spawnman;                         // sizeof 04h    offset 134h
+    float music_delay;                                // sizeof 04h    offset 138h
+    oCNpc* watchnpc;                                  // sizeof 04h    offset 13Ch
+    int initial_hour;                                 // sizeof 04h    offset 140h
+    int initial_minute;                               // sizeof 04h    offset 144h
+    zCArray<zCVob*> debugInstances;                   // sizeof 0Ch    offset 148h
+    int debugChannels;                                // sizeof 04h    offset 154h
+    int debugAllInstances;                            // sizeof 04h    offset 158h
+    int oldRoutineDay;                                // sizeof 04h    offset 15Ch
+    zCListSort<TObjectRoutine> objRoutineList;        // sizeof 0Ch    offset 160h
+    zCListSort<TObjectRoutine>* currentObjectRoutine; // sizeof 04h    offset 16Ch
+    zCViewProgressBar* progressBar;                   // sizeof 04h    offset 170h
+    zCArray<zCVisual*> visualList;                    // sizeof 0Ch    offset 174h
 
     void oCGame_OnInit()                                                         zCall( 0x0065BAE0 );
     oCGame()                                                                     zInit( oCGame_OnInit() );

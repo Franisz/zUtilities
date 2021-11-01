@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZTOOLS_H__VER2__
 #define __ZTOOLS_H__VER2__
@@ -7,18 +7,19 @@ namespace Gothic_II_Classic {
   const int zRAND_MAX = RAND_MAX;
   const float _PI     = 3.14159265358979323846f;
 
+  // sizeof 28h
   class zCTimer {
   public:
-    float factorMotion;
-    float frameTimeFloat;
-    float totalTimeFloat;
-    float frameTimeFloatSecs;
-    float totalTimeFloatSecs;
-    unsigned long lastTimer;
-    unsigned long frameTime;
-    unsigned long totalTime;
-    unsigned long minFrameTime;
-    unsigned long forcedMaxFrameTime;
+    float factorMotion;               // sizeof 04h    offset 00h
+    float frameTimeFloat;             // sizeof 04h    offset 04h
+    float totalTimeFloat;             // sizeof 04h    offset 08h
+    float frameTimeFloatSecs;         // sizeof 04h    offset 0Ch
+    float totalTimeFloatSecs;         // sizeof 04h    offset 10h
+    unsigned long lastTimer;          // sizeof 04h    offset 14h
+    unsigned long frameTime;          // sizeof 04h    offset 18h
+    unsigned long totalTime;          // sizeof 04h    offset 1Ch
+    unsigned long minFrameTime;       // sizeof 04h    offset 20h
+    unsigned long forcedMaxFrameTime; // sizeof 04h    offset 24h
 
     void zCTimer_OnInit()                    zCall( 0x005F2890 );
     zCTimer()                                zInit( zCTimer_OnInit() );
@@ -38,9 +39,10 @@ namespace Gothic_II_Classic {
     #include "zCTimer.inl"
   };
 
+  // sizeof 04h
   class zCChecksum {
   public:
-    unsigned long checksum;
+    unsigned long checksum; // sizeof 04h    offset 00h
 
     zCChecksum() {}
     void BeginChecksum()                                                                zCall( 0x005F2D60 );
@@ -54,9 +56,10 @@ namespace Gothic_II_Classic {
     #include "zCChecksum.inl"
   };
 
+  // sizeof 02h
   class zCChecksum16 {
   public:
-    unsigned short checksum;
+    unsigned short checksum; // sizeof 02h    offset 00h
 
     zCChecksum16() {}
     void BeginChecksum()                                                                  zCall( 0x005F2FE0 );
@@ -68,10 +71,11 @@ namespace Gothic_II_Classic {
     #include "zCChecksum16.inl"
   };
 
+  // sizeof 08h
   class zCFPUControler {
   public:
-    unsigned long savedControlWord;
-    unsigned long defaultControlWord;
+    unsigned long savedControlWord;   // sizeof 04h    offset 00h
+    unsigned long defaultControlWord; // sizeof 04h    offset 04h
 
     void zCFPUControler_OnInit()          zCall( 0x005F3080 );
     zCFPUControler()                      zInit( zCFPUControler_OnInit() );

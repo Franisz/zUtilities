@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVISUAL_H__VER0__
 #define __ZVISUAL_H__VER0__
@@ -12,18 +12,19 @@ namespace Gothic_I_Classic {
     zVISUAL_CAMALIGN_COUNT
   };
 
+  // sizeof 20h
   struct zTRenderContext {
-    int clipFlags;
-    zCVob* vob;
-    zCWorld* world;
-    zCCamera* cam;
-    float distVobToCam;
-    zTVisualCamAlign visualCamAlign;
-    zCOLOR hintLightingHighlightColor;
+    int clipFlags;                              // sizeof 04h    offset 00h
+    zCVob* vob;                                 // sizeof 04h    offset 04h
+    zCWorld* world;                             // sizeof 04h    offset 08h
+    zCCamera* cam;                              // sizeof 04h    offset 0Ch
+    float distVobToCam;                         // sizeof 04h    offset 10h
+    zTVisualCamAlign visualCamAlign;            // sizeof 04h    offset 14h
+    zCOLOR hintLightingHighlightColor;          // sizeof 04h    offset 18h
     group {
-      unsigned char hintLightingFullbright : 1;
-      unsigned char hintLightingSwell      : 1;
-      unsigned char hintLightingHighlight  : 1;
+      unsigned char hintLightingFullbright : 1; // sizeof 01h    offset bit
+      unsigned char hintLightingSwell      : 1; // sizeof 01h    offset bit
+      unsigned char hintLightingHighlight  : 1; // sizeof 01h    offset bit
     };
 
     zTRenderContext() {}
@@ -32,14 +33,15 @@ namespace Gothic_I_Classic {
     #include "zTRenderContext.inl"
   };
 
+  // sizeof 34h
   class zCVisual : public zCObject {
   public:
     zCLASS_DECLARATION( zCVisual )
 
-    zCVisual* nextLODVisual;
-    zCVisual* prevLODVisual;
-    float lodFarDistance;
-    float lodNearFadeOutDistance;
+    zCVisual* nextLODVisual;      // sizeof 04h    offset 24h
+    zCVisual* prevLODVisual;      // sizeof 04h    offset 28h
+    float lodFarDistance;         // sizeof 04h    offset 2Ch
+    float lodNearFadeOutDistance; // sizeof 04h    offset 30h
 
     void zCVisual_OnInit()                                                     zCall( 0x005D9D70 );
     zCVisual()                                                                 zInit( zCVisual_OnInit() );
@@ -75,6 +77,7 @@ namespace Gothic_I_Classic {
     #include "zCVisual.inl"
   };
 
+  // sizeof 34h
   class zCVisualAnimate : public zCVisual {
   public:
     zCLASS_DECLARATION( zCVisualAnimate )
@@ -94,16 +97,17 @@ namespace Gothic_I_Classic {
     #include "zCVisualAnimate.inl"
   };
 
+  // sizeof 4Ch
   class zCDecal : public zCVisual {
   public:
     zCLASS_DECLARATION( zCDecal )
 
-    zCMaterial* decalMaterial;
-    float xdim;
-    float ydim;
-    float xoffset;
-    float yoffset;
-    int decal2Sided;
+    zCMaterial* decalMaterial; // sizeof 04h    offset 34h
+    float xdim;                // sizeof 04h    offset 38h
+    float ydim;                // sizeof 04h    offset 3Ch
+    float xoffset;             // sizeof 04h    offset 40h
+    float yoffset;             // sizeof 04h    offset 44h
+    int decal2Sided;           // sizeof 04h    offset 48h
 
     void zCDecal_OnInit()                                               zCall( 0x00541E20 );
     zCDecal()                                                           zInit( zCDecal_OnInit() );
@@ -136,6 +140,7 @@ namespace Gothic_I_Classic {
     #include "zCDecal.inl"
   };
 
+  // sizeof E0h
   class zCMesh : public zCVisual {
   public:
     zCLASS_DECLARATION( zCMesh )
@@ -146,24 +151,24 @@ namespace Gothic_I_Classic {
       zMSH_VERTNORMAL_FACET
     };
 
-    int numPoly;
-    int numVert;
-    int numFeat;
-    zCVertex** vertList;
-    zCPolygon** polyList;
-    zCVertFeature** featList;
-    zCVertex* vertArray;
-    zCPolygon* polyArray;
-    zCVertFeature* featArray;
-    zTBBox3D bbox3D;
-    zCOBBox3D obbox3D;
-    int masterFrameCtr;
-    zCMesh* next;
-    zCMesh* prev;
-    zSTRING meshName;
-    char hasLightmaps;
-    int numVertAlloc;
-    int numPolyAlloc;
+    int numPoly;              // sizeof 04h    offset 34h
+    int numVert;              // sizeof 04h    offset 38h
+    int numFeat;              // sizeof 04h    offset 3Ch
+    zCVertex** vertList;      // sizeof 04h    offset 40h
+    zCPolygon** polyList;     // sizeof 04h    offset 44h
+    zCVertFeature** featList; // sizeof 04h    offset 48h
+    zCVertex* vertArray;      // sizeof 04h    offset 4Ch
+    zCPolygon* polyArray;     // sizeof 04h    offset 50h
+    zCVertFeature* featArray; // sizeof 04h    offset 54h
+    zTBBox3D bbox3D;          // sizeof 18h    offset 58h
+    zCOBBox3D obbox3D;        // sizeof 44h    offset 70h
+    int masterFrameCtr;       // sizeof 04h    offset B4h
+    zCMesh* next;             // sizeof 04h    offset B8h
+    zCMesh* prev;             // sizeof 04h    offset BCh
+    zSTRING meshName;         // sizeof 14h    offset C0h
+    char hasLightmaps;        // sizeof 01h    offset D4h
+    int numVertAlloc;         // sizeof 04h    offset D8h
+    int numPolyAlloc;         // sizeof 04h    offset DCh
 
     void zCMesh_OnInit()                                                                     zCall( 0x0054F970 );
     void LODRecalcEdge( zTLODEdge&, zCArraySort<zCPolygon*>& )                               zCall( 0x00528FC0 );

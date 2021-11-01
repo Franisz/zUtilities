@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMATH_TOOLS_H__VER0__
 #define __ZMATH_TOOLS_H__VER0__
@@ -7,16 +7,17 @@ namespace Gothic_I_Classic {
   const int MAX_SAMPLES_POS = 50;
   const int MAX_SAMPLES_ROT = 100;
 
+  // sizeof 38h
   class zCCircleArc3D {
   public:
-    float radius;
-    float angle;
-    float time;
-    zVEC3 center;
-    zVEC3 u;
-    zVEC3 v;
-    float b0;
-    float b1;
+    float radius; // sizeof 04h    offset 00h
+    float angle;  // sizeof 04h    offset 04h
+    float time;   // sizeof 04h    offset 08h
+    zVEC3 center; // sizeof 0Ch    offset 0Ch
+    zVEC3 u;      // sizeof 0Ch    offset 18h
+    zVEC3 v;      // sizeof 0Ch    offset 24h
+    float b0;     // sizeof 04h    offset 30h
+    float b1;     // sizeof 04h    offset 34h
 
     zCCircleArc3D() {}
 
@@ -24,19 +25,20 @@ namespace Gothic_I_Classic {
     #include "zCCircleArc3D.inl"
   };
 
+  // sizeof 8E4h
   class zCPose {
   public:
-    zCQuat qRing[MAX_SAMPLES_ROT];
-    zVEC3 pRing[MAX_SAMPLES_POS];
-    int ringPosTrans;
-    int ringPosRot;
-    zCQuat actRotAbs;
-    zVEC3 actPosAbs;
-    zCQuat actRot;
-    zVEC3 actPos;
-    int oneTurn;
-    int numSamplesPos;
-    int numSamplesRot;
+    zCQuat qRing[MAX_SAMPLES_ROT]; // sizeof 640h   offset 00h
+    zVEC3 pRing[MAX_SAMPLES_POS];  // sizeof 258h   offset 640h
+    int ringPosTrans;              // sizeof 04h    offset 898h
+    int ringPosRot;                // sizeof 04h    offset 89Ch
+    zCQuat actRotAbs;              // sizeof 10h    offset 8A0h
+    zVEC3 actPosAbs;               // sizeof 0Ch    offset 8B0h
+    zCQuat actRot;                 // sizeof 10h    offset 8BCh
+    zVEC3 actPos;                  // sizeof 0Ch    offset 8CCh
+    int oneTurn;                   // sizeof 04h    offset 8D8h
+    int numSamplesPos;             // sizeof 04h    offset 8DCh
+    int numSamplesRot;             // sizeof 04h    offset 8E0h
 
     void zCPose_OnInit()               zCall( 0x004CCE40 );
     ~zCPose()                          zCall( 0x004AC0A0 );

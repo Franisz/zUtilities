@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZPARSER__SYMBOL_H__VER3__
 #define __ZPARSER__SYMBOL_H__VER3__
@@ -6,9 +6,10 @@
 namespace Gothic_II_Addon {
   const int zMAX_SYM_DATASTACK = 2048;
 
+  // sizeof 0Ch
   class zCPar_StringTable {
   public:
-    zCArray<zSTRING*> array;
+    zCArray<zSTRING*> array; // sizeof 0Ch    offset 00h
 
     zCPar_StringTable() {}
     void zCPar_StringTable_OnInit( int ) zCall( 0x007A0EB0 );
@@ -27,10 +28,11 @@ namespace Gothic_II_Addon {
     #include "zCPar_StringTable.inl"
   };
 
+  // sizeof 3Ch
   class zCPar_Symbol {
   public:
-    zSTRING name;
-    zCPar_Symbol* next;
+    zSTRING name;               // sizeof 14h    offset 00h
+    zCPar_Symbol* next;         // sizeof 04h    offset 14h
     union {
       void* adr;
       int* intdata;
@@ -40,17 +42,17 @@ namespace Gothic_II_Addon {
       float single_floatdata;
     };
 
-    int offset;
-    unsigned int ele      : 12;
-    unsigned int type     : 4;
-    unsigned int flags    : 6;
-    int space             : 1;
-    unsigned int filenr   : 19;
-    unsigned int line     : 19;
-    unsigned int line_anz : 19;
-    unsigned int pos_beg  : 24;
-    unsigned int pos_anz  : 24;
-    zCPar_Symbol* parent;
+    int offset;                 // sizeof 04h    offset 1Ch
+    unsigned int ele      : 12; // sizeof 0Ch    offset bit
+    unsigned int type     : 4;  // sizeof 04h    offset bit
+    unsigned int flags    : 6;  // sizeof 06h    offset bit
+    int space             : 1;  // sizeof 01h    offset bit
+    unsigned int filenr   : 19; // sizeof 13h    offset bit
+    unsigned int line     : 19; // sizeof 13h    offset bit
+    unsigned int line_anz : 19; // sizeof 13h    offset bit
+    unsigned int pos_beg  : 24; // sizeof 18h    offset bit
+    unsigned int pos_anz  : 24; // sizeof 18h    offset bit
+    zCPar_Symbol* parent;       // sizeof 04h    offset 38h
 
     void zCPar_Symbol_OnInit()                  zCall( 0x007A1690 );
     zCPar_Symbol()                              zInit( zCPar_Symbol_OnInit() );
@@ -96,14 +98,15 @@ namespace Gothic_II_Addon {
     #include "zCPar_Symbol.inl"
   };
 
+  // sizeof 2Ch
   class zCPar_SymbolTable {
   public:
-    zCPar_Symbol* preAllocatedSymbols;
-    int nextPreAllocated;
-    zCArray<zCPar_Symbol*> table;
-    zCArraySort<int> tablesort;
-    zCPar_Symbol* lastsym;
-    zCPar_Symbol* firstsym;
+    zCPar_Symbol* preAllocatedSymbols; // sizeof 04h    offset 00h
+    int nextPreAllocated;              // sizeof 04h    offset 04h
+    zCArray<zCPar_Symbol*> table;      // sizeof 0Ch    offset 08h
+    zCArraySort<int> tablesort;        // sizeof 10h    offset 14h
+    zCPar_Symbol* lastsym;             // sizeof 04h    offset 24h
+    zCPar_Symbol* firstsym;            // sizeof 04h    offset 28h
 
     zCPar_SymbolTable() {}
     void zCPar_SymbolTable_OnInit( int )              zCall( 0x007A2F60 );
@@ -138,9 +141,10 @@ namespace Gothic_II_Addon {
     #include "zCPar_SymbolTable.inl"
   };
 
+  // sizeof 10h
   class zCPar_Stack {
   public:
-    unsigned char* stack;
+    unsigned char* stack; // sizeof 04h    offset 00h
     union {
       unsigned char* stackptr;
       unsigned short* stackptr_w;
@@ -152,7 +156,7 @@ namespace Gothic_II_Addon {
       int* stacklast_i;
     };
 
-    int stacksize;
+    int stacksize;        // sizeof 04h    offset 0Ch
 
     zCPar_Stack() {}
     void zCPar_Stack_OnInit( int )  zCall( 0x007A4AC0 );
@@ -181,11 +185,12 @@ namespace Gothic_II_Addon {
     #include "zCPar_Stack.inl"
   };
 
+  // sizeof 2004h
   class zCPar_DataStack {
   public:
 
-    int stack[zMAX_SYM_DATASTACK];
-    int sptr;
+    int stack[zMAX_SYM_DATASTACK]; // sizeof 2000h  offset 00h
+    int sptr;                      // sizeof 04h    offset 2000h
 
     void zCPar_DataStack_OnInit() zCall( 0x007A4F50 );
     zCPar_DataStack()             zInit( zCPar_DataStack_OnInit() );

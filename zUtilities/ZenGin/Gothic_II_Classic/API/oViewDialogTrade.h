@@ -1,10 +1,11 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIEW_DIALOG_TRADE_H__VER2__
 #define __OVIEW_DIALOG_TRADE_H__VER2__
 
 namespace Gothic_II_Classic {
 
+  // sizeof 110h
   class oCViewDialogTrade : public zCViewDialog {
   public:
     zCLASS_DECLARATION( oCViewDialogTrade )
@@ -14,12 +15,12 @@ namespace Gothic_II_Classic {
       TRADE_SECTION_RIGHT_INVENTORY
     } zTTradeSection;
 
-    oCViewDialogStealContainer* DlgInventoryNpc;
-    oCViewDialogInventory* DlgInventoryPlayer;
-    zTTradeSection SectionTrade;
-    oCNpc* NpcLeft;
-    oCNpc* NpcRight;
-    short TransferCount;
+    oCViewDialogStealContainer* DlgInventoryNpc; // sizeof 04h    offset F8h
+    oCViewDialogInventory* DlgInventoryPlayer;   // sizeof 04h    offset FCh
+    zTTradeSection SectionTrade;                 // sizeof 04h    offset 100h
+    oCNpc* NpcLeft;                              // sizeof 04h    offset 104h
+    oCNpc* NpcRight;                             // sizeof 04h    offset 108h
+    short TransferCount;                         // sizeof 02h    offset 10Ch
 
     void oCViewDialogTrade_OnInit()                   zCall( 0x00775080 );
     void UpdateViewSettings()                         zCall( 0x00774FE0 );

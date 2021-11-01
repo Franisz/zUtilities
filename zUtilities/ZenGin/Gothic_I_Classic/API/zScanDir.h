@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSCAN_DIR_H__VER0__
 #define __ZSCAN_DIR_H__VER0__
@@ -7,11 +7,12 @@
 
 namespace Gothic_I_Classic {
 
+  // sizeof 30h
   class zCScanDirFileHandler {
   public:
-    zCArray<zSTRING> msgList;
-    zCArray<zSTRING> extList;
-    zSTRING name;
+    zCArray<zSTRING> msgList; // sizeof 0Ch    offset 04h
+    zCArray<zSTRING> extList; // sizeof 0Ch    offset 10h
+    zSTRING name;             // sizeof 14h    offset 1Ch
 
     void zCScanDirFileHandler_OnInit()                                 zCall( 0x00463500 );
     zCScanDirFileHandler()                                             zInit( zCScanDirFileHandler_OnInit() );
@@ -30,12 +31,13 @@ namespace Gothic_I_Classic {
     #include "zCScanDirFileHandler.inl"
   };
 
+  // sizeof 18h
   class zCScanDir {
   public:
-    zCList<zCScanDirFileHandler> cbList;
-    int statFoundFiles;
-    int statHandledFiles;
-    int statTouchedFiles;
+    zCList<zCScanDirFileHandler> cbList; // sizeof 08h    offset 04h
+    int statFoundFiles;                  // sizeof 04h    offset 0Ch
+    int statHandledFiles;                // sizeof 04h    offset 10h
+    int statTouchedFiles;                // sizeof 04h    offset 14h
 
     void zCScanDir_OnInit()                                                   zCall( 0x00463F20 );
     zCScanDir()                                                               zInit( zCScanDir_OnInit() );

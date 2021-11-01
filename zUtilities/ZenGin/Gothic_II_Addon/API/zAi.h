@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZAI_H__VER3__
 #define __ZAI_H__VER3__
@@ -8,6 +8,7 @@
 
 namespace Gothic_II_Addon {
 
+  // sizeof 24h
   class zCAIBase : public zCObject {
   public:
     zCLASS_DECLARATION( zCAIBase )
@@ -28,12 +29,13 @@ namespace Gothic_II_Addon {
     #include "zCAIBase.inl"
   };
 
+  // sizeof 2Ch
   class zCAIBaseSound : public zCAIBase {
   public:
     zCLASS_DECLARATION( zCAIBaseSound )
 
-    int slideSoundHandle;
-    char slideSoundOn;
+    int slideSoundHandle; // sizeof 04h    offset 24h
+    char slideSoundOn;    // sizeof 01h    offset 28h
 
     zCAIBaseSound() {}
     void RemoveSlideSound()                                             zCall( 0x0050C120 );

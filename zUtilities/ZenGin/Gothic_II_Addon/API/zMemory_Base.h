@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMEMORY__BASE_H__VER3__
 #define __ZMEMORY__BASE_H__VER3__
@@ -22,15 +22,16 @@ namespace Gothic_II_Addon {
     zMALLOC_CHECK_PTR_NULL_PTR
   };
 
+  // sizeof 28h
   struct zTMallocStats {
-    int numBlocks;
-    int numBlocksPeak;
-    int numBytesAllocated;
-    int numBytesAllocatedPeak;
-    int numAllocs;
-    int numFrees;
-    __int64 numBytesAllocatedTotal;
-    __int64 numBytesFreedTotal;
+    int numBlocks;                  // sizeof 04h    offset 00h
+    int numBlocksPeak;              // sizeof 04h    offset 04h
+    int numBytesAllocated;          // sizeof 04h    offset 08h
+    int numBytesAllocatedPeak;      // sizeof 04h    offset 0Ch
+    int numAllocs;                  // sizeof 04h    offset 10h
+    int numFrees;                   // sizeof 04h    offset 14h
+    __int64 numBytesAllocatedTotal; // sizeof 08h    offset 18h
+    __int64 numBytesFreedTotal;     // sizeof 08h    offset 20h
 
     zTMallocStats() {}
 
@@ -38,10 +39,11 @@ namespace Gothic_II_Addon {
     #include "zTMallocStats.inl"
   };
 
+  // sizeof 0Ch
   struct zTMallocProcessStats {
-    unsigned long fixedMem;
-    unsigned long freeMem;
-    unsigned long moveable;
+    unsigned long fixedMem; // sizeof 04h    offset 00h
+    unsigned long freeMem;  // sizeof 04h    offset 04h
+    unsigned long moveable; // sizeof 04h    offset 08h
 
     zTMallocProcessStats() {}
 
@@ -49,6 +51,7 @@ namespace Gothic_II_Addon {
     #include "zTMallocProcessStats.inl"
   };
 
+  // sizeof 04h
   class zCMalloc {
   public:
 

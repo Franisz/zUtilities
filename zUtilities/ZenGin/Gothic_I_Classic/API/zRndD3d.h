@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZRND_D3D_H__VER0__
 #define __ZRND_D3D_H__VER0__
@@ -20,17 +20,19 @@ namespace Gothic_I_Classic {
     zRND_UNKNOWN_BUFFER
   };
 
+  // sizeof 100h
   class zD3D_alphaPoly : public zCRndAlphaSortObject {
   public:
 
+    // sizeof 1Ch
     struct zD3D_vertexFormat {
-      D3DVALUE a_sx;
-      D3DVALUE a_sy;
-      D3DVALUE a_sz;
-      D3DVALUE a_rhw;
-      D3DCOLOR a_color;
-      D3DVALUE a_tu;
-      D3DVALUE a_tv;
+      D3DVALUE a_sx;    // sizeof 04h    offset 00h
+      D3DVALUE a_sy;    // sizeof 04h    offset 04h
+      D3DVALUE a_sz;    // sizeof 04h    offset 08h
+      D3DVALUE a_rhw;   // sizeof 04h    offset 0Ch
+      D3DCOLOR a_color; // sizeof 04h    offset 10h
+      D3DVALUE a_tu;    // sizeof 04h    offset 14h
+      D3DVALUE a_tv;    // sizeof 04h    offset 18h
 
       zD3D_vertexFormat() {}
 
@@ -38,12 +40,12 @@ namespace Gothic_I_Classic {
       #include "zD3D_alphaPoly_zD3D_vertexFormat.inl"
     };
 
-    zTRnd_AlphaBlendFunc alphafunc;
-    zCTex_D3D* tex;
-    int wrap;
-    unsigned long zfunc;
-    int numVert;
-    zD3D_vertexFormat vertexList[zMAX_VERT];
+    zTRnd_AlphaBlendFunc alphafunc;          // sizeof 04h    offset 0Ch
+    zCTex_D3D* tex;                          // sizeof 04h    offset 10h
+    int wrap;                                // sizeof 04h    offset 14h
+    unsigned long zfunc;                     // sizeof 04h    offset 18h
+    int numVert;                             // sizeof 04h    offset 1Ch
+    zD3D_vertexFormat vertexList[zMAX_VERT]; // sizeof E0h    offset 20h
 
     void zD3D_alphaPoly_OnInit() zCall( 0x00713CE0 );
     zD3D_alphaPoly()             zInit( zD3D_alphaPoly_OnInit() );
@@ -64,33 +66,35 @@ namespace Gothic_I_Classic {
     #include "zD3D_alphaPoly.inl"
   };
 
+  // sizeof 80E58h
   class zCRnd_D3D : public zCRenderer {
   public:
+    // sizeof 7Ch
     struct zD3D_Status {
-      int modeNr;
-      int devnum;
-      int devmax;
-      int texwrap;
-      int filter;
-      int dither;
-      int fog;
-      float nearZ;
-      float farZ;
-      zCOLOR fogColor;
-      int fogMode;
-      zTRnd_AlphaBlendFunc alphafunc;
-      zTRnd_AlphaBlendSource alphasrc;
-      float alphafactor;
-      int zenable;
-      int fenable;
-      float zbias;
-      zTRnd_ZBufferCmp zfunc;
-      int zwrite;
-      unsigned long zd3dfunc;
-      DDPIXELFORMAT ddpf;
-      float gammavalue;
-      int palsupported;
-      zTRnd_RenderMode renderMode;
+      int modeNr;                      // sizeof 04h    offset 00h
+      int devnum;                      // sizeof 04h    offset 04h
+      int devmax;                      // sizeof 04h    offset 08h
+      int texwrap;                     // sizeof 04h    offset 0Ch
+      int filter;                      // sizeof 04h    offset 10h
+      int dither;                      // sizeof 04h    offset 14h
+      int fog;                         // sizeof 04h    offset 18h
+      float nearZ;                     // sizeof 04h    offset 1Ch
+      float farZ;                      // sizeof 04h    offset 20h
+      zCOLOR fogColor;                 // sizeof 04h    offset 24h
+      int fogMode;                     // sizeof 04h    offset 28h
+      zTRnd_AlphaBlendFunc alphafunc;  // sizeof 04h    offset 2Ch
+      zTRnd_AlphaBlendSource alphasrc; // sizeof 04h    offset 30h
+      float alphafactor;               // sizeof 04h    offset 34h
+      int zenable;                     // sizeof 04h    offset 38h
+      int fenable;                     // sizeof 04h    offset 3Ch
+      float zbias;                     // sizeof 04h    offset 40h
+      zTRnd_ZBufferCmp zfunc;          // sizeof 04h    offset 44h
+      int zwrite;                      // sizeof 04h    offset 48h
+      unsigned long zd3dfunc;          // sizeof 04h    offset 4Ch
+      DDPIXELFORMAT ddpf;              // sizeof 20h    offset 50h
+      float gammavalue;                // sizeof 04h    offset 70h
+      int palsupported;                // sizeof 04h    offset 74h
+      zTRnd_RenderMode renderMode;     // sizeof 04h    offset 78h
 
       zD3D_Status() {}
 
@@ -98,27 +102,28 @@ namespace Gothic_I_Classic {
       #include "zCRnd_D3D_zD3D_Status.inl"
     };
 
+    // sizeof 50h
     struct zD3D_Caps {
-      unsigned long vidmemsize;
-      unsigned long vidmemfree;
-      unsigned long mintexsize;
-      unsigned long maxtexsize;
-      int window;
-      int gamma;
-      int multitexture;
-      int ztest;
-      int guardband;
-      float guardbandleft;
-      float guardbandright;
-      float guardbandtop;
-      float guardbandbottom;
-      int alphatest;
-      int num_stages;
-      int num_texstages;
-      int tnl;
-      int tnl_hardware;
-      int tnl_maxlights;
-      int blendDiffuseAlpha;
+      unsigned long vidmemsize; // sizeof 04h    offset 00h
+      unsigned long vidmemfree; // sizeof 04h    offset 04h
+      unsigned long mintexsize; // sizeof 04h    offset 08h
+      unsigned long maxtexsize; // sizeof 04h    offset 0Ch
+      int window;               // sizeof 04h    offset 10h
+      int gamma;                // sizeof 04h    offset 14h
+      int multitexture;         // sizeof 04h    offset 18h
+      int ztest;                // sizeof 04h    offset 1Ch
+      int guardband;            // sizeof 04h    offset 20h
+      float guardbandleft;      // sizeof 04h    offset 24h
+      float guardbandright;     // sizeof 04h    offset 28h
+      float guardbandtop;       // sizeof 04h    offset 2Ch
+      float guardbandbottom;    // sizeof 04h    offset 30h
+      int alphatest;            // sizeof 04h    offset 34h
+      int num_stages;           // sizeof 04h    offset 38h
+      int num_texstages;        // sizeof 04h    offset 3Ch
+      int tnl;                  // sizeof 04h    offset 40h
+      int tnl_hardware;         // sizeof 04h    offset 44h
+      int tnl_maxlights;        // sizeof 04h    offset 48h
+      int blendDiffuseAlpha;    // sizeof 04h    offset 4Ch
 
       zD3D_Caps() {}
 
@@ -126,58 +131,58 @@ namespace Gothic_I_Classic {
       #include "zCRnd_D3D_zD3D_Caps.inl"
     };
 
-    unsigned long xd3d_actRenderState[MAXRENDERSTATES];
-    unsigned long xd3d_actTexStageState[MAXTEXTURESTAGES][zRND_TSS_COUNT];
-    zD3D_Status xd3d_actStatus;
-    zD3D_Caps xd3d_Capabilities;
-    DDDEVICEIDENTIFIER2 xd3d_deviceIdentifier;
-    unsigned int xd3d_numLightmapsUsedThisFrame;
-    int xd3d_wBuffer;
-    zTRnd_DepthBufferLevel xd3d_zwBufferLevel;
-    int xd3d_alphaTest;
-    int xd3d_alphaBlendImmed;
-    int xd3d_backlocked;
-    IDirectDrawSurface7* xd3d_pfrontBuffer;
-    IDirectDrawSurface7* xd3d_pbackBuffer;
-    IDirectDrawSurface7* xd3d_pzBuffer;
-    IDirectDrawClipper* xd3d_pclipper;
-    IDirectDrawGammaControl* xd3d_pgammacontrol;
-    DDPIXELFORMAT xd3d_pixelformat;
-    int xd3d_deviceChange;
-    zTRnd_ScreenMode xd3d_scrMode;
-    int xd3d_scrStatus;
-    int xd3d_scrWidth;
-    int xd3d_scrHeight;
-    int xd3d_scrBpp;
-    int xd3d_num;
-    zTRnd_ScreenMode xd3d_mode;
-    int xd3d_x;
-    int xd3d_y;
-    int xd3d_bpp;
-    float xd3d_zMAX_from_Engine;
-    float xd3d_zMIN_from_Engine;
-    float xd3d_scale_A;
-    float xd3d_scale_B;
-    float xd3d_scale_C;
-    zCMaterial* xd3d_pactivematerial;
-    zTMaterial xd3d_actmaterial;
-    zTRnd_Stats xd3d_statistics;
-    HWND xd3d_newWinHandle;
-    HWND xd3d_winHandle;
-    zTRnd_RenderMode xd3d_renderMode;
-    int xd3d_tryDevnum;
-    int xd3d_inScene;
-    int xd3d_disableFog;
-    zD3D_alphaPoly xd3d_alphaPolyPool[MAXALPHAPOLYS];
-    int xd3d_numAlphaPolys;
-    zCRndAlphaSortObject* xd3d_alphaSortBucket[MAXBUCKETS];
-    float xd3d_bucketSize;
-    int xd3d_vbclipping;
-    unsigned long xd3d_texturefactor;
-    zCTex_D3D* xd3d_ptexture[MAXTEXTURESTAGES];
-    IDirectDrawSurface7* xd3d_pd3dtexture[MAXTEXTURESTAGES];
-    unsigned int xd3d_numTexturesUsedThisFrame;
-    zD3D_savedTexture* xd3d_savedTexture;
+    unsigned long xd3d_actRenderState[MAXRENDERSTATES];                    // sizeof 280h   offset 34h
+    unsigned long xd3d_actTexStageState[MAXTEXTURESTAGES][zRND_TSS_COUNT]; // sizeof 180h   offset 2B4h
+    zD3D_Status xd3d_actStatus;                                            // sizeof 7Ch    offset 434h
+    zD3D_Caps xd3d_Capabilities;                                           // sizeof 50h    offset 4B0h
+    DDDEVICEIDENTIFIER2 xd3d_deviceIdentifier;                             // sizeof 430h   offset 500h
+    unsigned int xd3d_numLightmapsUsedThisFrame;                           // sizeof 04h    offset 930h
+    int xd3d_wBuffer;                                                      // sizeof 04h    offset 934h
+    zTRnd_DepthBufferLevel xd3d_zwBufferLevel;                             // sizeof 04h    offset 938h
+    int xd3d_alphaTest;                                                    // sizeof 04h    offset 93Ch
+    int xd3d_alphaBlendImmed;                                              // sizeof 04h    offset 940h
+    int xd3d_backlocked;                                                   // sizeof 04h    offset 944h
+    IDirectDrawSurface7* xd3d_pfrontBuffer;                                // sizeof 04h    offset 948h
+    IDirectDrawSurface7* xd3d_pbackBuffer;                                 // sizeof 04h    offset 94Ch
+    IDirectDrawSurface7* xd3d_pzBuffer;                                    // sizeof 04h    offset 950h
+    IDirectDrawClipper* xd3d_pclipper;                                     // sizeof 04h    offset 954h
+    IDirectDrawGammaControl* xd3d_pgammacontrol;                           // sizeof 04h    offset 958h
+    DDPIXELFORMAT xd3d_pixelformat;                                        // sizeof 20h    offset 95Ch
+    int xd3d_deviceChange;                                                 // sizeof 04h    offset 97Ch
+    zTRnd_ScreenMode xd3d_scrMode;                                         // sizeof 04h    offset 980h
+    int xd3d_scrStatus;                                                    // sizeof 04h    offset 984h
+    int xd3d_scrWidth;                                                     // sizeof 04h    offset 988h
+    int xd3d_scrHeight;                                                    // sizeof 04h    offset 98Ch
+    int xd3d_scrBpp;                                                       // sizeof 04h    offset 990h
+    int xd3d_num;                                                          // sizeof 04h    offset 994h
+    zTRnd_ScreenMode xd3d_mode;                                            // sizeof 04h    offset 998h
+    int xd3d_x;                                                            // sizeof 04h    offset 99Ch
+    int xd3d_y;                                                            // sizeof 04h    offset 9A0h
+    int xd3d_bpp;                                                          // sizeof 04h    offset 9A4h
+    float xd3d_zMAX_from_Engine;                                           // sizeof 04h    offset 9A8h
+    float xd3d_zMIN_from_Engine;                                           // sizeof 04h    offset 9ACh
+    float xd3d_scale_A;                                                    // sizeof 04h    offset 9B0h
+    float xd3d_scale_B;                                                    // sizeof 04h    offset 9B4h
+    float xd3d_scale_C;                                                    // sizeof 04h    offset 9B8h
+    zCMaterial* xd3d_pactivematerial;                                      // sizeof 04h    offset 9BCh
+    zTMaterial xd3d_actmaterial;                                           // sizeof 20h    offset 9C0h
+    zTRnd_Stats xd3d_statistics;                                           // sizeof 24h    offset 9E0h
+    HWND xd3d_newWinHandle;                                                // sizeof 04h    offset A04h
+    HWND xd3d_winHandle;                                                   // sizeof 04h    offset A08h
+    zTRnd_RenderMode xd3d_renderMode;                                      // sizeof 04h    offset A0Ch
+    int xd3d_tryDevnum;                                                    // sizeof 04h    offset A10h
+    int xd3d_inScene;                                                      // sizeof 04h    offset A14h
+    int xd3d_disableFog;                                                   // sizeof 04h    offset A18h
+    zD3D_alphaPoly xd3d_alphaPolyPool[MAXALPHAPOLYS];                      // sizeof 80000h offset A1Ch
+    int xd3d_numAlphaPolys;                                                // sizeof 04h    offset 80A1Ch
+    zCRndAlphaSortObject* xd3d_alphaSortBucket[MAXBUCKETS];                // sizeof 400h   offset 80A20h
+    float xd3d_bucketSize;                                                 // sizeof 04h    offset 80E20h
+    int xd3d_vbclipping;                                                   // sizeof 04h    offset 80E24h
+    unsigned long xd3d_texturefactor;                                      // sizeof 04h    offset 80E28h
+    zCTex_D3D* xd3d_ptexture[MAXTEXTURESTAGES];                            // sizeof 10h    offset 80E2Ch
+    IDirectDrawSurface7* xd3d_pd3dtexture[MAXTEXTURESTAGES];               // sizeof 10h    offset 80E3Ch
+    unsigned int xd3d_numTexturesUsedThisFrame;                            // sizeof 04h    offset 80E4Ch
+    zD3D_savedTexture* xd3d_savedTexture;                                  // sizeof 04h    offset 80E50h
 
     void zCRnd_D3D_OnInit()                                                                    zCall( 0x00713260 );
     int XD3D_EnumerateModes()                                                                  zCall( 0x0070E4F0 );
@@ -306,14 +311,16 @@ namespace Gothic_I_Classic {
     #include "zCRnd_D3D.inl"
   };
 
+  // sizeof 28804h
   class zCSurfaceCache_D3D {
   public:
+    // sizeof 14h
     struct zCSlotIndex {
-      int dynamic;
-      int pixelformat;
-      int mipmaps;
-      int width;
-      int height;
+      int dynamic;     // sizeof 04h    offset 00h
+      int pixelformat; // sizeof 04h    offset 04h
+      int mipmaps;     // sizeof 04h    offset 08h
+      int width;       // sizeof 04h    offset 0Ch
+      int height;      // sizeof 04h    offset 10h
 
       zCSlotIndex() {}
 
@@ -321,10 +328,11 @@ namespace Gothic_I_Classic {
       #include "zCSurfaceCache_D3D_zCSlotIndex.inl"
     };
 
+    // sizeof 0Ch
     struct zD3D_Entry {
-      IDirectDrawSurface7* surface;
-      unsigned long frameNumber;
-      zD3D_Entry* nextEntry;
+      IDirectDrawSurface7* surface; // sizeof 04h    offset 00h
+      unsigned long frameNumber;    // sizeof 04h    offset 04h
+      zD3D_Entry* nextEntry;        // sizeof 04h    offset 08h
 
       zD3D_Entry() {}
 
@@ -332,9 +340,10 @@ namespace Gothic_I_Classic {
       #include "zCSurfaceCache_D3D_zD3D_Entry.inl"
     };
 
+    // sizeof 08h
     struct zD3D_SlotHeader {
-      zD3D_Entry* firstEntry;
-      zD3D_Entry* lastEntry;
+      zD3D_Entry* firstEntry; // sizeof 04h    offset 00h
+      zD3D_Entry* lastEntry;  // sizeof 04h    offset 04h
 
       zD3D_SlotHeader() {}
 
@@ -342,8 +351,8 @@ namespace Gothic_I_Classic {
       #include "zCSurfaceCache_D3D_zD3D_SlotHeader.inl"
     };
 
-    int xsc_cacheentryCounter;
-    zD3D_SlotHeader xsc_slot[2][6][12][12][12];
+    int xsc_cacheentryCounter;                  // sizeof 04h    offset 00h
+    zD3D_SlotHeader xsc_slot[2][6][12][12][12]; // sizeof 28800h offset 04h
 
     void zCSurfaceCache_D3D_OnInit()                         zCall( 0x0071A3A0 );
     zCSurfaceCache_D3D()                                     zInit( zCSurfaceCache_D3D_OnInit() );
@@ -362,12 +371,14 @@ namespace Gothic_I_Classic {
     #include "zCSurfaceCache_D3D.inl"
   };
 
+  // sizeof 904h
   class zCDXTCCache_D3D {
   public:
+    // sizeof 0Ch
     struct zD3D_Entry {
-      IDirectDrawSurface7* surface;
-      int locked;
-      zD3D_Entry* nextEntry;
+      IDirectDrawSurface7* surface; // sizeof 04h    offset 00h
+      int locked;                   // sizeof 04h    offset 04h
+      zD3D_Entry* nextEntry;        // sizeof 04h    offset 08h
 
       zD3D_Entry() {}
 
@@ -375,9 +386,10 @@ namespace Gothic_I_Classic {
       #include "zCDXTCCache_D3D_zD3D_Entry.inl"
     };
 
+    // sizeof 08h
     struct zD3D_SlotHeader {
-      zD3D_Entry* firstEntry;
-      zD3D_Entry* lastEntry;
+      zD3D_Entry* firstEntry; // sizeof 04h    offset 00h
+      zD3D_Entry* lastEntry;  // sizeof 04h    offset 04h
 
       zD3D_SlotHeader() {}
 
@@ -385,8 +397,8 @@ namespace Gothic_I_Classic {
       #include "zCDXTCCache_D3D_zD3D_SlotHeader.inl"
     };
 
-    int xdxtc_cacheentryCounter;
-    zD3D_SlotHeader xdxtc_slot[2][12][12];
+    int xdxtc_cacheentryCounter;           // sizeof 04h    offset 00h
+    zD3D_SlotHeader xdxtc_slot[2][12][12]; // sizeof 900h   offset 04h
 
     void zCDXTCCache_D3D_OnInit()                                          zCall( 0x0070D6C0 );
     zCDXTCCache_D3D()                                                      zInit( zCDXTCCache_D3D_OnInit() );
@@ -400,10 +412,11 @@ namespace Gothic_I_Classic {
     #include "zCDXTCCache_D3D.inl"
   };
 
+  // sizeof 0Ch
   struct zD3D_savedTexture {
-    zCTex_D3D* texture;
-    zCTextureConvert* texCon;
-    zD3D_savedTexture* next;
+    zCTex_D3D* texture;       // sizeof 04h    offset 00h
+    zCTextureConvert* texCon; // sizeof 04h    offset 04h
+    zD3D_savedTexture* next;  // sizeof 04h    offset 08h
 
     zD3D_savedTexture() {}
 
@@ -411,26 +424,27 @@ namespace Gothic_I_Classic {
     #include "zD3D_savedTexture.inl"
   };
 
+  // sizeof 13Ch
   class zCTex_D3D : public zCTexture {
   public:
-    unsigned int xtex_textureflag;
+    unsigned int xtex_textureflag;                  // sizeof 04h    offset 8Ch
     group {
-      int                         : 17;
-      int xtex_decompress         : 1;
-      int xtex_locked             : 1;
-      int xtex_palsupport         : 1;
-      unsigned int xtex_miplocked : 12;
+      int                         : 17;             // sizeof 11h    offset bit
+      int xtex_decompress         : 1;              // sizeof 01h    offset bit
+      int xtex_locked             : 1;              // sizeof 01h    offset bit
+      int xtex_palsupport         : 1;              // sizeof 01h    offset bit
+      unsigned int xtex_miplocked : 12;             // sizeof 0Ch    offset bit
     };
-    zCTextureInfo xtex_texinfo;
-    zCSurfaceCache_D3D::zCSlotIndex xtex_slotindex;
-    unsigned char* xtex_pPalettePtr;
-    IDirectDrawPalette* xtex_pddpal;
-    int xtex_internalnumber;
-    int xtex_alphaTex;
-    IDirectDrawSurface7* xtex_pddtex[12];
-    IDirectDrawSurface7* xtex_pddtemporarytex[12];
-    unsigned long xtex_lastFrameUsed;
-    void* xtex_buffer;
+    zCTextureInfo xtex_texinfo;                     // sizeof 1Ch    offset 94h
+    zCSurfaceCache_D3D::zCSlotIndex xtex_slotindex; // sizeof 14h    offset B0h
+    unsigned char* xtex_pPalettePtr;                // sizeof 04h    offset C4h
+    IDirectDrawPalette* xtex_pddpal;                // sizeof 04h    offset C8h
+    int xtex_internalnumber;                        // sizeof 04h    offset CCh
+    int xtex_alphaTex;                              // sizeof 04h    offset D0h
+    IDirectDrawSurface7* xtex_pddtex[12];           // sizeof 30h    offset D4h
+    IDirectDrawSurface7* xtex_pddtemporarytex[12];  // sizeof 30h    offset 104h
+    unsigned long xtex_lastFrameUsed;               // sizeof 04h    offset 134h
+    void* xtex_buffer;                              // sizeof 04h    offset 138h
 
     void zCTex_D3D_OnInit()                            zCall( 0x0071B0E0 );
     zCTex_D3D()                                        zInit( zCTex_D3D_OnInit() );
@@ -459,18 +473,19 @@ namespace Gothic_I_Classic {
     #include "zCTex_D3D.inl"
   };
 
+  // sizeof 88h
   class zCVertexBuffer_D3D : public zCVertexBuffer {
   public:
     group {
-      int                                      : 23;
-      unsigned char xvb_optimized              : 1;
-      unsigned char xvb_locked                 : 1;
-      zTVBufferVertexType xvb_vertexType       : 3;
-      zTVBufferPrimitiveType xvb_primitiveType : 4;
+      int                                      : 23; // sizeof 17h    offset bit
+      unsigned char xvb_optimized              : 1;  // sizeof 01h    offset bit
+      unsigned char xvb_locked                 : 1;  // sizeof 01h    offset bit
+      zTVBufferVertexType xvb_vertexType       : 3;  // sizeof 03h    offset bit
+      zTVBufferPrimitiveType xvb_primitiveType : 4;  // sizeof 04h    offset bit
     };
-    unsigned long xvb_vertexFormat;
-    IDirect3DVertexBuffer7* xvb_vertexBuffer;
-    zCArray<unsigned short> xvb_indexList;
+    unsigned long xvb_vertexFormat;                  // sizeof 04h    offset 74h
+    IDirect3DVertexBuffer7* xvb_vertexBuffer;        // sizeof 04h    offset 78h
+    zCArray<unsigned short> xvb_indexList;           // sizeof 0Ch    offset 7Ch
 
     void zCVertexBuffer_D3D_OnInit()                                  zCall( 0x0071E310 );
     zCVertexBuffer_D3D()                                              zInit( zCVertexBuffer_D3D_OnInit() );

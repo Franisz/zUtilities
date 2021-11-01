@@ -1,22 +1,25 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZNET__WIN32_H__VER2__
 #define __ZNET__WIN32_H__VER2__
 
 namespace Gothic_II_Classic {
 
+  // sizeof 10h
   struct zTNetAddress {
-    unsigned short Protocol;
+    unsigned short Protocol; // sizeof 02h    offset 00h
     union {
+      // sizeof 08h
       struct zTNetAddressDummy0 {
-        unsigned short Port;
-        unsigned long IP;
+        unsigned short Port; // sizeof 02h    offset 00h
+        unsigned long IP;    // sizeof 04h    offset 04h
       };
 
+      // sizeof 08h
       struct zTNetAddressDummy1 {
-        unsigned char Net[4];
-        unsigned char Node[6];
-        unsigned short Socket;
+        unsigned char Net[4];  // sizeof 04h    offset 00h
+        unsigned char Node[6]; // sizeof 06h    offset 04h
+        unsigned short Socket; // sizeof 02h    offset 0Ah
       };
 
       zTNetAddressDummy0 INET;
@@ -29,9 +32,10 @@ namespace Gothic_II_Classic {
     #include "zTNetAddress.inl"
   };
 
+  // sizeof 08h
   struct zTNetBufferInfo {
-    int inPackets;
-    int inBytes;
+    int inPackets; // sizeof 04h    offset 00h
+    int inBytes;   // sizeof 04h    offset 04h
 
     zTNetBufferInfo() {}
 
@@ -39,11 +43,12 @@ namespace Gothic_II_Classic {
     #include "zTNetBufferInfo.inl"
   };
 
+  // sizeof 18h
   struct zTNetPacket {
-    zTNetAddress From;
-    unsigned long timestamp;
-    unsigned long size;
-    unsigned char Data[];
+    zTNetAddress From;       // sizeof 10h    offset 00h
+    unsigned long timestamp; // sizeof 04h    offset 10h
+    unsigned long size;      // sizeof 04h    offset 14h
+    unsigned char Data[];    // sizeof 04h    offset 18h
 
     zTNetPacket() {}
 
@@ -51,11 +56,12 @@ namespace Gothic_II_Classic {
     #include "zTNetPacket.inl"
   };
 
+  // sizeof 10h
   struct zTNetTimeout {
-    unsigned long getHostAddress;
-    unsigned long getHostName;
-    unsigned long getService;
-    unsigned long Connect;
+    unsigned long getHostAddress; // sizeof 04h    offset 00h
+    unsigned long getHostName;    // sizeof 04h    offset 04h
+    unsigned long getService;     // sizeof 04h    offset 08h
+    unsigned long Connect;        // sizeof 04h    offset 0Ch
 
     zTNetTimeout() {}
 

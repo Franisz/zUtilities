@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZDISK__VDFS_H__VER3__
 #define __ZDISK__VDFS_H__VER3__
@@ -7,24 +7,26 @@
 
 namespace Gothic_II_Addon {
 
+  // sizeof 4Ch
   struct TVDFFINDDATA {
   public:
-    char name[64];
-    long size;
-    long attr;
-    long datetime;
+    char name[64]; // sizeof 40h    offset 00h
+    long size;     // sizeof 04h    offset 40h
+    long attr;     // sizeof 04h    offset 44h
+    long datetime; // sizeof 04h    offset 48h
   };
 
+  // sizeof 2A38h
   class zFILE_VDFS : public zFILE_FILE {
   public:
-    char read_buffer[1024* 10];
-    TVDFFINDDATA find_filedata;
-    long vdfHandle;
-    long vdfResult;
-    bool vdfEOF;
-    long vdfFindHandle;
-    zSTRING vdfFindExt;
-    int error;
+    char read_buffer[1024* 10]; // sizeof 2800h  offset 1C0h
+    TVDFFINDDATA find_filedata; // sizeof 4Ch    offset 29C0h
+    long vdfHandle;             // sizeof 04h    offset 2A0Ch
+    long vdfResult;             // sizeof 04h    offset 2A10h
+    bool vdfEOF;                // sizeof 01h    offset 2A14h
+    long vdfFindHandle;         // sizeof 04h    offset 2A18h
+    zSTRING vdfFindExt;         // sizeof 14h    offset 2A1Ch
+    int error;                  // sizeof 04h    offset 2A30h
 
     void zFILE_VDFS_OnInit()                                      zCall( 0x00448BF0 );
     void zFILE_VDFS_OnInit( zSTRING const& )                      zCall( 0x00448E20 );

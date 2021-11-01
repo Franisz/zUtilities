@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZZONE_H__VER2__
 #define __ZZONE_H__VER2__
@@ -6,13 +6,15 @@
 namespace Gothic_II_Classic {
   const int DIMENSION=3;
 
+  // sizeof 44h
   class zCBBox3DSorterBase {
   public:
 
+    // sizeof 08h
     class zTNode {
     public:
-      int isBegin;
-      void* data;
+      int isBegin; // sizeof 04h    offset 00h
+      void* data;  // sizeof 04h    offset 04h
 
       zTNode() {}
 
@@ -20,12 +22,13 @@ namespace Gothic_II_Classic {
       #include "zCBBox3DSorterBase_zTNode.inl"
     };
 
+    // sizeof 38h
     class zTBoxSortHandle {
     public:
-      zCBBox3DSorterBase* mySorter;
-      zTBBox3D bbox3D;
-      int indexBegin[DIMENSION];
-      int indexEnd[DIMENSION];
+      zCBBox3DSorterBase* mySorter; // sizeof 04h    offset 04h
+      zTBBox3D bbox3D;              // sizeof 18h    offset 08h
+      int indexBegin[DIMENSION];    // sizeof 0Ch    offset 20h
+      int indexEnd[DIMENSION];      // sizeof 0Ch    offset 2Ch
 
       void zTBoxSortHandle_OnInit()   zCall( 0x00618830 );
       zTBoxSortHandle()               zInit( zTBoxSortHandle_OnInit() );
@@ -38,9 +41,9 @@ namespace Gothic_II_Classic {
       #include "zCBBox3DSorterBase_zTBoxSortHandle.inl"
     };
 
-    zCArray<zTBoxSortHandle*> handles;
-    zCArraySort<zTNode*> nodeList[DIMENSION];
-    int sorted;
+    zCArray<zTBoxSortHandle*> handles;        // sizeof 0Ch    offset 04h
+    zCArraySort<zTNode*> nodeList[DIMENSION]; // sizeof 30h    offset 10h
+    int sorted;                               // sizeof 04h    offset 40h
 
     void zCBBox3DSorterBase_OnInit()                           zCall( 0x006338B0 );
     zCBBox3DSorterBase()                                       zInit( zCBBox3DSorterBase_OnInit() );
@@ -67,11 +70,12 @@ namespace Gothic_II_Classic {
     #include "zCBBox3DSorterBase.inl"
   };
 
+  // sizeof 124h
   class zCZone : public zCVob {
   public:
     zCLASS_DECLARATION( zCZone )
 
-    zCWorld* world;
+    zCWorld* world; // sizeof 04h    offset 120h
 
     void zCZone_OnInit()                                                                               zCall( 0x00634880 );
     zCZone()                                                                                           zInit( zCZone_OnInit() );
@@ -94,15 +98,16 @@ namespace Gothic_II_Classic {
     #include "zCZone.inl"
   };
 
+  // sizeof 138h
   class zCZoneZFog : public zCZone {
   public:
     zCLASS_DECLARATION( zCZoneZFog )
 
-    float fogRangeCenter;
-    float innerRangePerc;
-    zCOLOR fogColor;
-    int bFadeOutSky;
-    int bOverrideColor;
+    float fogRangeCenter; // sizeof 04h    offset 124h
+    float innerRangePerc; // sizeof 04h    offset 128h
+    zCOLOR fogColor;      // sizeof 04h    offset 12Ch
+    int bFadeOutSky;      // sizeof 04h    offset 130h
+    int bOverrideColor;   // sizeof 04h    offset 134h
 
     void zCZoneZFog_OnInit()                                                                           zCall( 0x00634DD0 );
     zCZoneZFog()                                                                                       zInit( zCZoneZFog_OnInit() );
@@ -120,6 +125,7 @@ namespace Gothic_II_Classic {
     #include "zCZoneZFog.inl"
   };
 
+  // sizeof 138h
   class zCZoneZFogDefault : public zCZoneZFog {
   public:
     zCLASS_DECLARATION( zCZoneZFogDefault )
@@ -135,13 +141,14 @@ namespace Gothic_II_Classic {
     #include "zCZoneZFogDefault.inl"
   };
 
+  // sizeof 130h
   class zCZoneReverb : public zCZone {
   public:
     zCLASS_DECLARATION( zCZoneReverb )
 
-    int reverbPresetNr;
-    float reverbPresetWeight;
-    float innerRangePerc;
+    int reverbPresetNr;       // sizeof 04h    offset 124h
+    float reverbPresetWeight; // sizeof 04h    offset 128h
+    float innerRangePerc;     // sizeof 04h    offset 12Ch
 
     void zCZoneReverb_OnInit()                                                                         zCall( 0x00637BD0 );
     zCZoneReverb()                                                                                     zInit( zCZoneReverb_OnInit() );
@@ -159,6 +166,7 @@ namespace Gothic_II_Classic {
     #include "zCZoneReverb.inl"
   };
 
+  // sizeof 130h
   class zCZoneReverbDefault : public zCZoneReverb {
   public:
     zCLASS_DECLARATION( zCZoneReverbDefault )
@@ -175,6 +183,7 @@ namespace Gothic_II_Classic {
     #include "zCZoneReverbDefault.inl"
   };
 
+  // sizeof 124h
   class zCZoneMusic : public zCZone {
   public:
     zCLASS_DECLARATION( zCZoneMusic )
@@ -194,12 +203,13 @@ namespace Gothic_II_Classic {
     #include "zCZoneMusic.inl"
   };
 
+  // sizeof 12Ch
   class zCZoneVobFarPlane : public zCZone {
   public:
     zCLASS_DECLARATION( zCZoneVobFarPlane )
 
-    float vobFarZ;
-    float innerRangePerc;
+    float vobFarZ;        // sizeof 04h    offset 124h
+    float innerRangePerc; // sizeof 04h    offset 128h
 
     void zCZoneVobFarPlane_OnInit()                                                                    zCall( 0x00635630 );
     zCZoneVobFarPlane()                                                                                zInit( zCZoneVobFarPlane_OnInit() );
@@ -216,6 +226,7 @@ namespace Gothic_II_Classic {
     #include "zCZoneVobFarPlane.inl"
   };
 
+  // sizeof 12Ch
   class zCZoneVobFarPlaneDefault : public zCZoneVobFarPlane {
   public:
     zCLASS_DECLARATION( zCZoneVobFarPlaneDefault )
@@ -231,6 +242,7 @@ namespace Gothic_II_Classic {
     #include "zCZoneVobFarPlaneDefault.inl"
   };
 
+  // sizeof 16Ch
   class zCVobSound : public zCZone {
   public:
     zCLASS_DECLARATION( zCVobSound )
@@ -246,28 +258,28 @@ namespace Gothic_II_Classic {
       SM_RANDOM
     };
 
-    zSTRING soundName;
-    float soundRadius;
-    zTSoundMode soundMode;
+    zSTRING soundName;                       // sizeof 14h    offset 124h
+    float soundRadius;                       // sizeof 04h    offset 138h
+    zTSoundMode soundMode;                   // sizeof 04h    offset 13Ch
     group {
-      unsigned char soundStartOn        : 1;
-      unsigned char soundIsRunning      : 1;
-      unsigned char soundIsAmbient3D    : 1;
-      unsigned char soundHasObstruction : 1;
-      unsigned char soundVolType        : 1;
-      unsigned char soundAllowedToRun   : 1;
-      unsigned char soundAutoStart      : 1;
+      unsigned char soundStartOn        : 1; // sizeof 01h    offset bit
+      unsigned char soundIsRunning      : 1; // sizeof 01h    offset bit
+      unsigned char soundIsAmbient3D    : 1; // sizeof 01h    offset bit
+      unsigned char soundHasObstruction : 1; // sizeof 01h    offset bit
+      unsigned char soundVolType        : 1; // sizeof 01h    offset bit
+      unsigned char soundAllowedToRun   : 1; // sizeof 01h    offset bit
+      unsigned char soundAutoStart      : 1; // sizeof 01h    offset bit
     };
-    float soundRandDelay;
-    float soundRandDelayVar;
-    float soundVolume;
-    float soundConeAngle;
-    zCSoundFX* sfx;
-    int sfxHandle;
-    float soundRandTimer;
-    float obstruction0;
-    float obstruction1;
-    float obstructionFrameTime;
+    float soundRandDelay;                    // sizeof 04h    offset 144h
+    float soundRandDelayVar;                 // sizeof 04h    offset 148h
+    float soundVolume;                       // sizeof 04h    offset 14Ch
+    float soundConeAngle;                    // sizeof 04h    offset 150h
+    zCSoundFX* sfx;                          // sizeof 04h    offset 154h
+    int sfxHandle;                           // sizeof 04h    offset 158h
+    float soundRandTimer;                    // sizeof 04h    offset 15Ch
+    float obstruction0;                      // sizeof 04h    offset 160h
+    float obstruction1;                      // sizeof 04h    offset 164h
+    float obstructionFrameTime;              // sizeof 04h    offset 168h
 
     void zCVobSound_OnInit()                                                                           zCall( 0x00635AD0 );
     zCVobSound()                                                                                       zInit( zCVobSound_OnInit() );
@@ -298,15 +310,16 @@ namespace Gothic_II_Classic {
     #include "zCVobSound.inl"
   };
 
+  // sizeof 190h
   class zCVobSoundDaytime : public zCVobSound {
   public:
     zCLASS_DECLARATION( zCVobSoundDaytime )
 
-    float soundStartTime;
-    float soundEndTime;
-    zSTRING soundName2;
-    zCSoundFX* sfx2;
-    int activeSection;
+    float soundStartTime; // sizeof 04h    offset 16Ch
+    float soundEndTime;   // sizeof 04h    offset 170h
+    zSTRING soundName2;   // sizeof 14h    offset 174h
+    zCSoundFX* sfx2;      // sizeof 04h    offset 188h
+    int activeSection;    // sizeof 04h    offset 18Ch
 
     void zCVobSoundDaytime_OnInit()                 zCall( 0x00637240 );
     zCVobSoundDaytime()                             zInit( zCVobSoundDaytime_OnInit() );

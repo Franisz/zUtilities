@@ -1,10 +1,11 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_PRINT_H__VER2__
 #define __ZVIEW_PRINT_H__VER2__
 
 namespace Gothic_II_Classic {
 
+  // sizeof ECh
   class zCViewPrint : public zCViewFX {
   public:
     zCLASS_DECLARATION( zCViewPrint )
@@ -16,11 +17,11 @@ namespace Gothic_II_Classic {
       VIEW_ALIGN_CENTER
     } zTViewAlign;
 
-    zCArray<zCViewText2*> ListTextLines;
-    zCViewFont ViewFont;
-    zPOS PositionCursor;
-    zPOS OffsetTextPixel;
-    zPOS SizeMargin[2];
+    zCArray<zCViewText2*> ListTextLines; // sizeof 0Ch    offset ACh
+    zCViewFont ViewFont;                 // sizeof 14h    offset B8h
+    zPOS PositionCursor;                 // sizeof 08h    offset CCh
+    zPOS OffsetTextPixel;                // sizeof 08h    offset D4h
+    zPOS SizeMargin[2];                  // sizeof 10h    offset DCh
 
     void zCViewPrint_OnInit()                                                    zCall( 0x007A3450 );
     zCViewPrint()                                                                zInit( zCViewPrint_OnInit() );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZPHYSICS_H__VER1__
 #define __ZPHYSICS_H__VER1__
@@ -10,29 +10,30 @@ namespace Gothic_I_Addon {
     zPHY_RBMODE_SLIDE = 1
   };
 
+  // sizeof 104h
   class zCRigidBody {
   public:
-    float mass;
-    float massInv;
-    zMAT3 iBody;
-    zMAT3 iBodyInv;
-    zVEC3 xPos;
-    zMAT3 RDir;
-    zVEC3 PLinMom;
-    zVEC3 LAngMom;
-    zMAT3 iInv;
-    zVEC3 v;
-    zVEC3 omega;
-    zVEC3 force;
-    zVEC3 torque;
-    float gravityScale;
-    zVEC3 slideDir;
-    float slideAngle;
+    float mass;                         // sizeof 04h    offset 00h
+    float massInv;                      // sizeof 04h    offset 04h
+    zMAT3 iBody;                        // sizeof 24h    offset 08h
+    zMAT3 iBodyInv;                     // sizeof 24h    offset 2Ch
+    zVEC3 xPos;                         // sizeof 0Ch    offset 50h
+    zMAT3 RDir;                         // sizeof 24h    offset 5Ch
+    zVEC3 PLinMom;                      // sizeof 0Ch    offset 80h
+    zVEC3 LAngMom;                      // sizeof 0Ch    offset 8Ch
+    zMAT3 iInv;                         // sizeof 24h    offset 98h
+    zVEC3 v;                            // sizeof 0Ch    offset BCh
+    zVEC3 omega;                        // sizeof 0Ch    offset C8h
+    zVEC3 force;                        // sizeof 0Ch    offset D4h
+    zVEC3 torque;                       // sizeof 0Ch    offset E0h
+    float gravityScale;                 // sizeof 04h    offset ECh
+    zVEC3 slideDir;                     // sizeof 0Ch    offset F0h
+    float slideAngle;                   // sizeof 04h    offset FCh
     group {
-      unsigned char gravityOn      : 1;
-      unsigned char collisionHad   : 1;
-      unsigned char mode           : 1;
-      unsigned char justSetSliding : 4;
+      unsigned char gravityOn      : 1; // sizeof 01h    offset bit
+      unsigned char collisionHad   : 1; // sizeof 01h    offset bit
+      unsigned char mode           : 1; // sizeof 01h    offset bit
+      unsigned char justSetSliding : 4; // sizeof 04h    offset bit
     };
 
     void zCRigidBody_OnInit()                                                zCall( 0x005B0070 );

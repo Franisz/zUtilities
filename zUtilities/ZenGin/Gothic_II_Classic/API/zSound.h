@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSOUND_H__VER2__
 #define __ZSOUND_H__VER2__
@@ -14,6 +14,7 @@ namespace Gothic_II_Classic {
   const int zSND_SLOT_MAX             = 8;
   const int zSND_CHANNEL_FRAME_RANDOM =-1;
 
+  // sizeof 08h
   class zCSoundSystem {
   public:
     enum zTLoopType {
@@ -32,15 +33,16 @@ namespace Gothic_II_Classic {
       zMaxSpeakerType
     };
 
+    // sizeof 20h
     struct zTSound3DParams {
-      float obstruction;
-      float volume;
-      float radius;
-      zTLoopType loopType;
-      float coneAngleDeg;
-      float reverbLevel;
-      int isAmbient3D;
-      float pitchOffset;
+      float obstruction;   // sizeof 04h    offset 00h
+      float volume;        // sizeof 04h    offset 04h
+      float radius;        // sizeof 04h    offset 08h
+      zTLoopType loopType; // sizeof 04h    offset 0Ch
+      float coneAngleDeg;  // sizeof 04h    offset 10h
+      float reverbLevel;   // sizeof 04h    offset 14h
+      int isAmbient3D;     // sizeof 04h    offset 18h
+      float pitchOffset;   // sizeof 04h    offset 1Ch
 
       zTSound3DParams() {}
       void SetDefaults() zCall( 0x0060B890 );
@@ -49,7 +51,7 @@ namespace Gothic_II_Classic {
       #include "zCSoundSystem_zTSound3DParams.inl"
     };
 
-    float defaultRadius;
+    float defaultRadius; // sizeof 04h    offset 04h
 
     zCSoundSystem() {}
     int GetNumReverbPresets()                                                zCall( 0x005E52B0 );
@@ -91,6 +93,7 @@ namespace Gothic_II_Classic {
     #include "zCSoundSystem.inl"
   };
 
+  // sizeof 54h
   class zCSoundFX : public zCResource {
   public:
     zCLASS_DECLARATION( zCSoundFX )
@@ -120,6 +123,7 @@ namespace Gothic_II_Classic {
     #include "zCSoundFX.inl"
   };
 
+  // sizeof 54h
   class zCSoundFXDummy : public zCSoundFX {
   public:
 
@@ -130,6 +134,7 @@ namespace Gothic_II_Classic {
     #include "zCSoundFXDummy.inl"
   };
 
+  // sizeof 08h
   class zCSoundSystemDummy : public zCSoundSystem {
   public:
 

@@ -1,31 +1,33 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_OBJECT_H__VER2__
 #define __ZVIEW_OBJECT_H__VER2__
 
 namespace Gothic_II_Classic {
 
+  // sizeof 08h
   typedef class zCPosition {
   public:
-    long X;
-    long Y;
+    long X; // sizeof 04h    offset 00h
+    long Y; // sizeof 04h    offset 04h
 
     zCPosition() {}
     zCPosition& operator-= ( zCPosition& ) zCall( 0x00771540 );
     zCPosition& operator+= ( zCPosition& ) zCall( 0x007A2390 );
   } zPOS;
 
+  // sizeof 5Ch
   class zCViewObject : public zCObject, public zCViewBase {
   public:
     zCLASS_DECLARATION( zCViewObject )
 
-    zPOS VirtualPosition;
-    zPOS VirtualSize;
-    zPOS PixelPosition;
-    zPOS PixelSize;
-    unsigned long ID;
-    zCViewObject* ViewParent;
-    zCListSort<zCViewObject> ListChildren;
+    zPOS VirtualPosition;                  // sizeof 08h    offset 28h
+    zPOS VirtualSize;                      // sizeof 08h    offset 30h
+    zPOS PixelPosition;                    // sizeof 08h    offset 38h
+    zPOS PixelSize;                        // sizeof 08h    offset 40h
+    unsigned long ID;                      // sizeof 04h    offset 48h
+    zCViewObject* ViewParent;              // sizeof 04h    offset 4Ch
+    zCListSort<zCViewObject> ListChildren; // sizeof 0Ch    offset 50h
 
     void zCViewObject_OnInit()                                         zCall( 0x007A1B00 );
     zCViewObject()                                                     zInit( zCViewObject_OnInit() );

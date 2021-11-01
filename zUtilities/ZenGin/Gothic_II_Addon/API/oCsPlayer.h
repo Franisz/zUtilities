@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OCS_PLAYER_H__VER3__
 #define __OCS_PLAYER_H__VER3__
@@ -7,6 +7,7 @@
 
 namespace Gothic_II_Addon {
 
+  // sizeof 68h
   class oCCSPlayer : public zCCSPlayer {
   public:
     zCLASS_DECLARATION( oCCSPlayer )

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMATERIAL_H__VER1__
 #define __ZMATERIAL_H__VER1__
@@ -15,13 +15,14 @@ namespace Gothic_I_Addon {
     zMAT_NUM_MAT_GROUP
   };
 
+  // sizeof 14h
   class zCTexAniCtrl {
   public:
-    int aniChannel;
-    float actFrame;
-    float aniFPS;
-    unsigned long frameCtr;
-    int bOneShotAni;
+    int aniChannel;         // sizeof 04h    offset 00h
+    float actFrame;         // sizeof 04h    offset 04h
+    float aniFPS;           // sizeof 04h    offset 08h
+    unsigned long frameCtr; // sizeof 04h    offset 0Ch
+    int bOneShotAni;        // sizeof 04h    offset 10h
 
     void zCTexAniCtrl_OnInit()    zCall( 0x00566EB0 );
     zCTexAniCtrl()                zInit( zCTexAniCtrl_OnInit() );
@@ -34,6 +35,7 @@ namespace Gothic_I_Addon {
     #include "zCTexAniCtrl.inl"
   };
 
+  // sizeof 94h
   class zCMaterial : public zCObject {
   public:
     zCLASS_DECLARATION( zCMaterial )
@@ -43,34 +45,34 @@ namespace Gothic_I_Addon {
       zMAT_USAGE_OTHER
     };
 
-    zCArray<zCPolygon*> polyList;
-    unsigned long polyListTimeStamp;
-    zCTexture* texture;
-    zCOLOR color;
-    float smoothAngle;
-    zTMat_Group matGroup;
-    zCBspSector* bspSectorFront;
-    zCBspSector* bspSectorBack;
-    zCTexAniCtrl texAniCtrl;
-    zSTRING* detailObjectVisualName;
-    float kambient;
-    float kdiffuse;
+    zCArray<zCPolygon*> polyList;                 // sizeof 0Ch    offset 24h
+    unsigned long polyListTimeStamp;              // sizeof 04h    offset 30h
+    zCTexture* texture;                           // sizeof 04h    offset 34h
+    zCOLOR color;                                 // sizeof 04h    offset 38h
+    float smoothAngle;                            // sizeof 04h    offset 3Ch
+    zTMat_Group matGroup;                         // sizeof 04h    offset 40h
+    zCBspSector* bspSectorFront;                  // sizeof 04h    offset 44h
+    zCBspSector* bspSectorBack;                   // sizeof 04h    offset 48h
+    zCTexAniCtrl texAniCtrl;                      // sizeof 14h    offset 4Ch
+    zSTRING* detailObjectVisualName;              // sizeof 04h    offset 60h
+    float kambient;                               // sizeof 04h    offset 64h
+    float kdiffuse;                               // sizeof 04h    offset 68h
     group {
-      unsigned char smooth                   : 1;
-      unsigned char dontUseLightmaps         : 1;
-      unsigned char texAniMap                : 1;
-      unsigned char lodDontCollapse          : 1;
-      unsigned char noCollDet                : 1;
-      unsigned char polyListNeedsSort        : 1;
-      unsigned char matUsage                 : 8;
-      unsigned char libFlag                  : 8;
-      zTRnd_AlphaBlendFunc rndAlphaBlendFunc : 8;
+      unsigned char smooth                   : 1; // sizeof 01h    offset bit
+      unsigned char dontUseLightmaps         : 1; // sizeof 01h    offset bit
+      unsigned char texAniMap                : 1; // sizeof 01h    offset bit
+      unsigned char lodDontCollapse          : 1; // sizeof 01h    offset bit
+      unsigned char noCollDet                : 1; // sizeof 01h    offset bit
+      unsigned char polyListNeedsSort        : 1; // sizeof 01h    offset bit
+      unsigned char matUsage                 : 8; // sizeof 08h    offset bit
+      unsigned char libFlag                  : 8; // sizeof 08h    offset bit
+      zTRnd_AlphaBlendFunc rndAlphaBlendFunc : 8; // sizeof 08h    offset bit
     };
-    zCTexture* detailTexture;
-    float detailTextureScale;
-    zVEC2 texAniMapDelta;
-    zVEC2 default_mapping;
-    zVEC2 texScale;
+    zCTexture* detailTexture;                     // sizeof 04h    offset 74h
+    float detailTextureScale;                     // sizeof 04h    offset 78h
+    zVEC2 texAniMapDelta;                         // sizeof 08h    offset 7Ch
+    zVEC2 default_mapping;                        // sizeof 08h    offset 84h
+    zVEC2 texScale;                               // sizeof 08h    offset 8Ch
 
     void zCMaterial_OnInit()                                                 zCall( 0x00565370 );
     void zCMaterial_OnInit( zSTRING const& )                                 zCall( 0x00565450 );

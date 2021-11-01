@@ -1,17 +1,18 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_PRINT__FONT_H__VER3__
 #define __ZVIEW_PRINT__FONT_H__VER3__
 
 namespace Gothic_II_Addon {
 
+  // sizeof 14h
   class zCViewFont {
   public:
-    zTRnd_AlphaBlendFunc FuncAlphaBlend;
-    zCFont* Font;
-    zCOLOR Color;
-    int Alpha;
-    int EnabledBlend;
+    zTRnd_AlphaBlendFunc FuncAlphaBlend; // sizeof 04h    offset 00h
+    zCFont* Font;                        // sizeof 04h    offset 04h
+    zCOLOR Color;                        // sizeof 04h    offset 08h
+    int Alpha;                           // sizeof 04h    offset 0Ch
+    int EnabledBlend;                    // sizeof 04h    offset 10h
 
     void zCViewFont_OnInit( zCFont*, zCOLOR&, int, zTRnd_AlphaBlendFunc ) zCall( 0x00694C40 );
     void zCViewFont_OnInit( zCFont*, zCOLOR& )                            zCall( 0x00694C70 );
@@ -28,14 +29,15 @@ namespace Gothic_II_Addon {
     #include "zCViewFont.inl"
   };
 
+  // sizeof 3Ch
   class zCViewText2 {
   public:
-    int EnabledColor;
-    int EnabledTimer;
-    zPOS PixelPosition;
-    float Timer;
-    zSTRING Text;
-    zCViewFont ViewFont;
+    int EnabledColor;    // sizeof 04h    offset 00h
+    int EnabledTimer;    // sizeof 04h    offset 04h
+    zPOS PixelPosition;  // sizeof 08h    offset 08h
+    float Timer;         // sizeof 04h    offset 10h
+    zSTRING Text;        // sizeof 14h    offset 14h
+    zCViewFont ViewFont; // sizeof 14h    offset 28h
 
     zCViewText2() {}
     void zCViewText2_OnInit( zSTRING&, zCPosition&, zCOLOR&, float, zCFont*, int, zTRnd_AlphaBlendFunc )          zCall( 0x006943D0 );

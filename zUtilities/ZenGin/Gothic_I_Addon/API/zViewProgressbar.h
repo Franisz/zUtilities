@@ -1,14 +1,15 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_PROGRESSBAR_H__VER1__
 #define __ZVIEW_PROGRESSBAR_H__VER1__
 
 namespace Gothic_I_Addon {
 
+  // sizeof 0Ch
   struct zTProgressRange {
-    int iteration;
-    float min;
-    float max;
+    int iteration; // sizeof 04h    offset 00h
+    float min;     // sizeof 04h    offset 04h
+    float max;     // sizeof 04h    offset 08h
 
     zTProgressRange() {}
 
@@ -16,14 +17,15 @@ namespace Gothic_I_Addon {
     #include "zTProgressRange.inl"
   };
 
+  // sizeof 130h
   class zCViewProgressBar : public zCView {
   public:
-    zCView* bar;
-    int minStep;
-    int percent;
-    zSTRING text;
-    time_t start_time;
-    zCList<zTProgressRange> rangeList;
+    zCView* bar;                       // sizeof 04h    offset FCh
+    int minStep;                       // sizeof 04h    offset 100h
+    int percent;                       // sizeof 04h    offset 104h
+    zSTRING text;                      // sizeof 14h    offset 108h
+    time_t start_time;                 // sizeof 08h    offset 120h
+    zCList<zTProgressRange> rangeList; // sizeof 08h    offset 128h
 
     zCViewProgressBar() {}
     void zCViewProgressBar_OnInit( int, int, int, int, zTviewID )    zCall( 0x00471830 );

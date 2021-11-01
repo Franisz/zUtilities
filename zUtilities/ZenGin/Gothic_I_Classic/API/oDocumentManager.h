@@ -1,20 +1,25 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ODOCUMENT_MANAGER_H__VER0__
 #define __ODOCUMENT_MANAGER_H__VER0__
 
 namespace Gothic_I_Classic {
 
+  // sizeof 0Ch
   class oCDocumentManager : public zCInputCallback {
   public:
-    zCListSort<oCViewDocument>* ListDocuments;
-    zCViewDialog* DlgDocumentMain;
+    zCListSort<oCViewDocument>* ListDocuments; // sizeof 04h    offset 04h
+    zCViewDialog* DlgDocumentMain;             // sizeof 04h    offset 08h
 
     void oCDocumentManager_OnInit( oCDocumentManager const& )             zCall( 0x00724230 );
     void oCDocumentManager_OnInit()                                       zCall( 0x00724250 );
+
+  private:
     oCDocumentManager& operator =( oCDocumentManager const& )             zCall( 0x00724220 );
     oCDocumentManager( oCDocumentManager const& a0 )                      zInit( oCDocumentManager_OnInit( a0 ));
     oCDocumentManager()                                                   zInit( oCDocumentManager_OnInit() );
+
+  public:
     ~oCDocumentManager()                                                  zCall( 0x00724400 );
     int __fastcall CreateDocument()                                       zCall( 0x007244D0 );
     int __fastcall CreateMap()                                            zCall( 0x007246D0 );

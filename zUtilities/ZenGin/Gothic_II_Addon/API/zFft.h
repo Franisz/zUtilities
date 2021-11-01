@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZFFT_H__VER3__
 #define __ZFFT_H__VER3__
@@ -12,15 +12,16 @@ namespace Gothic_II_Addon {
     zTFFT_FAST
   };
 
+  // sizeof 1Ch
   class zRandom_Gauss {
   public:
-    float* u;
-    float c;
-    float cd;
-    float cm;
-    int i97;
-    int j97;
-    int m_gaussCall;
+    float* u;        // sizeof 04h    offset 00h
+    float c;         // sizeof 04h    offset 04h
+    float cd;        // sizeof 04h    offset 08h
+    float cm;        // sizeof 04h    offset 0Ch
+    int i97;         // sizeof 04h    offset 10h
+    int j97;         // sizeof 04h    offset 14h
+    int m_gaussCall; // sizeof 04h    offset 18h
 
     zRandom_Gauss() {}
     void zRandom_Gauss_OnInit( int, int ) zCall( 0x0055ACE0 );
@@ -41,14 +42,15 @@ namespace Gothic_II_Addon {
     #include "zRandom_Gauss.inl"
   };
 
+  // sizeof 1Ch
   class zCFFT {
   public:
-    zComplex** m_h0Map;
-    zComplex** m_WaveMap;
-    zComplex** m_IWaveMap;
-    float fftSpeed;
-    int frameCtr;
-    int frameCtrLastUsed;
+    zComplex** m_h0Map;    // sizeof 04h    offset 04h
+    zComplex** m_WaveMap;  // sizeof 04h    offset 08h
+    zComplex** m_IWaveMap; // sizeof 04h    offset 0Ch
+    float fftSpeed;        // sizeof 04h    offset 10h
+    int frameCtr;          // sizeof 04h    offset 14h
+    int frameCtrLastUsed;  // sizeof 04h    offset 18h
 
     void zCFFT_OnInit()                                       zCall( 0x00559E40 );
     zCFFT()                                                   zInit( zCFFT_OnInit() );

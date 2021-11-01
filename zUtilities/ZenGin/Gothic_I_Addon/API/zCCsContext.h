@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCCS_CONTEXT_H__VER1__
 #define __ZCCS_CONTEXT_H__VER1__
@@ -8,6 +8,7 @@
 
 namespace Gothic_I_Addon {
 
+  // sizeof ACh
   class zCCSCutsceneContext : public zCCutscene {
   public:
     zCLASS_DECLARATION( zCCSCutsceneContext )
@@ -28,17 +29,17 @@ namespace Gothic_I_Addon {
       CS_PLAY_MAX
     };
 
-    zTCSPlayResult lastPlayResult;
-    int allowedToPlay;
-    zCVob* alternativeStageVob;
-    int wasTriggered;
-    int isCutscene;
-    int loaded;
-    int reference;
-    zCVob* stage;
-    zCCSPoolItem* poolItem;
-    float lastTimeStamp;
-    float lastTimePoint;
+    zTCSPlayResult lastPlayResult; // sizeof 04h    offset 80h
+    int allowedToPlay;             // sizeof 04h    offset 84h
+    zCVob* alternativeStageVob;    // sizeof 04h    offset 88h
+    int wasTriggered;              // sizeof 04h    offset 8Ch
+    int isCutscene;                // sizeof 04h    offset 90h
+    int loaded;                    // sizeof 04h    offset 94h
+    int reference;                 // sizeof 04h    offset 98h
+    zCVob* stage;                  // sizeof 04h    offset 9Ch
+    zCCSPoolItem* poolItem;        // sizeof 04h    offset A0h
+    float lastTimeStamp;           // sizeof 04h    offset A4h
+    float lastTimePoint;           // sizeof 04h    offset A8h
 
     void zCCSCutsceneContext_OnInit()                                   zCall( 0x00405700 );
     void zCCSCutsceneContext_OnInit( zSTRING& )                         zCall( 0x00405790 );
@@ -94,11 +95,12 @@ namespace Gothic_I_Addon {
     #include "zCCSCutsceneContext.inl"
   };
 
+  // sizeof 18h
   class zCCSDebugger {
   public:
-    zCArray<zCCSBlockBase*> callstack;
-    zCCSSyncBlock* callframe;
-    zCCSDebugger* deb;
+    zCArray<zCCSBlockBase*> callstack; // sizeof 0Ch    offset 04h
+    zCCSSyncBlock* callframe;          // sizeof 04h    offset 10h
+    zCCSDebugger* deb;                 // sizeof 04h    offset 14h
 
     zCCSDebugger() {}
     virtual ~zCCSDebugger()                               zCall( 0x00420B70 );

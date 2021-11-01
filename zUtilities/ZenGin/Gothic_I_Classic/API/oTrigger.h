@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OTRIGGER_H__VER0__
 #define __OTRIGGER_H__VER0__
@@ -9,12 +9,13 @@
 
 namespace Gothic_I_Classic {
 
+  // sizeof 170h
   class oCTriggerChangeLevel : public zCTrigger {
   public:
     zCLASS_DECLARATION( oCTriggerChangeLevel )
 
-    zSTRING levelName;
-    zSTRING startVob;
+    zSTRING levelName; // sizeof 14h    offset 148h
+    zSTRING startVob;  // sizeof 14h    offset 15Ch
 
     void oCTriggerChangeLevel_OnInit()                                       zCall( 0x00438240 );
     oCTriggerChangeLevel()                                                   zInit( oCTriggerChangeLevel_OnInit() );
@@ -31,11 +32,12 @@ namespace Gothic_I_Classic {
     #include "oCTriggerChangeLevel.inl"
   };
 
+  // sizeof 15Ch
   class oCTriggerScript : public zCTrigger {
   public:
     zCLASS_DECLARATION( oCTriggerScript )
 
-    zSTRING scriptFunc;
+    zSTRING scriptFunc; // sizeof 14h    offset 148h
 
     void oCTriggerScript_OnInit()                                       zCall( 0x00438960 );
     oCTriggerScript()                                                   zInit( oCTriggerScript_OnInit() );
@@ -52,10 +54,11 @@ namespace Gothic_I_Classic {
     #include "oCTriggerScript.inl"
   };
 
+  // sizeof 118h
   class oCObjectGenerator : public zCVob {
   public:
-    float speed;
-    zSTRING objectName;
+    float speed;        // sizeof 04h    offset 100h
+    zSTRING objectName; // sizeof 14h    offset 104h
 
     void oCObjectGenerator_OnInit()          zCall( 0x004391D0 );
     oCObjectGenerator()                      zInit( oCObjectGenerator_OnInit() );

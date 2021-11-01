@@ -1,14 +1,15 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZPLUECKER_H__VER1__
 #define __ZPLUECKER_H__VER1__
 
 namespace Gothic_I_Addon {
 
+  // sizeof 18h
   class zCPluecker {
   public:
-    float dir[3];
-    float pos[3];
+    float dir[3]; // sizeof 0Ch    offset 00h
+    float pos[3]; // sizeof 0Ch    offset 0Ch
 
     void zCPluecker_OnInit( zVEC3 const&, zVEC3 const& ) zCall( 0x005B16A0 );
     void zCPluecker_OnInit()                             zCall( 0x005B16F0 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZFONTS_H__VER1__
 #define __ZFONTS_H__VER1__
@@ -6,14 +6,15 @@
 namespace Gothic_I_Addon {
   const int zFONT_MAX_LETTER = 256;
 
+  // sizeof 111Ch
   class zCFont {
   public:
-    zSTRING name;
-    int height;
-    zCTexture* fontTex;
-    unsigned char width[zFONT_MAX_LETTER];
-    zVEC2 fontuv1[zFONT_MAX_LETTER];
-    zVEC2 fontuv2[zFONT_MAX_LETTER];
+    zSTRING name;                          // sizeof 14h    offset 00h
+    int height;                            // sizeof 04h    offset 14h
+    zCTexture* fontTex;                    // sizeof 04h    offset 18h
+    unsigned char width[zFONT_MAX_LETTER]; // sizeof 100h   offset 1Ch
+    zVEC2 fontuv1[zFONT_MAX_LETTER];       // sizeof 800h   offset 11Ch
+    zVEC2 fontuv2[zFONT_MAX_LETTER];       // sizeof 800h   offset 91Ch
 
     zCFont() {}
     void zCFont_OnInit( zSTRING const& )                   zCall( 0x007179D0 );
@@ -51,9 +52,10 @@ namespace Gothic_I_Addon {
     #include "zCFont.inl"
   };
 
+  // sizeof 0Ch
   class zCFontMan {
   public:
-    zCArray<zCFont*> fontlist;
+    zCArray<zCFont*> fontlist; // sizeof 0Ch    offset 00h
 
     void zCFontMan_OnInit()          zCall( 0x007171B0 );
     zCFontMan()                      zInit( zCFontMan_OnInit() );

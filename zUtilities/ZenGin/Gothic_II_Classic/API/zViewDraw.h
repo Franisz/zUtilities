@@ -1,19 +1,20 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_DRAW_H__VER2__
 #define __ZVIEW_DRAW_H__VER2__
 
 namespace Gothic_II_Classic {
 
+  // sizeof 7Ch
   class zCViewDraw : public zCViewObject {
   public:
     zCLASS_DECLARATION( zCViewDraw )
 
-    zTRnd_AlphaBlendFunc TextureFuncAlpha;
-    zCTexture* Texture;
-    zCOLOR TextureColor;
-    int TextureAlpha;
-    zVEC2 TexturePosition[2];
+    zTRnd_AlphaBlendFunc TextureFuncAlpha; // sizeof 04h    offset 5Ch
+    zCTexture* Texture;                    // sizeof 04h    offset 60h
+    zCOLOR TextureColor;                   // sizeof 04h    offset 64h
+    int TextureAlpha;                      // sizeof 04h    offset 68h
+    zVEC2 TexturePosition[2];              // sizeof 10h    offset 6Ch
 
     void zCViewDraw_OnInit()                                                zCall( 0x0079FF70 );
     zCViewDraw()                                                            zInit( zCViewDraw_OnInit() );

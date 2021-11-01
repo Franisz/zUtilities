@@ -1,15 +1,16 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIEW_DIALOG_ITEM_H__VER0__
 #define __OVIEW_DIALOG_ITEM_H__VER0__
 
 namespace Gothic_I_Classic {
 
+  // sizeof FCh
   class oCViewDialogItem : public zCViewDialog {
   public:
     zCLASS_DECLARATION( oCViewDialogItem )
 
-    oCItem* Item;
+    oCItem* Item; // sizeof 04h    offset F8h
 
     void oCViewDialogItem_OnInit()                                      zCall( 0x00727050 );
     oCViewDialogItem()                                                  zInit( oCViewDialogItem_OnInit() );

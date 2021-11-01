@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIS_FX_H__VER0__
 #define __OVIS_FX_H__VER0__
@@ -61,14 +61,15 @@ namespace Gothic_I_Classic {
     TACTION_COLL_CREATE_QUAD = 32
   };
 
+  // sizeof 5Ch
   class oCTrajectory {
   public:
-    zCArray<zCPositionKey*> keyList;
-    zCKBSpline* spl;
-    int mode;
-    float length;
-    zMAT4 res;
-    int lastKey;
+    zCArray<zCPositionKey*> keyList; // sizeof 0Ch    offset 00h
+    zCKBSpline* spl;                 // sizeof 04h    offset 0Ch
+    int mode;                        // sizeof 04h    offset 10h
+    float length;                    // sizeof 04h    offset 14h
+    zMAT4 res;                       // sizeof 40h    offset 18h
+    int lastKey;                     // sizeof 04h    offset 58h
 
     oCTrajectory() {}
     void Calc()                                                         zCall( 0x0047FF60 );
@@ -90,55 +91,56 @@ namespace Gothic_I_Classic {
     #include "oCTrajectory.inl"
   };
 
+  // sizeof 1D4h
   class oCEmitterKey {
   public:
-    zSTRING visName_S;
-    float visSizeScale;
-    float scaleDuration;
-    float pfx_ppsValue;
-    int pfx_ppsIsSmoothChg;
-    int pfx_ppsIsLoopingChg;
-    float pfx_scTime;
-    zSTRING pfx_flyGravity_S;
-    zSTRING pfx_shpDim_S;
-    int pfx_shpIsVolumeChg;
-    float pfx_shpScaleFPS;
-    float pfx_shpDistribWalkSpeed;
-    zSTRING pfx_shpOffsetVec_S;
-    zSTRING pfx_shpDistribType_S;
-    zSTRING pfx_dirMode_S;
-    zSTRING pfx_dirFOR_S;
-    zSTRING pfx_dirModeTargetFOR_S;
-    zSTRING pfx_dirModeTargetPos_S;
-    float pfx_velAvg;
-    float pfx_lspPartAvg;
-    float pfx_visAlphaStart;
-    zSTRING lightPresetName;
-    float lightRange;
-    zSTRING sfxID;
-    int sfxIsAmbient;
-    zSTRING emCreateFXID;
-    float emFlyGravity;
-    zSTRING emSelfRotVel_S;
-    zSTRING emTrjMode_S;
-    float emTrjEaseVel;
-    int emCheckCollision;
-    float emFXLifeSpan;
-    unsigned char dScriptEnd;
-    zVEC3 pfx_flyGravity;
-    zVEC3 pfx_shpOffsetVec;
-    zTPFX_DistribType pfx_shpDistribType;
-    zTPFX_EmitterDirMode pfx_dirMode;
-    zTPFX_EmitterFOR pfx_dirFOR;
-    zTPFX_EmitterFOR pfx_dirModeTargetFOR;
-    zVEC3 pfx_dirModeTargetPos;
-    zVEC3 emSelfRotVel;
-    int emTrjMode;
-    zSTRING name;
-    zCVob* vob;
-    zVEC3 targetPos;
-    zCSoundFX* sfx;
-    int sfxHnd;
+    zSTRING visName_S;                     // sizeof 14h    offset 00h
+    float visSizeScale;                    // sizeof 04h    offset 14h
+    float scaleDuration;                   // sizeof 04h    offset 18h
+    float pfx_ppsValue;                    // sizeof 04h    offset 1Ch
+    int pfx_ppsIsSmoothChg;                // sizeof 04h    offset 20h
+    int pfx_ppsIsLoopingChg;               // sizeof 04h    offset 24h
+    float pfx_scTime;                      // sizeof 04h    offset 28h
+    zSTRING pfx_flyGravity_S;              // sizeof 14h    offset 2Ch
+    zSTRING pfx_shpDim_S;                  // sizeof 14h    offset 40h
+    int pfx_shpIsVolumeChg;                // sizeof 04h    offset 54h
+    float pfx_shpScaleFPS;                 // sizeof 04h    offset 58h
+    float pfx_shpDistribWalkSpeed;         // sizeof 04h    offset 5Ch
+    zSTRING pfx_shpOffsetVec_S;            // sizeof 14h    offset 60h
+    zSTRING pfx_shpDistribType_S;          // sizeof 14h    offset 74h
+    zSTRING pfx_dirMode_S;                 // sizeof 14h    offset 88h
+    zSTRING pfx_dirFOR_S;                  // sizeof 14h    offset 9Ch
+    zSTRING pfx_dirModeTargetFOR_S;        // sizeof 14h    offset B0h
+    zSTRING pfx_dirModeTargetPos_S;        // sizeof 14h    offset C4h
+    float pfx_velAvg;                      // sizeof 04h    offset D8h
+    float pfx_lspPartAvg;                  // sizeof 04h    offset DCh
+    float pfx_visAlphaStart;               // sizeof 04h    offset E0h
+    zSTRING lightPresetName;               // sizeof 14h    offset E4h
+    float lightRange;                      // sizeof 04h    offset F8h
+    zSTRING sfxID;                         // sizeof 14h    offset FCh
+    int sfxIsAmbient;                      // sizeof 04h    offset 110h
+    zSTRING emCreateFXID;                  // sizeof 14h    offset 114h
+    float emFlyGravity;                    // sizeof 04h    offset 128h
+    zSTRING emSelfRotVel_S;                // sizeof 14h    offset 12Ch
+    zSTRING emTrjMode_S;                   // sizeof 14h    offset 140h
+    float emTrjEaseVel;                    // sizeof 04h    offset 154h
+    int emCheckCollision;                  // sizeof 04h    offset 158h
+    float emFXLifeSpan;                    // sizeof 04h    offset 15Ch
+    unsigned char dScriptEnd;              // sizeof 01h    offset 160h
+    zVEC3 pfx_flyGravity;                  // sizeof 0Ch    offset 164h
+    zVEC3 pfx_shpOffsetVec;                // sizeof 0Ch    offset 170h
+    zTPFX_DistribType pfx_shpDistribType;  // sizeof 04h    offset 17Ch
+    zTPFX_EmitterDirMode pfx_dirMode;      // sizeof 04h    offset 180h
+    zTPFX_EmitterFOR pfx_dirFOR;           // sizeof 04h    offset 184h
+    zTPFX_EmitterFOR pfx_dirModeTargetFOR; // sizeof 04h    offset 188h
+    zVEC3 pfx_dirModeTargetPos;            // sizeof 0Ch    offset 18Ch
+    zVEC3 emSelfRotVel;                    // sizeof 0Ch    offset 198h
+    int emTrjMode;                         // sizeof 04h    offset 1A4h
+    zSTRING name;                          // sizeof 14h    offset 1A8h
+    zCVob* vob;                            // sizeof 04h    offset 1BCh
+    zVEC3 targetPos;                       // sizeof 0Ch    offset 1C0h
+    zCSoundFX* sfx;                        // sizeof 04h    offset 1CCh
+    int sfxHnd;                            // sizeof 04h    offset 1D0h
 
     void oCEmitterKey_OnInit()                       zCall( 0x004812F0 );
     oCEmitterKey()                                   zInit( oCEmitterKey_OnInit() );
@@ -153,10 +155,11 @@ namespace Gothic_I_Classic {
     #include "oCEmitterKey.inl"
   };
 
+  // sizeof 1Ch
   struct zSVisualFXColl {
-    zCVob* foundVob;
-    zVEC3 foundContactPoint;
-    zVEC3 foundNormal;
+    zCVob* foundVob;         // sizeof 04h    offset 00h
+    zVEC3 foundContactPoint; // sizeof 0Ch    offset 04h
+    zVEC3 foundNormal;       // sizeof 0Ch    offset 10h
 
     zSVisualFXColl() {}
 
@@ -164,136 +167,137 @@ namespace Gothic_I_Classic {
     #include "zSVisualFXColl.inl"
   };
 
+  // sizeof 5C8h
   class oCVisualFX : public zCEffect {
   public:
     zCLASS_DECLARATION( oCVisualFX )
 
-    zSTRING visName_S;
-    zSTRING visSize_S;
-    float visAlpha;
-    zSTRING visAlphaBlendFunc_S;
-    float visTexAniFPS;
-    int visTexAniIsLooping;
-    zSTRING emTrjMode_S;
-    zSTRING emTrjOriginNode_S;
-    zSTRING emTrjTargetNode_S;
-    float emTrjTargetRange;
-    float emTrjTargetAzi;
-    float emTrjTargetElev;
-    int emTrjNumKeys;
-    int emTrjNumKeysVar;
-    float emTrjAngleElevVar;
-    float emTrjAngleHeadVar;
-    float emTrjKeyDistVar;
-    zSTRING emTrjLoopMode_S;
-    zSTRING emTrjEaseFunc_S;
-    float emTrjEaseVel;
-    float emTrjDynUpdateDelay;
-    int emTrjDynUpdateTargetOnly;
-    zSTRING emFXCreate_S;
-    zSTRING emFXInvestOrigin_S;
-    zSTRING emFXInvestTarget_S;
-    float emFXTriggerDelay;
-    int emFXCreatedOwnTrj;
-    zSTRING emActionCollDyn_S;
-    zSTRING emActionCollStat_S;
-    zSTRING emFXCollStat_S;
-    zSTRING emFXCollDyn_S;
-    zSTRING emFXCollStatAlign_S;
-    zSTRING emFXCollDynAlign_S;
-    float emFXLifeSpan;
-    int emCheckCollision;
-    int emAdjustShpToOrigin;
-    float emInvestNextKeyDuration;
-    float emFlyGravity;
-    zSTRING emSelfRotVel_S;
-    zSTRING userString[VFX_NUM_USERSTRINGS];
-    zSTRING lightPresetName;
-    zSTRING sfxID;
-    int sfxIsAmbient;
-    int sendAssessMagic;
-    float secsPerDamage;
-    unsigned char dScriptEnd;
-    zVEC3 visSize;
-    int emTrjMode;
-    int emActionCollDyn;
-    int emActionCollStat;
-    zVEC3 emSelfRotVel;
-    TEaseFunc emTrjEaseFunc;
-    TTrjLoopMode emTrjLoopMode;
-    zTVFXState fxState;
-    oCVisualFX* root;
-    oCVisualFX* parent;
-    oCVisualFX* fxInvestOrigin;
-    oCVisualFX* fxInvestTarget;
-    oCVisualFXAI* ai;
-    int fxInvestOriginInitialized;
-    int fxInvestTargetInitialized;
-    int fxInvestStopped;
-    zCArray<oCVisualFX*> fxList;
-    zCArray<oCVisualFX*> childList;
-    zCArray<oCEmitterKey*> emKeyList;
-    zCArray<zCVob*> vobList;
-    zCArray<zCVob*> ignoreVobList;
-    zCArray<zCVob*> allowedCollisionVobList;
-    zCArray<zCVob*> collidedVobs;
-    zCArray<zSVisualFXColl> queuedCollisions;
-    oCTrajectory trajectory;
-    zCEarthquake* earthQuake;
-    zCVobScreenFX* screenFX;
-    float screenFXTime;
-    int screenFXDir;
-    zCModelNodeInst* orgNode;
-    zCModelNodeInst* targetNode;
-    zCVisual* lastSetVisual;
-    zCVob* origin;
-    zCVob* inflictor;
-    zCVob* target;
-    zCVobLight* light;
-    float lightRange;
-    zCSoundFX* sfx;
-    int sfxHnd;
-    zSTRING fxName;
-    oCEmitterKey* fxBackup;
-    oCEmitterKey* lastSetKey;
-    oCEmitterKey* actKey;
-    int level;
-    int collisionOccured;
-    int collisionCtr;
-    int showVisual;
-    int isChild;
-    int isDeleted;
-    int initialized;
-    int shouldDelete;
-    int lightning;
-    int queueSetLevel;
-    float frameTime;
-    float collisionTime;
-    float deleteTime;
-    float damageTime;
-    zVEC3 targetPos;
-    zVEC3 lastTrjDir;
-    zVEC3 keySize;
-    zVEC3 actSize;
-    zVEC3 castEndSize;
-    float nextLevelTime;
-    float easeTime;
-    float age;
-    float trjUpdateTime;
-    float emTrjDist;
-    float trjSign;
-    float levelTime;
-    float lifeSpanTimer;
-    float damage;
-    int damageType;
-    int spellType;
-    int spellTargetTypes;
-    float savePpsValue;
-    zVEC2 saveVisSizeStart;
-    zVEC3 transRing[VFX_MAX_POS_SAMPLES];
-    int ringPos;
-    int emTrjFollowHitLastCheck;
-    int bIsProjectile;
+    zSTRING visName_S;                        // sizeof 14h    offset 100h
+    zSTRING visSize_S;                        // sizeof 14h    offset 114h
+    float visAlpha;                           // sizeof 04h    offset 128h
+    zSTRING visAlphaBlendFunc_S;              // sizeof 14h    offset 12Ch
+    float visTexAniFPS;                       // sizeof 04h    offset 140h
+    int visTexAniIsLooping;                   // sizeof 04h    offset 144h
+    zSTRING emTrjMode_S;                      // sizeof 14h    offset 148h
+    zSTRING emTrjOriginNode_S;                // sizeof 14h    offset 15Ch
+    zSTRING emTrjTargetNode_S;                // sizeof 14h    offset 170h
+    float emTrjTargetRange;                   // sizeof 04h    offset 184h
+    float emTrjTargetAzi;                     // sizeof 04h    offset 188h
+    float emTrjTargetElev;                    // sizeof 04h    offset 18Ch
+    int emTrjNumKeys;                         // sizeof 04h    offset 190h
+    int emTrjNumKeysVar;                      // sizeof 04h    offset 194h
+    float emTrjAngleElevVar;                  // sizeof 04h    offset 198h
+    float emTrjAngleHeadVar;                  // sizeof 04h    offset 19Ch
+    float emTrjKeyDistVar;                    // sizeof 04h    offset 1A0h
+    zSTRING emTrjLoopMode_S;                  // sizeof 14h    offset 1A4h
+    zSTRING emTrjEaseFunc_S;                  // sizeof 14h    offset 1B8h
+    float emTrjEaseVel;                       // sizeof 04h    offset 1CCh
+    float emTrjDynUpdateDelay;                // sizeof 04h    offset 1D0h
+    int emTrjDynUpdateTargetOnly;             // sizeof 04h    offset 1D4h
+    zSTRING emFXCreate_S;                     // sizeof 14h    offset 1D8h
+    zSTRING emFXInvestOrigin_S;               // sizeof 14h    offset 1ECh
+    zSTRING emFXInvestTarget_S;               // sizeof 14h    offset 200h
+    float emFXTriggerDelay;                   // sizeof 04h    offset 214h
+    int emFXCreatedOwnTrj;                    // sizeof 04h    offset 218h
+    zSTRING emActionCollDyn_S;                // sizeof 14h    offset 21Ch
+    zSTRING emActionCollStat_S;               // sizeof 14h    offset 230h
+    zSTRING emFXCollStat_S;                   // sizeof 14h    offset 244h
+    zSTRING emFXCollDyn_S;                    // sizeof 14h    offset 258h
+    zSTRING emFXCollStatAlign_S;              // sizeof 14h    offset 26Ch
+    zSTRING emFXCollDynAlign_S;               // sizeof 14h    offset 280h
+    float emFXLifeSpan;                       // sizeof 04h    offset 294h
+    int emCheckCollision;                     // sizeof 04h    offset 298h
+    int emAdjustShpToOrigin;                  // sizeof 04h    offset 29Ch
+    float emInvestNextKeyDuration;            // sizeof 04h    offset 2A0h
+    float emFlyGravity;                       // sizeof 04h    offset 2A4h
+    zSTRING emSelfRotVel_S;                   // sizeof 14h    offset 2A8h
+    zSTRING userString[VFX_NUM_USERSTRINGS];  // sizeof 3Ch    offset 2BCh
+    zSTRING lightPresetName;                  // sizeof 14h    offset 2F8h
+    zSTRING sfxID;                            // sizeof 14h    offset 30Ch
+    int sfxIsAmbient;                         // sizeof 04h    offset 320h
+    int sendAssessMagic;                      // sizeof 04h    offset 324h
+    float secsPerDamage;                      // sizeof 04h    offset 328h
+    unsigned char dScriptEnd;                 // sizeof 01h    offset 32Ch
+    zVEC3 visSize;                            // sizeof 0Ch    offset 330h
+    int emTrjMode;                            // sizeof 04h    offset 33Ch
+    int emActionCollDyn;                      // sizeof 04h    offset 340h
+    int emActionCollStat;                     // sizeof 04h    offset 344h
+    zVEC3 emSelfRotVel;                       // sizeof 0Ch    offset 348h
+    TEaseFunc emTrjEaseFunc;                  // sizeof 04h    offset 354h
+    TTrjLoopMode emTrjLoopMode;               // sizeof 04h    offset 358h
+    zTVFXState fxState;                       // sizeof 04h    offset 35Ch
+    oCVisualFX* root;                         // sizeof 04h    offset 360h
+    oCVisualFX* parent;                       // sizeof 04h    offset 364h
+    oCVisualFX* fxInvestOrigin;               // sizeof 04h    offset 368h
+    oCVisualFX* fxInvestTarget;               // sizeof 04h    offset 36Ch
+    oCVisualFXAI* ai;                         // sizeof 04h    offset 370h
+    int fxInvestOriginInitialized;            // sizeof 04h    offset 374h
+    int fxInvestTargetInitialized;            // sizeof 04h    offset 378h
+    int fxInvestStopped;                      // sizeof 04h    offset 37Ch
+    zCArray<oCVisualFX*> fxList;              // sizeof 0Ch    offset 380h
+    zCArray<oCVisualFX*> childList;           // sizeof 0Ch    offset 38Ch
+    zCArray<oCEmitterKey*> emKeyList;         // sizeof 0Ch    offset 398h
+    zCArray<zCVob*> vobList;                  // sizeof 0Ch    offset 3A4h
+    zCArray<zCVob*> ignoreVobList;            // sizeof 0Ch    offset 3B0h
+    zCArray<zCVob*> allowedCollisionVobList;  // sizeof 0Ch    offset 3BCh
+    zCArray<zCVob*> collidedVobs;             // sizeof 0Ch    offset 3C8h
+    zCArray<zSVisualFXColl> queuedCollisions; // sizeof 0Ch    offset 3D4h
+    oCTrajectory trajectory;                  // sizeof 5Ch    offset 3E0h
+    zCEarthquake* earthQuake;                 // sizeof 04h    offset 43Ch
+    zCVobScreenFX* screenFX;                  // sizeof 04h    offset 440h
+    float screenFXTime;                       // sizeof 04h    offset 444h
+    int screenFXDir;                          // sizeof 04h    offset 448h
+    zCModelNodeInst* orgNode;                 // sizeof 04h    offset 44Ch
+    zCModelNodeInst* targetNode;              // sizeof 04h    offset 450h
+    zCVisual* lastSetVisual;                  // sizeof 04h    offset 454h
+    zCVob* origin;                            // sizeof 04h    offset 458h
+    zCVob* inflictor;                         // sizeof 04h    offset 45Ch
+    zCVob* target;                            // sizeof 04h    offset 460h
+    zCVobLight* light;                        // sizeof 04h    offset 464h
+    float lightRange;                         // sizeof 04h    offset 468h
+    zCSoundFX* sfx;                           // sizeof 04h    offset 46Ch
+    int sfxHnd;                               // sizeof 04h    offset 470h
+    zSTRING fxName;                           // sizeof 14h    offset 474h
+    oCEmitterKey* fxBackup;                   // sizeof 04h    offset 488h
+    oCEmitterKey* lastSetKey;                 // sizeof 04h    offset 48Ch
+    oCEmitterKey* actKey;                     // sizeof 04h    offset 490h
+    int level;                                // sizeof 04h    offset 494h
+    int collisionOccured;                     // sizeof 04h    offset 498h
+    int collisionCtr;                         // sizeof 04h    offset 49Ch
+    int showVisual;                           // sizeof 04h    offset 4A0h
+    int isChild;                              // sizeof 04h    offset 4A4h
+    int isDeleted;                            // sizeof 04h    offset 4A8h
+    int initialized;                          // sizeof 04h    offset 4ACh
+    int shouldDelete;                         // sizeof 04h    offset 4B0h
+    int lightning;                            // sizeof 04h    offset 4B4h
+    int queueSetLevel;                        // sizeof 04h    offset 4B8h
+    float frameTime;                          // sizeof 04h    offset 4BCh
+    float collisionTime;                      // sizeof 04h    offset 4C0h
+    float deleteTime;                         // sizeof 04h    offset 4C4h
+    float damageTime;                         // sizeof 04h    offset 4C8h
+    zVEC3 targetPos;                          // sizeof 0Ch    offset 4CCh
+    zVEC3 lastTrjDir;                         // sizeof 0Ch    offset 4D8h
+    zVEC3 keySize;                            // sizeof 0Ch    offset 4E4h
+    zVEC3 actSize;                            // sizeof 0Ch    offset 4F0h
+    zVEC3 castEndSize;                        // sizeof 0Ch    offset 4FCh
+    float nextLevelTime;                      // sizeof 04h    offset 508h
+    float easeTime;                           // sizeof 04h    offset 50Ch
+    float age;                                // sizeof 04h    offset 510h
+    float trjUpdateTime;                      // sizeof 04h    offset 514h
+    float emTrjDist;                          // sizeof 04h    offset 518h
+    float trjSign;                            // sizeof 04h    offset 51Ch
+    float levelTime;                          // sizeof 04h    offset 520h
+    float lifeSpanTimer;                      // sizeof 04h    offset 524h
+    float damage;                             // sizeof 04h    offset 528h
+    int damageType;                           // sizeof 04h    offset 52Ch
+    int spellType;                            // sizeof 04h    offset 530h
+    int spellTargetTypes;                     // sizeof 04h    offset 534h
+    float savePpsValue;                       // sizeof 04h    offset 538h
+    zVEC2 saveVisSizeStart;                   // sizeof 08h    offset 53Ch
+    zVEC3 transRing[VFX_MAX_POS_SAMPLES];     // sizeof 78h    offset 544h
+    int ringPos;                              // sizeof 04h    offset 5BCh
+    int emTrjFollowHitLastCheck;              // sizeof 04h    offset 5C0h
+    int bIsProjectile;                        // sizeof 04h    offset 5C4h
 
     void oCVisualFX_OnInit()                                                                             zCall( 0x004820C0 );
     oCVisualFX()                                                                                         zInit( oCVisualFX_OnInit() );
@@ -397,10 +401,11 @@ namespace Gothic_I_Classic {
     #include "oCVisualFX.inl"
   };
 
+  // sizeof 2Ch
   class oCVisualFXAI : public zCAIBase {
   public:
-    zCVob* vob;
-    int delete_it;
+    zCVob* vob;    // sizeof 04h    offset 24h
+    int delete_it; // sizeof 04h    offset 28h
 
     oCVisualFXAI() {}
     virtual ~oCVisualFXAI()                                      zCall( 0x00484190 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMENU_H__VER3__
 #define __ZMENU_H__VER3__
@@ -20,6 +20,7 @@ namespace Gothic_II_Addon {
     MN_SHOW_INFO     = 64
   };
 
+  // sizeof CC4h
   class zCMenu : public zCInputCallback {
   public:
     enum zCMenuEnum2 {
@@ -29,43 +30,43 @@ namespace Gothic_II_Addon {
       FINISHED
     };
 
-    zSTRING backPic;
-    zSTRING backWorld;
-    int posx;
-    int posy;
-    int dimx;
-    int dimy;
-    int alpha;
-    zSTRING musicThemeName;
-    int eventTimerUpdateMSec;
-    zSTRING itemID[MAX_ITEMS];
-    int flags;
-    int defaultOutGame;
-    int defaultInGame;
-    zCViewWindow* m_pWindow;
-    zCViewWindow* m_pInnerWindow;
-    zCMenuEnum2 m_exitState;
-    zSTRING name;
-    zCMusicTheme* m_musicTheme;
-    int m_mainSel;
-    int m_screenInitDone;
-    int m_use_dimx;
-    int m_use_dimy;
-    int m_use_posx;
-    int m_use_posy;
-    zCView* m_pViewInfo;
-    zCVob* cursorVob;
-    int eventOccured[MENU_EVENT_MAX];
-    int cursorEn;
-    int noneSelectable;
-    int registeredCPP;
-    int updateTimer;
-    float fxTimer;
-    zTMenuItemSelAction forceSelAction;
-    zSTRING forceSelAction_S;
-    zCMenuItem* forceSelActionItem;
-    int forcedSelAction;
-    zCArray<zCMenuItem*> m_listItems;
+    zSTRING backPic;                    // sizeof 14h    offset 04h
+    zSTRING backWorld;                  // sizeof 14h    offset 18h
+    int posx;                           // sizeof 04h    offset 2Ch
+    int posy;                           // sizeof 04h    offset 30h
+    int dimx;                           // sizeof 04h    offset 34h
+    int dimy;                           // sizeof 04h    offset 38h
+    int alpha;                          // sizeof 04h    offset 3Ch
+    zSTRING musicThemeName;             // sizeof 14h    offset 40h
+    int eventTimerUpdateMSec;           // sizeof 04h    offset 54h
+    zSTRING itemID[MAX_ITEMS];          // sizeof BB8h   offset 58h
+    int flags;                          // sizeof 04h    offset C10h
+    int defaultOutGame;                 // sizeof 04h    offset C14h
+    int defaultInGame;                  // sizeof 04h    offset C18h
+    zCViewWindow* m_pWindow;            // sizeof 04h    offset C1Ch
+    zCViewWindow* m_pInnerWindow;       // sizeof 04h    offset C20h
+    zCMenuEnum2 m_exitState;            // sizeof 04h    offset C24h
+    zSTRING name;                       // sizeof 14h    offset C28h
+    zCMusicTheme* m_musicTheme;         // sizeof 04h    offset C3Ch
+    int m_mainSel;                      // sizeof 04h    offset C40h
+    int m_screenInitDone;               // sizeof 04h    offset C44h
+    int m_use_dimx;                     // sizeof 04h    offset C48h
+    int m_use_dimy;                     // sizeof 04h    offset C4Ch
+    int m_use_posx;                     // sizeof 04h    offset C50h
+    int m_use_posy;                     // sizeof 04h    offset C54h
+    zCView* m_pViewInfo;                // sizeof 04h    offset C58h
+    zCVob* cursorVob;                   // sizeof 04h    offset C5Ch
+    int eventOccured[MENU_EVENT_MAX];   // sizeof 24h    offset C60h
+    int cursorEn;                       // sizeof 04h    offset C84h
+    int noneSelectable;                 // sizeof 04h    offset C88h
+    int registeredCPP;                  // sizeof 04h    offset C8Ch
+    int updateTimer;                    // sizeof 04h    offset C90h
+    float fxTimer;                      // sizeof 04h    offset C94h
+    zTMenuItemSelAction forceSelAction; // sizeof 04h    offset C98h
+    zSTRING forceSelAction_S;           // sizeof 14h    offset C9Ch
+    zCMenuItem* forceSelActionItem;     // sizeof 04h    offset CB0h
+    int forcedSelAction;                // sizeof 04h    offset CB4h
+    zCArray<zCMenuItem*> m_listItems;   // sizeof 0Ch    offset CB8h
 
     void zCMenu_OnInit()                                                            zCall( 0x004DA470 );
     void zCMenu_OnInit( zSTRING const& )                                            zCall( 0x004DA610 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZNET_H__VER0__
 #define __ZNET_H__VER0__
@@ -17,9 +17,10 @@ namespace Gothic_I_Classic {
     zNET_READ_STREAM
   };
 
+  // sizeof 10h
   struct zTNetStatistics {
-    double bytes;
-    double packets;
+    double bytes;   // sizeof 08h    offset 00h
+    double packets; // sizeof 08h    offset 08h
 
     zTNetStatistics() {}
 
@@ -27,15 +28,16 @@ namespace Gothic_I_Classic {
     #include "zTNetStatistics.inl"
   };
 
+  // sizeof 60h
   class zCNetStatistics {
   public:
-    zTNetStatistics sent;
-    zTNetStatistics recv;
-    zTNetStatistics lost_recv;
-    zTNetStatistics lost_sent;
-    double seconds;
-    int started;
-    time_t start_time;
+    zTNetStatistics sent;      // sizeof 10h    offset 08h
+    zTNetStatistics recv;      // sizeof 10h    offset 18h
+    zTNetStatistics lost_recv; // sizeof 10h    offset 28h
+    zTNetStatistics lost_sent; // sizeof 10h    offset 38h
+    double seconds;            // sizeof 08h    offset 48h
+    int started;               // sizeof 04h    offset 50h
+    time_t start_time;         // sizeof 08h    offset 58h
 
     void zCNetStatistics_OnInit()    zCall( 0x0044E6F0 );
     zCNetStatistics()                zInit( zCNetStatistics_OnInit() );
@@ -54,14 +56,15 @@ namespace Gothic_I_Classic {
     #include "zCNetStatistics.inl"
   };
 
+  // sizeof 80h
   class zCNet {
   public:
-    zCNetSession* session;
-    bool enabled;
-    zCNetStatistics statistics;
-    int error;
-    int sendCount;
-    int recvCount;
+    zCNetSession* session;      // sizeof 04h    offset 08h
+    bool enabled;               // sizeof 01h    offset 0Ch
+    zCNetStatistics statistics; // sizeof 60h    offset 10h
+    int error;                  // sizeof 04h    offset 70h
+    int sendCount;              // sizeof 04h    offset 74h
+    int recvCount;              // sizeof 04h    offset 78h
 
     zCNet() {}
     void zCNet_OnInit( unsigned short )                                                            zCall( 0x0044BE10 );

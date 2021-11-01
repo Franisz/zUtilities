@@ -1,31 +1,33 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMORPH_MESH_H__VER2__
 #define __ZMORPH_MESH_H__VER2__
 
 namespace Gothic_II_Classic {
 
+  // sizeof 50h
   class zCMorphMeshAni {
   public:
+    // sizeof 01h
     struct zCMorphMeshAniDummy0 {
-      unsigned char discontinuity : 1;
-      unsigned char looping       : 1;
-      unsigned char shape         : 1;
-      unsigned char refShape      : 1;
+      unsigned char discontinuity : 1; // sizeof 01h    offset bit
+      unsigned char looping       : 1; // sizeof 01h    offset bit
+      unsigned char shape         : 1; // sizeof 01h    offset bit
+      unsigned char refShape      : 1; // sizeof 01h    offset bit
     };
 
-    zSTRING aniName;
-    zSTRING ascName;
-    float blendInSpeed;
-    float blendOutSpeed;
-    float holdTime;
-    int layer;
-    float fpsRate;
-    zCMorphMeshAniDummy0 flags;
-    int numVert;
-    int* vertIndexList;
-    int numFrames;
-    zVEC3* vertPosMatrix;
+    zSTRING aniName;            // sizeof 14h    offset 00h
+    zSTRING ascName;            // sizeof 14h    offset 14h
+    float blendInSpeed;         // sizeof 04h    offset 28h
+    float blendOutSpeed;        // sizeof 04h    offset 2Ch
+    float holdTime;             // sizeof 04h    offset 30h
+    int layer;                  // sizeof 04h    offset 34h
+    float fpsRate;              // sizeof 04h    offset 38h
+    zCMorphMeshAniDummy0 flags; // sizeof 01h    offset 3Ch
+    int numVert;                // sizeof 04h    offset 40h
+    int* vertIndexList;         // sizeof 04h    offset 44h
+    int numFrames;              // sizeof 04h    offset 48h
+    zVEC3* vertPosMatrix;       // sizeof 04h    offset 4Ch
 
     void zCMorphMeshAni_OnInit()            zCall( 0x0059DBA0 );
     zCMorphMeshAni()                        zInit( zCMorphMeshAni_OnInit() );
@@ -39,16 +41,17 @@ namespace Gothic_II_Classic {
     #include "zCMorphMeshAni.inl"
   };
 
+  // sizeof 3Ch
   class zCMorphMeshProto {
   public:
-    zCMorphMeshProto* next;
-    zCMorphMeshProto* prev;
-    int refCtr;
-    zSTRING morphProtoName;
-    zCProgMeshProto* morphRefMesh;
-    zVEC3* morphRefMeshVertPos;
-    zCArraySort<zCMorphMeshAni*> aniList;
-    int m_bAlphaTestingEnabled;
+    zCMorphMeshProto* next;               // sizeof 04h    offset 00h
+    zCMorphMeshProto* prev;               // sizeof 04h    offset 04h
+    int refCtr;                           // sizeof 04h    offset 08h
+    zSTRING morphProtoName;               // sizeof 14h    offset 0Ch
+    zCProgMeshProto* morphRefMesh;        // sizeof 04h    offset 20h
+    zVEC3* morphRefMeshVertPos;           // sizeof 04h    offset 24h
+    zCArraySort<zCMorphMeshAni*> aniList; // sizeof 10h    offset 28h
+    int m_bAlphaTestingEnabled;           // sizeof 04h    offset 38h
 
     void zCMorphMeshProto_OnInit()                                        zCall( 0x0059DF50 );
     zCMorphMeshProto()                                                    zInit( zCMorphMeshProto_OnInit() );
@@ -73,6 +76,7 @@ namespace Gothic_II_Classic {
     #include "zCMorphMeshProto.inl"
   };
 
+  // sizeof 88h
   class zCMorphMesh : public zCVisualAnimate {
   public:
     zCLASS_DECLARATION( zCMorphMesh )
@@ -83,18 +87,19 @@ namespace Gothic_II_Classic {
       zMORPH_BLEND_STATE_FADEOUT
     };
 
+    // sizeof 2Ch
     struct zTMorphAniEntry {
-      zCMorphMeshAni* ani;
-      float weight;
-      float weightDest;
-      float actFrame;
-      int actFrameInt;
-      int nextFrameInt;
-      float frac;
-      float blendInSpeed;
-      float blendOutSpeed;
-      float holdTime;
-      int blendState;
+      zCMorphMeshAni* ani; // sizeof 04h    offset 00h
+      float weight;        // sizeof 04h    offset 04h
+      float weightDest;    // sizeof 04h    offset 08h
+      float actFrame;      // sizeof 04h    offset 0Ch
+      int actFrameInt;     // sizeof 04h    offset 10h
+      int nextFrameInt;    // sizeof 04h    offset 14h
+      float frac;          // sizeof 04h    offset 18h
+      float blendInSpeed;  // sizeof 04h    offset 1Ch
+      float blendOutSpeed; // sizeof 04h    offset 20h
+      float holdTime;      // sizeof 04h    offset 24h
+      int blendState;      // sizeof 04h    offset 28h
 
       zTMorphAniEntry() {}
 
@@ -102,14 +107,15 @@ namespace Gothic_II_Classic {
       #include "zCMorphMesh_zTMorphAniEntry.inl"
     };
 
+    // sizeof 1Ch
     struct zTRandAni {
-      float randAniTimer;
-      zCMorphMeshAni* randAni;
-      float randAniTimeMin;
-      float randAniTimeMinVar;
-      float randAniTimeMax;
-      float randAniTimeMaxVar;
-      float randAniProbMin;
+      float randAniTimer;      // sizeof 04h    offset 00h
+      zCMorphMeshAni* randAni; // sizeof 04h    offset 04h
+      float randAniTimeMin;    // sizeof 04h    offset 08h
+      float randAniTimeMinVar; // sizeof 04h    offset 0Ch
+      float randAniTimeMax;    // sizeof 04h    offset 10h
+      float randAniTimeMaxVar; // sizeof 04h    offset 14h
+      float randAniProbMin;    // sizeof 04h    offset 18h
 
       zTRandAni() {}
 
@@ -117,13 +123,13 @@ namespace Gothic_II_Classic {
       #include "zCMorphMesh_zTRandAni.inl"
     };
 
-    zCMorphMeshProto* morphProto;
-    zCProgMeshProto* morphMesh;
-    zCMorphMeshAni* refShapeAni;
-    zCModelTexAniState texAniState;
-    int m_bUsesAlphaTesting;
-    zCArraySort<zTMorphAniEntry*>aniChannels;
-    zCArray<zTRandAni> randAniList;
+    zCMorphMeshProto* morphProto;             // sizeof 04h    offset 34h
+    zCProgMeshProto* morphMesh;               // sizeof 04h    offset 38h
+    zCMorphMeshAni* refShapeAni;              // sizeof 04h    offset 3Ch
+    zCModelTexAniState texAniState;           // sizeof 28h    offset 40h
+    int m_bUsesAlphaTesting;                  // sizeof 04h    offset 68h
+    zCArraySort<zTMorphAniEntry*>aniChannels; // sizeof 10h    offset 6Ch
+    zCArray<zTRandAni> randAniList;           // sizeof 0Ch    offset 7Ch
 
     zCMorphMesh() {}
     void zCMorphMesh_OnInit( zCMorphMeshProto* )                               zCall( 0x005A09F0 );
@@ -171,6 +177,7 @@ namespace Gothic_II_Classic {
     #include "zCMorphMesh.inl"
   };
 
+  // sizeof 30h
   class zCMorphMeshConvertFileHandler : public zCScanDirFileHandler {
   public:
 

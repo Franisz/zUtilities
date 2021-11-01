@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZINC_VIEWS_H__VER3__
 #define __ZINC_VIEWS_H__VER3__

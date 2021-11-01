@@ -1,14 +1,15 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OITEM_REACT_H__VER0__
 #define __OITEM_REACT_H__VER0__
 
 namespace Gothic_I_Classic {
 
+  // sizeof 14h
   class oCTradeManager {
   public:
-    zCParser* p;
-    zList<oCItemReactModule> moduleList;
+    zCParser* p;                         // sizeof 04h    offset 00h
+    zList<oCItemReactModule> moduleList; // sizeof 10h    offset 04h
 
     oCTradeManager() {}
     void oCTradeManager_OnInit( zCParser* )                 zCall( 0x00673810 );
@@ -23,20 +24,22 @@ namespace Gothic_I_Classic {
     #include "oCTradeManager.inl"
   };
 
+  // sizeof 20h
   class oCItemReactModule {
   public:
+    // sizeof 1Ch
     struct oCItemReactModuleDummy0 {
-      int trade_npc;
-      int trade_instance;
-      int trade_amount;
-      int other_category;
-      int other_instance;
-      int other_amount;
-      int reaction;
+      int trade_npc;      // sizeof 04h    offset 00h
+      int trade_instance; // sizeof 04h    offset 04h
+      int trade_amount;   // sizeof 04h    offset 08h
+      int other_category; // sizeof 04h    offset 0Ch
+      int other_instance; // sizeof 04h    offset 10h
+      int other_amount;   // sizeof 04h    offset 14h
+      int reaction;       // sizeof 04h    offset 18h
     };
 
-    oCItemReactModule* next;
-    oCItemReactModuleDummy0 pd;
+    oCItemReactModule* next;    // sizeof 04h    offset 00h
+    oCItemReactModuleDummy0 pd; // sizeof 1Ch    offset 04h
 
     oCItemReactModule() {}
     void oCItemReactModule_OnInit( int )  zCall( 0x00673C20 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZRENDER_LIGHT_CONTAINER_H__VER0__
 #define __ZRENDER_LIGHT_CONTAINER_H__VER0__
@@ -6,12 +6,14 @@
 namespace Gothic_I_Classic {
   const int zRENDERLIGHT_LIGHT_MAX = 8;
 
+  // sizeof 2A8h
   class zCRenderLightContainer {
   public:
 
+    // sizeof 08h
     struct zTLightScore {
-      int index;
-      float score;
+      int index;   // sizeof 04h    offset 00h
+      float score; // sizeof 04h    offset 04h
 
       zTLightScore() {}
 
@@ -19,10 +21,10 @@ namespace Gothic_I_Classic {
       #include "zCRenderLightContainer_zTLightScore.inl"
     };
 
-    zCRenderLight lightList[zRENDERLIGHT_LIGHT_MAX];
-    int numLights;
-    int doPrelight;
-    zMAT4 trafoObjToCam;
+    zCRenderLight lightList[zRENDERLIGHT_LIGHT_MAX]; // sizeof 260h   offset 00h
+    int numLights;                                   // sizeof 04h    offset 260h
+    int doPrelight;                                  // sizeof 04h    offset 264h
+    zMAT4 trafoObjToCam;                             // sizeof 40h    offset 268h
 
     zCRenderLightContainer() {}
     ~zCRenderLightContainer()                                          zCall( 0x005609F0 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OMAGIC_H__VER3__
 #define __OMAGIC_H__VER3__
@@ -11,31 +11,32 @@
 
 namespace Gothic_II_Addon {
 
+  // sizeof 7Ch
   class oCMag_Book {
   public:
-    zCArray<oCSpell*> spells;
-    zCArray<oCItem*> spellitems;
-    zCWorld* wld;
-    zCVob* owner;
-    zCModel* model;
-    int spellnr;
-    float MAG_HEIGHT;
-    int active;
-    int remove_all;
-    int in_movement;
-    int show_handsymbol;
-    float step;
-    int action;
-    int fullangle;
-    int open;
-    float open_delay_timer;
-    int show_particles;
-    float targetdir;
-    float t1;
-    zVEC3 targetpos;
-    zVEC3 startpos;
-    int nextRegister;
-    unsigned int keys;
+    zCArray<oCSpell*> spells;    // sizeof 0Ch    offset 00h
+    zCArray<oCItem*> spellitems; // sizeof 0Ch    offset 0Ch
+    zCWorld* wld;                // sizeof 04h    offset 18h
+    zCVob* owner;                // sizeof 04h    offset 1Ch
+    zCModel* model;              // sizeof 04h    offset 20h
+    int spellnr;                 // sizeof 04h    offset 24h
+    float MAG_HEIGHT;            // sizeof 04h    offset 28h
+    int active;                  // sizeof 04h    offset 2Ch
+    int remove_all;              // sizeof 04h    offset 30h
+    int in_movement;             // sizeof 04h    offset 34h
+    int show_handsymbol;         // sizeof 04h    offset 38h
+    float step;                  // sizeof 04h    offset 3Ch
+    int action;                  // sizeof 04h    offset 40h
+    int fullangle;               // sizeof 04h    offset 44h
+    int open;                    // sizeof 04h    offset 48h
+    float open_delay_timer;      // sizeof 04h    offset 4Ch
+    int show_particles;          // sizeof 04h    offset 50h
+    float targetdir;             // sizeof 04h    offset 54h
+    float t1;                    // sizeof 04h    offset 58h
+    zVEC3 targetpos;             // sizeof 0Ch    offset 5Ch
+    zVEC3 startpos;              // sizeof 0Ch    offset 68h
+    int nextRegister;            // sizeof 04h    offset 74h
+    unsigned int keys;           // sizeof 04h    offset 78h
 
     void oCMag_Book_OnInit()                        zCall( 0x004753F0 );
     oCMag_Book()                                    zInit( oCMag_Book_OnInit() );

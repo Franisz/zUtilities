@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZRND_D3D__INIT_H__VER0__
 #define __ZRND_D3D__INIT_H__VER0__
@@ -7,29 +7,32 @@
 
 namespace Gothic_I_Classic {
 
+  // sizeof 32Ch
   struct dxDEVICE {
   public:
-    char name[256];
-    char desc[256];
-    char DeviceName[256];
-    unsigned long hardware;
-    unsigned long number;
-    unsigned long dxguidflag;
-    GUID guid;
-    GUID dxguid;
+    char name[256];           // sizeof 100h   offset 00h
+    char desc[256];           // sizeof 100h   offset 100h
+    char DeviceName[256];     // sizeof 100h   offset 200h
+    unsigned long hardware;   // sizeof 04h    offset 300h
+    unsigned long number;     // sizeof 04h    offset 304h
+    unsigned long dxguidflag; // sizeof 04h    offset 308h
+    GUID guid;                // sizeof 10h    offset 30Ch
+    GUID dxguid;              // sizeof 10h    offset 31Ch
   };
 
+  // sizeof 0Ch
   struct dxDDMODE {
   public:
-    int w;
-    int h;
-    int bpp;
+    int w;   // sizeof 04h    offset 00h
+    int h;   // sizeof 04h    offset 04h
+    int bpp; // sizeof 04h    offset 08h
   };
 
+  // sizeof 08h
   struct zD3DTEX {
   public:
-    int mode;
-    zCTex_D3D* texture;
+    int mode;           // sizeof 04h    offset 00h
+    zCTex_D3D* texture; // sizeof 04h    offset 04h
 
     // user API
     #include "zD3DTEX.inl"

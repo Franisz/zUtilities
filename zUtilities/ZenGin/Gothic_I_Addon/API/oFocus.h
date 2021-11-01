@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OFOCUS_H__VER1__
 #define __OFOCUS_H__VER1__
@@ -15,29 +15,30 @@ namespace Gothic_I_Addon {
     FOCUS_MAGIC
   };
 
+  // sizeof 50h
   class oCNpcFocus {
   public:
     group {
-      float n_range3;
-      float n_range1;
-      float n_range2;
-      float n_azi;
-      float n_elev1;
-      float n_elev2;
-      int n_prio;
-      float i_range1;
-      float i_range2;
-      float i_azi;
-      float i_elev1;
-      float i_elev2;
-      int i_prio;
-      float m_range1;
-      float m_range2;
-      float m_azi;
-      float m_elev1;
-      float m_elev2;
-      int m_prio;
-      float max_range;
+      float n_range3;  // sizeof 04h    offset 00h
+      float n_range1;  // sizeof 04h    offset 04h
+      float n_range2;  // sizeof 04h    offset 08h
+      float n_azi;     // sizeof 04h    offset 0Ch
+      float n_elev1;   // sizeof 04h    offset 10h
+      float n_elev2;   // sizeof 04h    offset 14h
+      int n_prio;      // sizeof 04h    offset 18h
+      float i_range1;  // sizeof 04h    offset 1Ch
+      float i_range2;  // sizeof 04h    offset 20h
+      float i_azi;     // sizeof 04h    offset 24h
+      float i_elev1;   // sizeof 04h    offset 28h
+      float i_elev2;   // sizeof 04h    offset 2Ch
+      int i_prio;      // sizeof 04h    offset 30h
+      float m_range1;  // sizeof 04h    offset 34h
+      float m_range2;  // sizeof 04h    offset 38h
+      float m_azi;     // sizeof 04h    offset 3Ch
+      float m_elev1;   // sizeof 04h    offset 40h
+      float m_elev2;   // sizeof 04h    offset 44h
+      int m_prio;      // sizeof 04h    offset 48h
+      float max_range; // sizeof 04h    offset 4Ch
     };
 
     void oCNpcFocus_OnInit()           zCall( 0x0065B1B0 );

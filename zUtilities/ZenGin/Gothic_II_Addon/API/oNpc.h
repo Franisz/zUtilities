@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ONPC_H__VER3__
 #define __ONPC_H__VER3__
@@ -263,6 +263,7 @@ namespace Gothic_II_Addon {
     NPCTYPE_OW_GUARD
   };
 
+  // sizeof 30h
   class oCNpcTalent : public zCObject {
   public:
     zCLASS_DECLARATION( oCNpcTalent )
@@ -293,9 +294,9 @@ namespace Gothic_II_Addon {
       NPC_TAL_MAX
     };
 
-    oTEnumNpcTalent m_talent;
-    int m_skill;
-    int m_value;
+    oTEnumNpcTalent m_talent; // sizeof 04h    offset 24h
+    int m_skill;              // sizeof 04h    offset 28h
+    int m_value;              // sizeof 04h    offset 2Ch
 
     void oCNpcTalent_OnInit()                              zCall( 0x0072C4C0 );
     oCNpcTalent()                                          zInit( oCNpcTalent_OnInit() );
@@ -310,14 +311,15 @@ namespace Gothic_II_Addon {
     #include "oCNpcTalent.inl"
   };
 
+  // sizeof 38h
   struct TNpcSlot {
   public:
-    zSTRING name;
-    int inInventory;
-    int tmpLevel;
-    zSTRING itemName;
-    oCVob* vob;
-    int wasVobTreeWhenInserted : 1;
+    zSTRING name;                   // sizeof 14h    offset 00h
+    int inInventory;                // sizeof 04h    offset 14h
+    int tmpLevel;                   // sizeof 04h    offset 18h
+    zSTRING itemName;               // sizeof 14h    offset 1Ch
+    oCVob* vob;                     // sizeof 04h    offset 30h
+    int wasVobTreeWhenInserted : 1; // sizeof 01h    offset bit
 
     void TNpcSlot_OnInit() zCall( 0x0072E330 );
     void SetVob( oCVob* )  zCall( 0x0072C860 );
@@ -329,10 +331,11 @@ namespace Gothic_II_Addon {
     #include "TNpcSlot.inl"
   };
 
+  // sizeof 08h
   struct TNpcPerc {
   public:
-    int percID;
-    int percFunc;
+    int percID;   // sizeof 04h    offset 00h
+    int percFunc; // sizeof 04h    offset 04h
 
     TNpcPerc() {}
 
@@ -340,6 +343,7 @@ namespace Gothic_II_Addon {
     #include "TNpcPerc.inl"
   };
 
+  // sizeof A04h
   class oCNpc : public oCVob {
   public:
     zCLASS_DECLARATION( oCNpc )
@@ -401,64 +405,67 @@ namespace Gothic_II_Addon {
       oEDamageDescFlag_ForceDWORD      = 0xffffffff
     } oEDescDamageFlags, oEFlagsDamageDesc;
 
+    // sizeof 1Ch
     typedef struct oSActionBlock {
     public:
-      int ownaction[FA_MAX_ENTRY];
-      int max;
+      int ownaction[FA_MAX_ENTRY]; // sizeof 18h    offset 00h
+      int max;                     // sizeof 04h    offset 18h
 
       oSActionBlock() {}
       void InitBlock( zCParser*, int, int ) zCall( 0x0067C170 );
       int GetOwnAction( int )               zCall( 0x0067C390 );
     } oSActionBlock;
 
+    // sizeof 214h
     typedef struct oSFightAI {
     public:
-      oSActionBlock myactions[FA_MAX_SITUATIONS];
+      oSActionBlock myactions[FA_MAX_SITUATIONS]; // sizeof 214h   offset 00h
 
       oSFightAI() {}
       void Init( zCParser*, int ) zCall( 0x0067C3C0 );
       int GetOwnAction( int )     zCall( 0x0067C3F0 );
     } oCNpc::oSFightAI;
 
+    // sizeof D4h
     typedef struct oSDamageDescriptor {
     public:
-      unsigned long dwFieldsValid;
-      zCVob* pVobAttacker;
-      oCNpc* pNpcAttacker;
-      zCVob* pVobHit;
-      oCVisualFX* pFXHit;
-      oCItem* pItemWeapon;
-      unsigned long nSpellID;
-      unsigned long nSpellCat;
-      unsigned long nSpellLevel;
-      unsigned long enuModeDamage;
-      unsigned long enuModeWeapon;
-      unsigned long aryDamage[oEDamageIndex_MAX];
-      float fDamageTotal;
-      float fDamageMultiplier;
-      zVEC3 vecLocationHit;
-      zVEC3 vecDirectionFly;
-      zSTRING strVisualFX;
-      float fTimeDuration;
-      float fTimeInterval;
-      float fDamagePerInterval;
-      int bDamageDontKill;
+      unsigned long dwFieldsValid;                         // sizeof 04h    offset 00h
+      zCVob* pVobAttacker;                                 // sizeof 04h    offset 04h
+      oCNpc* pNpcAttacker;                                 // sizeof 04h    offset 08h
+      zCVob* pVobHit;                                      // sizeof 04h    offset 0Ch
+      oCVisualFX* pFXHit;                                  // sizeof 04h    offset 10h
+      oCItem* pItemWeapon;                                 // sizeof 04h    offset 14h
+      unsigned long nSpellID;                              // sizeof 04h    offset 18h
+      unsigned long nSpellCat;                             // sizeof 04h    offset 1Ch
+      unsigned long nSpellLevel;                           // sizeof 04h    offset 20h
+      unsigned long enuModeDamage;                         // sizeof 04h    offset 24h
+      unsigned long enuModeWeapon;                         // sizeof 04h    offset 28h
+      unsigned long aryDamage[oEDamageIndex_MAX];          // sizeof 20h    offset 2Ch
+      float fDamageTotal;                                  // sizeof 04h    offset 4Ch
+      float fDamageMultiplier;                             // sizeof 04h    offset 50h
+      zVEC3 vecLocationHit;                                // sizeof 0Ch    offset 54h
+      zVEC3 vecDirectionFly;                               // sizeof 0Ch    offset 60h
+      zSTRING strVisualFX;                                 // sizeof 14h    offset 6Ch
+      float fTimeDuration;                                 // sizeof 04h    offset 80h
+      float fTimeInterval;                                 // sizeof 04h    offset 84h
+      float fDamagePerInterval;                            // sizeof 04h    offset 88h
+      int bDamageDontKill;                                 // sizeof 04h    offset 8Ch
       group {
-        unsigned long bOnce          : 1;
-        unsigned long bFinished      : 1;
-        unsigned long bIsDead        : 1;
-        unsigned long bIsUnconscious : 1;
-        unsigned long lReserved      : 28;
+        unsigned long bOnce          : 1;                  // sizeof 01h    offset bit
+        unsigned long bFinished      : 1;                  // sizeof 01h    offset bit
+        unsigned long bIsDead        : 1;                  // sizeof 01h    offset bit
+        unsigned long bIsUnconscious : 1;                  // sizeof 01h    offset bit
+        unsigned long lReserved      : 28;                 // sizeof 1Ch    offset bit
       };
-      float fAzimuth;
-      float fElevation;
-      float fTimeCurrent;
-      float fDamageReal;
-      float fDamageEffective;
-      unsigned long aryDamageEffective[oEDamageIndex_MAX];
-      zCVob* pVobParticleFX;
-      zCParticleFX* pParticleFX;
-      oCVisualFX* pVisualFX;
+      float fAzimuth;                                      // sizeof 04h    offset 94h
+      float fElevation;                                    // sizeof 04h    offset 98h
+      float fTimeCurrent;                                  // sizeof 04h    offset 9Ch
+      float fDamageReal;                                   // sizeof 04h    offset A0h
+      float fDamageEffective;                              // sizeof 04h    offset A4h
+      unsigned long aryDamageEffective[oEDamageIndex_MAX]; // sizeof 20h    offset A8h
+      zCVob* pVobParticleFX;                               // sizeof 04h    offset C8h
+      zCParticleFX* pParticleFX;                           // sizeof 04h    offset CCh
+      oCVisualFX* pVisualFX;                               // sizeof 04h    offset D0h
 
       oSDamageDescriptor() {}
       void oSDamageDescriptor_OnInit( oSDamageDescriptor const& ) zCall( 0x00664250 );
@@ -470,11 +477,12 @@ namespace Gothic_II_Addon {
       oSDamageDescriptor& operator =( oSDamageDescriptor const& ) zCall( 0x00664310 );
     } oSDescDamage;
 
+    // sizeof 10h
     struct oSDirectionInfo {
-      zVEC3 checkDirection;
-      unsigned char checkForChasm       : 1;
-      unsigned char checkForSmallObject : 1;
-      unsigned char checkIfClimbable    : 1;
+      zVEC3 checkDirection;                  // sizeof 0Ch    offset 00h
+      unsigned char checkForChasm       : 1; // sizeof 01h    offset bit
+      unsigned char checkForSmallObject : 1; // sizeof 01h    offset bit
+      unsigned char checkIfClimbable    : 1; // sizeof 01h    offset bit
 
       oSDirectionInfo() {}
 
@@ -482,36 +490,37 @@ namespace Gothic_II_Addon {
       #include "oCNpc_oSDirectionInfo.inl"
     };
 
+    // sizeof 9Ch
     struct oTRobustTrace {
       group {
-        unsigned char stand                : 1;
-        unsigned char dirChoosed           : 1;
-        unsigned char exactPosition        : 1;
-        unsigned char targetReached        : 1;
-        unsigned char standIfTargetReached : 1;
-        unsigned char waiting              : 1;
-        unsigned char isObstVobSmall       : 1;
-        unsigned char targetVisible        : 1;
-        unsigned char useChasmChecks       : 1;
+        unsigned char stand                : 1; // sizeof 01h    offset bit
+        unsigned char dirChoosed           : 1; // sizeof 01h    offset bit
+        unsigned char exactPosition        : 1; // sizeof 01h    offset bit
+        unsigned char targetReached        : 1; // sizeof 01h    offset bit
+        unsigned char standIfTargetReached : 1; // sizeof 01h    offset bit
+        unsigned char waiting              : 1; // sizeof 01h    offset bit
+        unsigned char isObstVobSmall       : 1; // sizeof 01h    offset bit
+        unsigned char targetVisible        : 1; // sizeof 01h    offset bit
+        unsigned char useChasmChecks       : 1; // sizeof 01h    offset bit
       };
-      zVEC3 targetPos;
-      zCVob* targetVob;
-      zCVob* obstVob;
-      float targetDist;
-      float lastTargetDist;
-      float maxTargetDist;
-      float dirTurn;
-      float timer;
-      zVEC3 dirFirst;
-      float dirLastAngle;
-      zCArray<oSDirectionInfo*> lastDirections;
-      int frameCtr;
-      zVEC3 targetPosArray[5];
-      int targetPosCounter;
-      int targetPosIndex;
-      float checkVisibilityTime;
-      float positionUpdateTime;
-      float failurePossibility;
+      zVEC3 targetPos;                          // sizeof 0Ch    offset 04h
+      zCVob* targetVob;                         // sizeof 04h    offset 10h
+      zCVob* obstVob;                           // sizeof 04h    offset 14h
+      float targetDist;                         // sizeof 04h    offset 18h
+      float lastTargetDist;                     // sizeof 04h    offset 1Ch
+      float maxTargetDist;                      // sizeof 04h    offset 20h
+      float dirTurn;                            // sizeof 04h    offset 24h
+      float timer;                              // sizeof 04h    offset 28h
+      zVEC3 dirFirst;                           // sizeof 0Ch    offset 2Ch
+      float dirLastAngle;                       // sizeof 04h    offset 38h
+      zCArray<oSDirectionInfo*> lastDirections; // sizeof 0Ch    offset 3Ch
+      int frameCtr;                             // sizeof 04h    offset 48h
+      zVEC3 targetPosArray[5];                  // sizeof 3Ch    offset 4Ch
+      int targetPosCounter;                     // sizeof 04h    offset 88h
+      int targetPosIndex;                       // sizeof 04h    offset 8Ch
+      float checkVisibilityTime;                // sizeof 04h    offset 90h
+      float positionUpdateTime;                 // sizeof 04h    offset 94h
+      float failurePossibility;                 // sizeof 04h    offset 98h
 
       oTRobustTrace() {}
       ~oTRobustTrace() zCall( 0x0072E3D0 );
@@ -520,12 +529,13 @@ namespace Gothic_II_Addon {
       #include "oCNpc_oTRobustTrace.inl"
     };
 
+    // sizeof 04h
     class TActiveInfo {
     public:
-      int modified           : 1;
-      int putTorchBackInHand : 1;
-      int changeTorchAni     : 1;
-      int changeTorchAniTo   : 1;
+      int modified           : 1; // sizeof 01h    offset bit
+      int putTorchBackInHand : 1; // sizeof 01h    offset bit
+      int changeTorchAni     : 1; // sizeof 01h    offset bit
+      int changeTorchAniTo   : 1; // sizeof 01h    offset bit
 
       TActiveInfo() {}
       void TActiveInfo_OnInit( oCNpc const* ) zCall( 0x0072C960 );
@@ -536,10 +546,11 @@ namespace Gothic_II_Addon {
       #include "oCNpc_TActiveInfo.inl"
     };
 
+    // sizeof 18h
     class oCNpcTimedOverlay {
     public:
-      zSTRING mdsOverlayName;
-      float timer;
+      zSTRING mdsOverlayName; // sizeof 14h    offset 00h
+      float timer;            // sizeof 04h    offset 14h
 
       oCNpcTimedOverlay() {}
       zSTRING GetMdsName() zCall( 0x0073E8D0 );
@@ -551,170 +562,170 @@ namespace Gothic_II_Addon {
     };
 
     group {
-      int idx;
-      zSTRING name[5];
-      zSTRING slot;
-      zSTRING effect;
-      int npcType;
-      int variousFlags;
-      int attribute[NPC_ATR_MAX];
-      int hitChance[NPC_HITCHANCE_MAX];
-      int protection[oEDamageIndex_MAX];
-      int damage[oEDamageIndex_MAX];
-      int damagetype;
-      int guild;
-      int level;
-      int mission[NPC_MIS_MAX];
-      int fighttactic;
-      int fmode;
-      int voice;
-      int voicePitch;
-      int mass;
-      int daily_routine;
-      int startAIState;
-      zSTRING spawnPoint;
-      int spawnDelay;
-      int senses;
-      int senses_range;
-      int aiscriptvars[100];
-      zSTRING wpname;
-      unsigned long experience_points;
-      unsigned long experience_points_next_level;
-      unsigned long learn_points;
-      int bodyStateInterruptableOverride;
-      int noFocus;
-      int parserEnd;
+      int idx;                                    // sizeof 04h    offset 120h
+      zSTRING name[5];                            // sizeof 64h    offset 124h
+      zSTRING slot;                               // sizeof 14h    offset 188h
+      zSTRING effect;                             // sizeof 14h    offset 19Ch
+      int npcType;                                // sizeof 04h    offset 1B0h
+      int variousFlags;                           // sizeof 04h    offset 1B4h
+      int attribute[NPC_ATR_MAX];                 // sizeof 20h    offset 1B8h
+      int hitChance[NPC_HITCHANCE_MAX];           // sizeof 14h    offset 1D8h
+      int protection[oEDamageIndex_MAX];          // sizeof 20h    offset 1ECh
+      int damage[oEDamageIndex_MAX];              // sizeof 20h    offset 20Ch
+      int damagetype;                             // sizeof 04h    offset 22Ch
+      int guild;                                  // sizeof 04h    offset 230h
+      int level;                                  // sizeof 04h    offset 234h
+      int mission[NPC_MIS_MAX];                   // sizeof 14h    offset 238h
+      int fighttactic;                            // sizeof 04h    offset 24Ch
+      int fmode;                                  // sizeof 04h    offset 250h
+      int voice;                                  // sizeof 04h    offset 254h
+      int voicePitch;                             // sizeof 04h    offset 258h
+      int mass;                                   // sizeof 04h    offset 25Ch
+      int daily_routine;                          // sizeof 04h    offset 260h
+      int startAIState;                           // sizeof 04h    offset 264h
+      zSTRING spawnPoint;                         // sizeof 14h    offset 268h
+      int spawnDelay;                             // sizeof 04h    offset 27Ch
+      int senses;                                 // sizeof 04h    offset 280h
+      int senses_range;                           // sizeof 04h    offset 284h
+      int aiscriptvars[100];                      // sizeof 190h   offset 288h
+      zSTRING wpname;                             // sizeof 14h    offset 418h
+      unsigned long experience_points;            // sizeof 04h    offset 42Ch
+      unsigned long experience_points_next_level; // sizeof 04h    offset 430h
+      unsigned long learn_points;                 // sizeof 04h    offset 434h
+      int bodyStateInterruptableOverride;         // sizeof 04h    offset 438h
+      int noFocus;                                // sizeof 04h    offset 43Ch
+      int parserEnd;                              // sizeof 04h    offset 440h
     };
-    int bloodEnabled;
-    int bloodDistance;
-    int bloodAmount;
-    int bloodFlow;
-    zSTRING bloodEmitter;
-    zSTRING bloodTexture;
-    int didHit;
-    int didParade;
-    int didShoot;
-    int hasLockedEnemy;
-    int isDefending;
-    int wasAiming;
-    TFAction lastAction;
-    oCNpc* enemy;
-    float speedTurn;
-    int foundFleePoint;
-    int reachedFleePoint;
-    zVEC3 vecFlee;
-    zVEC3 posFlee;
-    zCWaypoint* waypointFlee;
-    oTRobustTrace rbt;
-    zCList<oCNpcTimedOverlay> timedOverlays;
-    zCArray<oCNpcTalent*> talents;
-    int spellMana;
-    oCMagFrontier magFrontier;
-    oCNpc_States state;
-    oCNpcInventory inventory2;
-    oCItemContainer* trader;
-    oCNpc* tradeNpc;
-    float rangeToPlayer;
-    zCArray<int> listOfVoiceHandles;
-    int voiceIndex;
-    zCArray<oCVisualFX*> effectList;
-    int showaidebug          : 1;
-    int showNews             : 1;
-    int csAllowedAsRole      : 1;
-    int isSummoned           : 1;
-    int respawnOn            : 1;
-    int movlock              : 1;
-    int drunk                : 1;
-    int mad                  : 1;
-    int overlay_wounded      : 1;
-    int inOnDamage           : 1;
-    int autoremoveweapon     : 1;
-    int openinventory        : 1;
-    int askroutine           : 1;
-    int spawnInRange         : 1;
-    int body_TexVarNr        : 16;
-    int body_TexColorNr      : 16;
-    int head_TexVarNr        : 16;
-    int teeth_TexVarNr       : 16;
-    int guildTrue            : 8;
-    int drunk_heal           : 8;
-    int mad_heal             : 8;
-    int spells               : 8;
-    int bodyState            : 19;
-    int m_bAniMessageRunning : 1;
-    int instanz;
-    zSTRING mds_name;
-    zSTRING body_visualName;
-    zSTRING head_visualName;
-    zVEC3 model_scale;
-    float model_fatness;
-    int namenr;
-    float hpHeal;
-    float manaHeal;
-    float swimtime;
-    float divetime;
-    float divectr;
-    zCVob* fireVob;
-    int fireDamage;
-    float fireDamageTimer;
-    int attitude;
-    int tmp_attitude;
-    float attTimer;
-    int knowsPlayer;
-    TNpcPerc percList[NPC_PERC_MAX];
-    int percActive;
-    float percActiveTime;
-    float percActiveDelta;
-    int overrideFallDownHeight;
-    float fallDownHeight;
-    int fallDownDamage;
-    oCMag_Book* mag_book;
-    zCList<oCSpell> activeSpells;
-    int lastHitSpellID;
-    int lastHitSpellCat;
-    zCArray<zSTRING> activeOverlays;
-    oCAskBox* askbox;
-    int askYes;
-    int askNo;
-    float canTalk;
-    oCNpc* talkOther;
-    oCInfo* info;
-    oCNews* news;
-    oCMission* curMission;
-    oCNewsMemory knownNews;
-    zCVob* carry_vob;
-    oCMobInter* interactMob;
-    oCItem* interactItem;
-    int interactItemCurrentState;
-    int interactItemTargetState;
-    int script_aiprio;
-    int old_script_state;
-    oCAIHuman* human_ai;
-    oCAniCtrl_Human* anictrl;
-    zCRoute* route;
-    float damageMul;
-    oCNpcMessage* csg;
-    oCNpcMessage* lastLookMsg;
-    oCNpcMessage* lastPointMsg;
-    zCArray<zCVob*> vobList;
-    float vobcheck_time;
-    float pickvobdelay;
-    zCVob* focus_vob;
-    zCArray<TNpcSlot*> invSlot;
-    zCArray<TNpcSlot*> tmpSlotList;
-    float fadeAwayTime;
-    float respawnTime;
-    float selfDist;
-    int fightRangeBase;
-    int fightRangeFist;
-    int fightRangeG;
-    float fight_waitTime;
-    int fight_waitForAniEnd;
-    float fight_lastStrafeFrame;
-    int soundType;
-    zCVob* soundVob;
-    zVEC3 soundPosition;
-    zCPlayerGroup* playerGroup;
+    int bloodEnabled;                             // sizeof 04h    offset 444h
+    int bloodDistance;                            // sizeof 04h    offset 448h
+    int bloodAmount;                              // sizeof 04h    offset 44Ch
+    int bloodFlow;                                // sizeof 04h    offset 450h
+    zSTRING bloodEmitter;                         // sizeof 14h    offset 454h
+    zSTRING bloodTexture;                         // sizeof 14h    offset 468h
+    int didHit;                                   // sizeof 04h    offset 47Ch
+    int didParade;                                // sizeof 04h    offset 480h
+    int didShoot;                                 // sizeof 04h    offset 484h
+    int hasLockedEnemy;                           // sizeof 04h    offset 488h
+    int isDefending;                              // sizeof 04h    offset 48Ch
+    int wasAiming;                                // sizeof 04h    offset 490h
+    TFAction lastAction;                          // sizeof 04h    offset 494h
+    oCNpc* enemy;                                 // sizeof 04h    offset 498h
+    float speedTurn;                              // sizeof 04h    offset 49Ch
+    int foundFleePoint;                           // sizeof 04h    offset 4A0h
+    int reachedFleePoint;                         // sizeof 04h    offset 4A4h
+    zVEC3 vecFlee;                                // sizeof 0Ch    offset 4A8h
+    zVEC3 posFlee;                                // sizeof 0Ch    offset 4B4h
+    zCWaypoint* waypointFlee;                     // sizeof 04h    offset 4C0h
+    oTRobustTrace rbt;                            // sizeof 9Ch    offset 4C4h
+    zCList<oCNpcTimedOverlay> timedOverlays;      // sizeof 08h    offset 560h
+    zCArray<oCNpcTalent*> talents;                // sizeof 0Ch    offset 568h
+    int spellMana;                                // sizeof 04h    offset 574h
+    oCMagFrontier magFrontier;                    // sizeof 10h    offset 578h
+    oCNpc_States state;                           // sizeof E0h    offset 588h
+    oCNpcInventory inventory2;                    // sizeof CCh    offset 668h
+    oCItemContainer* trader;                      // sizeof 04h    offset 734h
+    oCNpc* tradeNpc;                              // sizeof 04h    offset 738h
+    float rangeToPlayer;                          // sizeof 04h    offset 73Ch
+    zCArray<int> listOfVoiceHandles;              // sizeof 0Ch    offset 740h
+    int voiceIndex;                               // sizeof 04h    offset 74Ch
+    zCArray<oCVisualFX*> effectList;              // sizeof 0Ch    offset 750h
+    int showaidebug          : 1;                 // sizeof 01h    offset bit
+    int showNews             : 1;                 // sizeof 01h    offset bit
+    int csAllowedAsRole      : 1;                 // sizeof 01h    offset bit
+    int isSummoned           : 1;                 // sizeof 01h    offset bit
+    int respawnOn            : 1;                 // sizeof 01h    offset bit
+    int movlock              : 1;                 // sizeof 01h    offset bit
+    int drunk                : 1;                 // sizeof 01h    offset bit
+    int mad                  : 1;                 // sizeof 01h    offset bit
+    int overlay_wounded      : 1;                 // sizeof 01h    offset bit
+    int inOnDamage           : 1;                 // sizeof 01h    offset bit
+    int autoremoveweapon     : 1;                 // sizeof 01h    offset bit
+    int openinventory        : 1;                 // sizeof 01h    offset bit
+    int askroutine           : 1;                 // sizeof 01h    offset bit
+    int spawnInRange         : 1;                 // sizeof 01h    offset bit
+    int body_TexVarNr        : 16;                // sizeof 10h    offset bit
+    int body_TexColorNr      : 16;                // sizeof 10h    offset bit
+    int head_TexVarNr        : 16;                // sizeof 10h    offset bit
+    int teeth_TexVarNr       : 16;                // sizeof 10h    offset bit
+    int guildTrue            : 8;                 // sizeof 08h    offset bit
+    int drunk_heal           : 8;                 // sizeof 08h    offset bit
+    int mad_heal             : 8;                 // sizeof 08h    offset bit
+    int spells               : 8;                 // sizeof 08h    offset bit
+    int bodyState            : 19;                // sizeof 13h    offset bit
+    int m_bAniMessageRunning : 1;                 // sizeof 01h    offset bit
+    int instanz;                                  // sizeof 04h    offset 770h
+    zSTRING mds_name;                             // sizeof 14h    offset 774h
+    zSTRING body_visualName;                      // sizeof 14h    offset 788h
+    zSTRING head_visualName;                      // sizeof 14h    offset 79Ch
+    zVEC3 model_scale;                            // sizeof 0Ch    offset 7B0h
+    float model_fatness;                          // sizeof 04h    offset 7BCh
+    int namenr;                                   // sizeof 04h    offset 7C0h
+    float hpHeal;                                 // sizeof 04h    offset 7C4h
+    float manaHeal;                               // sizeof 04h    offset 7C8h
+    float swimtime;                               // sizeof 04h    offset 7CCh
+    float divetime;                               // sizeof 04h    offset 7D0h
+    float divectr;                                // sizeof 04h    offset 7D4h
+    zCVob* fireVob;                               // sizeof 04h    offset 7D8h
+    int fireDamage;                               // sizeof 04h    offset 7DCh
+    float fireDamageTimer;                        // sizeof 04h    offset 7E0h
+    int attitude;                                 // sizeof 04h    offset 7E4h
+    int tmp_attitude;                             // sizeof 04h    offset 7E8h
+    float attTimer;                               // sizeof 04h    offset 7ECh
+    int knowsPlayer;                              // sizeof 04h    offset 7F0h
+    TNpcPerc percList[NPC_PERC_MAX];              // sizeof 108h   offset 7F4h
+    int percActive;                               // sizeof 04h    offset 8FCh
+    float percActiveTime;                         // sizeof 04h    offset 900h
+    float percActiveDelta;                        // sizeof 04h    offset 904h
+    int overrideFallDownHeight;                   // sizeof 04h    offset 908h
+    float fallDownHeight;                         // sizeof 04h    offset 90Ch
+    int fallDownDamage;                           // sizeof 04h    offset 910h
+    oCMag_Book* mag_book;                         // sizeof 04h    offset 914h
+    zCList<oCSpell> activeSpells;                 // sizeof 08h    offset 918h
+    int lastHitSpellID;                           // sizeof 04h    offset 920h
+    int lastHitSpellCat;                          // sizeof 04h    offset 924h
+    zCArray<zSTRING> activeOverlays;              // sizeof 0Ch    offset 928h
+    oCAskBox* askbox;                             // sizeof 04h    offset 934h
+    int askYes;                                   // sizeof 04h    offset 938h
+    int askNo;                                    // sizeof 04h    offset 93Ch
+    float canTalk;                                // sizeof 04h    offset 940h
+    oCNpc* talkOther;                             // sizeof 04h    offset 944h
+    oCInfo* info;                                 // sizeof 04h    offset 948h
+    oCNews* news;                                 // sizeof 04h    offset 94Ch
+    oCMission* curMission;                        // sizeof 04h    offset 950h
+    oCNewsMemory knownNews;                       // sizeof 0Ch    offset 954h
+    zCVob* carry_vob;                             // sizeof 04h    offset 960h
+    oCMobInter* interactMob;                      // sizeof 04h    offset 964h
+    oCItem* interactItem;                         // sizeof 04h    offset 968h
+    int interactItemCurrentState;                 // sizeof 04h    offset 96Ch
+    int interactItemTargetState;                  // sizeof 04h    offset 970h
+    int script_aiprio;                            // sizeof 04h    offset 974h
+    int old_script_state;                         // sizeof 04h    offset 978h
+    oCAIHuman* human_ai;                          // sizeof 04h    offset 97Ch
+    oCAniCtrl_Human* anictrl;                     // sizeof 04h    offset 980h
+    zCRoute* route;                               // sizeof 04h    offset 984h
+    float damageMul;                              // sizeof 04h    offset 988h
+    oCNpcMessage* csg;                            // sizeof 04h    offset 98Ch
+    oCNpcMessage* lastLookMsg;                    // sizeof 04h    offset 990h
+    oCNpcMessage* lastPointMsg;                   // sizeof 04h    offset 994h
+    zCArray<zCVob*> vobList;                      // sizeof 0Ch    offset 998h
+    float vobcheck_time;                          // sizeof 04h    offset 9A4h
+    float pickvobdelay;                           // sizeof 04h    offset 9A8h
+    zCVob* focus_vob;                             // sizeof 04h    offset 9ACh
+    zCArray<TNpcSlot*> invSlot;                   // sizeof 0Ch    offset 9B0h
+    zCArray<TNpcSlot*> tmpSlotList;               // sizeof 0Ch    offset 9BCh
+    float fadeAwayTime;                           // sizeof 04h    offset 9C8h
+    float respawnTime;                            // sizeof 04h    offset 9CCh
+    float selfDist;                               // sizeof 04h    offset 9D0h
+    int fightRangeBase;                           // sizeof 04h    offset 9D4h
+    int fightRangeFist;                           // sizeof 04h    offset 9D8h
+    int fightRangeG;                              // sizeof 04h    offset 9DCh
+    float fight_waitTime;                         // sizeof 04h    offset 9E0h
+    int fight_waitForAniEnd;                      // sizeof 04h    offset 9E4h
+    float fight_lastStrafeFrame;                  // sizeof 04h    offset 9E8h
+    int soundType;                                // sizeof 04h    offset 9ECh
+    zCVob* soundVob;                              // sizeof 04h    offset 9F0h
+    zVEC3 soundPosition;                          // sizeof 0Ch    offset 9F4h
+    zCPlayerGroup* playerGroup;                   // sizeof 04h    offset A00h
 
     void oCNpc_OnInit()                                                                          zCall( 0x0082DF20 );
     void InitDamage()                                                                            zCall( 0x00664490 );

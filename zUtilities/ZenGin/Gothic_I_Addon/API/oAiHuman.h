@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OAI_HUMAN_H__VER1__
 #define __OAI_HUMAN_H__VER1__
@@ -10,11 +10,12 @@
 
 namespace Gothic_I_Addon {
 
+  // sizeof 44h
   class oCAICamera : public zCAIBase {
   public:
     zCLASS_DECLARATION( oCAICamera )
 
-    zCTimer localTimer;
+    zCTimer localTimer; // sizeof 20h    offset 24h
 
     void oCAICamera_OnInit()                                            zCall( 0x00639450 );
     oCAICamera()                                                        zInit( oCAICamera_OnInit() );
@@ -28,24 +29,25 @@ namespace Gothic_I_Addon {
     #include "oCAICamera.inl"
   };
 
+  // sizeof 120Ch
   class oCAIHuman : public oCAniCtrl_Human {
   public:
     zCLASS_DECLARATION( oCAIHuman )
 
-    zCList<zCVob> ignoreVobList;
-    zCAICamera* aiCam;
-    int forcejump              : 1;
-    int lookedAround           : 1;
-    int sprintActive           : 1;
-    int crawlActive            : 1;
-    int showai                 : 1;
-    int startObserveIntruder   : 1;
-    int dontKnowAniPlayed      : 1;
-    int spellReleased          : 1;
-    int spellCastedLastFrame   : 1;
-    int eyeBlinkActivated      : 1;
-    int hasStartedConversation : 1;
-    float createFlyDamage;
+    zCList<zCVob> ignoreVobList;    // sizeof 08h    offset 11F8h
+    zCAICamera* aiCam;              // sizeof 04h    offset 1200h
+    int forcejump              : 1; // sizeof 01h    offset bit
+    int lookedAround           : 1; // sizeof 01h    offset bit
+    int sprintActive           : 1; // sizeof 01h    offset bit
+    int crawlActive            : 1; // sizeof 01h    offset bit
+    int showai                 : 1; // sizeof 01h    offset bit
+    int startObserveIntruder   : 1; // sizeof 01h    offset bit
+    int dontKnowAniPlayed      : 1; // sizeof 01h    offset bit
+    int spellReleased          : 1; // sizeof 01h    offset bit
+    int spellCastedLastFrame   : 1; // sizeof 01h    offset bit
+    int eyeBlinkActivated      : 1; // sizeof 01h    offset bit
+    int hasStartedConversation : 1; // sizeof 01h    offset bit
+    float createFlyDamage;          // sizeof 04h    offset 1208h
 
     void oCAIHuman_OnInit()                                             zCall( 0x00631FD0 );
     int CheckActiveSpells()                                             zCall( 0x00474650 );
@@ -116,6 +118,7 @@ namespace Gothic_I_Addon {
     #include "oCAIHuman.inl"
   };
 
+  // sizeof 24h
   class oCAIHuman_Stand : public zCAIBase {
   public:
     zCLASS_DECLARATION( oCAIHuman_Stand )

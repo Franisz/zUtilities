@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZAI_CAMERA__CORE_H__VER2__
 #define __ZAI_CAMERA__CORE_H__VER2__
@@ -59,14 +59,16 @@ namespace Gothic_II_Classic {
     zPATHSEARCH_USE_DYNCOLLISION            = 1 << 11
   };
 
+  // sizeof 24h
   struct zSEvasionSearchDesc {
+    // sizeof 58h
     struct zSEvasionSearchOptions {
-      zVEC3 scSign;
-      zVEC3 scQuality;
-      zVEC3 scStart;
-      zVEC3 scEnd;
-      zSTRING scSequence;
-      zSTRING scName;
+      zVEC3 scSign;       // sizeof 0Ch    offset 00h
+      zVEC3 scQuality;    // sizeof 0Ch    offset 0Ch
+      zVEC3 scStart;      // sizeof 0Ch    offset 18h
+      zVEC3 scEnd;        // sizeof 0Ch    offset 24h
+      zSTRING scSequence; // sizeof 14h    offset 30h
+      zSTRING scName;     // sizeof 14h    offset 44h
 
       void zSEvasionSearchOptions_OnInit()                                zCall( 0x004A8B30 );
       ~zSEvasionSearchOptions()                                           zCall( 0x004A5010 );
@@ -77,9 +79,9 @@ namespace Gothic_II_Classic {
       #include "zSEvasionSearchDesc_zSEvasionSearchOptions.inl"
     };
 
-    bool32(* searchFunc )( const zSEvasionSearchDesc& );
-    zSTRING searchName;
-    zCArray<zSEvasionSearchOptions> sphereSearchList;
+    bool32(* searchFunc )( const zSEvasionSearchDesc& ); // sizeof 04h    offset 00h
+    zSTRING searchName;                                  // sizeof 14h    offset 04h
+    zCArray<zSEvasionSearchOptions> sphereSearchList;    // sizeof 0Ch    offset 18h
 
     void zSEvasionSearchDesc_OnInit()                             zCall( 0x004A69D0 );
     zSEvasionSearchDesc()                                         zInit( zSEvasionSearchDesc_OnInit() );
@@ -90,19 +92,20 @@ namespace Gothic_II_Classic {
     #include "zSEvasionSearchDesc.inl"
   };
 
+  // sizeof 60h
   struct zSPathSearchResult {
-    int foundEvasion;
-    zVEC3 p1;
-    zVEC3 p2;
-    zCQuat r1;
-    zCQuat r2;
-    zTPathLerpMode bestLerpMode;
-    int lerpModes;
-    zCArray<zCPositionKey*>resPath;
-    float avgScore;
-    float bestScore;
-    float veloTrans;
-    float veloRot;
+    int foundEvasion;               // sizeof 04h    offset 00h
+    zVEC3 p1;                       // sizeof 0Ch    offset 04h
+    zVEC3 p2;                       // sizeof 0Ch    offset 10h
+    zCQuat r1;                      // sizeof 10h    offset 1Ch
+    zCQuat r2;                      // sizeof 10h    offset 2Ch
+    zTPathLerpMode bestLerpMode;    // sizeof 04h    offset 3Ch
+    int lerpModes;                  // sizeof 04h    offset 40h
+    zCArray<zCPositionKey*>resPath; // sizeof 0Ch    offset 44h
+    float avgScore;                 // sizeof 04h    offset 50h
+    float bestScore;                // sizeof 04h    offset 54h
+    float veloTrans;                // sizeof 04h    offset 58h
+    float veloRot;                  // sizeof 04h    offset 5Ch
 
     void zSPathSearchResult_OnInit() zCall( 0x004A4830 );
     ~zSPathSearchResult()            zCall( 0x004A1BE0 );
@@ -112,22 +115,23 @@ namespace Gothic_II_Classic {
     #include "zSPathSearchResult.inl"
   };
 
+  // sizeof 98h
   struct zSPathSearchState {
-    float startAzi;
-    float startElev;
-    float startRange;
-    float endAzi;
-    float endElev;
-    float endRange;
-    float bestAzi;
-    float bestElev;
-    float bestRange;
-    zMAT4 trafoCamToWorld;
-    zTPathLerpMode bestLerpMode;
-    int lerpModes;
-    float totalScore;
-    zSTRING sphereSearchName;
-    zSTRING sphereSearchSegment;
+    float startAzi;              // sizeof 04h    offset 00h
+    float startElev;             // sizeof 04h    offset 04h
+    float startRange;            // sizeof 04h    offset 08h
+    float endAzi;                // sizeof 04h    offset 0Ch
+    float endElev;               // sizeof 04h    offset 10h
+    float endRange;              // sizeof 04h    offset 14h
+    float bestAzi;               // sizeof 04h    offset 18h
+    float bestElev;              // sizeof 04h    offset 1Ch
+    float bestRange;             // sizeof 04h    offset 20h
+    zMAT4 trafoCamToWorld;       // sizeof 40h    offset 24h
+    zTPathLerpMode bestLerpMode; // sizeof 04h    offset 64h
+    int lerpModes;               // sizeof 04h    offset 68h
+    float totalScore;            // sizeof 04h    offset 6Ch
+    zSTRING sphereSearchName;    // sizeof 14h    offset 70h
+    zSTRING sphereSearchSegment; // sizeof 14h    offset 84h
 
     zSPathSearchState() {}
     ~zSPathSearchState() zCall( 0x004A3560 );
@@ -136,19 +140,20 @@ namespace Gothic_II_Classic {
     #include "zSPathSearchState.inl"
   };
 
+  // sizeof 74h
   struct zSPathSearchState_Internal {
-    float maxRange;
-    zVEC3 foundPos;
-    zMAT4 trafoCamToWorld;
-    zTPathLerpMode bestLerpMode;
-    float scoreLerpMode;
-    float scoreDistToIdealPos;
-    float scoreFoundNumNpcs;
-    float scoreFoundNumBBoxes;
-    float scoreFoundNumTargets;
-    float scorePlayerVisibility;
-    float scoreDistToLastEvasion;
-    float totalScore;
+    float maxRange;               // sizeof 04h    offset 00h
+    zVEC3 foundPos;               // sizeof 0Ch    offset 04h
+    zMAT4 trafoCamToWorld;        // sizeof 40h    offset 10h
+    zTPathLerpMode bestLerpMode;  // sizeof 04h    offset 50h
+    float scoreLerpMode;          // sizeof 04h    offset 54h
+    float scoreDistToIdealPos;    // sizeof 04h    offset 58h
+    float scoreFoundNumNpcs;      // sizeof 04h    offset 5Ch
+    float scoreFoundNumBBoxes;    // sizeof 04h    offset 60h
+    float scoreFoundNumTargets;   // sizeof 04h    offset 64h
+    float scorePlayerVisibility;  // sizeof 04h    offset 68h
+    float scoreDistToLastEvasion; // sizeof 04h    offset 6Ch
+    float totalScore;             // sizeof 04h    offset 70h
 
     void zSPathSearchState_Internal_OnInit() zCall( 0x004A4500 );
     zSPathSearchState_Internal()             zInit( zSPathSearchState_Internal_OnInit() );
@@ -157,11 +162,13 @@ namespace Gothic_II_Classic {
     #include "zSPathSearchState_Internal.inl"
   };
 
+  // sizeof 10h
   class zCSphereCoordsCache {
   public:
+    // sizeof 78h
     struct zSRangeSphereCoord {
-      float range;
-      zSPathSearchState_Internal searchState;
+      float range;                            // sizeof 04h    offset 00h
+      zSPathSearchState_Internal searchState; // sizeof 74h    offset 04h
 
       zSRangeSphereCoord() {}
 
@@ -169,10 +176,11 @@ namespace Gothic_II_Classic {
       #include "zCSphereCoordsCache_zSRangeSphereCoord.inl"
     };
 
+    // sizeof 18h
     struct zSElevSphereCoord {
-      float elev;
-      float maxRange;
-      zCArraySort<zSRangeSphereCoord*> rangeCoords;
+      float elev;                                   // sizeof 04h    offset 00h
+      float maxRange;                               // sizeof 04h    offset 04h
+      zCArraySort<zSRangeSphereCoord*> rangeCoords; // sizeof 10h    offset 08h
 
       zSElevSphereCoord() {}
       ~zSElevSphereCoord() zCall( 0x004A44E0 );
@@ -181,9 +189,10 @@ namespace Gothic_II_Classic {
       #include "zCSphereCoordsCache_zSElevSphereCoord.inl"
     };
 
+    // sizeof 14h
     struct zSAziSphereCoord {
-      float azi;
-      zCArraySort<zSElevSphereCoord*> elevCoords;
+      float azi;                                  // sizeof 04h    offset 00h
+      zCArraySort<zSElevSphereCoord*> elevCoords; // sizeof 10h    offset 04h
 
       zSAziSphereCoord() {}
       ~zSAziSphereCoord() zCall( 0x004A44C0 );
@@ -192,7 +201,7 @@ namespace Gothic_II_Classic {
       #include "zCSphereCoordsCache_zSAziSphereCoord.inl"
     };
 
-    zCArraySort<zSAziSphereCoord*> aziCoords;
+    zCArraySort<zSAziSphereCoord*> aziCoords; // sizeof 10h    offset 00h
 
     void zCSphereCoordsCache_OnInit()                                                                zCall( 0x004A4660 );
     int GetSphereCoordLazy( float const&, float const&, float const&, zSPathSearchState_Internal*& ) zCall( 0x004A3760 );
@@ -205,21 +214,23 @@ namespace Gothic_II_Classic {
     #include "zCSphereCoordsCache.inl"
   };
 
+  // sizeof 214h
   class zCPathSearch {
   public:
+    // sizeof 30h
     struct zSPathSearchOptions {
-      int searchFlags;
-      zTPoseFailReason poseFailReason;
-      zTPathLerpMode minLerpMode;
-      float bestScore;
-      float minScore;
-      float startAzi;
-      float startElev;
-      float startRange;
-      float endAzi;
-      float endElev;
-      float endRange;
-      float quality;
+      int searchFlags;                 // sizeof 04h    offset 00h
+      zTPoseFailReason poseFailReason; // sizeof 04h    offset 04h
+      zTPathLerpMode minLerpMode;      // sizeof 04h    offset 08h
+      float bestScore;                 // sizeof 04h    offset 0Ch
+      float minScore;                  // sizeof 04h    offset 10h
+      float startAzi;                  // sizeof 04h    offset 14h
+      float startElev;                 // sizeof 04h    offset 18h
+      float startRange;                // sizeof 04h    offset 1Ch
+      float endAzi;                    // sizeof 04h    offset 20h
+      float endElev;                   // sizeof 04h    offset 24h
+      float endRange;                  // sizeof 04h    offset 28h
+      float quality;                   // sizeof 04h    offset 2Ch
 
       zSPathSearchOptions() {}
 
@@ -227,24 +238,28 @@ namespace Gothic_II_Classic {
       #include "zCPathSearch_zSPathSearchOptions.inl"
     };
 
-    zSPathSearchState bestSearchState;
-    zSPathSearchState lastSearchState;
-    int ignoreSearchFlags;
-    zCAICamera* camai;
-    zCVob* camVob;
-    zCVob* target;
-    zCWorld* world;
-    int collisionEnabled;
-    zSPathSearchOptions searchOptions;
-    zSPathSearchResult evasionSearchReport;
-    zCMovementTracker* moveTracker;
-    zCSphereCoordsCache searchCache;
-    zVEC3 lastTriedPosition;
-    zTBSphere3D POISphere;
-    zCArray<bool32(* * )( const zSEvasionSearchDesc& )> searchFuncs;
+    zSPathSearchState bestSearchState;                               // sizeof 98h    offset 00h
+    zSPathSearchState lastSearchState;                               // sizeof 98h    offset 98h
+    int ignoreSearchFlags;                                           // sizeof 04h    offset 130h
+    zCAICamera* camai;                                               // sizeof 04h    offset 134h
+    zCVob* camVob;                                                   // sizeof 04h    offset 138h
+    zCVob* target;                                                   // sizeof 04h    offset 13Ch
+    zCWorld* world;                                                  // sizeof 04h    offset 140h
+    int collisionEnabled;                                            // sizeof 04h    offset 144h
+    zSPathSearchOptions searchOptions;                               // sizeof 30h    offset 148h
+    zSPathSearchResult evasionSearchReport;                          // sizeof 60h    offset 178h
+    zCMovementTracker* moveTracker;                                  // sizeof 04h    offset 1D8h
+    zCSphereCoordsCache searchCache;                                 // sizeof 10h    offset 1DCh
+    zVEC3 lastTriedPosition;                                         // sizeof 0Ch    offset 1ECh
+    zTBSphere3D POISphere;                                           // sizeof 10h    offset 1F8h
+    zCArray<bool32(* * )( const zSEvasionSearchDesc& )> searchFuncs; // sizeof 0Ch    offset 208h
 
     void zCPathSearch_OnInit()                                                       zCall( 0x004A3380 );
+
+  private:
     zCPathSearch()                                                                   zInit( zCPathSearch_OnInit() );
+
+  public:
     void CamVobChanged()                                                             zCall( 0x004A3630 );
     void TargetChanged()                                                             zCall( 0x004A3730 );
     void SetAICamera( zCAICamera* )                                                  zCall( 0x004A3750 );

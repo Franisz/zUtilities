@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIEW_STATUSBAR_H__VER1__
 #define __OVIEW_STATUSBAR_H__VER1__
@@ -7,16 +7,17 @@
 
 namespace Gothic_I_Addon {
 
+  // sizeof 174h
   class oCViewStatusBar : public zCViewStatusBar {
   public:
-    float scale;
-    zCView* range_bar;
-    zCView* preview_bar;
-    zCView* value_bar;
-    zSTRING texView;
-    zSTRING texRange;
-    zSTRING texPreview;
-    zSTRING texValue;
+    float scale;         // sizeof 04h    offset 114h
+    zCView* range_bar;   // sizeof 04h    offset 118h
+    zCView* preview_bar; // sizeof 04h    offset 11Ch
+    zCView* value_bar;   // sizeof 04h    offset 120h
+    zSTRING texView;     // sizeof 14h    offset 124h
+    zSTRING texRange;    // sizeof 14h    offset 138h
+    zSTRING texPreview;  // sizeof 14h    offset 14Ch
+    zSTRING texValue;    // sizeof 14h    offset 160h
 
     void oCViewStatusBar_OnInit()                                                      zCall( 0x0043E460 );
     void oCViewStatusBar_OnInit( int, int, int, int, zTviewID )                        zCall( 0x0043E5B0 );

@@ -1,10 +1,11 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMUSIC_CTRL_H__VER1__
 #define __ZMUSIC_CTRL_H__VER1__
 
 namespace Gothic_I_Addon {
 
+  // sizeof 40h
   class zCEventMusicControler : public zCEventMessage {
   public:
     zCLASS_DECLARATION( zCEventMusicControler )
@@ -15,7 +16,7 @@ namespace Gothic_I_Addon {
       zEVENT_MUSICCONTROLER_COUNT
     };
 
-    zSTRING sgt;
+    zSTRING sgt; // sizeof 14h    offset 2Ch
 
     zCEventMusicControler() {}
     static zCObject* _CreateNewInstance()                               zCall( 0x00748230 );
@@ -32,6 +33,7 @@ namespace Gothic_I_Addon {
     #include "zCEventMusicControler.inl"
   };
 
+  // sizeof 100h
   class zCMusicControler : public zCEffect {
   public:
     zCLASS_DECLARATION( zCMusicControler )

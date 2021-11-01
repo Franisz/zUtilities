@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZPARSER__CONST_H__VER3__
 #define __ZPARSER__CONST_H__VER3__

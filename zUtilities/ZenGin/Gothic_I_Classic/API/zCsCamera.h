@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCS_CAMERA_H__VER0__
 #define __ZCS_CAMERA_H__VER0__
@@ -29,27 +29,28 @@ namespace Gothic_I_Classic {
     KF_CAM
   };
 
+  // sizeof 1BCh
   class zCCamTrj_KeyFrame : public zCVob {
   public:
     zCLASS_DECLARATION( zCCamTrj_KeyFrame )
 
-    float time;
-    float angleRollDeg;
-    float camFOVScale;
-    zTCamTrj_KeyMotionType motionType;
-    zTCamTrj_KeyMotionType motionTypeFOV;
-    zTCamTrj_KeyMotionType motionTypeRoll;
-    zTCamTrj_KeyMotionType motionTypeTimeScale;
-    int timeIsFixed;
-    float tension;
-    float bias;
-    float continuity;
-    float timeScale;
-    zMAT4 originalPose;
-    zMAT4 actPose;
-    int adjusted;
-    zCCSCamera* cscam;
-    zTCamTrj_KFType type;
+    float time;                                 // sizeof 04h    offset 100h
+    float angleRollDeg;                         // sizeof 04h    offset 104h
+    float camFOVScale;                          // sizeof 04h    offset 108h
+    zTCamTrj_KeyMotionType motionType;          // sizeof 04h    offset 10Ch
+    zTCamTrj_KeyMotionType motionTypeFOV;       // sizeof 04h    offset 110h
+    zTCamTrj_KeyMotionType motionTypeRoll;      // sizeof 04h    offset 114h
+    zTCamTrj_KeyMotionType motionTypeTimeScale; // sizeof 04h    offset 118h
+    int timeIsFixed;                            // sizeof 04h    offset 11Ch
+    float tension;                              // sizeof 04h    offset 120h
+    float bias;                                 // sizeof 04h    offset 124h
+    float continuity;                           // sizeof 04h    offset 128h
+    float timeScale;                            // sizeof 04h    offset 12Ch
+    zMAT4 originalPose;                         // sizeof 40h    offset 130h
+    zMAT4 actPose;                              // sizeof 40h    offset 170h
+    int adjusted;                               // sizeof 04h    offset 1B0h
+    zCCSCamera* cscam;                          // sizeof 04h    offset 1B4h
+    zTCamTrj_KFType type;                       // sizeof 04h    offset 1B8h
 
     void zCCamTrj_KeyFrame_OnInit()                                     zCall( 0x004B4AC0 );
     zCCamTrj_KeyFrame()                                                 zInit( zCCamTrj_KeyFrame_OnInit() );
@@ -66,6 +67,7 @@ namespace Gothic_I_Classic {
     #include "zCCamTrj_KeyFrame.inl"
   };
 
+  // sizeof 3Ch
   class zCCSCamera_EventMsg : public zCEventMessage {
   public:
     zCLASS_DECLARATION( zCCSCamera_EventMsg )
@@ -81,10 +83,10 @@ namespace Gothic_I_Classic {
       EV_SET_TO_TIME
     };
 
-    int key;
-    float time;
-    int isDeleted;
-    zTCamTrj_KFType kfType;
+    int key;                // sizeof 04h    offset 2Ch
+    float time;             // sizeof 04h    offset 30h
+    int isDeleted;          // sizeof 04h    offset 34h
+    zTCamTrj_KFType kfType; // sizeof 04h    offset 38h
 
     void zCCSCamera_EventMsg_OnInit()                                        zCall( 0x004BD7A0 );
     void zCCSCamera_EventMsg_OnInit( zTCSCam_EvSubType )                     zCall( 0x004BD910 );
@@ -108,6 +110,7 @@ namespace Gothic_I_Classic {
     #include "zCCSCamera_EventMsg.inl"
   };
 
+  // sizeof 48h
   class zCCSCamera_EventMsgActivate : public zCEventMessage {
   public:
     zCLASS_DECLARATION( zCCSCamera_EventMsgActivate )
@@ -118,9 +121,9 @@ namespace Gothic_I_Classic {
       EV_SETTARGETREFERENCE
     };
 
-    zSTRING referenceName;
-    int isDeleted;
-    zCVob* referenceVob;
+    zSTRING referenceName; // sizeof 14h    offset 2Ch
+    int isDeleted;         // sizeof 04h    offset 40h
+    zCVob* referenceVob;   // sizeof 04h    offset 44h
 
     zCCSCamera_EventMsgActivate() {}
     static zCObject* _CreateNewInstance()                               zCall( 0x004BE7E0 );
@@ -140,6 +143,7 @@ namespace Gothic_I_Classic {
     #include "zCCSCamera_EventMsgActivate.inl"
   };
 
+  // sizeof 14BCh
   class zCCSCamera : public zCVob {
   public:
     zCLASS_DECLARATION( zCCSCamera )
@@ -155,60 +159,60 @@ namespace Gothic_I_Classic {
       zCAMTRJ_LOOPMODE_PINGPONG
     };
 
-    zTCamTrj_FOR camKeysFOR;
-    zTCamTrj_FOR targetKeysFOR;
-    zTCamTrj_LoopMode loopMode;
-    zTSplLerpMode splLerpMode;
-    int ignoreFORVobRotCam;
-    int ignoreFORVobRotTarget;
-    int adaptToSurroundings;
-    int easeToFirstKey;
-    int easeFromLastKey;
-    float totalTime;
-    zSTRING autoCamFocusVobName;
-    int autoCamPlayerMovable;
-    int autoCamUntriggerOnLastKey;
-    float autoCamUntriggerOnLastKeyDelay;
-    zCVob* camKeysRefVob;
-    zCVob* targetKeysRefVob;
-    zCArray<zCEventMessage*> evMsgProcessList;
-    zCArray<zCCamTrj_KeyFrame*>posKeys;
-    zCArray<zCCamTrj_KeyFrame*>targetKeys;
-    int paused;
-    int hasBeenTriggered;
-    int hasBeenUntriggered;
-    int triggerQueued;
-    zCVob* queuedVob;
-    int keysPreProcessed;
-    int started;
-    int gotoTimeMode;
-    int initialized;
-    int easeToFirstKeyNotPossible;
-    int easeFromLastKeyNotPossible;
-    int autoCamPlayerMovable_BAK;
-    int autoAdjustTime;
-    float avgFPS;
-    int avgFPSNumFrames;
-    float actTimeCam;
-    float csTime;
-    float unTriggerDelayTime;
-    zMAT4 trafoCStoWS;
-    float lerpDirSign;
-    float timeToReach;
-    float timeToReachScale;
-    zTCamTrj_KFType camFOVSetBy;
-    zTCamTrj_KFType angleRollDegSetBy;
-    zTCamTrj_KFType globalTimeScaleSetBy;
-    int d_testCS;
-    zCPose camRefVobPose;
-    zCPose targetRefVobPose;
-    zCKBSpline posSpl;
-    zCKBSpline targetSpl;
-    LerpFunc LerpFuncCam;
-    LerpFunc LerpFuncTarget;
-    zMAT4 initialPoseCamRefVob;
-    zMAT4 initialPoseTargetRefVob;
-    zVEC3 actTargetFocus;
+    zTCamTrj_FOR camKeysFOR;                   // sizeof 04h    offset 100h
+    zTCamTrj_FOR targetKeysFOR;                // sizeof 04h    offset 104h
+    zTCamTrj_LoopMode loopMode;                // sizeof 04h    offset 108h
+    zTSplLerpMode splLerpMode;                 // sizeof 04h    offset 10Ch
+    int ignoreFORVobRotCam;                    // sizeof 04h    offset 110h
+    int ignoreFORVobRotTarget;                 // sizeof 04h    offset 114h
+    int adaptToSurroundings;                   // sizeof 04h    offset 118h
+    int easeToFirstKey;                        // sizeof 04h    offset 11Ch
+    int easeFromLastKey;                       // sizeof 04h    offset 120h
+    float totalTime;                           // sizeof 04h    offset 124h
+    zSTRING autoCamFocusVobName;               // sizeof 14h    offset 128h
+    int autoCamPlayerMovable;                  // sizeof 04h    offset 13Ch
+    int autoCamUntriggerOnLastKey;             // sizeof 04h    offset 140h
+    float autoCamUntriggerOnLastKeyDelay;      // sizeof 04h    offset 144h
+    zCVob* camKeysRefVob;                      // sizeof 04h    offset 148h
+    zCVob* targetKeysRefVob;                   // sizeof 04h    offset 14Ch
+    zCArray<zCEventMessage*> evMsgProcessList; // sizeof 0Ch    offset 150h
+    zCArray<zCCamTrj_KeyFrame*>posKeys;        // sizeof 0Ch    offset 15Ch
+    zCArray<zCCamTrj_KeyFrame*>targetKeys;     // sizeof 0Ch    offset 168h
+    int paused;                                // sizeof 04h    offset 174h
+    int hasBeenTriggered;                      // sizeof 04h    offset 178h
+    int hasBeenUntriggered;                    // sizeof 04h    offset 17Ch
+    int triggerQueued;                         // sizeof 04h    offset 180h
+    zCVob* queuedVob;                          // sizeof 04h    offset 184h
+    int keysPreProcessed;                      // sizeof 04h    offset 188h
+    int started;                               // sizeof 04h    offset 18Ch
+    int gotoTimeMode;                          // sizeof 04h    offset 190h
+    int initialized;                           // sizeof 04h    offset 194h
+    int easeToFirstKeyNotPossible;             // sizeof 04h    offset 198h
+    int easeFromLastKeyNotPossible;            // sizeof 04h    offset 19Ch
+    int autoCamPlayerMovable_BAK;              // sizeof 04h    offset 1A0h
+    int autoAdjustTime;                        // sizeof 04h    offset 1A4h
+    float avgFPS;                              // sizeof 04h    offset 1A8h
+    int avgFPSNumFrames;                       // sizeof 04h    offset 1ACh
+    float actTimeCam;                          // sizeof 04h    offset 1B0h
+    float csTime;                              // sizeof 04h    offset 1B4h
+    float unTriggerDelayTime;                  // sizeof 04h    offset 1B8h
+    zMAT4 trafoCStoWS;                         // sizeof 40h    offset 1BCh
+    float lerpDirSign;                         // sizeof 04h    offset 1FCh
+    float timeToReach;                         // sizeof 04h    offset 200h
+    float timeToReachScale;                    // sizeof 04h    offset 204h
+    zTCamTrj_KFType camFOVSetBy;               // sizeof 04h    offset 208h
+    zTCamTrj_KFType angleRollDegSetBy;         // sizeof 04h    offset 20Ch
+    zTCamTrj_KFType globalTimeScaleSetBy;      // sizeof 04h    offset 210h
+    int d_testCS;                              // sizeof 04h    offset 214h
+    zCPose camRefVobPose;                      // sizeof 8E4h   offset 218h
+    zCPose targetRefVobPose;                   // sizeof 8E4h   offset AFCh
+    zCKBSpline posSpl;                         // sizeof 24h    offset 13E0h
+    zCKBSpline targetSpl;                      // sizeof 24h    offset 1404h
+    LerpFunc LerpFuncCam;                      // sizeof 04h    offset 1428h
+    LerpFunc LerpFuncTarget;                   // sizeof 04h    offset 142Ch
+    zMAT4 initialPoseCamRefVob;                // sizeof 40h    offset 1430h
+    zMAT4 initialPoseTargetRefVob;             // sizeof 40h    offset 1470h
+    zVEC3 actTargetFocus;                      // sizeof 0Ch    offset 14B0h
 
     void zCCSCamera_OnInit()                                                                      zCall( 0x004B50D0 );
     zCCamTrj_KeyFrame* GetCamKey( int )                                                           zCall( 0x004AB9A0 );

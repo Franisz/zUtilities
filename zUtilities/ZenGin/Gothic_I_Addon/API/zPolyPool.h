@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZPOLY_POOL_H__VER1__
 #define __ZPOLY_POOL_H__VER1__
@@ -8,11 +8,12 @@
 
 namespace Gothic_I_Addon {
 
+  // sizeof 0Ch
   class zCVertexFeaturePool {
   public:
-    GETSmallArrayNative<zCVertFeature>* Pool;
-    GETSmallArrayNative<zCVertFeature*>* PtrPool;
-    int NumOfAllocatedVertexFeatures;
+    GETSmallArrayNative<zCVertFeature>* Pool;     // sizeof 04h    offset 00h
+    GETSmallArrayNative<zCVertFeature*>* PtrPool; // sizeof 04h    offset 04h
+    int NumOfAllocatedVertexFeatures;             // sizeof 04h    offset 08h
 
     zCVertexFeaturePool() {}
 
@@ -20,10 +21,11 @@ namespace Gothic_I_Addon {
     #include "zCVertexFeaturePool.inl"
   };
 
+  // sizeof 08h
   class zCPolygonPool {
   public:
-    GETSmallArrayNative<zCPolygon>* Pool;
-    int NumOfAllocatedPolygon;
+    GETSmallArrayNative<zCPolygon>* Pool; // sizeof 04h    offset 00h
+    int NumOfAllocatedPolygon;            // sizeof 04h    offset 04h
 
     zCPolygonPool() {}
 
@@ -31,11 +33,12 @@ namespace Gothic_I_Addon {
     #include "zCPolygonPool.inl"
   };
 
+  // sizeof 0Ch
   class zCVertexPool {
   public:
-    GETSmallArrayNative<zCVertex>* Pool;
-    GETSmallArrayNative<zCVertex*>* PtrPool;
-    int NumOfAllocatedVertex;
+    GETSmallArrayNative<zCVertex>* Pool;     // sizeof 04h    offset 00h
+    GETSmallArrayNative<zCVertex*>* PtrPool; // sizeof 04h    offset 04h
+    int NumOfAllocatedVertex;                // sizeof 04h    offset 08h
 
     zCVertexPool() {}
 
@@ -43,13 +46,14 @@ namespace Gothic_I_Addon {
     #include "zCVertexPool.inl"
   };
 
+  // sizeof 14h
   class zCMeshPool {
   public:
-    zCVertexPool* vertexPool;
-    zCPolygonPool* polygonPool;
-    zCVertexFeaturePool* vertexFeaturePool;
-    int meshIndex;
-    zCMesh* meshObject;
+    zCVertexPool* vertexPool;               // sizeof 04h    offset 00h
+    zCPolygonPool* polygonPool;             // sizeof 04h    offset 04h
+    zCVertexFeaturePool* vertexFeaturePool; // sizeof 04h    offset 08h
+    int meshIndex;                          // sizeof 04h    offset 0Ch
+    zCMesh* meshObject;                     // sizeof 04h    offset 10h
 
     zCMeshPool() {}
 
@@ -57,10 +61,11 @@ namespace Gothic_I_Addon {
     #include "zCMeshPool.inl"
   };
 
+  // sizeof 08h
   class zCMeshesPool {
   public:
-    int IsActive;
-    GETSmallArrayNative<zCMeshPool*>* pool;
+    int IsActive;                           // sizeof 04h    offset 00h
+    GETSmallArrayNative<zCMeshPool*>* pool; // sizeof 04h    offset 04h
 
     zCMeshesPool() {}
 

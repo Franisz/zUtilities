@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZNET_MESSAGE_H__VER2__
 #define __ZNET_MESSAGE_H__VER2__
@@ -16,12 +16,13 @@ namespace Gothic_II_Classic {
   const unsigned char zNET_MAX_SENDERIDS    = 255;
 
 #pragma pack( push, 4 )
+  // sizeof 10h
   struct zTNetMessageHeader {
-    unsigned long id;
-    unsigned char senderID;
-    unsigned long datasize;
-    unsigned char timestamp;
-    unsigned char flags;
+    unsigned long id;        // sizeof 04h    offset 00h
+    unsigned char senderID;  // sizeof 01h    offset 04h
+    unsigned long datasize;  // sizeof 04h    offset 08h
+    unsigned char timestamp; // sizeof 01h    offset 0Ch
+    unsigned char flags;     // sizeof 01h    offset 0Dh
 
     zTNetMessageHeader() {}
 
@@ -30,14 +31,15 @@ namespace Gothic_II_Classic {
   };
 #pragma pack( pop )
 
+  // sizeof 1Ch
   class zCNetMessage {
   public:
-    zCBuffer* buffer;
-    int isStream;
-    zFILE* file;
-    zFILE* remote_file;
-    zCPlayerInfo* targetPlayer;
-    zCPlayerGroup* targetGroup;
+    zCBuffer* buffer;           // sizeof 04h    offset 04h
+    int isStream;               // sizeof 04h    offset 08h
+    zFILE* file;                // sizeof 04h    offset 0Ch
+    zFILE* remote_file;         // sizeof 04h    offset 10h
+    zCPlayerInfo* targetPlayer; // sizeof 04h    offset 14h
+    zCPlayerGroup* targetGroup; // sizeof 04h    offset 18h
 
     zCNetMessage() {}
     void zCNetMessage_OnInit( zTNetMessageHeader& )                 zCall( 0x0045B920 );
@@ -88,9 +90,10 @@ namespace Gothic_II_Classic {
     #include "zCNetMessage.inl"
   };
 
+  // sizeof 0Ch
   class zCNetMessageQueue {
   public:
-    zQUEUE<zCNetMessage> queue;
+    zQUEUE<zCNetMessage> queue; // sizeof 0Ch    offset 00h
 
     void zCNetMessageQueue_OnInit() zCall( 0x0044FD40 );
     zCNetMessageQueue()             zInit( zCNetMessageQueue_OnInit() );

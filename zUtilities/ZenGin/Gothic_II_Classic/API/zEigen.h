@@ -1,16 +1,17 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZEIGEN_H__VER2__
 #define __ZEIGEN_H__VER2__
 
 namespace Gothic_II_Classic {
 
+  // sizeof 10h
   class zCMgcEigenD {
   public:
-    int size;
-    double** mat;
-    double* diag;
-    double* subd;
+    int size;     // sizeof 04h    offset 00h
+    double** mat; // sizeof 04h    offset 04h
+    double* diag; // sizeof 04h    offset 08h
+    double* subd; // sizeof 04h    offset 0Ch
 
     zCMgcEigenD() {}
     void zCMgcEigenD_OnInit( int )                       zCall( 0x00551E60 );

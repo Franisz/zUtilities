@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZWORLD_H__VER3__
 #define __ZWORLD_H__VER3__
@@ -34,6 +34,7 @@ namespace Gothic_II_Addon {
     zWLD_RENDER_MODE_LIGHTMAPS
   };
 
+  // sizeof 01h
   class zCCallback {
   public:
 
@@ -43,6 +44,7 @@ namespace Gothic_II_Addon {
     #include "zCCallback.inl"
   };
 
+  // sizeof 04h
   class zCVobCallback : public zCCallback {
   public:
 
@@ -53,6 +55,7 @@ namespace Gothic_II_Addon {
     #include "zCVobCallback.inl"
   };
 
+  // sizeof 04h
   class zCWorldPerFrameCallback : public zCCallback {
   public:
     
@@ -63,13 +66,14 @@ namespace Gothic_II_Addon {
     #include "zCWorldPerFrameCallback.inl"
   };
 
+  // sizeof 28h
   struct zTTraceRayReport {
-    int foundHit;
-    zCVob* foundVob;
-    zCPolygon* foundPoly;
-    zVEC3 foundIntersection;
-    zVEC3 foundPolyNormal;
-    zCVertex* foundVertex;
+    int foundHit;            // sizeof 04h    offset 00h
+    zCVob* foundVob;         // sizeof 04h    offset 04h
+    zCPolygon* foundPoly;    // sizeof 04h    offset 08h
+    zVEC3 foundIntersection; // sizeof 0Ch    offset 0Ch
+    zVEC3 foundPolyNormal;   // sizeof 0Ch    offset 18h
+    zCVertex* foundVertex;   // sizeof 04h    offset 24h
 
     zTTraceRayReport() {}
 
@@ -77,10 +81,11 @@ namespace Gothic_II_Addon {
     #include "zTTraceRayReport.inl"
   };
 
+  // sizeof 08h
   class zCTransferConstr {
   public:
-    zCPatch* targetPatch;
-    float formFactor;
+    zCPatch* targetPatch; // sizeof 04h    offset 00h
+    float formFactor;     // sizeof 04h    offset 04h
 
     zCTransferConstr() {}
 
@@ -90,10 +95,11 @@ namespace Gothic_II_Addon {
   
 #pragma pack( push, 1 )
 
+  // sizeof 06h
   class zCTransfer {
   public:
-    zCPatch* targetPatch;
-    unsigned short formFactor;
+    zCPatch* targetPatch;      // sizeof 04h    offset 00h
+    unsigned short formFactor; // sizeof 02h    offset 04h
 
     zCTransfer() {}
 
@@ -103,18 +109,19 @@ namespace Gothic_II_Addon {
   
 #pragma pack( pop )	
 
+  // sizeof 5Ch
   class zCPatch {
   public:
-    zVEC3 center;
-    zVEC3 centerLight;
-    zVEC3 normal;
-    float area;
-    zVEC3 radiosity;
-    zVEC3 radToShoot;
-    short xpos;
-    short ypos;
-    zCArray<zCTransfer> transferList;
-    zVEC3 reflectivity;
+    zVEC3 center;                     // sizeof 0Ch    offset 00h
+    zVEC3 centerLight;                // sizeof 0Ch    offset 0Ch
+    zVEC3 normal;                     // sizeof 0Ch    offset 18h
+    float area;                       // sizeof 04h    offset 24h
+    zVEC3 radiosity;                  // sizeof 0Ch    offset 28h
+    zVEC3 radToShoot;                 // sizeof 0Ch    offset 34h
+    short xpos;                       // sizeof 02h    offset 40h
+    short ypos;                       // sizeof 02h    offset 42h
+    zCArray<zCTransfer> transferList; // sizeof 0Ch    offset 44h
+    zVEC3 reflectivity;               // sizeof 0Ch    offset 50h
 
     void zCPatch_OnInit() zCall( 0x0062C0C0 );
     zCPatch()             zInit( zCPatch_OnInit() );
@@ -126,20 +133,21 @@ namespace Gothic_II_Addon {
 
 #pragma pack( push, 1 )
 
+  // sizeof 7Dh
   class zCPatchMap {
   public:
-    char hit;
-    short xdim;
-    short ydim;
-    zCArray<zCPatch*> patchList;
-    zCArray<zCPolygon*> surface;
-    zTPlane lightRejectPlane0;
-    zTPlane lightRejectPlane1;
-    zTBBox3D bbox3D;
-    zVEC3 lightmapOrigin;
-    zVEC3 lightmapUp;
-    zVEC3 lightmapRight;
-    zCPolygon* lastRayHitPoly;
+    char hit;                    // sizeof 01h    offset 00h
+    short xdim;                  // sizeof 02h    offset 01h
+    short ydim;                  // sizeof 02h    offset 03h
+    zCArray<zCPatch*> patchList; // sizeof 0Ch    offset 05h
+    zCArray<zCPolygon*> surface; // sizeof 0Ch    offset 11h
+    zTPlane lightRejectPlane0;   // sizeof 10h    offset 1Dh
+    zTPlane lightRejectPlane1;   // sizeof 10h    offset 2Dh
+    zTBBox3D bbox3D;             // sizeof 18h    offset 3Dh
+    zVEC3 lightmapOrigin;        // sizeof 0Ch    offset 55h
+    zVEC3 lightmapUp;            // sizeof 0Ch    offset 61h
+    zVEC3 lightmapRight;         // sizeof 0Ch    offset 6Dh
+    zCPolygon* lastRayHitPoly;   // sizeof 04h    offset 79h
 
     zCPatchMap() {}
     int CheckRaySurfaceIntersection( zVEC3&, zVEC3&, zVEC3&, zCPolygon*& ) zCall( 0x0062C110 );
@@ -151,6 +159,7 @@ namespace Gothic_II_Addon {
 
 #pragma pack( pop )	
 
+  // sizeof 6258h
   class zCWorld : public zCObject {
   public:
     zCLASS_DECLARATION( zCWorld )
@@ -183,45 +192,45 @@ namespace Gothic_II_Addon {
       zWLD_LIGHT_VERTLIGHT_LIGHTMAPS_HI_QUAL
     };
 
-    zCTree<zCVob> globalVobTree;
-    zTTraceRayReport traceRayReport;
-    zCSession* ownerSession;
-    zCCSPlayer* csPlayer;
-    zSTRING m_strlevelName;
-    int compiled;
-    int compiledEditorMode;
-    int traceRayIgnoreVobFlag;
-    int m_bIsInventoryWorld;
-    zTWld_RenderMode worldRenderMode;
-    zCWayNet* wayNet;
-    int masterFrameCtr;
-    float vobFarClipZ;
-    float vobFarClipZScalability;
-    zCArray<zCVob*> traceRayVobList;
-    zCArray<zCVob*> traceRayTempIgnoreVobList;
-    int renderingFirstTime;
-    int showWaynet;
-    int showTraceRayLines;
-    zCViewProgressBar* progressBar;
-    unsigned long unarchiveFileLen;
-    unsigned long unarchiveStartPosVobtree;
-    int numVobsInWorld;
-    zCArray<zCWorldPerFrameCallback*> perFrameCallbackList;
-    zCSkyControler* skyControlerIndoor;
-    zCSkyControler* skyControlerOutdoor;
-    zCSkyControler* activeSkyControler;
-    zCArray<zCZone*> zoneGlobalList;
-    zCArraySort<zCZone*> zoneActiveList;
-    zCArraySort<zCZone*> zoneLastClassList;
-    zCVobBBox3DSorter<zCZone> zoneBoxSorter;
-    zCVobBBox3DSorter<zCZone>::zTBoxSortHandle zoneActiveHandle;
-    int addZonesToWorld;
-    int showZonesDebugInfo;
-    zCCBspTree* cbspTree;
-    zCBspTree bspTree;
-    zCArray<zCVob*> activeVobList;
-    zCArray<zCVob*> walkList;
-    zCArray<zCVob*> vobHashTable[zNUM_VOB_HASH];
+    zCTree<zCVob> globalVobTree;                                 // sizeof 14h    offset 24h
+    zTTraceRayReport traceRayReport;                             // sizeof 28h    offset 38h
+    zCSession* ownerSession;                                     // sizeof 04h    offset 60h
+    zCCSPlayer* csPlayer;                                        // sizeof 04h    offset 64h
+    zSTRING m_strlevelName;                                      // sizeof 14h    offset 68h
+    int compiled;                                                // sizeof 04h    offset 7Ch
+    int compiledEditorMode;                                      // sizeof 04h    offset 80h
+    int traceRayIgnoreVobFlag;                                   // sizeof 04h    offset 84h
+    int m_bIsInventoryWorld;                                     // sizeof 04h    offset 88h
+    zTWld_RenderMode worldRenderMode;                            // sizeof 04h    offset 8Ch
+    zCWayNet* wayNet;                                            // sizeof 04h    offset 90h
+    int masterFrameCtr;                                          // sizeof 04h    offset 94h
+    float vobFarClipZ;                                           // sizeof 04h    offset 98h
+    float vobFarClipZScalability;                                // sizeof 04h    offset 9Ch
+    zCArray<zCVob*> traceRayVobList;                             // sizeof 0Ch    offset A0h
+    zCArray<zCVob*> traceRayTempIgnoreVobList;                   // sizeof 0Ch    offset ACh
+    int renderingFirstTime;                                      // sizeof 04h    offset B8h
+    int showWaynet;                                              // sizeof 04h    offset BCh
+    int showTraceRayLines;                                       // sizeof 04h    offset C0h
+    zCViewProgressBar* progressBar;                              // sizeof 04h    offset C4h
+    unsigned long unarchiveFileLen;                              // sizeof 04h    offset C8h
+    unsigned long unarchiveStartPosVobtree;                      // sizeof 04h    offset CCh
+    int numVobsInWorld;                                          // sizeof 04h    offset D0h
+    zCArray<zCWorldPerFrameCallback*> perFrameCallbackList;      // sizeof 0Ch    offset D4h
+    zCSkyControler* skyControlerIndoor;                          // sizeof 04h    offset E0h
+    zCSkyControler* skyControlerOutdoor;                         // sizeof 04h    offset E4h
+    zCSkyControler* activeSkyControler;                          // sizeof 04h    offset E8h
+    zCArray<zCZone*> zoneGlobalList;                             // sizeof 0Ch    offset ECh
+    zCArraySort<zCZone*> zoneActiveList;                         // sizeof 10h    offset F8h
+    zCArraySort<zCZone*> zoneLastClassList;                      // sizeof 10h    offset 108h
+    zCVobBBox3DSorter<zCZone> zoneBoxSorter;                     // sizeof 44h    offset 118h
+    zCVobBBox3DSorter<zCZone>::zTBoxSortHandle zoneActiveHandle; // sizeof 44h    offset 15Ch
+    int addZonesToWorld;                                         // sizeof 04h    offset 1A0h
+    int showZonesDebugInfo;                                      // sizeof 04h    offset 1A4h
+    zCCBspTree* cbspTree;                                        // sizeof 04h    offset 1A8h
+    zCBspTree bspTree;                                           // sizeof 94h    offset 1ACh
+    zCArray<zCVob*> activeVobList;                               // sizeof 0Ch    offset 240h
+    zCArray<zCVob*> walkList;                                    // sizeof 0Ch    offset 24Ch
+    zCArray<zCVob*> vobHashTable[zNUM_VOB_HASH];                 // sizeof 6000h  offset 258h
 
     void zCWorld_OnInit()                                                                                          zCall( 0x0061FA40 );
     zCWorld()                                                                                                      zInit( zCWorld_OnInit() );

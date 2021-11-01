@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OMUSIC_ZONE_H__VER3__
 #define __OMUSIC_ZONE_H__VER3__
@@ -14,9 +14,10 @@ namespace Gothic_II_Addon {
     oHERO_STATUS_FGT
   };
 
+  // sizeof 08h
   struct oCZoneMusicList {
-    oCZoneMusic* entry;
-    oCZoneMusicList* next;
+    oCZoneMusic* entry;    // sizeof 04h    offset 00h
+    oCZoneMusicList* next; // sizeof 04h    offset 04h
 
     oCZoneMusicList() {}
 
@@ -24,19 +25,20 @@ namespace Gothic_II_Addon {
     #include "oCZoneMusicList.inl"
   };
 
+  // sizeof 148h
   class oCZoneMusic : public zCZoneMusic {
   public:
     zCLASS_DECLARATION( oCZoneMusic )
 
-    int enabled;
-    int local_enabled;
-    int priority;
-    int ellipsoid;
-    float reverbLevel;
-    float volumeLevel;
-    int loop;
-    int dayEntranceDone;
-    int nightEntranceDone;
+    int enabled;           // sizeof 04h    offset 124h
+    int local_enabled;     // sizeof 04h    offset 128h
+    int priority;          // sizeof 04h    offset 12Ch
+    int ellipsoid;         // sizeof 04h    offset 130h
+    float reverbLevel;     // sizeof 04h    offset 134h
+    float volumeLevel;     // sizeof 04h    offset 138h
+    int loop;              // sizeof 04h    offset 13Ch
+    int dayEntranceDone;   // sizeof 04h    offset 140h
+    int nightEntranceDone; // sizeof 04h    offset 144h
 
     void oCZoneMusic_OnInit()                                                                          zCall( 0x006404C0 );
     oCZoneMusic()                                                                                      zInit( oCZoneMusic_OnInit() );
@@ -89,6 +91,7 @@ namespace Gothic_II_Addon {
     #include "oCZoneMusic.inl"
   };
 
+  // sizeof 148h
   class oCZoneMusicDefault : public oCZoneMusic {
   public:
     zCLASS_DECLARATION( oCZoneMusicDefault )

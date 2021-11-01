@@ -1,14 +1,15 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCONVEX_COLLISION_H__VER3__
 #define __ZCONVEX_COLLISION_H__VER3__
 
 namespace Gothic_II_Addon {
 
+  // sizeof 08h
   class zCCacheIndex {
   public:
-    zCVob* voba;
-    zCVob* vobb;
+    zCVob* voba; // sizeof 04h    offset 00h
+    zCVob* vobb; // sizeof 04h    offset 04h
 
     zCCacheIndex() {}
 
@@ -16,12 +17,13 @@ namespace Gothic_II_Addon {
     #include "zCCacheIndex.inl"
   };
 
+  // sizeof 10h
   class zCConvexCollisionCache {
   public:
     zMEMPOOL_DECLARATION( zCConvexCollisionCache, 0x008D83D4 )
 
-    zVEC3 planeNormal;
-    int invert;
+    zVEC3 planeNormal; // sizeof 0Ch    offset 00h
+    int invert;        // sizeof 04h    offset 0Ch
 
     zCConvexCollisionCache() {}
     void zCConvexCollisionCache_OnInit( zCCacheIndex const& ) zCall( 0x00554E20 );
@@ -31,9 +33,10 @@ namespace Gothic_II_Addon {
     #include "zCConvexCollisionCache.inl"
   };
 
+  // sizeof 1Ch
   class zCConvexPrimitive {
   public:
-    zTBBox3D bbox3Dlocal;
+    zTBBox3D bbox3Dlocal; // sizeof 18h    offset 04h
 
     zCConvexPrimitive() {}
     void PointNearestToPlane( zVEC3&, zVEC3 const&, zMAT4 const&, zMAT3 const& ) const                                                                           zCall( 0x00553F60 );
@@ -56,6 +59,7 @@ namespace Gothic_II_Addon {
     #include "zCConvexPrimitive.inl"
   };
 
+  // sizeof 1Ch
   class zCConvexPrimitiveUnitSphere : public zCConvexPrimitive {
   public:
 
@@ -76,11 +80,12 @@ namespace Gothic_II_Addon {
     #include "zCConvexPrimitiveUnitSphere.inl"
   };
 
+  // sizeof 38h
   class zCConvexPrimitiveScaleTrans : public zCConvexPrimitive {
   public:
-    zVEC3 scale;
-    zVEC3 translation;
-    zCConvexPrimitive* original;
+    zVEC3 scale;                 // sizeof 0Ch    offset 1Ch
+    zVEC3 translation;           // sizeof 0Ch    offset 28h
+    zCConvexPrimitive* original; // sizeof 04h    offset 34h
 
     zCConvexPrimitiveScaleTrans() {}
     void zCConvexPrimitiveScaleTrans_OnInit( zCConvexPrimitive*, zVEC3 const&, zVEC3 const& ) zCall( 0x00555730 );
@@ -96,9 +101,10 @@ namespace Gothic_II_Addon {
     #include "zCConvexPrimitiveScaleTrans.inl"
   };
 
+  // sizeof 3Ch
   class zCConvexPrimitiveEllipsoid : public zCConvexPrimitiveScaleTrans {
   public:
-    int symetric;
+    int symetric; // sizeof 04h    offset 38h
 
     zCConvexPrimitiveEllipsoid() {}
     void zCConvexPrimitiveEllipsoid_OnInit( zTBBox3D const&, int ) zCall( 0x00555A40 );

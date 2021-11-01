@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZTHREAD_H__VER0__
 #define __ZTHREAD_H__VER0__
@@ -6,6 +6,7 @@
 namespace Gothic_I_Classic {
   const int float_OUT_INFINITE = INFINITE;
 
+  // sizeof 18h
   class zCThread {
   public:
     enum zTThread_Prio {
@@ -18,11 +19,11 @@ namespace Gothic_I_Classic {
       zTHREAD_PRIORITY_IDLE          = THREAD_PRIORITY_IDLE
     };
 
-    HANDLE threadHandle;
-    unsigned int threadID;
-    int suspendCount;
-    int isThreadRunning;
-    int terminationRequested;
+    HANDLE threadHandle;      // sizeof 04h    offset 04h
+    unsigned int threadID;    // sizeof 04h    offset 08h
+    int suspendCount;         // sizeof 04h    offset 0Ch
+    int isThreadRunning;      // sizeof 04h    offset 10h
+    int terminationRequested; // sizeof 04h    offset 14h
 
     void zCThread_OnInit()                      zCall( 0x005CE010 );
     zCThread()                                  zInit( zCThread_OnInit() );
@@ -41,6 +42,7 @@ namespace Gothic_I_Classic {
     #include "zCThread.inl"
   };
 
+  // sizeof 04h
   class zCSyncObject {
   public:
 
@@ -53,9 +55,10 @@ namespace Gothic_I_Classic {
     #include "zCSyncObject.inl"
   };
 
+  // sizeof 1Ch
   class zCCriticalSection : public zCSyncObject {
   public:
-    CRITICAL_SECTION criticalSection;
+    CRITICAL_SECTION criticalSection; // sizeof 18h    offset 04h
 
     void zCCriticalSection_OnInit()   zCall( 0x005CE290 );
     zCCriticalSection()               zInit( zCCriticalSection_OnInit() );
@@ -67,9 +70,10 @@ namespace Gothic_I_Classic {
     #include "zCCriticalSection.inl"
   };
 
+  // sizeof 08h
   class zCMutex : public zCSyncObject {
   public:
-    HANDLE mutex;
+    HANDLE mutex; // sizeof 04h    offset 04h
 
     void zCMutex_OnInit()             zCall( 0x005CE340 );
     zCMutex()                         zInit( zCMutex_OnInit() );

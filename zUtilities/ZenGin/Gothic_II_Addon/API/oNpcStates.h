@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ONPC_STATES_H__VER3__
 #define __ONPC_STATES_H__VER3__
@@ -20,19 +20,20 @@ namespace Gothic_II_Addon {
     NPC_AISTATE_FOLLOW      = -6
   };
 
+  // sizeof 3Ch
   struct TNpcAIState {
   public:
-    int index;
-    int loop;
-    int end;
-    int timeBehaviour;
-    float restTime;
-    int phase;
-    int valid;
-    zSTRING name;
-    float stateTime;
-    int prgIndex;
-    int isRtnState;
+    int index;         // sizeof 04h    offset 00h
+    int loop;          // sizeof 04h    offset 04h
+    int end;           // sizeof 04h    offset 08h
+    int timeBehaviour; // sizeof 04h    offset 0Ch
+    float restTime;    // sizeof 04h    offset 10h
+    int phase;         // sizeof 04h    offset 14h
+    int valid;         // sizeof 04h    offset 18h
+    zSTRING name;      // sizeof 14h    offset 1Ch
+    float stateTime;   // sizeof 04h    offset 30h
+    int prgIndex;      // sizeof 04h    offset 34h
+    int isRtnState;    // sizeof 04h    offset 38h
 
     void TNpcAIState_OnInit() zCall( 0x0076BAD0 );
     TNpcAIState()             zInit( TNpcAIState_OnInit() );
@@ -42,29 +43,30 @@ namespace Gothic_II_Addon {
     #include "TNpcAIState.inl"
   };
 
+  // sizeof E0h
   class oCNpc_States {
   public:
-    zSTRING name;
-    oCNpc* npc;
-    TNpcAIState curState;
-    TNpcAIState nextState;
-    int lastAIState;
-    int hasRoutine;
-    int rtnChanged;
-    oCRtnEntry* rtnBefore;
-    oCRtnEntry* rtnNow;
-    zCRoute* rtnRoute;
-    int rtnOverlay;
-    int rtnOverlayCount;
-    int walkmode_routine;
-    int weaponmode_routine;
-    int startNewRoutine;
-    int aiStateDriven;
-    zVEC3 aiStatePosition;
-    oCNpc* parOther;
-    oCNpc* parVictim;
-    oCItem* parItem;
-    int rntChangeCount;
+    zSTRING name;           // sizeof 14h    offset 04h
+    oCNpc* npc;             // sizeof 04h    offset 18h
+    TNpcAIState curState;   // sizeof 3Ch    offset 1Ch
+    TNpcAIState nextState;  // sizeof 3Ch    offset 58h
+    int lastAIState;        // sizeof 04h    offset 94h
+    int hasRoutine;         // sizeof 04h    offset 98h
+    int rtnChanged;         // sizeof 04h    offset 9Ch
+    oCRtnEntry* rtnBefore;  // sizeof 04h    offset A0h
+    oCRtnEntry* rtnNow;     // sizeof 04h    offset A4h
+    zCRoute* rtnRoute;      // sizeof 04h    offset A8h
+    int rtnOverlay;         // sizeof 04h    offset ACh
+    int rtnOverlayCount;    // sizeof 04h    offset B0h
+    int walkmode_routine;   // sizeof 04h    offset B4h
+    int weaponmode_routine; // sizeof 04h    offset B8h
+    int startNewRoutine;    // sizeof 04h    offset BCh
+    int aiStateDriven;      // sizeof 04h    offset C0h
+    zVEC3 aiStatePosition;  // sizeof 0Ch    offset C4h
+    oCNpc* parOther;        // sizeof 04h    offset D0h
+    oCNpc* parVictim;       // sizeof 04h    offset D4h
+    oCItem* parItem;        // sizeof 04h    offset D8h
+    int rntChangeCount;     // sizeof 04h    offset DCh
 
     void oCNpc_States_OnInit()                                         zCall( 0x0076BB60 );
     oCNpc_States()                                                     zInit( oCNpc_States_OnInit() );

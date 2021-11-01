@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCCS_PROPS_H__VER2__
 #define __ZCCS_PROPS_H__VER2__
@@ -11,6 +11,7 @@ namespace Gothic_II_Classic {
     SCR_RESULT_INTERRUPT
   };
 
+  // sizeof 84h
   class zCCSProps : public zCObject {
   public:
     zCLASS_DECLARATION( zCCSProps )
@@ -22,18 +23,18 @@ namespace Gothic_II_Classic {
       RUN_PERDAY
     };
 
-    zSTRING name;
-    int csLoop;
-    int globalCutscene;
-    float distance;
-    int hasToBeTriggerd;
-    float range;
-    int ignore;
-    int numLockedBlocks;
-    zSTRING stageName;
-    zSTRING scriptFuncOnStop;
-    zTCSRunBehaviour runBehaviour;
-    int runBehaviourValue;
+    zSTRING name;                  // sizeof 14h    offset 24h
+    int csLoop;                    // sizeof 04h    offset 38h
+    int globalCutscene;            // sizeof 04h    offset 3Ch
+    float distance;                // sizeof 04h    offset 40h
+    int hasToBeTriggerd;           // sizeof 04h    offset 44h
+    float range;                   // sizeof 04h    offset 48h
+    int ignore;                    // sizeof 04h    offset 4Ch
+    int numLockedBlocks;           // sizeof 04h    offset 50h
+    zSTRING stageName;             // sizeof 14h    offset 54h
+    zSTRING scriptFuncOnStop;      // sizeof 14h    offset 68h
+    zTCSRunBehaviour runBehaviour; // sizeof 04h    offset 7Ch
+    int runBehaviourValue;         // sizeof 04h    offset 80h
 
     void zCCSProps_OnInit()                     zCall( 0x00421B70 );
     zSTRING GetName()                           zCall( 0x00406300 );

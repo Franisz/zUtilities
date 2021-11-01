@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZGAME_INFO_H__VER1__
 #define __ZGAME_INFO_H__VER1__
@@ -13,9 +13,10 @@ namespace Gothic_I_Addon {
   const int zPCK_GAMEINFO_PLAYER = 2;
   const int zPCK_GAMEINFO_ALL    = 255;
 
+  // sizeof 18h
   class zCGameInfo {
   public:
-    zSTRING name;
+    zSTRING name; // sizeof 14h    offset 04h
 
     void zCGameInfo_OnInit()                                     zCall( 0x00451BD0 );
     zCGameInfo()                                                 zInit( zCGameInfo_OnInit() );

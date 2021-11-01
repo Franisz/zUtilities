@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OWAYNET_H__VER2__
 #define __OWAYNET_H__VER2__
@@ -7,6 +7,7 @@
 
 namespace Gothic_II_Classic {
 
+  // sizeof 7Ch
   class oCWaypoint : public zCWaypoint {
   public:
 
@@ -19,10 +20,11 @@ namespace Gothic_II_Classic {
     #include "oCWaypoint.inl"
   };
 
+  // sizeof 28h
   class oCWay : public zCWay {
   public:
-    oCMobLadder* ladder;
-    oCMobDoor* door;
+    oCMobLadder* ladder; // sizeof 04h    offset 20h
+    oCMobDoor* door;     // sizeof 04h    offset 24h
 
     void oCWay_OnInit()                           zCall( 0x0071E590 );
     oCWay()                                       zInit( oCWay_OnInit() );

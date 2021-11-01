@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OITEM_H__VER3__
 #define __OITEM_H__VER3__
@@ -53,63 +53,64 @@ namespace Gothic_II_Addon {
     ITM_WEAR_LIGHT = 8
   };
 
+  // sizeof 348h
   class oCItem : public oCVob {
   public:
     zCLASS_DECLARATION( oCItem )
 
     group {
-      int idx;
-      zSTRING name;
-      zSTRING nameID;
-      int hitp;
-      int max_hitp;
-      int mainflag;
-      int flags;
-      int weight;
-      int value;
-      unsigned long damageTypes;
-      int damageTotal;
-      int damage[oEDamageIndex_MAX];
-      int wear;
-      int protection[oEDamageIndex_MAX];
-      int nutrition;
-      int cond_atr[ITM_COND_MAX];
-      int cond_value[ITM_COND_MAX];
-      int change_atr[ITM_COND_MAX];
-      int change_value[ITM_COND_MAX];
-      int magic;
-      int on_equip;
-      int on_unequip;
-      int onState[ITM_STATE_MAX];
-      int owner;
-      int ownerGuild;
-      int disguiseGuild;
-      zSTRING file;
-      zSTRING visual_change;
-      zSTRING effectName;
-      int visual_skin;
-      zSTRING scemeName;
-      oTSndMaterial sndMat;
-      int munition;
-      int spell;
-      int range;
-      int mag_circle;
-      zSTRING description;
-      zSTRING text[ITM_TEXT_MAX];
-      int count[ITM_TEXT_MAX];
-      int inv_zbias;
-      int inv_rotx;
-      int inv_roty;
-      int inv_rotz;
-      int inv_animate;
+      int idx;                           // sizeof 04h    offset 120h
+      zSTRING name;                      // sizeof 14h    offset 124h
+      zSTRING nameID;                    // sizeof 14h    offset 138h
+      int hitp;                          // sizeof 04h    offset 14Ch
+      int max_hitp;                      // sizeof 04h    offset 150h
+      int mainflag;                      // sizeof 04h    offset 154h
+      int flags;                         // sizeof 04h    offset 158h
+      int weight;                        // sizeof 04h    offset 15Ch
+      int value;                         // sizeof 04h    offset 160h
+      unsigned long damageTypes;         // sizeof 04h    offset 164h
+      int damageTotal;                   // sizeof 04h    offset 168h
+      int damage[oEDamageIndex_MAX];     // sizeof 20h    offset 16Ch
+      int wear;                          // sizeof 04h    offset 18Ch
+      int protection[oEDamageIndex_MAX]; // sizeof 20h    offset 190h
+      int nutrition;                     // sizeof 04h    offset 1B0h
+      int cond_atr[ITM_COND_MAX];        // sizeof 0Ch    offset 1B4h
+      int cond_value[ITM_COND_MAX];      // sizeof 0Ch    offset 1C0h
+      int change_atr[ITM_COND_MAX];      // sizeof 0Ch    offset 1CCh
+      int change_value[ITM_COND_MAX];    // sizeof 0Ch    offset 1D8h
+      int magic;                         // sizeof 04h    offset 1E4h
+      int on_equip;                      // sizeof 04h    offset 1E8h
+      int on_unequip;                    // sizeof 04h    offset 1ECh
+      int onState[ITM_STATE_MAX];        // sizeof 10h    offset 1F0h
+      int owner;                         // sizeof 04h    offset 200h
+      int ownerGuild;                    // sizeof 04h    offset 204h
+      int disguiseGuild;                 // sizeof 04h    offset 208h
+      zSTRING file;                      // sizeof 14h    offset 20Ch
+      zSTRING visual_change;             // sizeof 14h    offset 220h
+      zSTRING effectName;                // sizeof 14h    offset 234h
+      int visual_skin;                   // sizeof 04h    offset 248h
+      zSTRING scemeName;                 // sizeof 14h    offset 24Ch
+      oTSndMaterial sndMat;              // sizeof 04h    offset 260h
+      int munition;                      // sizeof 04h    offset 264h
+      int spell;                         // sizeof 04h    offset 268h
+      int range;                         // sizeof 04h    offset 26Ch
+      int mag_circle;                    // sizeof 04h    offset 270h
+      zSTRING description;               // sizeof 14h    offset 274h
+      zSTRING text[ITM_TEXT_MAX];        // sizeof 78h    offset 288h
+      int count[ITM_TEXT_MAX];           // sizeof 18h    offset 300h
+      int inv_zbias;                     // sizeof 04h    offset 318h
+      int inv_rotx;                      // sizeof 04h    offset 31Ch
+      int inv_roty;                      // sizeof 04h    offset 320h
+      int inv_rotz;                      // sizeof 04h    offset 324h
+      int inv_animate;                   // sizeof 04h    offset 328h
     };
-    int amount;
-    int instanz;
-    int c_manipulation;
-    float last_manipulation;
-    int magic_value;
-    oCVisualFX* effectVob;
-    oCItem* next;
+    int amount;                          // sizeof 04h    offset 32Ch
+    int instanz;                         // sizeof 04h    offset 330h
+    int c_manipulation;                  // sizeof 04h    offset 334h
+    float last_manipulation;             // sizeof 04h    offset 338h
+    int magic_value;                     // sizeof 04h    offset 33Ch
+    oCVisualFX* effectVob;               // sizeof 04h    offset 340h
+    oCItem* next;                        // sizeof 04h    offset 344h
 
     void oCItem_OnInit()                                                                     zCall( 0x00711290 );
     void oCItem_OnInit( zSTRING&, int )                                                      zCall( 0x00711470 );

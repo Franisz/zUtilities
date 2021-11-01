@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZKB_SPLINES_H__VER0__
 #define __ZKB_SPLINES_H__VER0__
@@ -16,14 +16,15 @@ namespace Gothic_I_Classic {
     zTSPL_LERP_PATH_ROTvoidS
   };
 
+  // sizeof 2Ch
   class zCPositionKey {
   public:
-    float t;
-    zVEC3 p;
-    zCQuat rot;
-    float tension;
-    float continuity;
-    float bias;
+    float t;          // sizeof 04h    offset 00h
+    zVEC3 p;          // sizeof 0Ch    offset 04h
+    zCQuat rot;       // sizeof 10h    offset 10h
+    float tension;    // sizeof 04h    offset 20h
+    float continuity; // sizeof 04h    offset 24h
+    float bias;       // sizeof 04h    offset 28h
 
     zCPositionKey() {}
     void SetMat( zMAT4 const& ) zCall( 0x004890E0 );
@@ -32,15 +33,16 @@ namespace Gothic_I_Classic {
     #include "zCPositionKey.inl"
   };
 
+  // sizeof 3Ch
   class zCCubicPolynomial {
   public:
-    zVEC3 c0;
-    zVEC3 c1;
-    zVEC3 c2;
-    zVEC3 c3;
-    float tmin;
-    float tmax;
-    float trange;
+    zVEC3 c0;     // sizeof 0Ch    offset 00h
+    zVEC3 c1;     // sizeof 0Ch    offset 0Ch
+    zVEC3 c2;     // sizeof 0Ch    offset 18h
+    zVEC3 c3;     // sizeof 0Ch    offset 24h
+    float tmin;   // sizeof 04h    offset 30h
+    float tmax;   // sizeof 04h    offset 34h
+    float trange; // sizeof 04h    offset 38h
 
     void zCCubicPolynomial_OnInit()    zCall( 0x004C95A0 );
     zCCubicPolynomial()                zInit( zCCubicPolynomial_OnInit() );
@@ -54,15 +56,16 @@ namespace Gothic_I_Classic {
     #include "zCCubicPolynomial.inl"
   };
 
+  // sizeof 24h
   class zCKBSpline {
   public:
-    zCCubicPolynomial* polynom;
-    int numPolynomials;
-    float* length;
-    float totalLength;
-    int lastKey;
-    zCArray<zCPositionKey*> keyList;
-    int deleteKeysWhenDone;
+    zCCubicPolynomial* polynom;      // sizeof 04h    offset 00h
+    int numPolynomials;              // sizeof 04h    offset 04h
+    float* length;                   // sizeof 04h    offset 08h
+    float totalLength;               // sizeof 04h    offset 0Ch
+    int lastKey;                     // sizeof 04h    offset 10h
+    zCArray<zCPositionKey*> keyList; // sizeof 0Ch    offset 14h
+    int deleteKeysWhenDone;          // sizeof 04h    offset 20h
 
     zCKBSpline() {}
     void InitVars()                                      zCall( 0x00480300 );

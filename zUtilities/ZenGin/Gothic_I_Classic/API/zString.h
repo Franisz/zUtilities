@@ -1,10 +1,10 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSTRING_H__VER0__
 #define __ZSTRING_H__VER0__
 
 #define USING_UNION_STRING_METHODS True
-#define UNPROTECT_ZSTRING_METHODS  True
+#define UNPROTECT_ZSTRING_METHODS  False
 
 namespace Gothic_I_Classic {
 

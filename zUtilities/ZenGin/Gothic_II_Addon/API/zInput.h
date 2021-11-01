@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZINPUT_H__VER3__
 #define __ZINPUT_H__VER3__
@@ -15,10 +15,11 @@ namespace Gothic_II_Addon {
     zINPUT_JOYSTICK4
   };
 
+  // sizeof 14h
   struct zSKeyMapping {
-    unsigned short logicalID;
-    zCArray<unsigned short> controlValues;
-    int set;
+    unsigned short logicalID;              // sizeof 02h    offset 00h
+    zCArray<unsigned short> controlValues; // sizeof 0Ch    offset 04h
+    int set;                               // sizeof 04h    offset 10h
 
     zSKeyMapping() {}
     ~zSKeyMapping() zCall( 0x004CC240 );
@@ -27,9 +28,10 @@ namespace Gothic_II_Addon {
     #include "zSKeyMapping.inl"
   };
 
+  // sizeof 18h
   struct zSCtrlValue {
-    zSTRING name;
-    unsigned short value;
+    zSTRING name;         // sizeof 14h    offset 00h
+    unsigned short value; // sizeof 02h    offset 14h
 
     void zSCtrlValue_OnInit() zCall( 0x004D20A0 );
     ~zSCtrlValue()            zCall( 0x004CFBB0 );
@@ -39,9 +41,10 @@ namespace Gothic_II_Addon {
     #include "zSCtrlValue.inl"
   };
 
+  // sizeof 14h
   class zCInput {
   public:
-    zCArraySort<zSKeyMapping*> mapList;
+    zCArraySort<zSKeyMapping*> mapList; // sizeof 10h    offset 04h
 
     void zCInput_OnInit()                                               zCall( 0x004CBB60 );
     zCInput()                                                           zInit( zCInput_OnInit() );

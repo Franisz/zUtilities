@@ -1,36 +1,37 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OGAME_MANAGER_H__VER3__
 #define __OGAME_MANAGER_H__VER3__
 
 namespace Gothic_II_Addon {
 
+  // sizeof 94h
   class CGameManager : public zCInputCallback {
   public:
-    zTRnd_AlphaBlendFunc oldAlphaBlendFunc;
-    HWND* sysContextHandle;
-    oCGame* gameSession;
-    oCGame* backLoop;
-    int exitGame;
-    int exitSession;
-    int gameIdle;
-    int lastWorldWasGame;
-    oCSavegameManager* savegameManager;
-    zCArray<zSTRING> lastDatFileList;
-    zCArray<zSTRING> lastWorldList;
-    zSTRING backWorldRunning;
-    zSTRING backDatFileRunning;
-    zCView* vidScreen;
-    zCView* initScreen;
-    int introActive;
-    int dontStartGame;
-    oCBinkPlayer* videoPlayer;
-    int videoPlayInGame;
-    zCMenu* menu_chgkeys;
-    zCMenu* menu_chgkeys_ext;
-    oCMenuSavegame* menu_save_savegame;
-    oCMenuSavegame* menu_load_savegame;
-    int playTime;
+    zTRnd_AlphaBlendFunc oldAlphaBlendFunc; // sizeof 04h    offset 04h
+    HWND* sysContextHandle;                 // sizeof 04h    offset 08h
+    oCGame* gameSession;                    // sizeof 04h    offset 0Ch
+    oCGame* backLoop;                       // sizeof 04h    offset 10h
+    int exitGame;                           // sizeof 04h    offset 14h
+    int exitSession;                        // sizeof 04h    offset 18h
+    int gameIdle;                           // sizeof 04h    offset 1Ch
+    int lastWorldWasGame;                   // sizeof 04h    offset 20h
+    oCSavegameManager* savegameManager;     // sizeof 04h    offset 24h
+    zCArray<zSTRING> lastDatFileList;       // sizeof 0Ch    offset 28h
+    zCArray<zSTRING> lastWorldList;         // sizeof 0Ch    offset 34h
+    zSTRING backWorldRunning;               // sizeof 14h    offset 40h
+    zSTRING backDatFileRunning;             // sizeof 14h    offset 54h
+    zCView* vidScreen;                      // sizeof 04h    offset 68h
+    zCView* initScreen;                     // sizeof 04h    offset 6Ch
+    int introActive;                        // sizeof 04h    offset 70h
+    int dontStartGame;                      // sizeof 04h    offset 74h
+    oCBinkPlayer* videoPlayer;              // sizeof 04h    offset 78h
+    int videoPlayInGame;                    // sizeof 04h    offset 7Ch
+    zCMenu* menu_chgkeys;                   // sizeof 04h    offset 80h
+    zCMenu* menu_chgkeys_ext;               // sizeof 04h    offset 84h
+    oCMenuSavegame* menu_save_savegame;     // sizeof 04h    offset 88h
+    oCMenuSavegame* menu_load_savegame;     // sizeof 04h    offset 8Ch
+    int playTime;                           // sizeof 04h    offset 90h
 
     void CGameManager_OnInit()                                      zCall( 0x004244E0 );
     CGameManager()                                                  zInit( CGameManager_OnInit() );

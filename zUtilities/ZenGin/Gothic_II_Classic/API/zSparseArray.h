@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSPARSE_ARRAY_H__VER2__
 #define __ZSPARSE_ARRAY_H__VER2__

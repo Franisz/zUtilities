@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OSPAWN_H__VER0__
 #define __OSPAWN_H__VER0__
@@ -7,21 +7,23 @@
 
 namespace Gothic_I_Classic {
 
+  // sizeof 20h
   class oCSpawnManager {
   public:
+    // sizeof 14h
     typedef struct oSSpawnNode {
     public:
-      oCNpc* npc;
-      zVEC3 spawnPos;
-      float timer;
+      oCNpc* npc;     // sizeof 04h    offset 00h
+      zVEC3 spawnPos; // sizeof 0Ch    offset 04h
+      float timer;    // sizeof 04h    offset 10h
 
       oSSpawnNode() {}
     } oTSpawnNode;
 
-    zCArray<oTSpawnNode*> spawnList;
-    int spawningEnabled;
-    zVEC3 camPos;
-    float insertTime;
+    zCArray<oTSpawnNode*> spawnList; // sizeof 0Ch    offset 00h
+    int spawningEnabled;             // sizeof 04h    offset 0Ch
+    zVEC3 camPos;                    // sizeof 0Ch    offset 10h
+    float insertTime;                // sizeof 04h    offset 1Ch
 
     void oCSpawnManager_OnInit()                      zCall( 0x006CF4D0 );
     oCSpawnManager()                                  zInit( oCSpawnManager_OnInit() );

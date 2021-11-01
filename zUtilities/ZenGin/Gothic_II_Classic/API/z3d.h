@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __Z3D_H__VER2__
 #define __Z3D_H__VER2__
@@ -43,16 +43,17 @@ namespace Gothic_II_Classic {
     zCAM_TRAFO_VIEW_INV
   };
 
+  // sizeof 24h
   struct zTEngineStats {
-    int numVobAI;
-    int numVobAI_only;
-    int numVobAI_full;
-    int numVob_EndMovement;
-    int numVobFirstTestInterpen;
-    int numModelUpdateBBoxTree;
-    int numPolysClipped;
-    int numPlanesClipped;
-    int numTraceRay;
+    int numVobAI;                // sizeof 04h    offset 00h
+    int numVobAI_only;           // sizeof 04h    offset 04h
+    int numVobAI_full;           // sizeof 04h    offset 08h
+    int numVob_EndMovement;      // sizeof 04h    offset 0Ch
+    int numVobFirstTestInterpen; // sizeof 04h    offset 10h
+    int numModelUpdateBBoxTree;  // sizeof 04h    offset 14h
+    int numPolysClipped;         // sizeof 04h    offset 18h
+    int numPlanesClipped;        // sizeof 04h    offset 1Ch
+    int numTraceRay;             // sizeof 04h    offset 20h
 
     zTEngineStats() {}
     void PrintScreen( int, int ) zCall( 0x00507F40 );
@@ -61,14 +62,16 @@ namespace Gothic_II_Classic {
     #include "zTEngineStats.inl"
   };
 
+  // sizeof 0Ch
   class zCLineCache {
   public:
+    // sizeof 14h
     struct zTCacheEntry {
-      int x1;
-      int y1;
-      int x2;
-      int y2;
-      int color;
+      int x1;    // sizeof 04h    offset 00h
+      int y1;    // sizeof 04h    offset 04h
+      int x2;    // sizeof 04h    offset 08h
+      int y2;    // sizeof 04h    offset 0Ch
+      int color; // sizeof 04h    offset 10h
 
       zTCacheEntry() {}
 
@@ -76,9 +79,9 @@ namespace Gothic_II_Classic {
       #include "zCLineCache_zTCacheEntry.inl"
     };
 
-    int numEntries;
-    int nextFree;
-    zTCacheEntry* cache;
+    int numEntries;      // sizeof 04h    offset 00h
+    int nextFree;        // sizeof 04h    offset 04h
+    zTCacheEntry* cache; // sizeof 04h    offset 08h
 
     zCLineCache() {}
     ~zCLineCache()                                         zCall( 0x00508560 );
@@ -91,21 +94,22 @@ namespace Gothic_II_Classic {
     #include "zCLineCache.inl"
   };
 
+  // sizeof 38h
   struct zTViewportData {
-    int xmin;
-    int ymin;
-    int xdim;
-    int ydim;
-    float xminFloat;
-    float yminFloat;
-    float xmaxFloat;
-    float ymaxFloat;
-    float xdimFloat;
-    float ydimFloat;
-    float xdimFloatMinus1;
-    float ydimFloatMinus1;
-    float xcenter;
-    float ycenter;
+    int xmin;              // sizeof 04h    offset 00h
+    int ymin;              // sizeof 04h    offset 04h
+    int xdim;              // sizeof 04h    offset 08h
+    int ydim;              // sizeof 04h    offset 0Ch
+    float xminFloat;       // sizeof 04h    offset 10h
+    float yminFloat;       // sizeof 04h    offset 14h
+    float xmaxFloat;       // sizeof 04h    offset 18h
+    float ymaxFloat;       // sizeof 04h    offset 1Ch
+    float xdimFloat;       // sizeof 04h    offset 20h
+    float ydimFloat;       // sizeof 04h    offset 24h
+    float xdimFloatMinus1; // sizeof 04h    offset 28h
+    float ydimFloatMinus1; // sizeof 04h    offset 2Ch
+    float xcenter;         // sizeof 04h    offset 30h
+    float ycenter;         // sizeof 04h    offset 34h
 
     zTViewportData() {}
 
@@ -113,6 +117,7 @@ namespace Gothic_II_Classic {
     #include "zTViewportData.inl"
   };
 
+  // sizeof 934h
   class zCCamera {
   public:
     enum {
@@ -125,12 +130,13 @@ namespace Gothic_II_Classic {
       NUM_FRUSTUM_PLANES_WO_FAR = 4
     };
 
+    // sizeof 18h
     struct zTCamVertSimple {
-      float x;
-      float y;
-      float z;
-      zVEC2 texuv;
-      zCOLOR color;
+      float x;      // sizeof 04h    offset 00h
+      float y;      // sizeof 04h    offset 04h
+      float z;      // sizeof 04h    offset 08h
+      zVEC2 texuv;  // sizeof 08h    offset 0Ch
+      zCOLOR color; // sizeof 04h    offset 14h
 
       zTCamVertSimple() {}
 
@@ -138,53 +144,53 @@ namespace Gothic_II_Classic {
       #include "zCCamera_zTCamVertSimple.inl"
     };
 
-    zTPlane frustumplanes[NUM_FRUSTUM_PLANES];
-    unsigned char signbits[NUM_FRUSTUM_PLANES];
-    zTViewportData vpData;
-    zCViewBase* targetView;
-    zMAT4 camMatrix;
-    zMAT4 camMatrixInv;
-    int tremorToggle;
-    float tremorScale;
-    zVEC3 tremorAmplitude;
-    zVEC3 tremorOrigin;
-    float tremorVelo;
-    zMAT4 trafoView;
-    zMAT4 trafoViewInv;
-    zMAT4 trafoWorld;
-    zCMatrixStack<zMAT4, 8> trafoViewStack;
-    zCMatrixStack<zMAT4, 8> trafoWorldStack;
-    zCMatrixStack<zMAT4, 8> trafoWorldViewStack;
-    zMAT4 trafoProjection;
-    zTCamVertSimple polyCamVerts[zTCAM_POLY_NUM_VERT];
-    zCPolygon* poly;
-    zCMesh* polyMesh;
-    zCMaterial* polyMaterial;
-    int screenFadeEnabled;
-    zCOLOR screenFadeColor;
-    zSTRING screenFadeTexture;
-    float screenFadeTextureAniFPS;
-    zTRnd_AlphaBlendFunc screenFadeTextureBlendFunc;
-    int cinemaScopeEnabled;
-    zCOLOR cinemaScopeColor;
-    zPROJECTION projection;
-    zTCam_DrawMode drawMode;
-    zTShadeMode shadeMode;
-    int drawWire;
-    float farClipZ;
-    float nearClipZ;
-    float viewDistanceX;
-    float viewDistanceY;
-    float viewDistanceXInv;
-    float viewDistanceYInv;
-    int vobFarClipZ;
-    float fovH;
-    float fovV;
-    zCVob* connectedVob;
-    float topBottomSin;
-    float topBottomCos;
-    float leftRightSin;
-    float leftRightCos;
+    zTPlane frustumplanes[NUM_FRUSTUM_PLANES];         // sizeof 60h    offset 00h
+    unsigned char signbits[NUM_FRUSTUM_PLANES];        // sizeof 06h    offset 60h
+    zTViewportData vpData;                             // sizeof 38h    offset 68h
+    zCViewBase* targetView;                            // sizeof 04h    offset A0h
+    zMAT4 camMatrix;                                   // sizeof 40h    offset A4h
+    zMAT4 camMatrixInv;                                // sizeof 40h    offset E4h
+    int tremorToggle;                                  // sizeof 04h    offset 124h
+    float tremorScale;                                 // sizeof 04h    offset 128h
+    zVEC3 tremorAmplitude;                             // sizeof 0Ch    offset 12Ch
+    zVEC3 tremorOrigin;                                // sizeof 0Ch    offset 138h
+    float tremorVelo;                                  // sizeof 04h    offset 144h
+    zMAT4 trafoView;                                   // sizeof 40h    offset 148h
+    zMAT4 trafoViewInv;                                // sizeof 40h    offset 188h
+    zMAT4 trafoWorld;                                  // sizeof 40h    offset 1C8h
+    zCMatrixStack<zMAT4, 8> trafoViewStack;            // sizeof 204h   offset 208h
+    zCMatrixStack<zMAT4, 8> trafoWorldStack;           // sizeof 204h   offset 40Ch
+    zCMatrixStack<zMAT4, 8> trafoWorldViewStack;       // sizeof 204h   offset 610h
+    zMAT4 trafoProjection;                             // sizeof 40h    offset 814h
+    zTCamVertSimple polyCamVerts[zTCAM_POLY_NUM_VERT]; // sizeof 60h    offset 854h
+    zCPolygon* poly;                                   // sizeof 04h    offset 8B4h
+    zCMesh* polyMesh;                                  // sizeof 04h    offset 8B8h
+    zCMaterial* polyMaterial;                          // sizeof 04h    offset 8BCh
+    int screenFadeEnabled;                             // sizeof 04h    offset 8C0h
+    zCOLOR screenFadeColor;                            // sizeof 04h    offset 8C4h
+    zSTRING screenFadeTexture;                         // sizeof 14h    offset 8C8h
+    float screenFadeTextureAniFPS;                     // sizeof 04h    offset 8DCh
+    zTRnd_AlphaBlendFunc screenFadeTextureBlendFunc;   // sizeof 04h    offset 8E0h
+    int cinemaScopeEnabled;                            // sizeof 04h    offset 8E4h
+    zCOLOR cinemaScopeColor;                           // sizeof 04h    offset 8E8h
+    zPROJECTION projection;                            // sizeof 04h    offset 8ECh
+    zTCam_DrawMode drawMode;                           // sizeof 04h    offset 8F0h
+    zTShadeMode shadeMode;                             // sizeof 04h    offset 8F4h
+    int drawWire;                                      // sizeof 04h    offset 8F8h
+    float farClipZ;                                    // sizeof 04h    offset 8FCh
+    float nearClipZ;                                   // sizeof 04h    offset 900h
+    float viewDistanceX;                               // sizeof 04h    offset 904h
+    float viewDistanceY;                               // sizeof 04h    offset 908h
+    float viewDistanceXInv;                            // sizeof 04h    offset 90Ch
+    float viewDistanceYInv;                            // sizeof 04h    offset 910h
+    int vobFarClipZ;                                   // sizeof 04h    offset 914h
+    float fovH;                                        // sizeof 04h    offset 918h
+    float fovV;                                        // sizeof 04h    offset 91Ch
+    zCVob* connectedVob;                               // sizeof 04h    offset 920h
+    float topBottomSin;                                // sizeof 04h    offset 924h
+    float topBottomCos;                                // sizeof 04h    offset 928h
+    float leftRightSin;                                // sizeof 04h    offset 92Ch
+    float leftRightCos;                                // sizeof 04h    offset 930h
 
     void zCCamera_OnInit()                                                                zCall( 0x00544C40 );
     void Project( zVEC3 const* const, float&, float& ) const                              zCall( 0x0052D0E0 );
@@ -236,15 +242,16 @@ namespace Gothic_II_Classic {
     #include "zCCamera.inl"
   };
 
+  // sizeof 14h
   class zCVertex {
   public:
     zMEMPOOL_DECLARATION( zCVertex, 0x008C5CCC )
 
-    zVEC3 position;
+    zVEC3 position;           // sizeof 0Ch    offset 00h
     union {
       group {
-        int transformedIndex;
-        int myIndex;
+        int transformedIndex; // sizeof 04h    offset 0Ch
+        int myIndex;          // sizeof 04h    offset 10h
       };
       unsigned int hackData;
     };
@@ -261,15 +268,16 @@ namespace Gothic_II_Classic {
     #include "zCVertex.inl"
   };
 
+  // sizeof 1Ch
   class zCVertFeature {
   public:
     zMEMPOOL_DECLARATION( zCVertFeature, 0x008C5D30 )
 
-    zVEC3 vertNormal;
-    zCOLOR lightStat;
-    zCOLOR lightDyn;
-    float texu;
-    float texv;
+    zVEC3 vertNormal; // sizeof 0Ch    offset 00h
+    zCOLOR lightStat; // sizeof 04h    offset 0Ch
+    zCOLOR lightDyn;  // sizeof 04h    offset 10h
+    float texu;       // sizeof 04h    offset 14h
+    float texv;       // sizeof 04h    offset 18h
 
     void zCVertFeature_OnInit() zCall( 0x00568510 );
     zCVertFeature()             zInit( zCVertFeature_OnInit() );
@@ -278,6 +286,7 @@ namespace Gothic_II_Classic {
     #include "zCVertFeature.inl"
   };
 
+  // sizeof 34h
   class zCPolygon {
   public:
     zMEMPOOL_DECLARATION( zCPolygon, 0x008C5D68 )
@@ -289,9 +298,10 @@ namespace Gothic_II_Classic {
       zPORTAL_TYPE_BIG_NOFADE
     };
 
+    // sizeof 14h
     struct zSPolySavedValues {
-      zCPolygon* poly;
-      zTPlane plane;
+      zCPolygon* poly; // sizeof 04h    offset 00h
+      zTPlane plane;   // sizeof 10h    offset 04h
 
       zSPolySavedValues() {}
 
@@ -299,9 +309,10 @@ namespace Gothic_II_Classic {
       #include "zCPolygon_zSPolySavedValues.inl"
     };
 
+    // sizeof 08h
     struct zSVertexSavedValues {
-      zCVertex* vert;
-      float offset;
+      zCVertex* vert; // sizeof 04h    offset 00h
+      float offset;   // sizeof 04h    offset 04h
 
       zSVertexSavedValues() {}
 
@@ -309,11 +320,12 @@ namespace Gothic_II_Classic {
       #include "zCPolygon_zSVertexSavedValues.inl"
     };
 
+    // sizeof 20h
     struct zSFeatureSavedValues {
-      zCVertFeature* feat;
-      zCOLOR color;
-      zVEC3 mapping;
-      zVEC3 vertNormal;
+      zCVertFeature* feat; // sizeof 04h    offset 00h
+      zCOLOR color;        // sizeof 04h    offset 04h
+      zVEC3 mapping;       // sizeof 0Ch    offset 08h
+      zVEC3 vertNormal;    // sizeof 0Ch    offset 14h
 
       zSFeatureSavedValues() {}
 
@@ -322,15 +334,16 @@ namespace Gothic_II_Classic {
     };
 
 #pragma pack( push, 1 )
+    // sizeof 03h
     struct TFlags {
-      unsigned char portalPoly          : 2;
-      unsigned char occluder            : 1;
-      unsigned char sectorPoly          : 1;
-      unsigned char mustRelight         : 1;
-      unsigned char portalIndoorOutdoor : 1;
-      unsigned char ghostOccluder       : 1;
-      unsigned char noDynLightNear      : 1;
-      unsigned short sectorIndex        : 16;
+      unsigned char portalPoly          : 2;  // sizeof 02h    offset bit
+      unsigned char occluder            : 1;  // sizeof 01h    offset bit
+      unsigned char sectorPoly          : 1;  // sizeof 01h    offset bit
+      unsigned char mustRelight         : 1;  // sizeof 01h    offset bit
+      unsigned char portalIndoorOutdoor : 1;  // sizeof 01h    offset bit
+      unsigned char ghostOccluder       : 1;  // sizeof 01h    offset bit
+      unsigned char noDynLightNear      : 1;  // sizeof 01h    offset bit
+      unsigned short sectorIndex        : 16; // sizeof 10h    offset bit
 
       TFlags() {}
 
@@ -339,17 +352,17 @@ namespace Gothic_II_Classic {
     };
 #pragma pack( pop )
 
-    zCVertex** vertex;
-    int lastTimeDrawn;
-    zTPlane polyPlane;
-    zCMaterial* material;
-    zCLightMap* lightmap;
-    zCVertex** clipVert;
-    zCVertFeature** clipFeat;
-    int numClipVert;
-    zCVertFeature** feature;
-    unsigned char polyNumVert;
-    TFlags flags;
+    zCVertex** vertex;         // sizeof 04h    offset 00h
+    int lastTimeDrawn;         // sizeof 04h    offset 04h
+    zTPlane polyPlane;         // sizeof 10h    offset 08h
+    zCMaterial* material;      // sizeof 04h    offset 18h
+    zCLightMap* lightmap;      // sizeof 04h    offset 1Ch
+    zCVertex** clipVert;       // sizeof 04h    offset 20h
+    zCVertFeature** clipFeat;  // sizeof 04h    offset 24h
+    int numClipVert;           // sizeof 04h    offset 28h
+    zCVertFeature** feature;   // sizeof 04h    offset 2Ch
+    unsigned char polyNumVert; // sizeof 01h    offset 30h
+    TFlags flags;              // sizeof 03h    offset 31h
 
     void zCPolygon_OnInit()                                                                                           zCall( 0x005B1430 );
     int RenderPoly( int )                                                                                             zCall( 0x00526FE0 );
@@ -455,13 +468,14 @@ namespace Gothic_II_Classic {
     #include "zCPolygon.inl"
   };
 
+  // sizeof 40h
   class zCPortal : public zCPolygon {
   public:
     zMEMPOOL_DECLARATION( zCPortal, 0x008C5D4C )
 
-    zCBspNode* frontBspNode;
-    zCBspNode* backBspNode;
-    int lastTimeCompletely;
+    zCBspNode* frontBspNode; // sizeof 04h    offset 34h
+    zCBspNode* backBspNode;  // sizeof 04h    offset 38h
+    int lastTimeCompletely;  // sizeof 04h    offset 3Ch
 
     zCPortal() {}
     void zCPortal_OnInit( zTPlane const&, zCMesh* ) zCall( 0x005265C0 );

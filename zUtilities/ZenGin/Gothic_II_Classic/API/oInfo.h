@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OINFO_H__VER2__
 #define __OINFO_H__VER2__
@@ -15,10 +15,11 @@ namespace Gothic_II_Classic {
     INF_ANSWER_PSIONIC
   };
 
+  // sizeof 18h
   class oCInfoChoice {
   public:
-    zSTRING Text;
-    int Function;
+    zSTRING Text; // sizeof 14h    offset 00h
+    int Function; // sizeof 04h    offset 14h
 
     oCInfoChoice() {}
     ~oCInfoChoice() zCall( 0x006A6370 );
@@ -27,18 +28,20 @@ namespace Gothic_II_Classic {
     #include "oCInfoChoice.inl"
   };
 
+  // sizeof 5Ch
   class oCInfo {
   public:
 #pragma pack( push, 1 )
+    // sizeof 30h
     struct Tpd {
-      int npc;
-      int nr;
-      int important;
-      int conditions;
-      int information;
-      zSTRING description;
-      int trade;
-      int permanent;
+      int npc;             // sizeof 04h    offset 00h
+      int nr;              // sizeof 04h    offset 04h
+      int important;       // sizeof 04h    offset 08h
+      int conditions;      // sizeof 04h    offset 0Ch
+      int information;     // sizeof 04h    offset 10h
+      zSTRING description; // sizeof 14h    offset 14h
+      int trade;           // sizeof 04h    offset 28h
+      int permanent;       // sizeof 04h    offset 2Ch
 
       Tpd() {}
       ~Tpd() zCall( 0x006A5A60 );
@@ -48,12 +51,12 @@ namespace Gothic_II_Classic {
     };
 #pragma pack( pop )
 
-    oCInfo* next;
-    zSTRING name;
-    Tpd pd;
-    int told;
-    int instance;
-    zCList<oCInfoChoice> listChoices;
+    oCInfo* next;                     // sizeof 04h    offset 04h
+    zSTRING name;                     // sizeof 14h    offset 08h
+    Tpd pd;                           // sizeof 30h    offset 1Ch
+    int told;                         // sizeof 04h    offset 4Ch
+    int instance;                     // sizeof 04h    offset 50h
+    zCList<oCInfoChoice> listChoices; // sizeof 08h    offset 54h
 
     void oCInfo_OnInit()                  zCall( 0x006A5920 );
     oCInfo()                              zInit( oCInfo_OnInit() );
@@ -81,10 +84,11 @@ namespace Gothic_II_Classic {
     #include "oCInfo.inl"
   };
 
+  // sizeof 14h
   class oCInfoManager {
   public:
-    zCListSort<oCInfo> infoList;
-    zCParser* p;
+    zCListSort<oCInfo> infoList; // sizeof 0Ch    offset 04h
+    zCParser* p;                 // sizeof 04h    offset 10h
 
     oCInfoManager() {}
     void oCInfoManager_OnInit( zCParser* )            zCall( 0x006A4960 );

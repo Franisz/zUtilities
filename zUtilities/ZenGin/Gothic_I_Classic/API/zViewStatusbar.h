@@ -1,4 +1,4 @@
-// Supported with union (c) 2018 Union team
+// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_STATUSBAR_H__VER0__
 #define __ZVIEW_STATUSBAR_H__VER0__
@@ -7,13 +7,14 @@
 
 namespace Gothic_I_Classic {
 
+  // sizeof 110h
   class zCViewStatusBar : public zCView {
   public:
-    float minLow;
-    float maxHigh;
-    float low;
-    float high;
-    float currentValue;
+    float minLow;       // sizeof 04h    offset FCh
+    float maxHigh;      // sizeof 04h    offset 100h
+    float low;          // sizeof 04h    offset 104h
+    float high;         // sizeof 04h    offset 108h
+    float currentValue; // sizeof 04h    offset 10Ch
 
     void zCViewStatusBar_OnInit()                                  zCall( 0x0046A200 );
     void zCViewStatusBar_OnInit( int, int, int, int, zTviewID )    zCall( 0x0046A270 );
