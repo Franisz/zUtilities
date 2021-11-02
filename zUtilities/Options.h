@@ -29,6 +29,7 @@ namespace GOTHIC_ENGINE {
 
       zoptions->AddTrivia( PLUGIN_NAME, "LabelItems", "... enables (1) or disables (0) inventory item labeling" );
       zoptions->AddTrivia( PLUGIN_NAME, "LabelScale", "... defines scale of the label" );
+      zoptions->AddTrivia( PLUGIN_NAME, "LabelMissionItems", "... enables (1) or disables (0) labeling of item missions, this will overwrite previous label on any item with ITEM_MISSION flag" );
       zoptions->AddTrivia( PLUGIN_NAME, "PutLabelBehind", "... specifies if the label should be rendered behind the item" );
 
       zoptions->AddTrivia( PLUGIN_NAME, "DamagePopupMode", "... specifies DamagePopup mode, (0) - Disabled, (1) - 'Alter Damage', (2) - 'New World'" );

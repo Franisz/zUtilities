@@ -7,11 +7,11 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_Init() {
+    Options::Misc();
     Options::QuickSave();
     Options::FocusColor();
     Options::ItemLabel();
     Options::DamagePopup();
-    Options::Misc();
     Options::AddTrivias();
     RegisterCommands();
     quickSave = new QuickSave();

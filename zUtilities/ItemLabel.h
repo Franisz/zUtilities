@@ -3,12 +3,13 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int LabelItems, PutLabelBehind;
+    int LabelItems, PutLabelBehind, LabelMissionItems;
     float LabelScale;
 
     void ItemLabel() {
       LabelItems = zoptions->ReadInt( PLUGIN_NAME, "LabelItems", true );
       LabelScale = zoptions->ReadReal( PLUGIN_NAME, "LabelScale", 1.25f );
+      LabelMissionItems = zoptions->ReadInt( PLUGIN_NAME, "LabelMissionItems", false );
       PutLabelBehind = zoptions->ReadInt( PLUGIN_NAME, "PutLabelBehind", false );
     }
   }

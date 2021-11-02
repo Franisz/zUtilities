@@ -43,6 +43,13 @@ namespace GOTHIC_ENGINE {
     zCOLOR grey = zCOLOR( 189, 195, 199 );
     zCOLOR lightBronze = zCOLOR( 205, 127, 50 );
 
+    // ITEM_MISSION
+    if ( Options::LabelMissionItems && item->HasFlag( ITM_FLAG_MI ) ) {
+      color = zCOLOR( 243, 104, 224 );
+      texture = "MISSION"; // https://game-icons.net/1x1/delapouite/pin.html
+      return;
+    }
+
     // Melee
     if ( item->HasFlag( ITM_CAT_NF ) ) {
 
@@ -278,6 +285,14 @@ namespace GOTHIC_ENGINE {
         texture = "MONEY"; // https://game-icons.net/1x1/delapouite/two-coins.html
         return;
       }
+
+#if ENGINE >= Engine_G2
+    if ( item->GetInstanceName().HasWord( "SILVER" ) || item->GetInstanceName().HasWord( "GOLD" ) ) {
+      color = zCOLOR( 72, 219, 251 );
+      texture = "VALUABLES"; // https://game-icons.net/1x1/lorc/cut-diamond.html
+      return;
+    }
+#endif
   }
 
   ItemLabel::ItemLabel( oCItem* renderedItem, zCViewBase* viewBase ) {
