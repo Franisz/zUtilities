@@ -864,6 +864,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="DebugHelper.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="DebugHelper.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="FocusColor.cpp">
       <SubType>
       </SubType>

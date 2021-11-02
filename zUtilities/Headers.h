@@ -6,6 +6,7 @@
 #include "Randomizer.h"
 #include "Options.h"
 #include "PlayerHelper.h"
+#include "DebugHelper.h"
 #include "FocusColor.h"
 #include "QuickSave.h"
 #include "ItemLabel.h"

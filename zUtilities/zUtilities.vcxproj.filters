@@ -232,6 +232,9 @@
     <Filter Include="Plugin\Workspace\Features\QuickSave">
       <UniqueIdentifier>{d60ae5f4-5cd3-4f1d-9267-ccd9efad05e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\Workspace\Features\DebugHelper">
+      <UniqueIdentifier>{73fb9875-d712-4448-bc8b-4e3db8d224e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2840,6 +2843,12 @@
     </ClInclude>
     <ClInclude Include="DamagePopup.cpp">
       <Filter>Plugin\Workspace\Features\DamagePopup</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugHelper.cpp">
+      <Filter>Plugin\Workspace\Features\DebugHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugHelper.h">
+      <Filter>Plugin\Workspace\Features\DebugHelper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

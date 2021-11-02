@@ -27,6 +27,7 @@ namespace GOTHIC_ENGINE {
     for ( uint i = 0; i < popups.GetNum(); i++ )
       popups[i]->Update();
 
+    debugHelper.DebugHelperLoop();
     focusColor.FocusColorLoop();
     quickSave->QuickSaveLoop();
   }
@@ -42,6 +43,7 @@ namespace GOTHIC_ENGINE {
 
   void Game_SaveBegin() {
     playerHelper.isSaving = true;
+    debugHelper.Clear();
   }
 
   void Game_SaveEnd() {
@@ -49,6 +51,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void LoadBegin() {
+    debugHelper.Clear();
     for ( uint i = 0; i < popups.GetNum(); i++ )
       delete popups[i];
   }

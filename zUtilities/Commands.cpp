@@ -17,6 +17,13 @@ namespace GOTHIC_ENGINE {
       return true;
     }
 
+    if ( w2 == "Debug" ) {
+      Options::UsingDebugHelper = (!Options::UsingDebugHelper) ? Options::UsingDebugHelper : !Options::UsingDebugHelper;
+      zSTRING state = (Options::UsingDebugHelper) ? "ON" : "OFF";
+      msg = "zUtilites debug helper " + state;
+      return true;
+    }
+
     return false;
   }
 
@@ -34,5 +41,6 @@ namespace GOTHIC_ENGINE {
   void RegisterCommands() {
     RegisterEvalFunc();
     zcon->Register( "zUtilities Version", "Shows version number" );
+    zcon->Register( "zUtilities Debug", "Toggles debug mode" );
   }
 }
