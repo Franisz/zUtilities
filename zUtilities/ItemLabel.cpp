@@ -22,6 +22,12 @@ namespace GOTHIC_ENGINE {
       list = list->GetNextInList();
 
       if ( viewBase == container->viewItem
+#if ENGINE < Engine_G2
+        || viewBase == container->viewItemFocus
+        || viewBase == container->viewItemActiveFocus
+        || viewBase == container->viewItemHightlightedFocus
+        || viewBase == container->viewItemActiveHighlightedFocus
+#endif
         || viewBase == container->viewItemActive
         || viewBase == container->viewItemHightlighted
         || viewBase == container->viewItemActiveHighlighted )
