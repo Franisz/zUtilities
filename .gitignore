@@ -351,11 +351,11 @@ MigrationBackup/
 
 # Union builds
 G[12] Debug
-G[12] Release
+G[12] M[dDtT] Release
 G[12]A Debug
-G[12]A Release
-MP Debug
-MP Release
+G[12]A M[dDtT] Release
+MP x[24] Debug
+MP x[24] M[dDtT] Release
 
 *.last
 *.bat
