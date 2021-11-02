@@ -12,7 +12,7 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
 
 - Changes name color of focused npcs, containers, doors and items.
 
-  - Npcs: `Red` - hostile / wants to kill you, `Orange` - angry / pissed off, `Green` - friendly, `Slightly green` - friendly guild, `White` - neutral / dead, `Grey` - dead and looted.
+  - Npcs: `Red` - hostile / wants to kill you, `Orange` - angry / pissed off, `Cyan` - partymember, `Green` - friendly, `Slightly green` - friendly guild, `White` - neutral / dead, `Grey` - dead and looted.
   - Doors: `Red` - locked on key, `Orange` - locked, `White` - open.
   - Containers: `Red` - locked on key, `Orange` - locked, `Green` - open with items, `Grey` - open and empty.
   - Items: `White` - default / item can be taken, `Slightly orange` - someone will catch the hero stealing.
