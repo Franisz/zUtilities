@@ -4,7 +4,7 @@
 namespace GOTHIC_ENGINE {
   namespace Options {
     int UseQuickSave, MinSaveSlot, MaxSaveSlot;
-    zSTRING CantSave, CantLoad, NoSave, SaveName;
+    string CantSave, CantLoad, NoSave, SaveName;
 
     void QuickSave() {
       UseQuickSave = zoptions->ReadInt( PLUGIN_NAME, "UseQuickSave", true );
@@ -47,10 +47,10 @@ namespace GOTHIC_ENGINE {
         break;
       }
 
-      CantSave = zoptions->ReadString( PLUGIN_NAME, "CantSave", CantSave );
-      CantLoad = zoptions->ReadString( PLUGIN_NAME, "CantLoad", CantLoad );
-      NoSave = zoptions->ReadString( PLUGIN_NAME, "NoSave", NoSave );
-      SaveName = zoptions->ReadString( PLUGIN_NAME, "SaveName", "QuickSave" );
+      CantSave = A zoptions->ReadString( PLUGIN_NAME, "CantSave", CantSave );
+      CantLoad = A zoptions->ReadString( PLUGIN_NAME, "CantLoad", CantLoad );
+      NoSave = A zoptions->ReadString( PLUGIN_NAME, "NoSave", NoSave );
+      SaveName = A zoptions->ReadString( PLUGIN_NAME, "SaveName", "QuickSave" );
     }
   }
 

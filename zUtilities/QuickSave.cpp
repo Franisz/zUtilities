@@ -71,7 +71,7 @@ namespace GOTHIC_ENGINE {
     // SaveInfo
     auto info = ogame->savegameManager->GetSavegame( iLastSaveSlot );
 
-    info->m_Name = Options::SaveName + Z iLastSaveNumber;
+    info->m_Name = Z Options::SaveName + Z iLastSaveNumber;
     info->m_WorldName = ogame->GetGameWorld()->GetWorldName();
     int day, hour, min;
     ogame->GetTime( day, hour, min );
@@ -95,7 +95,7 @@ namespace GOTHIC_ENGINE {
     }
 
     if ( !ogame->savegameManager->GetSavegame( iLastSaveSlot )->DoesSavegameExist() ) {
-      ogame->GetTextView()->Printwin( Options::NoSave + " (" + Z iLastSaveSlot + ")" );
+      ogame->GetTextView()->Printwin( Z Options::NoSave + " (" + Z iLastSaveSlot + ")" );
       return;
     }
 

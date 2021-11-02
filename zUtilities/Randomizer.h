@@ -1,7 +1,6 @@
 // Supported with union (c) 2020 Union team
 // Union HEADER file
 
-#include <chrono>
 #include <random>
 
 namespace GOTHIC_ENGINE {
