@@ -4,7 +4,7 @@
 #define __ZSTRING_H__VER3__
 
 #define USING_UNION_STRING_METHODS True
-#define UNPROTECT_ZSTRING_METHODS  False
+#define UNPROTECT_ZSTRING_METHODS  True
 
 namespace Gothic_II_Addon {
 
