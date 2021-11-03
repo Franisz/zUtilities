@@ -2,6 +2,20 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
+  HOOK Ivk_Print_Union PATCH( &zCView::Print, &zCView::Print_Union );
+  void zCView::Print_Union( int x, int y, const zSTRING& text ) {
+    if ( !player || focusColor.AllOptionsOff() || focusColor.isNameOnScreen ) {
+      THISCALL( Ivk_Print_Union )(x, y, text);
+      return;
+    }
+
+    if ( this != focusColor.focusView )
+      if ( focusColor.PrintName( x, y, text ) )
+        return;
+
+    THISCALL( Ivk_Print_Union )(x, y, text);
+  }
+
   int oCNpc::GetAivar( zSTRING aivar ) {
     auto sym = parser->GetSymbol( aivar );
     if ( !sym )
@@ -252,10 +266,9 @@ namespace GOTHIC_ENGINE {
     return zCOLOR( 255, 200, 100 );
   }
 
-  zCOLOR FocusColor::CheckFocus() {
-    zCVob* focusVob = player->GetFocusVob();
-
-    if ( !focusVob ) return colDefault;
+  zCOLOR FocusColor::CheckFocus( zCVob* focusVob ) {
+    if ( !TYPE_FRIEND || !CRIME_MURDER )
+      InitData();
 
     if ( Options::ColorChests )
       if ( oCMobContainer* focusContainer = focusVob->CastTo<oCMobContainer>() )
@@ -276,12 +289,74 @@ namespace GOTHIC_ENGINE {
     return colDefault;
   }
 
+  zSTRING FocusColor::GetName( zCVob* focusVob ) {
+    if ( Options::ColorChests )
+      if ( oCMobContainer* focusContainer = focusVob->CastTo<oCMobContainer>() )
+        return focusContainer->GetName();
+
+    if ( Options::ColorDoors )
+      if ( oCMobDoor* focusDoor = focusVob->CastTo<oCMobDoor>() )
+        return focusDoor->GetName();
+
+    if ( Options::ColorNpcs )
+      if ( oCNpc* focusNpc = focusVob->CastTo<oCNpc>() )
+        return focusNpc->name[0];
+
+    if ( Options::ColorItems )
+      if ( oCItem* focusItem = focusVob->CastTo<oCItem>() )
+        return focusItem->name;
+
+    return "";
+  }
+
+  bool FocusColor::PrintName( int x, int y, const zSTRING& text ) {
+    //if ( AllOptionsOff() )
+    //  return false;
+
+    if ( playerHelper.IsInInfo() )
+      return false;
+
+    zCVob* focusVob = player->GetFocusVob();
+    if ( !focusVob ) return false;
+
+    zSTRING name = GetName( focusVob );
+
+    if ( text != name + "\n" && text != name ) return false;
+
+    zCOLOR col = CheckFocus( focusVob );
+    if ( col.GetDescription() == colDefault.GetDescription() )
+      return false;
+
+    if ( focusView == nullptr ) {
+      focusView = new zCView( 0, 0, 8192, 8192 );
+      screen->InsertItem( focusView );
+    }
+
+    focusView->ClrPrintwin();
+    focusView->SetFontColor( col );
+    focusView->Print( x, y, text );
+    isNameOnScreen = true;
+    return true;
+  }
+
+  bool FocusColor::AllOptionsOff() {
+    return !Options::ColorNpcs && !Options::ColorChests && !Options::ColorDoors && !Options::ColorItems;
+  }
+
   void FocusColor::FocusColorLoop() {
-    if ( !Options::ColorNpcs && !Options::ColorChests && !Options::ColorDoors && !Options::ColorItems )
+    if ( AllOptionsOff() )
       return;
 
-    InitData();
+    if ( focusView == nullptr )
+      return;
 
-    screen->SetFontColor( CheckFocus() );
+    focusView->ClrPrintwin();
+    isNameOnScreen = false;
+
+    zCVob* focusVob = player->GetFocusVob();
+    if ( !focusVob ) {
+      screen->RemoveItem( focusView );
+      focusView = nullptr;
+    };
   }
 }

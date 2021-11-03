@@ -3,3 +3,4 @@
 // User API for zCView
 // Add your methods here
 
+void Print_Union( int, int, const zSTRING& );

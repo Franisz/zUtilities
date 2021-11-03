@@ -25,14 +25,19 @@ namespace GOTHIC_ENGINE {
     bool HasReasonToKill( oCNpc* slf );
     bool CanStealNow( oCItem* item );
     bool CanTakeFromRoom( oCItem* item );
-    zCOLOR CheckFocus();
+    zSTRING GetName( zCVob* focusVob );
+    zCOLOR CheckFocus( zCVob* focusVob );
     zCOLOR DoorColor( oCMobDoor* focusDoor );
     zCOLOR ChestColor( oCMobContainer* focusContainer );
     zCOLOR NpcColor( oCNpc* focusNpc );
     zCOLOR ItemColor( oCItem* focusItem );
 
   public:
+    zCView* focusView;
+    bool isNameOnScreen;
+    bool PrintName( int x, int y, const zSTRING& text );
     void FocusColorLoop();
+    bool AllOptionsOff();
   };
 
   FocusColor focusColor;

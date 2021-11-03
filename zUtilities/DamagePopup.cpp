@@ -41,7 +41,7 @@ namespace GOTHIC_ENGINE {
 #endif
   }
 
-  HOOK Ivk_OnDamage_Hit_Union PATCH_IF( &oCNpc::OnDamage_Hit, &oCNpc::OnDamage_Hit_Union, true );
+  HOOK Ivk_OnDamage_Hit_Union PATCH( &oCNpc::OnDamage_Hit, &oCNpc::OnDamage_Hit_Union );
   void oCNpc::OnDamage_Hit_Union( oSDamageDescriptor& desc ) {
     if ( !Options::DamagePopupMode ) {
       THISCALL( Ivk_OnDamage_Hit_Union )(desc);
