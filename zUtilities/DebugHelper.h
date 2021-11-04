@@ -3,7 +3,7 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    bool UsingDebugHelper = true;
+    bool UsingDebugHelper = false;
   }
 
   class DebugHelper {
