@@ -18,7 +18,7 @@ namespace GOTHIC_ENGINE {
     }
 
     if ( w2 == "Debug" ) {
-      Options::UsingDebugHelper = (!Options::UsingDebugHelper) ? Options::UsingDebugHelper : !Options::UsingDebugHelper;
+      Options::UsingDebugHelper = (Options::UsingDebugHelper) ? false : true;
       zSTRING state = (Options::UsingDebugHelper) ? "ON" : "OFF";
       msg = "zUtilites debug helper " + state;
       return true;

@@ -17,11 +17,11 @@ namespace GOTHIC_ENGINE {
     int margin;
 
     void InfoNpc( oCNpc* npc );
-    void InfoInter( oCMobInter* inter );
     void InfoItem( oCItem* item );
+    void InfoMob( oCMOB* mob );
     void AddSeparator( zSTRING str = "" );
     void Print( zCView* view, zSTRING name, zSTRING value );
-    void PrintInfo( zCVob* vob );
+    bool TryPrintInfo();
 
   public:
     void Clear();
