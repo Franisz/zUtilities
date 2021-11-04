@@ -4,13 +4,8 @@
 namespace GOTHIC_ENGINE {
   HOOK Ivk_Print_Union PATCH( &zCView::Print, &zCView::Print_Union );
   void zCView::Print_Union( int x, int y, const zSTRING& text ) {
-    if ( !player || focusColor.AllOptionsOff() || focusColor.isNameOnScreen ) {
-      THISCALL( Ivk_Print_Union )(x, y, text);
-      return;
-    }
-
-    if ( this != focusColor.focusView )
-      if ( focusColor.PrintName( x, y, text ) )
+    if ( player && !focusColor.AllOptionsOff() && !focusColor.isNameOnScreen && this != focusColor.focusView )
+      if ( focusColor.TryPrintName( x, y, text ) )
         return;
 
     THISCALL( Ivk_Print_Union )(x, y, text);
@@ -309,7 +304,7 @@ namespace GOTHIC_ENGINE {
     return "";
   }
 
-  bool FocusColor::PrintName( int x, int y, const zSTRING& text ) {
+  bool FocusColor::TryPrintName( int x, int y, const zSTRING& text ) {
     //if ( AllOptionsOff() )
     //  return false;
 
