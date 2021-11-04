@@ -9,7 +9,7 @@ env:
   # Configuration type to build.
   # You can convert this to a build matrix if you need coverage of multiple configuration types.
   # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-  BUILD_CONFIGURATION: MP x4 MT Release
+  BUILD_CONFIGURATION: MP%20x4%20MT%20Release
 
 jobs:
   build:
