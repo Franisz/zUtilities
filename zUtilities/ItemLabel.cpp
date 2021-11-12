@@ -2,6 +2,22 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
+  bool canDrawLabels;
+
+  HOOK Hook_oCItemContainer_Draw PATCH( &oCItemContainer::Draw, &oCItemContainer::Draw_Union );
+  void oCItemContainer::Draw_Union() {
+    canDrawLabels = true;
+    THISCALL( Hook_oCItemContainer_Draw )();
+    canDrawLabels = false;
+  }
+
+  HOOK Hook_oCItemContainer_DrawItemInfo PATCH( &oCItemContainer::DrawItemInfo, &oCItemContainer::DrawItemInfo_Union );
+  void oCItemContainer::DrawItemInfo_Union( oCItem* item, zCWorld* world ) {
+    canDrawLabels = false;
+    THISCALL( Hook_oCItemContainer_DrawItemInfo )(item, world);
+    canDrawLabels = true;
+  }
+
   int oCItem::GetHighestCond() {
     int maxCond = 0;
     int maxIndex = -1;
@@ -16,24 +32,7 @@ namespace GOTHIC_ENGINE {
   }
 
   bool ItemLabel::CanDrawLabel( zCViewBase* viewBase ) {
-    auto list = oCItemContainer::contList.GetNextInList();
-    while ( list != nullptr ) {
-      oCItemContainer* container = list->GetData();
-      list = list->GetNextInList();
-
-      if ( viewBase == container->viewItem
-#if ENGINE < Engine_G2
-        || viewBase == container->viewItemFocus
-        || viewBase == container->viewItemActiveFocus
-        || viewBase == container->viewItemHightlightedFocus
-        || viewBase == container->viewItemActiveHighlightedFocus
-#endif
-        || viewBase == container->viewItemActive
-        || viewBase == container->viewItemHightlighted
-        || viewBase == container->viewItemActiveHighlighted )
-        return true;
-    }
-    return false;
+    return canDrawLabels;
   }
 
   void ItemLabel::SetLabelParams() {

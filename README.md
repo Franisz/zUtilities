@@ -46,6 +46,10 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
 
   - This feature can be disabled in `gothic.ini` with `TrampleMeatbugs` option.
 
+- Allows to display debug info data about focused vob or selected in the inventory item.
+
+  - Use `zutilities debug` command to toggle on/off.
+
 - Allows to check currently used plugin version through in game console with `zutilities version` command.
 
 ### Options

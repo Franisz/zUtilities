@@ -3,3 +3,5 @@
 // User API for oCItemContainer
 // Add your methods here
 
+void __thiscall Draw_Union();
+void __thiscall DrawItemInfo_Union( oCItem*, zCWorld* );
