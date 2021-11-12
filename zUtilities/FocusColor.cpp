@@ -215,27 +215,26 @@ namespace GOTHIC_ENGINE {
     return colDefault;
   }
 
-  zCOLOR FocusColor::ChestColor( oCMobContainer* focusContainer ) {
-    if ( focusContainer->locked )
-      if ( focusContainer->keyInstance != "" )
-        return zCOLOR( 255, 20, 20 );
-      else
-        return zCOLOR( 255, 175, 0 );
-
-    if ( focusContainer->containList.GetNumInList() )
-      return zCOLOR( 0, 175, 0 );
-
-    return zCOLOR( 175, 175, 175 );
-  }
-
-  zCOLOR FocusColor::DoorColor( oCMobDoor* focusDoor ) {
-    if ( focusDoor->locked )
-      if ( focusDoor->keyInstance != "" )
+  zCOLOR FocusColor::LockableColor( oCMobLockable* focusLockable ) {
+    if ( focusLockable->locked )
+      if ( focusLockable->keyInstance.Length() && focusLockable->pickLockStr.Length() )
+        return zCOLOR( 255, 135, 150 );
+      else if ( focusLockable->keyInstance.Length() )
         return zCOLOR( 255, 20, 20 );
       else
         return zCOLOR( 255, 175, 0 );
 
     return colDefault;
+  }
+
+  zCOLOR FocusColor::ChestColor( oCMobContainer* focusContainer ) {
+    if ( focusContainer->locked )
+      return LockableColor( focusContainer );
+
+    if ( focusContainer->containList.GetNumInList() )
+      return zCOLOR( 0, 175, 0 );
+
+    return zCOLOR( 175, 175, 175 );
   }
 
   zCOLOR FocusColor::ItemColor( oCItem* focusItem ) {
@@ -271,7 +270,7 @@ namespace GOTHIC_ENGINE {
 
     if ( Options::ColorDoors )
       if ( oCMobDoor* focusDoor = focusVob->CastTo<oCMobDoor>() )
-        return DoorColor( focusDoor );
+        return LockableColor( focusDoor );
 
     if ( Options::ColorNpcs )
       if ( oCNpc* focusNpc = focusVob->CastTo<oCNpc>() )

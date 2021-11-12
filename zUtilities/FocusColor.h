@@ -27,6 +27,7 @@ namespace GOTHIC_ENGINE {
     bool CanTakeFromRoom( oCItem* item );
     zSTRING GetName( zCVob* focusVob );
     zCOLOR CheckFocus( zCVob* focusVob );
+    zCOLOR LockableColor( oCMobLockable* focusLockable );
     zCOLOR DoorColor( oCMobDoor* focusDoor );
     zCOLOR ChestColor( oCMobContainer* focusContainer );
     zCOLOR NpcColor( oCNpc* focusNpc );

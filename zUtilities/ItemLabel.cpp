@@ -59,7 +59,7 @@ namespace GOTHIC_ENGINE {
     if ( item->HasFlag( ITM_CAT_NF ) ) {
 
       if ( item->HasFlag( ITM_FLAG_2HD_AXE ) || item->HasFlag( ITM_FLAG_2HD_SWD ) ) {
-        if ( condAtr == NPC_ATR_MANAMAX ) {
+        if ( condAtr == NPC_ATR_MANAMAX || item->mag_circle ) {
           color = manaBlue;
           texture = "WPN_MANA_2H"; // https://game-icons.net/1x1/lorc/moebius-star.html
           return;
@@ -225,7 +225,7 @@ namespace GOTHIC_ENGINE {
     }
 
     if ( item->HasFlag( ITM_CAT_RUNE ) ) {
-      if ( item->GetInstanceName().StartWith( "ITRU" ) || item->GetInstanceName().StartWith( "ITARRUNE" ) ) {
+      if ( !item->HasFlag( ITM_FLAG_MULTI ) ) {
         color = zCOLOR( 217, 128, 250 );
         texture = "RUNE"; // https://game-icons.net/1x1/lorc/cursed-star.html
         return;

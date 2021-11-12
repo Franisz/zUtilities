@@ -82,8 +82,8 @@ namespace GOTHIC_ENGINE {
     Print( textView, "Description", Z item->GetDescription() );
     Print( textView, "Value", Z item->GetValue() );
 
-    AddSeparator();
     if ( item->HasFlag( ITM_CAT_ARMOR ) || item->HasFlag( ITM_CAT_NF ) || item->HasFlag( ITM_CAT_FF ) ) {
+      AddSeparator();
       Print( textView, "PROT_EDGE", Z item->GetProtectionByIndex( oEDamageIndex_Edge ) );
       Print( sideView, "DAM_EDGE", Z item->GetDamageByIndex( oEDamageIndex_Edge ) );
       Print( textView, "PROT_BLUNT", Z item->GetProtectionByIndex( oEDamageIndex_Blunt ) );
@@ -99,12 +99,18 @@ namespace GOTHIC_ENGINE {
       Print( textView, "PROT_FALL", Z item->GetProtectionByIndex( oEDamageIndex_Fall ) );
       Print( sideView, "DAM_FALL", Z item->GetDamageByIndex( oEDamageIndex_Fall ) );
       Print( textView, "TotalDamage", Z item->damageTotal );
-      AddSeparator();
     }
     else if ( item->spell ) {
+      AddSeparator( "Spell" );
       Print( textView, "SpellID", Z item->spell );
       Print( sideView, "Circle", Z item->mag_circle );
+
+      oCSpell* spl = new oCSpell( item->spell );
+      Print( textView, "SpellName", spl->GetName() );
+      spl->Release();
     }
+    else
+      AddSeparator();
 
     for ( int i = 0; i < ITM_COND_MAX; i++ ) {
       if ( !item->cond_atr[i] ) continue;
