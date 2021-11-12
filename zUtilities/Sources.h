@@ -12,6 +12,7 @@
 #include "ItemLabel.cpp"
 #include "RenderItem.cpp"
 #include "DamagePopup.cpp"
+#include "Inventory.cpp"
 #include "Plugin.cpp"
 #pragma endregion
 

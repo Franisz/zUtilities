@@ -2850,6 +2850,9 @@
     <ClInclude Include="DebugHelper.h">
       <Filter>Plugin\Workspace\Features\DebugHelper</Filter>
     </ClInclude>
+    <ClInclude Include="Inventory.cpp">
+      <Filter>Plugin\Workspace\Features</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl">

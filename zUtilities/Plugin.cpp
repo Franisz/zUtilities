@@ -30,6 +30,7 @@ namespace GOTHIC_ENGINE {
     debugHelper.DebugHelperLoop();
     focusColor.FocusColorLoop();
     quickSave->QuickSaveLoop();
+    HandleMunitionLoop();
   }
 
   void Game_PostLoop() {
