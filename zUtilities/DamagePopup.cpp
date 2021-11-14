@@ -32,10 +32,10 @@ namespace GOTHIC_ENGINE {
       return false;
 
 #if ENGINE >= Engine_G2
-    if ( desc.pItemWeapon->HasFlag( ITM_FLAG_2HD_SWD ) || desc.pItemWeapon->HasFlag( ITM_FLAG_2HD_AXE ) )
-      return dmgRand <= desc.pNpcAttacker->GetHitChance( NPC_HITCHANCE_2H );
+    int talent = (desc.pItemWeapon->HasFlag( ITM_FLAG_2HD_SWD ) || desc.pItemWeapon->HasFlag( ITM_FLAG_2HD_AXE ))
+      ? NPC_HITCHANCE_2H : NPC_HITCHANCE_1H;
 
-    return dmgRand <= desc.pNpcAttacker->GetHitChance( NPC_HITCHANCE_1H );
+    return dmgRand < desc.pNpcAttacker->GetHitChance( talent );
 #else
     return desc.fDamageMultiplier > 1.0f;
 #endif
