@@ -84,11 +84,10 @@ namespace GOTHIC_ENGINE {
       bonusHpPercent = 100 - currentHpPercent;
 
     int start = currentHpPercent * 8192 / 100;
-    int offset = 0; // 100
 
-    int x1 = max( start - offset, 0 );
+    int x1 = max( start, 0 );
     int y1 = bar->range_bar->py1;
-    int x2 = min( bonusHpPercent * 8192 / 100 + start + offset, 8192 );
+    int x2 = min( bonusHpPercent * 8192 / 100 + start, 8192 );
     int y2 = bar->range_bar->py2;
 
     predictView = new zCView( x1, y1, x2, y2 );

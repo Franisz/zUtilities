@@ -110,7 +110,7 @@ namespace GOTHIC_ENGINE {
     toggledShowStatus = !toggledShowStatus;
   }
 
-  void QuickSave::QuickSaveLoop() {
+  void QuickSave::Loop() {
     if ( !Options::UseQuickSave ) return;
 
     if ( !toggledShowStatus )

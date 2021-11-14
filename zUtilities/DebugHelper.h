@@ -25,7 +25,7 @@ namespace GOTHIC_ENGINE {
 
   public:
     void Clear();
-    void DebugHelperLoop();
+    void Loop();
   };
 
   DebugHelper debugHelper;

@@ -337,7 +337,7 @@ namespace GOTHIC_ENGINE {
     return !Options::ColorNpcs && !Options::ColorChests && !Options::ColorDoors && !Options::ColorItems;
   }
 
-  void FocusColor::FocusColorLoop() {
+  void FocusColor::Loop() {
     if ( AllOptionsOff() )
       return;
 

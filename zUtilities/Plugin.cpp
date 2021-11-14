@@ -29,9 +29,9 @@ namespace GOTHIC_ENGINE {
       popups[i]->Update();
 
     playerStatus.Loop();
-    debugHelper.DebugHelperLoop();
-    focusColor.FocusColorLoop();
-    quickSave->QuickSaveLoop();
+    debugHelper.Loop();
+    focusColor.Loop();
+    quickSave->Loop();
     HandleMunitionLoop();
   }
 

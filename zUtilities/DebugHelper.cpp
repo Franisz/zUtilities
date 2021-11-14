@@ -238,7 +238,7 @@ namespace GOTHIC_ENGINE {
     mainView = nullptr;
   }
 
-  void DebugHelper::DebugHelperLoop() {
+  void DebugHelper::Loop() {
     if ( !Options::UsingDebugHelper
       || ogame->pause_screen
       || zcon->IsVisible()

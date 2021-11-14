@@ -70,7 +70,7 @@ namespace GOTHIC_ENGINE {
     void ToggleShowStatus();
 
   public:
-    void QuickSaveLoop();
+    void Loop();
     QuickSave();
   };
 
