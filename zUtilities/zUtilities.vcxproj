@@ -908,6 +908,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PlayerStatus.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PlayerStatus.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Plugin.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="ZenGin\Gothic_II_Addon\ClassDeclarators_G2A.cpp" />
@@ -944,6 +952,14 @@
     </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Sources.h" />
+    <ClInclude Include="StatusBar.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="StatusBar.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="UnionAfx.h" />
     <ClInclude Include="ZenGin\Gothic_II_Addon\API\oAiHuman.h" />
     <ClInclude Include="ZenGin\Gothic_II_Addon\API\oAiShoot.h" />

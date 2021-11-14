@@ -8,6 +8,7 @@ namespace GOTHIC_ENGINE {
 
   void Game_Init() {
     Options::Misc();
+    Options::PlayerStatus();
     Options::QuickSave();
     Options::FocusColor();
     Options::ItemLabel();
@@ -27,6 +28,7 @@ namespace GOTHIC_ENGINE {
     for ( uint i = 0; i < popups.GetNum(); i++ )
       popups[i]->Update();
 
+    playerStatus.Loop();
     debugHelper.DebugHelperLoop();
     focusColor.FocusColorLoop();
     quickSave->QuickSaveLoop();

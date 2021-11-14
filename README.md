@@ -46,6 +46,15 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
 
   - This feature can be disabled in `gothic.ini` with `TrampleMeatbugs` option.
 
+- Allows to highlight munition used by currently equipped ranged weapon.
+
+  - This feature can be disabled in `gothic.ini` with `ActivateUsedMunition` option.
+
+- Allows to see on the status bars how much hovered item will heal.
+
+  - Heal value is based on the `count` value of the item associated with the `text` that is equal to the original recovery string variables `NAME_BONUS_HP` and `NAME_BONUS_MANA`.
+  - This feature can be disabled in `gothic.ini` with `RecoveryVisualization` option.
+
 - Allows to display debug info data about focused vob or selected in the inventory item.
 
   - Use `zutilities debug` command to toggle on/off.
@@ -64,6 +73,12 @@ TrampleMeatbugs=1
 
 CenterInvItems=1
 ; ... enables (1) or disables (0) inventory item rendering in the center of the screen instead of the item description box
+
+ActivateUsedMunition=1
+; ... enables (1) or disables (0) highlighting currently used ranged weapon munition in the inventory
+
+RecoveryVisualization=1
+; ... enables (1) or disables (0) visualization of healing that hovered in the inventory item gives
 
 UseQuickSave=1
 ; ... enables (1) or disables (0) QuickSaving with [F10] and QuickLoading with [F12]

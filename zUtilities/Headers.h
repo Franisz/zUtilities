@@ -11,6 +11,8 @@
 #include "QuickSave.h"
 #include "ItemLabel.h"
 #include "DamagePopup.h"
+#include "StatusBar.h"
+#include "PlayerStatus.h"
 #include "Plugin.h"
 #pragma endregion
 

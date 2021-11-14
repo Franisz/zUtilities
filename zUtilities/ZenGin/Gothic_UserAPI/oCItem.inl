@@ -5,3 +5,4 @@
 
 void RenderItem_Union( zCWorld*, zCViewBase*, float );
 int GetHighestCond();
+int GetLineTextIsIn( zSTRING );

@@ -235,6 +235,12 @@
     <Filter Include="Plugin\Workspace\Features\DebugHelper">
       <UniqueIdentifier>{73fb9875-d712-4448-bc8b-4e3db8d224e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\Workspace\Features\PlayerStatus">
+      <UniqueIdentifier>{1a1d4b3f-f152-4f65-a537-f4f4cb926484}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugin\Workspace\Features\PlayerStatus\StatusBar">
+      <UniqueIdentifier>{f5a6fe54-5837-452a-8b39-b2eea83b3d9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2852,6 +2858,18 @@
     </ClInclude>
     <ClInclude Include="Inventory.cpp">
       <Filter>Plugin\Workspace\Features</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStatus.cpp">
+      <Filter>Plugin\Workspace\Features\PlayerStatus</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStatus.h">
+      <Filter>Plugin\Workspace\Features\PlayerStatus</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusBar.h">
+      <Filter>Plugin\Workspace\Features\PlayerStatus\StatusBar</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusBar.cpp">
+      <Filter>Plugin\Workspace\Features\PlayerStatus\StatusBar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
