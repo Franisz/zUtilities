@@ -171,11 +171,26 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
+    zCCamera* cam = ogame->GetCamera();
+    zVEC3 viewPos = cam->GetTransform( zTCamTrafoType::zCAM_TRAFO_VIEW ) * npc->GetPositionWorld();
+    int posx, posy;
+    cam->Project( &viewPos, posx, posy );
+    if ( viewPos[2] <= cam->nearClipZ ) {
+      bar->vposy = -screen->FontY() * 2;
+      return;
+    }
+
     zSTRING name = npc->name[0];
     if ( text != name + "\n" && text != name )
       return;
 
-    bar->vposx = x + screen->FontSize( name ) / 2 - bar->vsizex / 2;
+    x = x + screen->FontSize( name ) / 2 - bar->vsizex / 2;
+    if ( x + bar->vsizex > 8192 )
+      x = 8192 - bar->vsizex;
+    else if ( x < 0 )
+      x = 0;
+
+    bar->vposx = x;
     bar->vposy = y - screen->FontY() * 2;
   }
 
