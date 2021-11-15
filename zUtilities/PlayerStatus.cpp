@@ -9,8 +9,12 @@ namespace GOTHIC_ENGINE {
     if ( !manaBar )
       manaBar = new StatusBar( ogame->manaBar );
 
+    if ( !focusBar )
+      focusBar = new StatusBar( ogame->focusBar );
+
     hpBar->Loop();
     manaBar->Loop();
+    focusBar->Loop();
   }
 
   void PlayerStatus::Loop() {

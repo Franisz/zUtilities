@@ -36,6 +36,7 @@ namespace GOTHIC_ENGINE {
 
   bool StatusBar::Init() {
     if ( bar == ogame->hpBar ) {
+      npc = player;
       talent = NPC_ATR_HITPOINTS;
       talentMax = NPC_ATR_HITPOINTSMAX;
       symbols.Insert( "NAME_BONUS_HP" );
@@ -43,9 +44,18 @@ namespace GOTHIC_ENGINE {
     }
 
     if ( bar == ogame->manaBar ) {
+      npc = player;
       talent = NPC_ATR_MANA;
       talentMax = NPC_ATR_MANAMAX;
       symbols.Insert( "NAME_BONUS_MANA" );
+      return true;
+    }
+
+    if ( bar == ogame->focusBar ) {
+      talent = NPC_ATR_HITPOINTS;
+      talentMax = NPC_ATR_HITPOINTSMAX;
+      if ( Options::ShowEnemyBarAboveHim )
+        bar->vposy = -screen->FontY() * 2;
       return true;
     }
 
@@ -53,13 +63,13 @@ namespace GOTHIC_ENGINE {
   }
 
   int StatusBar::GetHealValue() {
-    if ( !player->inventory2.IsOpen() )
+    if ( !npc->inventory2.IsOpen() )
       return 0;
 
-    if ( player->attribute[talent] == player->attribute[talentMax] )
+    if ( npc->attribute[talent] == npc->attribute[talentMax] )
       return 0;
 
-    oCItem* item = player->inventory2.GetSelectedItem();
+    oCItem* item = npc->inventory2.GetSelectedItem();
     if ( !item )
       return 0;
 
@@ -76,8 +86,8 @@ namespace GOTHIC_ENGINE {
   }
 
   void StatusBar::DrawPrediction( int value ) {
-    int currentHpPercent = player->attribute[talent] * 100 / player->attribute[talentMax];
-    int bonusHpPercent = min( value * 100 / player->attribute[talentMax], 100 );
+    int currentHpPercent = npc->attribute[talent] * 100 / npc->attribute[talentMax];
+    int bonusHpPercent = min( value * 100 / npc->attribute[talentMax], 100 );
 
     if ( bonusHpPercent + currentHpPercent > 100 )
       bonusHpPercent = 100 - currentHpPercent;
@@ -105,7 +115,7 @@ namespace GOTHIC_ENGINE {
       predictView = nullptr;
     }
 
-    if ( !IsBarActive() )
+    if ( !IsBarActive() || !npc || npc != player )
       return;
 
     int value = GetHealValue();
@@ -127,17 +137,17 @@ namespace GOTHIC_ENGINE {
       valueView = nullptr;
     }
 
-    if ( !IsBarActive() )
+    if ( !IsBarActive() || !npc )
       return;
 
     valueView = new zCView( 0, 0, 8192, 8192 );
-    int min = player->attribute[talent];
-    int max = player->attribute[talentMax];
+    int min = npc->attribute[talent];
+    int max = npc->attribute[talentMax];
     zSTRING str = Z min + "/" + Z max;
 
     insertView->InsertItem( valueView );
 
-    if ( Options::StatusBarValueMode == Above ) {
+    if ( Options::StatusBarValueMode == Above && (Options::ShowEnemyBarAboveHim || bar != ogame->focusBar) ) {
       int x = bar->vposx + bar->vsizex / 2 - valueView->FontSize( str ) / 2;
       int y = bar->vposy + bar->vsizey / 2 - valueView->FontY() * 1.75;
       valueView->Print( x, y, str );
@@ -147,12 +157,39 @@ namespace GOTHIC_ENGINE {
     valueView->PrintCXY( str );
   }
 
+  void StatusBar::MoveFocusBar( int x, int y, zSTRING text ) {
+    if ( !Options::ShowEnemyBarAboveHim )
+      return;
+
+    if ( bar != ogame->focusBar )
+      return;
+
+    if ( !IsBarActive() )
+      return;
+
+    npc = player->GetFocusNpc();
+    if ( !npc ) {
+      bar->vposy = -screen->FontY() * 2;
+      return;
+    }
+
+    zSTRING name = npc->name[0];
+    if ( text != name + "\n" && text != name )
+      return;
+
+    bar->vposx = x + screen->FontSize( name ) / 2 - bar->vsizex / 2;
+    bar->vposy = y - screen->FontY() * 2;
+  }
+
   void StatusBar::Loop() {
     if ( !ogame || !player )
       return;
 
     if ( !bar )
       return;
+
+    if ( bar == ogame->focusBar )
+      npc = player->GetFocusNpc();
 
     PredictHeal();
     PrintValue();
@@ -161,10 +198,10 @@ namespace GOTHIC_ENGINE {
   StatusBar::StatusBar( oCViewStatusBar* bar ) {
     this->bar = bar;
 
-    if ( !Init() );
+    if ( !Init() )
       return;
 
-    if( Options::StatusBarValueMode == Inside && !playerHelper.GetSysScale() )
+    if ( Options::StatusBarValueMode == Inside && !playerHelper.GetSysScale() )
       this->bar->vsizey *= 1.15;
   }
 }

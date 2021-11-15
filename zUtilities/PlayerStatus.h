@@ -11,6 +11,7 @@ namespace GOTHIC_ENGINE {
     void StatusBars();
 
   public:
+    StatusBar* focusBar;
     void Loop();
   };
 
