@@ -36,7 +36,6 @@ namespace GOTHIC_ENGINE {
 
   bool StatusBar::Init() {
     if ( bar == ogame->hpBar ) {
-      npc = player;
       talent = NPC_ATR_HITPOINTS;
       talentMax = NPC_ATR_HITPOINTSMAX;
       symbols.Insert( "NAME_BONUS_HP" );
@@ -44,7 +43,6 @@ namespace GOTHIC_ENGINE {
     }
 
     if ( bar == ogame->manaBar ) {
-      npc = player;
       talent = NPC_ATR_MANA;
       talentMax = NPC_ATR_MANAMAX;
       symbols.Insert( "NAME_BONUS_MANA" );
@@ -190,6 +188,8 @@ namespace GOTHIC_ENGINE {
 
     if ( bar == ogame->focusBar )
       npc = player->GetFocusNpc();
+    else
+      npc = player;
 
     PredictHeal();
     PrintValue();

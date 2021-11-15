@@ -20,6 +20,8 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "ShowEnemyBarAboveHim", "... enables (1) or disables (0) showing enemy hp bar above his head" );
 
       zoptions->AddTrivia( PLUGIN_NAME, "UseQuickSave", "... enables (1) or disables (0) QuickSaving with [F10] and QuickLoading with [F12]" );
+      zoptions->AddTrivia( PLUGIN_NAME, "KeyQuickSave", "... key for QuickSave" );
+      zoptions->AddTrivia( PLUGIN_NAME, "KeyQuickLoad", "... key for QuickLoad" );
       zoptions->AddTrivia( PLUGIN_NAME, "MinSaveSlot", "... defines min range of used save slots" );
       zoptions->AddTrivia( PLUGIN_NAME, "MaxSaveSlot", "... defines max range of used save slots" );
       zoptions->AddTrivia( PLUGIN_NAME, "CantSave", "... text appearing when game cannot be saved" );
