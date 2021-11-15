@@ -2871,6 +2871,9 @@
     <ClInclude Include="StatusBar.cpp">
       <Filter>Plugin\Workspace\Features\PlayerStatus\StatusBar</Filter>
     </ClInclude>
+    <ClInclude Include="KeyCode.h">
+      <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl">

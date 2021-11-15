@@ -47,7 +47,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void QuickSave::CheckSave() {
-    if ( !zinput->KeyToggled( KEY_F10 ) )
+    if ( !zinput->KeyToggled( Options::KeyQuickSave ) )
       return;
 
     if ( !CanSave() ) {
@@ -86,7 +86,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void QuickSave::CheckLoad() {
-    if ( !zinput->KeyToggled( KEY_F12 ) )
+    if ( !zinput->KeyToggled( Options::KeyQuickLoad ) )
       return;
 
     if ( InInteraction() ) {
