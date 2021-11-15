@@ -2,19 +2,12 @@
 // Union HEADER file
 
 namespace GOTHIC_ENGINE {
-  namespace Options {
-    int RecoveryVisualization;
-
-    void PlayerStatus() {
-      RecoveryVisualization = zoptions->ReadInt( PLUGIN_NAME, "RecoveryVisualization", true );
-    }
-  }
-
   class PlayerStatus {
   private:
     StatusBar* hpBar;
     StatusBar* manaBar;
 
+    void ShowBarsValue();
     void StatusBars();
 
   public:

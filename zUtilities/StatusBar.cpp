@@ -30,6 +30,10 @@ namespace GOTHIC_ENGINE {
     return 0;
   }
 
+  bool StatusBar::IsBarActive() {
+    return bar->owner;
+  }
+
   bool StatusBar::Init() {
     if ( bar == ogame->hpBar ) {
       talent = NPC_ATR_HITPOINTS;
@@ -71,12 +75,7 @@ namespace GOTHIC_ENGINE {
     return 0;
   }
 
-  void StatusBar::Clear() {
-    bar->range_bar->RemoveItem( predictView );
-    predictView = nullptr;
-  }
-
-  void StatusBar::PredictHeal( int value ) {
+  void StatusBar::DrawPrediction( int value ) {
     int currentHpPercent = player->attribute[talent] * 100 / player->attribute[talentMax];
     int bonusHpPercent = min( value * 100 / player->attribute[talentMax], 100 );
 
@@ -97,6 +96,57 @@ namespace GOTHIC_ENGINE {
     bar->range_bar->InsertItem( predictView );
   }
 
+  void StatusBar::PredictHeal() {
+    if ( !Options::RecoveryVisualization )
+      return;
+
+    if ( predictView ) {
+      bar->range_bar->RemoveItem( predictView );
+      predictView = nullptr;
+    }
+
+    if ( !IsBarActive() )
+      return;
+
+    int value = GetHealValue();
+    if ( value <= 0 )
+      return;
+
+    DrawPrediction( value );
+  }
+
+  void StatusBar::PrintValue() {
+    if ( !Options::StatusBarValueMode )
+      return;
+
+    zCView* insertView = (Options::StatusBarValueMode == Above) ? screen : bar->range_bar;
+
+    if ( valueView ) {
+      valueView->ClrPrintwin();
+      insertView->RemoveItem( valueView );
+      valueView = nullptr;
+    }
+
+    if ( !IsBarActive() )
+      return;
+
+    valueView = new zCView( 0, 0, 8192, 8192 );
+    int min = player->attribute[talent];
+    int max = player->attribute[talentMax];
+    zSTRING str = Z min + "/" + Z max;
+
+    insertView->InsertItem( valueView );
+
+    if ( Options::StatusBarValueMode == Above ) {
+      int x = bar->vposx + bar->vsizex / 2 - valueView->FontSize( str ) / 2;
+      int y = bar->vposy + bar->vsizey / 2 - valueView->FontY() * 1.75;
+      valueView->Print( x, y, str );
+      return;
+    }
+
+    valueView->PrintCXY( str );
+  }
+
   void StatusBar::Loop() {
     if ( !ogame || !player )
       return;
@@ -104,20 +154,17 @@ namespace GOTHIC_ENGINE {
     if ( !bar )
       return;
 
-    if ( predictView )
-      Clear();
-
-    int value = GetHealValue();
-    if ( value <= 0 )
-      return;
-
-    PredictHeal( value );
+    PredictHeal();
+    PrintValue();
   }
 
   StatusBar::StatusBar( oCViewStatusBar* bar ) {
     this->bar = bar;
 
     if ( !Init() );
-    return;
+      return;
+
+    if( Options::StatusBarValueMode == Inside && !playerHelper.GetSysScale() )
+      this->bar->vsizey *= 1.15;
   }
 }

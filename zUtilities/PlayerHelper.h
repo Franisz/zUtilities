@@ -29,6 +29,12 @@ namespace GOTHIC_ENGINE {
     bool IsInCombat() {
       return !IsDead() && player->enemy != nullptr;
     }
+
+    int GetSysScale() {
+      float scale;
+      Union.GetSysPackOption().Read( scale, "INTERFACE", "Scale", 1.0f );
+      return (int)scale;
+    }
   };
 
   PlayerHelper playerHelper;

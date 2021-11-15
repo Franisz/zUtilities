@@ -3,9 +3,6 @@
 
 namespace GOTHIC_ENGINE {
   void PlayerStatus::StatusBars() {
-    if ( !Options::RecoveryVisualization )
-      return;
-
     if ( !hpBar )
       hpBar = new StatusBar( ogame->hpBar );
 

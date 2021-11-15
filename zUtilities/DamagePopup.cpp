@@ -185,9 +185,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void DamagePopup::SetScale() {
-    float sysScale;
-    Union.GetSysPackOption().Read( sysScale, "INTERFACE", "Scale", 1.0f );
-    scale = (sysScale) ? 1.15f : 1.0f;
+    scale = (playerHelper.GetSysScale()) ? 1.15f : 1.0f;
     scale *= Options::DamagePopupScale;
 
     if ( dmgAmount > 0 ) {
