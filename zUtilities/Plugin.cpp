@@ -8,6 +8,7 @@ namespace GOTHIC_ENGINE {
 
   void Game_Init() {
     Options::Misc();
+    Options::PlayerStatus();
     Options::StatusBar();
     Options::QuickSave();
     Options::FocusColor();
