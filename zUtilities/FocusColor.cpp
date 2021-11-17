@@ -2,16 +2,34 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
+  bool CheckFocusNpc( int x, int y, const zSTRING& text, zCView* view ) {
+    if ( !player || playerHelper.IsInInfo() )
+      return false;
+
+    oCNpc* npc = player->GetFocusNpc();
+    if ( !npc )
+      return false;
+
+    zSTRING name = npc->name[0];
+    if ( text != name + "\n" && text != name )
+      return false;
+
+    if ( focusColor.isNameOnScreen || view == focusColor.focusView )
+      return false;
+
+    if ( playerStatus.focusBar )
+      playerStatus.focusBar->MoveFocusBar( x, y, text, npc );
+
+    if ( focusColor.AllOptionsOff() )
+      return false;
+
+    return focusColor.TryPrintName( x, y, text, npc );
+  }
+
   HOOK Ivk_Print_Union PATCH( &zCView::Print, &zCView::Print_Union );
   void zCView::Print_Union( int x, int y, const zSTRING& text ) {
-    if ( player && !playerHelper.IsInInfo() ) {
-      if ( playerStatus.focusBar )
-        playerStatus.focusBar->MoveFocusBar( x, y, text );
-
-      if ( !focusColor.AllOptionsOff() && !focusColor.isNameOnScreen && this != focusColor.focusView )
-        if ( focusColor.TryPrintName( x, y, text ) )
-          return;
-    }
+    if ( CheckFocusNpc( x, y, text, this ) )
+      return;
 
     THISCALL( Ivk_Print_Union )(x, y, text);
   }
@@ -308,15 +326,8 @@ namespace GOTHIC_ENGINE {
     return "";
   }
 
-  bool FocusColor::TryPrintName( int x, int y, const zSTRING& text ) {
-    zCVob* focusVob = player->GetFocusVob();
-    if ( !focusVob ) return false;
-
-    zSTRING name = GetName( focusVob );
-
-    if ( text != name + "\n" && text != name ) return false;
-
-    zCOLOR col = CheckFocus( focusVob );
+  bool FocusColor::TryPrintName( int x, int y, const zSTRING& text, oCNpc* focusNpc ) {
+    zCOLOR col = CheckFocus( focusNpc );
     if ( col.GetDescription() == colDefault.GetDescription() )
       return false;
 

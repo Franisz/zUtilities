@@ -34,11 +34,11 @@ namespace GOTHIC_ENGINE {
   public:
     enum ValueMode {
       Disabled,
-      Inside,
-      Above
+      Above,
+      Inside
     };
 
-    void MoveFocusBar( int x, int y, zSTRING text );
+    void MoveFocusBar( int x, int y, zSTRING text, oCNpc* focusNpc );
     void Loop();
     StatusBar( oCViewStatusBar* bar );
   };

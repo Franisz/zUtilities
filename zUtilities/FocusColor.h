@@ -36,7 +36,7 @@ namespace GOTHIC_ENGINE {
   public:
     zCView* focusView;
     bool isNameOnScreen;
-    bool TryPrintName( int x, int y, const zSTRING& text );
+    bool TryPrintName( int x, int y, const zSTRING& text, oCNpc* focusNpc );
     void Loop();
     bool AllOptionsOff();
   };

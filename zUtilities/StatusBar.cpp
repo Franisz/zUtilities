@@ -155,7 +155,7 @@ namespace GOTHIC_ENGINE {
     valueView->PrintCXY( str );
   }
 
-  void StatusBar::MoveFocusBar( int x, int y, zSTRING text ) {
+  void StatusBar::MoveFocusBar( int x, int y, zSTRING text, oCNpc* focusNpc ) {
     if ( !Options::ShowEnemyBarAboveHim )
       return;
 
@@ -165,14 +165,8 @@ namespace GOTHIC_ENGINE {
     if ( !IsBarActive() )
       return;
 
-    npc = player->GetFocusNpc();
-    if ( !npc ) {
-      bar->vposy = -screen->FontY() * 2;
-      return;
-    }
-
     zCCamera* cam = ogame->GetCamera();
-    zVEC3 viewPos = cam->GetTransform( zTCamTrafoType::zCAM_TRAFO_VIEW ) * npc->GetPositionWorld();
+    zVEC3 viewPos = cam->GetTransform( zTCamTrafoType::zCAM_TRAFO_VIEW ) * focusNpc->GetPositionWorld();
     int posx, posy;
     cam->Project( &viewPos, posx, posy );
     if ( viewPos[2] <= cam->nearClipZ ) {
@@ -180,11 +174,7 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    zSTRING name = npc->name[0];
-    if ( text != name + "\n" && text != name )
-      return;
-
-    x = x + screen->FontSize( name ) / 2 - bar->vsizex / 2;
+    x = x + screen->FontSize( focusNpc->name[0] ) / 2 - bar->vsizex / 2;
     if ( x + bar->vsizex > 8192 )
       x = 8192 - bar->vsizex;
     else if ( x < 0 )
@@ -201,8 +191,11 @@ namespace GOTHIC_ENGINE {
     if ( !bar )
       return;
 
-    if ( bar == ogame->focusBar )
+    if ( bar == ogame->focusBar ) {
       npc = player->GetFocusNpc();
+      if ( !npc )
+        bar->vposy = -screen->FontY() * 2;
+    }
     else
       npc = player;
 
