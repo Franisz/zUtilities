@@ -52,8 +52,6 @@ namespace GOTHIC_ENGINE {
     if ( bar == ogame->focusBar ) {
       talent = NPC_ATR_HITPOINTS;
       talentMax = NPC_ATR_HITPOINTSMAX;
-      if ( Options::ShowEnemyBarAboveHim )
-        bar->vposy = -screen->FontY() * 2;
       return true;
     }
 
@@ -61,13 +59,13 @@ namespace GOTHIC_ENGINE {
   }
 
   int StatusBar::GetHealValue() {
-    if ( !npc->inventory2.IsOpen() )
+    if ( !player->inventory2.IsOpen() )
       return 0;
 
-    if ( npc->attribute[talent] == npc->attribute[talentMax] )
+    if ( player->attribute[talent] == player->attribute[talentMax] )
       return 0;
 
-    oCItem* item = npc->inventory2.GetSelectedItem();
+    oCItem* item = player->inventory2.GetSelectedItem();
     if ( !item )
       return 0;
 
@@ -84,8 +82,8 @@ namespace GOTHIC_ENGINE {
   }
 
   void StatusBar::DrawPrediction( int value ) {
-    int currentHpPercent = npc->attribute[talent] * 100 / npc->attribute[talentMax];
-    int bonusHpPercent = min( value * 100 / npc->attribute[talentMax], 100 );
+    int currentHpPercent = player->attribute[talent] * 100 / player->attribute[talentMax];
+    int bonusHpPercent = min( value * 100 / player->attribute[talentMax], 100 );
 
     if ( bonusHpPercent + currentHpPercent > 100 )
       bonusHpPercent = 100 - currentHpPercent;
@@ -113,7 +111,7 @@ namespace GOTHIC_ENGINE {
       predictView = nullptr;
     }
 
-    if ( !IsBarActive() || !npc || npc != player )
+    if ( !IsBarActive() )
       return;
 
     int value = GetHealValue();
@@ -123,7 +121,7 @@ namespace GOTHIC_ENGINE {
     DrawPrediction( value );
   }
 
-  void StatusBar::PrintValue() {
+  void StatusBar::PrintValue( oCNpc* npc ) {
     if ( !Options::StatusBarValueMode )
       return;
 
@@ -135,7 +133,7 @@ namespace GOTHIC_ENGINE {
       valueView = nullptr;
     }
 
-    if ( !IsBarActive() || !npc )
+    if ( !IsBarActive() )
       return;
 
     valueView = new zCView( 0, 0, 8192, 8192 );
@@ -145,9 +143,10 @@ namespace GOTHIC_ENGINE {
 
     insertView->InsertItem( valueView );
 
-    if ( Options::StatusBarValueMode == Above && (Options::ShowEnemyBarAboveHim || bar != ogame->focusBar) ) {
+    if ( Options::StatusBarValueMode == Above ) {
       int x = bar->vposx + bar->vsizex / 2 - valueView->FontSize( str ) / 2;
-      int y = bar->vposy + bar->vsizey / 2 - valueView->FontY() * 1.75;
+      int offsetY = bar->vsizey / 2 + valueView->FontY();
+      int y = (!Options::ShowEnemyBarAboveHim && bar == ogame->focusBar) ? bar->vposy + offsetY : bar->vposy - offsetY;
       valueView->Print( x, y, str );
       return;
     }
@@ -155,7 +154,7 @@ namespace GOTHIC_ENGINE {
     valueView->PrintCXY( str );
   }
 
-  void StatusBar::MoveFocusBar( int x, int y, zSTRING text, oCNpc* focusNpc ) {
+  void StatusBar::MoveFocusBar( int x, int y, oCNpc* npc ) {
     if ( !Options::ShowEnemyBarAboveHim )
       return;
 
@@ -166,22 +165,46 @@ namespace GOTHIC_ENGINE {
       return;
 
     zCCamera* cam = ogame->GetCamera();
-    zVEC3 viewPos = cam->GetTransform( zTCamTrafoType::zCAM_TRAFO_VIEW ) * focusNpc->GetPositionWorld();
+    zVEC3 viewPos = cam->GetTransform( zTCamTrafoType::zCAM_TRAFO_VIEW ) * npc->GetPositionWorld();
     int posx, posy;
     cam->Project( &viewPos, posx, posy );
-    if ( viewPos[2] <= cam->nearClipZ ) {
-      bar->vposy = -screen->FontY() * 2;
+    if ( viewPos[2] <= cam->nearClipZ )
       return;
-    }
 
-    x = x + screen->FontSize( focusNpc->name[0] ) / 2 - bar->vsizex / 2;
+    x = x + screen->FontSize( npc->name[0] ) / 2 - bar->vsizex / 2;
     if ( x + bar->vsizex > 8192 )
       x = 8192 - bar->vsizex;
-    else if ( x < 0 )
-      x = 0;
 
-    bar->vposx = x;
-    bar->vposy = y - screen->FontY() * 2;
+    x = max( 0, x );
+    y = max( 0, y - screen->FontY() * 1.75 );
+
+    bar->SetPos( x, y );
+  }
+
+  bool StatusBar::NeedAdjustPosition( int x, int y, oCNpc* npc ) {
+    if ( !ogame->focusBar || !npc || npc->attribute[NPC_ATR_HITPOINTS] <= 0 )
+      return false;
+
+    playerStatus.focusBar->MoveFocusBar( x, y, npc );
+    playerStatus.focusBar->PrintValue( npc );
+    return Options::ShowEnemyBarAboveHim;
+  }
+
+  void StatusBar::Clear() {
+    if ( !bar )
+      return;
+
+    if ( valueView ) {
+      zCView* insertView = (Options::StatusBarValueMode == Above) ? screen : bar->range_bar;
+      valueView->ClrPrintwin();
+      insertView->RemoveItem( valueView );
+      valueView = nullptr;
+    }
+
+    if ( predictView ) {
+      bar->range_bar->RemoveItem( predictView );
+      predictView = nullptr;
+    }
   }
 
   void StatusBar::Loop() {
@@ -192,15 +215,14 @@ namespace GOTHIC_ENGINE {
       return;
 
     if ( bar == ogame->focusBar ) {
-      npc = player->GetFocusNpc();
-      if ( !npc )
-        bar->vposy = -screen->FontY() * 2;
+      if ( valueView )
+        valueView->ClrPrintwin();
+
+      return;
     }
-    else
-      npc = player;
 
     PredictHeal();
-    PrintValue();
+    PrintValue( player );
   }
 
   StatusBar::StatusBar( oCViewStatusBar* bar ) {

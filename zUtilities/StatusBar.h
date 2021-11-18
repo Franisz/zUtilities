@@ -15,7 +15,6 @@ namespace GOTHIC_ENGINE {
   class StatusBar {
   private:
     oCViewStatusBar* bar;
-    oCNpc* npc;
     zCView* valueView;
     zCView* predictView;
     zCView* focusView;
@@ -29,7 +28,8 @@ namespace GOTHIC_ENGINE {
     int GetHealValue();
     void DrawPrediction( int value );
     void PredictHeal();
-    void PrintValue();
+    void PrintValue( oCNpc* npc );
+    void MoveFocusBar( int x, int y, oCNpc* npc );
 
   public:
     enum ValueMode {
@@ -38,8 +38,9 @@ namespace GOTHIC_ENGINE {
       Inside
     };
 
-    void MoveFocusBar( int x, int y, zSTRING text, oCNpc* focusNpc );
+    bool NeedAdjustPosition( int x, int y, oCNpc* npc );
     void Loop();
+    void Clear();
     StatusBar( oCViewStatusBar* bar );
   };
 }

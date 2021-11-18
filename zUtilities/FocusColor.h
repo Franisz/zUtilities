@@ -15,7 +15,9 @@ namespace GOTHIC_ENGINE {
 
   class FocusColor {
   private:
+    zCView* focusView;
     zCOLOR colDefault = zCOLOR( 255, 255, 255 );
+    bool vobOnScreen = false;
 
     int TYPE_FRIEND;
     int CRIME_MURDER;
@@ -26,19 +28,18 @@ namespace GOTHIC_ENGINE {
     bool CanStealNow( oCItem* item );
     bool CanTakeFromRoom( oCItem* item );
     zSTRING GetName( zCVob* focusVob );
-    zCOLOR CheckFocus( zCVob* focusVob );
+    zCOLOR GetFocusColor( zCVob* focusVob );
     zCOLOR LockableColor( oCMobLockable* focusLockable );
     zCOLOR DoorColor( oCMobDoor* focusDoor );
     zCOLOR ChestColor( oCMobContainer* focusContainer );
     zCOLOR NpcColor( oCNpc* focusNpc );
     zCOLOR ItemColor( oCItem* focusItem );
+    bool TryPrintFocus( int x, int y, zSTRING name, zCVob* vob );
 
   public:
-    zCView* focusView;
-    bool isNameOnScreen;
-    bool TryPrintName( int x, int y, const zSTRING& text, oCNpc* focusNpc );
+    bool CanPrintFocus( zCView* view, int x, int y, const zSTRING& text );
+    void Clear();
     void Loop();
-    bool AllOptionsOff();
   };
 
   FocusColor focusColor;

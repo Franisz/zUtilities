@@ -50,10 +50,31 @@ namespace GOTHIC_ENGINE {
     focusBar->Loop();
   }
 
+  void PlayerStatus::Clear() {
+    focusColor.Clear();
+    debugHelper.Clear();
+
+    if ( hpBar )
+      hpBar->Clear();
+
+    if ( manaBar )
+      manaBar->Clear();
+
+    if ( focusBar )
+      focusBar->Clear();
+  }
+
   void PlayerStatus::Loop() {
     if ( !ogame || !player )
       return;
 
+    if ( quickSave->isSaving ) {
+      Clear();
+      return;
+    }
+
+    debugHelper.Loop();
+    focusColor.Loop();
     StatusBars();
     FactorMotion();
   }

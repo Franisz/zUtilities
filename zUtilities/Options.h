@@ -16,7 +16,7 @@ namespace GOTHIC_ENGINE {
 
     void AddTrivias() {
       zoptions->AddTrivia( PLUGIN_NAME, "RecoveryVisualization", "... enables (1) or disables (0) visualization of healing that hovered in the inventory item gives" );
-      zoptions->AddTrivia( PLUGIN_NAME, "StatusBarValueMode", "... specifies mode of showing hp / mana bar value, (0) - Disabled, (1) - 'Inside', (2) - 'Above'" );
+      zoptions->AddTrivia( PLUGIN_NAME, "StatusBarValueMode", "... specifies mode of showing hp / mana bar value, (0) - Disabled, (1) - 'Above', (2) - 'Inside'" );
       zoptions->AddTrivia( PLUGIN_NAME, "ShowEnemyBarAboveHim", "... enables (1) or disables (0) showing enemy hp bar above his head" );
 
       zoptions->AddTrivia( PLUGIN_NAME, "UseTimeMultiplier", "... enables (1) or disables (0) time speed multiplier" );

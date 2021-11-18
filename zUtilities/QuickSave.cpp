@@ -27,7 +27,7 @@ namespace GOTHIC_ENGINE {
   }
 
   int QuickSave::InInteraction() {
-    if ( playerHelper.IsSaving() ) return true;
+    if ( isSaving ) return true;
     if ( playerHelper.IsBusy() ) return true;
     if ( player->bodyState == BS_TAKEITEM ) return true;
     if ( player->bodyState == BS_MOBINTERACT ) return true;
@@ -106,6 +106,7 @@ namespace GOTHIC_ENGINE {
   void QuickSave::ToggleShowStatus() {
     if ( !oldShowStatus ) return;
 
+    isSaving = (isSaving) ? false : true;
     ogame->SetShowPlayerStatus( toggledShowStatus );
     toggledShowStatus = !toggledShowStatus;
   }

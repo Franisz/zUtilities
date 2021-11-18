@@ -73,6 +73,7 @@ namespace GOTHIC_ENGINE {
     void ToggleShowStatus();
 
   public:
+    bool isSaving = false;
     void Loop();
     QuickSave();
   };

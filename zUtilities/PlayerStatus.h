@@ -9,7 +9,7 @@ namespace GOTHIC_ENGINE {
     void PlayerStatus() {
       UseTimeMultiplier = zoptions->ReadInt( PLUGIN_NAME, "UseTimeMultiplier", true );
       KeyTimeMultiplier = GetEmulationKeyCode( zoptions->ReadString( PLUGIN_NAME, "KeyTimeMultiplier", "KEY_Z" ) );
-      string MulString = A zoptions->ReadString( PLUGIN_NAME, "TimeMultipliers", "1.0 | 2.5" );
+      string MulString = A zoptions->ReadString( PLUGIN_NAME, "TimeMultipliers", "1.0|2.5" );
 
       Array<string> MulStrings = MulString.Split( "|" );
       for ( int i = 0; i < MulStrings.GetNum(); i++ )
@@ -30,6 +30,7 @@ namespace GOTHIC_ENGINE {
   public:
     StatusBar* focusBar;
     void ResetTimeMultiplier();
+    void Clear();
     void Loop();
   };
 

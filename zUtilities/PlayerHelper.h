@@ -4,8 +4,6 @@
 namespace GOTHIC_ENGINE {
   class PlayerHelper {
   public:
-    bool isSaving = false;
-
     bool IsBusy() {
       return IsInInfo() || OnPause() || player->inventory2.IsOpen();
     }
@@ -16,10 +14,6 @@ namespace GOTHIC_ENGINE {
 
     bool OnPause() {
       return ogame->IsOnPause();
-    }
-
-    bool IsSaving() {
-      return isSaving;
     }
 
     bool IsDead() {

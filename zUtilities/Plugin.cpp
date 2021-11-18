@@ -29,10 +29,8 @@ namespace GOTHIC_ENGINE {
     for ( uint i = 0; i < popups.GetNum(); i++ )
       popups[i]->Update();
 
-    playerStatus.Loop();
-    debugHelper.Loop();
-    focusColor.Loop();
     quickSave->Loop();
+    playerStatus.Loop();
     HandleMunitionLoop();
   }
 
@@ -46,16 +44,14 @@ namespace GOTHIC_ENGINE {
   TSaveLoadGameInfo& SaveLoadGameInfo = UnionCore::SaveLoadGameInfo;
 
   void Game_SaveBegin() {
-    playerHelper.isSaving = true;
-    debugHelper.Clear();
+    playerStatus.Clear();
   }
 
   void Game_SaveEnd() {
-    playerHelper.isSaving = false;
   }
 
   void LoadBegin() {
-    debugHelper.Clear();
+    playerStatus.Clear();
     for ( uint i = 0; i < popups.GetNum(); i++ )
       delete popups[i];
   }
