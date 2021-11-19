@@ -5,6 +5,7 @@
 #pragma region Includes
 #include "Misc.cpp"
 #include "Commands.cpp"
+#include "IconInfo.cpp"
 #include "DebugHelper.cpp"
 #include "FocusColor.cpp"
 #include "QuickSave.cpp"

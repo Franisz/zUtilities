@@ -248,6 +248,7 @@ namespace GOTHIC_ENGINE {
     if ( !Options::UsingDebugHelper
       || ogame->pause_screen
       || zcon->IsVisible()
+      || (edit_con && edit_con->IsVisible())
       || quickSave->isSaving
       || player->inventory2.GetNextContainerLeft( &player->inventory2 ) ) {
       Clear();

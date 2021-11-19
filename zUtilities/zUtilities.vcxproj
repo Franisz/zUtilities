@@ -880,6 +880,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="IconInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="IconInfo.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Inventory.cpp">
       <SubType>
       </SubType>

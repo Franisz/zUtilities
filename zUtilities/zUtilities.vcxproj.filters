@@ -241,6 +241,9 @@
     <Filter Include="Plugin\Workspace\Features\PlayerStatus\StatusBar">
       <UniqueIdentifier>{f5a6fe54-5837-452a-8b39-b2eea83b3d9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\Workspace\Features\PlayerStatus\IconInfo">
+      <UniqueIdentifier>{ad1d68b4-22dc-4e58-914f-444545260f86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2873,6 +2876,12 @@
     </ClInclude>
     <ClInclude Include="KeyCode.h">
       <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="IconInfo.cpp">
+      <Filter>Plugin\Workspace\Features\PlayerStatus\IconInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="IconInfo.h">
+      <Filter>Plugin\Workspace\Features\PlayerStatus\IconInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

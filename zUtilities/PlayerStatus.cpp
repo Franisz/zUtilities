@@ -13,7 +13,7 @@ namespace GOTHIC_ENGINE {
     if ( !Options::UseTimeMultiplier )
       return;
 
-    if ( !Options::TimeMultipliers.GetNum() || zcon->IsVisible() )
+    if ( !Options::TimeMultipliers.GetNum() || zcon->IsVisible() || (edit_con && edit_con->IsVisible()) )
       return;
 
     if ( playerHelper.IsDead() || !oCInformationManager::GetInformationManager().IsDone || ogame->IsOnPause() ) {
@@ -33,6 +33,31 @@ namespace GOTHIC_ENGINE {
       multiplierIndex = 0;
 
     ztimer->factorMotion = Options::TimeMultipliers[multiplierIndex];
+  }
+
+  void PlayerStatus::ShowGameTime() {
+    if ( !Options::ShowGameTime && !Options::UseTimeMultiplier )
+      return;
+
+    zSTRING str = "";
+    zCOLOR color = zCOLOR( 255, 255, 255 );
+
+    if ( Options::ShowGameTime ) {
+      int day, hour, min;
+      ogame->GetTime( day, hour, min );
+      str = (min > 9) ? Z hour + ":" + Z min : Z hour + ":0" + Z min;
+    }
+
+    if ( ztimer->factorMotion != 1.0f ) {
+      color = zCOLOR( 255, 0, 0 );
+      if ( str.Length() ) str = str + " ";
+      str = str + "x" + Z ztimer->factorMotion;
+    }
+
+    if ( !str.Length() )
+      return;
+
+    new IconInfo( screen->FontY(), screen->FontY() * 2.5, color, "ICON_CLOCK", str );
   }
 
   void PlayerStatus::StatusBars() {
@@ -77,5 +102,6 @@ namespace GOTHIC_ENGINE {
     focusColor.Loop();
     StatusBars();
     FactorMotion();
+    ShowGameTime();
   }
 }
