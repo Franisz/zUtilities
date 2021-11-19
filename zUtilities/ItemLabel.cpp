@@ -266,15 +266,29 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    if ( item->GetInstanceName().StartWith( "ITKE" ) ) {
-      color = zCOLOR( 113, 128, 147 );
-      texture = "KEY"; // https://game-icons.net/1x1/lorc/key.html
-      return;
-    }
+    if ( auto sym = parser->GetSymbol( "TRADE_CURRENCY_INSTANCE" ) )
+      if ( item->GetInstanceName() == sym->stringdata ) {
+        color = goldYellow;
+        texture = "MONEY"; // https://game-icons.net/1x1/delapouite/two-coins.html
+        return;
+      }
 
     if ( item->GetInstanceName().StartWith( "ITSE" ) ) {
       color = goldYellow;
       texture = "SECRET"; // https://game-icons.net/1x1/lorc/cash.html
+      return;
+    }
+
+    for ( int i = 0; i < ITM_STATE_MAX; i++ ) {
+      if ( !item->onState[i] ) continue;
+      color = zCOLOR( 255, 191, 246 );
+      texture = "USABLE"; // https://game-icons.net/1x1/delapouite/perspective-dice-six-faces-random.html
+      return;
+    }
+
+    if ( item->GetInstanceName().StartWith( "ITKE" ) ) {
+      color = zCOLOR( 113, 128, 147 );
+      texture = "KEY"; // https://game-icons.net/1x1/lorc/key.html
       return;
     }
 
@@ -284,12 +298,6 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    if ( auto sym = parser->GetSymbol( "TRADE_CURRENCY_INSTANCE" ) )
-      if ( item->GetInstanceName() == sym->stringdata ) {
-        color = goldYellow;
-        texture = "MONEY"; // https://game-icons.net/1x1/delapouite/two-coins.html
-        return;
-      }
 
 #if ENGINE >= Engine_G2
     if ( item->GetInstanceName().HasWord( "SILVER" ) || item->GetInstanceName().HasWord( "GOLD" ) ) {

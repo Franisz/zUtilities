@@ -125,6 +125,12 @@ namespace GOTHIC_ENGINE {
     Print( textView, "SchemeName", Z item->GetSchemeName() );
     Print( sideView, "Material", Z item->GetSoundMaterial() );
 
+    for ( int i = 0; i < ITM_STATE_MAX; i++ ) {
+      if ( !item->onState[i] ) continue;
+      Print( textView, "onState", Z item->onState[i] );
+      break;
+    }
+
     if ( zCVisual* visual = item->GetVisual() ) {
       AddSeparator( "Visual" );
       Print( textView, "VisualFile", visual->GetVisualName() );

@@ -28,6 +28,7 @@ namespace GOTHIC_ENGINE {
     void FactorMotion();
 
   public:
+    oCNpc* traderNpc;
     StatusBar* focusBar;
     void ResetTimeMultiplier();
     void Clear();

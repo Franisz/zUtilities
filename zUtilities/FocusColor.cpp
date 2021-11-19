@@ -55,7 +55,7 @@ namespace GOTHIC_ENGINE {
         continue;
 
 #if ENGINE < Engine_G2
-      if ( npc->GetAivar( "AIV_ITEMSCHWEIN" ) && npc->HasVobDetected( player ) )
+      if ( npc->HasVobDetected( player ) && npc->GetAivar( "AIV_ITEMSCHWEIN" ) )
         return false;
 #endif
 
@@ -220,8 +220,10 @@ namespace GOTHIC_ENGINE {
         return zCOLOR( 255, 135, 150 );
       else if ( focusLockable->keyInstance.Length() )
         return zCOLOR( 255, 20, 20 );
-      else
+      else if ( focusLockable->pickLockStr.Length() )
         return zCOLOR( 255, 175, 0 );
+      else
+        return zCOLOR( 175, 175, 175 );
 
     return colDefault;
   }

@@ -5,3 +5,4 @@
 
 void __thiscall Draw_Union();
 void __thiscall DrawItemInfo_Union( oCItem*, zCWorld* );
+void __thiscall Close_Union();

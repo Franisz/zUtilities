@@ -35,6 +35,11 @@ namespace GOTHIC_ENGINE {
     if ( !Options::ActivateUsedMunition )
       return;
 
+    if ( playerStatus.traderNpc ) {
+      HandleMunition( nullptr );
+      return;
+    }
+
     if ( !player->inventory2.IsOpen() )
       return;
 
@@ -51,5 +56,17 @@ namespace GOTHIC_ENGINE {
       return;
 
     HandleMunition( weapon );
+  }
+
+  HOOK Hook_oCInformationManager_OnTradeBegin PATCH( &oCInformationManager::OnTradeBegin, &oCInformationManager::OnTradeBegin_Union );
+  void oCInformationManager::OnTradeBegin_Union() {
+    THISCALL( Hook_oCInformationManager_OnTradeBegin )();
+    playerStatus.traderNpc = Npc;
+  }
+
+  HOOK Hook_oCItemContainer_Close PATCH( &oCItemContainer::Close, &oCItemContainer::Close_Union );
+  void oCItemContainer::Close_Union() {
+    playerStatus.traderNpc = nullptr;
+    THISCALL( Hook_oCItemContainer_Close )();
   }
 }
