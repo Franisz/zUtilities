@@ -33,10 +33,9 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "NoSave", "... text appearing when something went wrong and incorrect save slot tried to be loaded" );
       zoptions->AddTrivia( PLUGIN_NAME, "SaveName", "... name used for quicksaves" );
 
-      zoptions->AddTrivia( PLUGIN_NAME, "ColorNpcs", "... enables (1) or disables (0) coloring of focused Npcs" );
-      zoptions->AddTrivia( PLUGIN_NAME, "ColorChests", "... enables (1) or disables (0) coloring of focused Chests" );
-      zoptions->AddTrivia( PLUGIN_NAME, "ColorDoors", "... enables (1) or disables (0) coloring of focused Doors" );
-      zoptions->AddTrivia( PLUGIN_NAME, "ColorItems", "... enables (1) or disables (0) coloring of focused Items" );
+      zoptions->AddTrivia( PLUGIN_NAME, "ColorNpcs", "... enables (1) or disables (0) coloring of focused npcs" );
+      zoptions->AddTrivia( PLUGIN_NAME, "ColorLockables", "... enables (1) or disables (0) coloring of focused chests, doors and other lockables" );
+      zoptions->AddTrivia( PLUGIN_NAME, "ColorItems", "... enables (1) or disables (0) coloring of focused items" );
 
       zoptions->AddTrivia( PLUGIN_NAME, "LabelItems", "... enables (1) or disables (0) inventory item labeling" );
       zoptions->AddTrivia( PLUGIN_NAME, "LabelScale", "... defines scale of the label" );

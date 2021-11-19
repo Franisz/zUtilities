@@ -28,7 +28,7 @@ namespace GOTHIC_ENGINE {
     CRIME_MURDER = (sym) ? sym->single_intdata : Invalid;
   }
 
-  bool FocusColor::CanStealNow( oCItem* focusItem ) {
+  bool FocusColor::CanStealNow( oCItem* item ) {
     int ZS_Clear = parser->GetIndex( "ZS_ClearRoom" );
 
 #if ENGINE >= Engine_G2
@@ -70,7 +70,7 @@ namespace GOTHIC_ENGINE {
       }
 
 #if ENGINE < Engine_G2
-      if ( !focusItem->owner && !focusItem->ownerGuild )
+      if ( !item->owner && !item->ownerGuild )
         continue;
 #endif
 
@@ -81,12 +81,12 @@ namespace GOTHIC_ENGINE {
   }
 
 #if ENGINE >= Engine_G2
-  bool FocusColor::CanTakeFromRoom( oCItem* focusItem ) {
+  bool FocusColor::CanTakeFromRoom( oCItem* item ) {
     oCPortalRoomManager* rooms = ogame->GetPortalRoomManager();
 
     if ( !rooms ) return true;
 
-    const zSTRING* portalName = focusItem->GetSectorNameVobIsIn();
+    const zSTRING* portalName = item->GetSectorNameVobIsIn();
 
     if ( !portalName ) return true;
 
@@ -164,142 +164,130 @@ namespace GOTHIC_ENGINE {
   }
 #endif
 
-  zCOLOR FocusColor::NpcColor( oCNpc* focusNpc ) {
-    if ( focusNpc->attribute[NPC_ATR_HITPOINTS] <= 0 ) {
-      if ( !focusNpc->stealcontainer->contList.GetNumInList() )
+  zCOLOR FocusColor::NpcColor( oCNpc* npc ) {
+    if ( npc->attribute[NPC_ATR_HITPOINTS] <= 0 ) {
+      if ( !npc->stealcontainer->contList.GetNumInList() )
         return zCOLOR( 175, 175, 175 );
       else
         return colDefault;
     }
 
-    bool inAttack = focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) );
-    bool inReact = focusNpc->IsAIState( parser->GetIndex( "ZS_ReactToDamage" ) );
+    bool inAttack = npc->IsAIState( parser->GetIndex( "ZS_Attack" ) );
+    bool inReact = npc->IsAIState( parser->GetIndex( "ZS_ReactToDamage" ) );
 
 #if ENGINE >= Engine_G2
-    if ( focusNpc->IsHostile( player ) && focusNpc->GetPermAttitude( player ) == NPC_ATT_HOSTILE
-      || (focusNpc->enemy == player && inAttack && HasReasonToKill( focusNpc )) )
+    if ( npc->IsHostile( player ) && npc->GetPermAttitude( player ) == NPC_ATT_HOSTILE
+      || (npc->enemy == player && inAttack && HasReasonToKill( npc )) )
       return zCOLOR( 255, 0, 0 );
 
-    if ( focusNpc->IsAngry( player ) || (focusNpc->enemy == player && inAttack) )
+    if ( npc->IsAngry( player ) || (npc->enemy == player && inAttack) )
       return zCOLOR( 255, 180, 0 );
 
     int day, hour, min;
     ogame->GetTime( day, hour, min );
 
-    if ( focusNpc->GetAivar( "AIV_NpcSawPlayerCommit" )
-      && !(focusNpc->GetAivar( "AIV_NpcSawPlayerCommit" ) < CRIME_MURDER && focusNpc->GetAivar( "AIV_NpcSawPlayerCommitDay" ) < day - 2)
-      && !(focusNpc->GetAivar( "AIV_CrimeAbsolutionLevel" ) < GetAbsolutionLevel( focusNpc )) )
+    if ( npc->GetAivar( "AIV_NpcSawPlayerCommit" )
+      && !(npc->GetAivar( "AIV_NpcSawPlayerCommit" ) < CRIME_MURDER && npc->GetAivar( "AIV_NpcSawPlayerCommitDay" ) < day - 2)
+      && !(npc->GetAivar( "AIV_CrimeAbsolutionLevel" ) < GetAbsolutionLevel( npc )) )
       return zCOLOR( 255, 180, 0 );
 #else
-    if ( (focusNpc->IsHostile( player ) && focusNpc->GetPermAttitude( player ) == NPC_ATT_HOSTILE)
-      || (focusNpc->enemy == player && inAttack && focusNpc->GetAivar( "AIV_ATTACKREASON" )) )
+    if ( (npc->IsHostile( player ) && npc->GetPermAttitude( player ) == NPC_ATT_HOSTILE)
+      || (npc->enemy == player && inAttack && npc->GetAivar( "AIV_ATTACKREASON" )) )
       return zCOLOR( 255, 0, 0 );
 
-    if ( (focusNpc->IsAngry( player ) || focusNpc->enemy == player) && (inAttack || inReact) )
+    if ( (npc->IsAngry( player ) || npc->enemy == player) && (inAttack || inReact) )
       return zCOLOR( 255, 180, 0 );
 #endif
 
     if ( inReact )
       return colDefault;
 
-    if ( focusNpc->GetAivar( "AIV_PARTYMEMBER" ) )
+    if ( npc->GetAivar( "AIV_PARTYMEMBER" ) )
       return zCOLOR( 51, 235, 255 );
 
-    if ( (focusNpc->IsFriendly( player ) || focusNpc->npcType == TYPE_FRIEND) )
+    if ( (npc->IsFriendly( player ) || npc->npcType == TYPE_FRIEND) )
       return zCOLOR( 0, 255, 0 );
 
-    if ( ogame->GetGuilds()->GetAttitude( focusNpc->guild, player->guild ) == NPC_ATT_FRIENDLY )
+    if ( ogame->GetGuilds()->GetAttitude( npc->guild, player->guild ) == NPC_ATT_FRIENDLY )
       return zCOLOR( 175, 255, 175 );
 
     return colDefault;
   }
 
-  zCOLOR FocusColor::LockableColor( oCMobLockable* focusLockable ) {
-    if ( focusLockable->locked )
-      if ( focusLockable->keyInstance.Length() && focusLockable->pickLockStr.Length() )
+  zCOLOR FocusColor::LockableColor( oCMobLockable* lockable ) {
+    if ( lockable->locked )
+      if ( lockable->keyInstance.Length() && lockable->pickLockStr.Length() )
         return zCOLOR( 255, 135, 150 );
-      else if ( focusLockable->keyInstance.Length() )
+      else if ( lockable->keyInstance.Length() )
         return zCOLOR( 255, 20, 20 );
-      else if ( focusLockable->pickLockStr.Length() )
+      else if ( lockable->pickLockStr.Length() )
         return zCOLOR( 255, 175, 0 );
+      else
+        return zCOLOR( 175, 175, 175 );
+
+    if ( oCMobContainer* container = lockable->CastTo<oCMobContainer>() )
+      if ( container->containList.GetNumInList() )
+        return zCOLOR( 0, 175, 0 );
       else
         return zCOLOR( 175, 175, 175 );
 
     return colDefault;
   }
 
-  zCOLOR FocusColor::ChestColor( oCMobContainer* focusContainer ) {
-    if ( focusContainer->locked )
-      return LockableColor( focusContainer );
-
-    if ( focusContainer->containList.GetNumInList() )
-      return zCOLOR( 0, 175, 0 );
-
-    return zCOLOR( 175, 175, 175 );
-  }
-
-  zCOLOR FocusColor::ItemColor( oCItem* focusItem ) {
+  zCOLOR FocusColor::ItemColor( oCItem* item ) {
 #if ENGINE >= Engine_G2
-    if ( focusItem->HasFlag( ITM_FLAG_DROPPED ) )
+    if ( item->HasFlag( ITM_FLAG_DROPPED ) )
       return colDefault;
 #endif
 
-    if ( focusItem->IsOwnedByNpc( player->GetInstance() ) )
+    if ( item->IsOwnedByNpc( player->GetInstance() ) )
       return colDefault;
 
-    if ( focusItem->IsOwnedByGuild( player->guild ) )
+    if ( item->IsOwnedByGuild( player->guild ) )
       return colDefault;
 
 #if ENGINE >= Engine_G2
-    if ( CanTakeFromRoom( focusItem ) )
+    if ( CanTakeFromRoom( item ) )
       return colDefault;
 #endif
 
-    if ( CanStealNow( focusItem ) )
+    if ( CanStealNow( item ) )
       return colDefault;
 
     return zCOLOR( 255, 200, 100 );
   }
 
-  zCOLOR FocusColor::GetFocusColor( zCVob* focusVob ) {
+  zCOLOR FocusColor::GetFocusColor( zCVob* vob ) {
     if ( !TYPE_FRIEND || !CRIME_MURDER )
       InitData();
 
-    if ( Options::ColorChests )
-      if ( oCMobContainer* focusContainer = focusVob->CastTo<oCMobContainer>() )
-        return ChestColor( focusContainer );
-
-    if ( Options::ColorDoors )
-      if ( oCMobDoor* focusDoor = focusVob->CastTo<oCMobDoor>() )
-        return LockableColor( focusDoor );
+    if ( Options::ColorLockables )
+      if ( oCMobLockable* lockable = vob->CastTo<oCMobLockable>() )
+        return LockableColor( lockable );
 
     if ( Options::ColorNpcs )
-      if ( oCNpc* focusNpc = focusVob->CastTo<oCNpc>() )
-        return NpcColor( focusNpc );
+      if ( oCNpc* npc = vob->CastTo<oCNpc>() )
+        return NpcColor( npc );
 
     if ( Options::ColorItems )
-      if ( oCItem* focusItem = focusVob->CastTo<oCItem>() )
-        return ItemColor( focusItem );
+      if ( oCItem* item = vob->CastTo<oCItem>() )
+        return ItemColor( item );
 
     return colDefault;
   }
 
-  zSTRING FocusColor::GetName( zCVob* focusVob ) {
-    if ( Options::ColorChests )
-      if ( oCMobContainer* focusContainer = focusVob->CastTo<oCMobContainer>() )
-        return focusContainer->GetName();
-
-    if ( Options::ColorDoors )
-      if ( oCMobDoor* focusDoor = focusVob->CastTo<oCMobDoor>() )
-        return focusDoor->GetName();
+  zSTRING FocusColor::GetName( zCVob* vob ) {
+    if ( Options::ColorLockables )
+      if ( oCMobLockable* lockable = vob->CastTo<oCMobLockable>() )
+        return lockable->GetName();
 
     if ( Options::ColorNpcs )
-      if ( oCNpc* focusNpc = focusVob->CastTo<oCNpc>() )
-        return focusNpc->name[0];
+      if ( oCNpc* npc = vob->CastTo<oCNpc>() )
+        return npc->name[0];
 
     if ( Options::ColorItems )
-      if ( oCItem* focusItem = focusVob->CastTo<oCItem>() )
-        return focusItem->name;
+      if ( oCItem* item = vob->CastTo<oCItem>() )
+        return item->name;
 
     return "";
   }

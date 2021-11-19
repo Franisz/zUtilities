@@ -3,12 +3,11 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int ColorNpcs, ColorChests, ColorDoors, ColorItems;
+    int ColorNpcs, ColorLockables, ColorItems;
 
     void FocusColor() {
       ColorNpcs = zoptions->ReadInt( PLUGIN_NAME, "ColorNpcs", true );
-      ColorChests = zoptions->ReadInt( PLUGIN_NAME, "ColorChests", true );
-      ColorDoors = zoptions->ReadInt( PLUGIN_NAME, "ColorDoors", true );
+      ColorLockables = zoptions->ReadInt( PLUGIN_NAME, "ColorLockables", true );
       ColorItems = zoptions->ReadInt( PLUGIN_NAME, "ColorItems", true );
     }
   }
@@ -27,13 +26,12 @@ namespace GOTHIC_ENGINE {
     bool HasReasonToKill( oCNpc* slf );
     bool CanStealNow( oCItem* item );
     bool CanTakeFromRoom( oCItem* item );
-    zSTRING GetName( zCVob* focusVob );
-    zCOLOR GetFocusColor( zCVob* focusVob );
-    zCOLOR LockableColor( oCMobLockable* focusLockable );
-    zCOLOR DoorColor( oCMobDoor* focusDoor );
-    zCOLOR ChestColor( oCMobContainer* focusContainer );
-    zCOLOR NpcColor( oCNpc* focusNpc );
-    zCOLOR ItemColor( oCItem* focusItem );
+    zSTRING GetName( zCVob* vob );
+    zCOLOR GetFocusColor( zCVob* vob );
+    zCOLOR LockableColor( oCMobLockable* lockable );
+    zCOLOR InterColor( oCMobInter* inter );
+    zCOLOR NpcColor( oCNpc* npc );
+    zCOLOR ItemColor( oCItem* item );
     bool TryPrintFocus( int x, int y, zSTRING name, zCVob* vob );
 
   public:
