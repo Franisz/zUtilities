@@ -2,6 +2,14 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
+  HOOK Ivk_CallOnStateFunc_Union PATCH( &oCMobInter::CallOnStateFunc, &oCMobInter::CallOnStateFunc_Union );
+  void oCMobInter::CallOnStateFunc_Union( oCNpc* npc, int a1 ) {
+    THISCALL( Ivk_CallOnStateFunc_Union )(npc, a1);
+
+    if ( npc == player && !focusColor.stateFuncs.IsInList( onStateFuncName ) )
+      focusColor.stateFuncs.Insert( onStateFuncName );
+  }
+
   HOOK Ivk_Print_Union PATCH( &zCView::Print, &zCView::Print_Union );
   void zCView::Print_Union( int x, int y, const zSTRING& text ) {
     if ( focusColor.CanPrintFocus( this, x, y, text ) )
@@ -16,6 +24,47 @@ namespace GOTHIC_ENGINE {
       return 0;
 
     return this->aiscriptvars[sym->single_intdata];
+  }
+
+  void FocusColor::Archive() {
+    int slotID = SaveLoadGameInfo.slotID;
+    if ( slotID < 0 )
+      return;
+
+    zCArchiver* ar = zarcFactory->CreateArchiverWrite( Z GetArchivePath( PLUGIN_NAME ), zARC_MODE_ASCII, 0, 0 );
+    if ( !ar )
+      return;
+
+    ar->WriteInt( "stateFuncsCount", stateFuncs.GetNum() );
+    for ( uint i = 0; i < stateFuncs.GetNum(); i++ ) {
+      ar->WriteString( "stateFuncs", stateFuncs[i] );
+    }
+
+    ar->Close();
+    ar->Release();
+  }
+
+  void FocusColor::Unarchive() {
+    int slotID = SaveLoadGameInfo.slotID;
+    if ( slotID < 0 )
+      return;
+
+    stateFuncs.EmptyList();
+
+    zCArchiver* ar = zarcFactory->CreateArchiverRead( Z GetArchivePath( PLUGIN_NAME ), 0 );
+    if ( !ar )
+      return;
+
+    int stateFuncsCount;
+    ar->ReadInt( "stateFuncsCount", stateFuncsCount );
+    for ( int i = 0; i < stateFuncsCount; i++ ) {
+      zSTRING funcName;
+      ar->ReadString( "stateFuncs", funcName );
+      stateFuncs.Insert( funcName );
+    };
+
+    ar->Close();
+    ar->Release();
   }
 
   void FocusColor::InitData() {
@@ -227,7 +276,7 @@ namespace GOTHIC_ENGINE {
 
     if ( oCMobContainer* container = lockable->CastTo<oCMobContainer>() )
       if ( container->containList.GetNumInList() )
-        return zCOLOR( 0, 175, 0 );
+        return zCOLOR( 30, 220, 30 );
       else
         return zCOLOR( 175, 175, 175 );
 
@@ -257,6 +306,19 @@ namespace GOTHIC_ENGINE {
     return zCOLOR( 255, 200, 100 );
   }
 
+  zCOLOR FocusColor::InterColor( oCMobInter* inter ) {
+    if ( !inter->onStateFuncName.Length() )
+      return colDefault;
+
+    if ( inter->GetScemeName() != "BOOK" )
+      return colDefault;
+
+    if ( stateFuncs.IsInList( inter->onStateFuncName ) )
+      return colDefault;
+
+    return zCOLOR( 30, 220, 30 );
+  }
+
   zCOLOR FocusColor::GetFocusColor( zCVob* vob ) {
     if ( !TYPE_FRIEND || !CRIME_MURDER )
       InitData();
@@ -273,6 +335,10 @@ namespace GOTHIC_ENGINE {
       if ( oCItem* item = vob->CastTo<oCItem>() )
         return ItemColor( item );
 
+    if ( Options::ColorInter )
+      if ( oCMobInter* inter = vob->CastTo<oCMobInter>() )
+        return InterColor( inter );
+
     return colDefault;
   }
 
@@ -288,6 +354,10 @@ namespace GOTHIC_ENGINE {
     if ( Options::ColorItems )
       if ( oCItem* item = vob->CastTo<oCItem>() )
         return item->name;
+
+    if ( Options::ColorInter )
+      if ( oCMobInter* inter = vob->CastTo<oCMobInter>() )
+        return inter->GetName();
 
     return "";
   }

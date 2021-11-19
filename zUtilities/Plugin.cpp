@@ -48,6 +48,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_SaveEnd() {
+    focusColor.Archive();
   }
 
   void LoadBegin() {
@@ -57,6 +58,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void LoadEnd() {
+    focusColor.Unarchive();
   }
 
   void Game_LoadBegin_NewGame() {

@@ -3,12 +3,13 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int ColorNpcs, ColorLockables, ColorItems;
+    int ColorNpcs, ColorLockables, ColorItems, ColorInter;
 
     void FocusColor() {
       ColorNpcs = zoptions->ReadInt( PLUGIN_NAME, "ColorNpcs", true );
       ColorLockables = zoptions->ReadInt( PLUGIN_NAME, "ColorLockables", true );
       ColorItems = zoptions->ReadInt( PLUGIN_NAME, "ColorItems", true );
+      ColorInter = zoptions->ReadInt( PLUGIN_NAME, "ColorInter", true );
     }
   }
 
@@ -35,9 +36,12 @@ namespace GOTHIC_ENGINE {
     bool TryPrintFocus( int x, int y, zSTRING name, zCVob* vob );
 
   public:
+    zCArray<zSTRING> stateFuncs;
     bool CanPrintFocus( zCView* view, int x, int y, const zSTRING& text );
     void Clear();
     void Loop();
+    void Archive();
+    void Unarchive();
   };
 
   FocusColor focusColor;

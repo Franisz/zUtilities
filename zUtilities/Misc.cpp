@@ -14,4 +14,22 @@ namespace GOTHIC_ENGINE {
       a.top <= b.bottom &&
       b.top <= a.bottom);
   }
+
+  string GetSlotNameByID( uint ID ) {
+    if ( ID > 0 )
+      return "savegame" + A ID;
+
+    if ( ID == 0 )
+      return "quicksave";
+
+    return "current";
+  }
+
+  string GetArchivePath( string sav ) {
+    int slotID = SaveLoadGameInfo.slotID;
+    string savesDir = zoptions->GetDirString( zTOptionPaths::DIR_SAVEGAMES );
+    string slotDir = GetSlotNameByID( SaveLoadGameInfo.slotID );
+    string archivePath = string::Combine( "%s\\%s\\%s\.sav", savesDir, slotDir, sav );
+    return archivePath;
+  }
 }
