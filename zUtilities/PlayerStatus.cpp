@@ -5,7 +5,7 @@ namespace GOTHIC_ENGINE {
 #if ENGINE < Engine_G2
   HOOK Hook_zCAICamera_CheckKeys PATCH( &zCAICamera::CheckKeys, &zCAICamera::CheckKeys_Union );
   void zCAICamera::CheckKeys_Union() {
-    if ( ztimer->factorMotion == 1.0f ) {
+    if ( !Options::UseTimeMultiplier || ztimer->factorMotion == 1.0f ) {
       THISCALL( Hook_zCAICamera_CheckKeys )();
       return;
     }
@@ -21,7 +21,7 @@ namespace GOTHIC_ENGINE {
 
   HOOK Hook_oCAIHuman_PC_Turnings PATCH( &oCAIHuman::PC_Turnings, &oCAIHuman::PC_Turnings_Union );
   void oCAIHuman::PC_Turnings_Union( int forceRotation ) {
-    if ( ztimer->factorMotion == 1.0f || Pressed( GAME_LEFT ) || Pressed( GAME_RIGHT ) ) {
+    if ( !Options::UseTimeMultiplier || ztimer->factorMotion == 1.0f || Pressed( GAME_LEFT ) || Pressed( GAME_RIGHT ) ) {
       THISCALL( Hook_oCAIHuman_PC_Turnings )(forceRotation);
       return;
     }
@@ -47,7 +47,7 @@ namespace GOTHIC_ENGINE {
     if ( !Options::UseTimeMultiplier )
       return;
 
-    if ( !Options::TimeMultipliers.GetNum() || zcon->IsVisible() || (edit_con && edit_con->IsVisible()) )
+    if ( !Options::TimeMultipliers.GetNum() || playerHelper.IsConUp() )
       return;
 
     if ( playerHelper.IsDead() || !oCInformationManager::GetInformationManager().IsDone || ogame->IsOnPause() ) {
@@ -82,7 +82,7 @@ namespace GOTHIC_ENGINE {
       str = (min > 9) ? Z hour + ":" + Z min : Z hour + ":0" + Z min;
     }
 
-    if ( ztimer->factorMotion != 1.0f ) {
+    if ( Options::UseTimeMultiplier && ztimer->factorMotion != 1.0f ) {
       color = zCOLOR( 255, 0, 0 );
       if ( str.Length() ) str = str + " ";
       str = str + "x" + Z ztimer->factorMotion;
@@ -91,7 +91,8 @@ namespace GOTHIC_ENGINE {
     if ( !str.Length() )
       return;
 
-    new IconInfo( screen->FontY(), screen->FontY() * 2.5, color, "ICON_CLOCK", str );
+    zSTRING texture = "ICON_CLOCK"; // https://game-icons.net/1x1/lorc/empty-hourglass.html
+    new IconInfo( screen->FontY(), screen->FontY() * 2.5, color, texture, str );
   }
 
   void PlayerStatus::StatusBars() {

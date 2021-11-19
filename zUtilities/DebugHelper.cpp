@@ -247,8 +247,7 @@ namespace GOTHIC_ENGINE {
   void DebugHelper::Loop() {
     if ( !Options::UsingDebugHelper
       || ogame->pause_screen
-      || zcon->IsVisible()
-      || (edit_con && edit_con->IsVisible())
+      || playerHelper.IsConUp()
       || quickSave->isSaving
       || player->inventory2.GetNextContainerLeft( &player->inventory2 ) ) {
       Clear();

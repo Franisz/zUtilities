@@ -29,6 +29,14 @@ namespace GOTHIC_ENGINE {
       Union.GetSysPackOption().Read( scale, "INTERFACE", "Scale", 1.0f );
       return (int)scale;
     }
+
+    bool IsConUp() {
+      for ( int i = 0; i < zCConsole::active_consoles.GetNumInList(); i++ )
+        if ( zCConsole::active_consoles[i]->IsVisible() )
+          return true;
+
+      return false;
+    }
   };
 
   PlayerHelper playerHelper;
