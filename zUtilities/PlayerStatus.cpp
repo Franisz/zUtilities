@@ -2,6 +2,40 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
+#if ENGINE < Engine_G2
+  HOOK Hook_zCAICamera_CheckKeys PATCH( &zCAICamera::CheckKeys, &zCAICamera::CheckKeys_Union );
+  void zCAICamera::CheckKeys_Union() {
+    if ( ztimer->factorMotion == 1.0f ) {
+      THISCALL( Hook_zCAICamera_CheckKeys )();
+      return;
+    }
+
+    float frameTimeOld = ztimer->frameTimeFloat;
+    float motionFactorOld = ztimer->factorMotion;
+    ztimer->frameTimeFloat = frameTimeOld / motionFactorOld;
+    ztimer->factorMotion = 1.0f;
+    THISCALL( Hook_zCAICamera_CheckKeys )();
+    ztimer->frameTimeFloat = frameTimeOld;
+    ztimer->factorMotion = motionFactorOld;
+  }
+
+  HOOK Hook_oCAIHuman_PC_Turnings PATCH( &oCAIHuman::PC_Turnings, &oCAIHuman::PC_Turnings_Union );
+  void oCAIHuman::PC_Turnings_Union( int forceRotation ) {
+    if ( ztimer->factorMotion == 1.0f || Pressed( GAME_LEFT ) || Pressed( GAME_RIGHT ) ) {
+      THISCALL( Hook_oCAIHuman_PC_Turnings )(forceRotation);
+      return;
+    }
+
+    float frameTimeOld = ztimer->frameTimeFloat;
+    float motionFactorOld = ztimer->factorMotion;
+    ztimer->frameTimeFloat = frameTimeOld / motionFactorOld;
+    ztimer->factorMotion = 1.0f;
+    THISCALL( Hook_oCAIHuman_PC_Turnings )(forceRotation);
+    ztimer->frameTimeFloat = frameTimeOld;
+    ztimer->factorMotion = motionFactorOld;
+  };
+#endif
+
   void PlayerStatus::ResetTimeMultiplier() {
     if ( !ztimer )
       return;
