@@ -105,9 +105,13 @@ namespace GOTHIC_ENGINE {
     if ( !focusBar )
       focusBar = new StatusBar( ogame->focusBar );
 
+    if ( !swimBar )
+      swimBar = new StatusBar( ogame->swimBar );
+
     hpBar->Loop();
     manaBar->Loop();
     focusBar->Loop();
+    swimBar->Loop();
   }
 
   void PlayerStatus::Clear() {
@@ -122,6 +126,9 @@ namespace GOTHIC_ENGINE {
 
     if ( focusBar )
       focusBar->Clear();
+
+    if ( swimBar )
+      swimBar->Clear();
   }
 
   void PlayerStatus::Loop() {

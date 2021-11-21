@@ -22,6 +22,7 @@ namespace GOTHIC_ENGINE {
   private:
     StatusBar* hpBar;
     StatusBar* manaBar;
+    StatusBar* swimBar;
     int multiplierIndex = 0;
 
     void ShowGameTime();

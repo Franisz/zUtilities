@@ -4,11 +4,13 @@
 namespace GOTHIC_ENGINE {
   namespace Options {
     int RecoveryVisualization, StatusBarValueMode, ShowEnemyBarAboveHim;
+    Array<string> StatusBarNames;
 
     void StatusBar() {
       RecoveryVisualization = zoptions->ReadInt( PLUGIN_NAME, "RecoveryVisualization", true );
       StatusBarValueMode = zoptions->ReadInt( PLUGIN_NAME, "StatusBarValueMode", 1 );
       ShowEnemyBarAboveHim = zoptions->ReadInt( PLUGIN_NAME, "ShowEnemyBarAboveHim", true );
+      StatusBarNames = (A zoptions->ReadString( PLUGIN_NAME, "StatusBarNames", "" )).Split( "|" );
     }
   }
 
@@ -18,9 +20,8 @@ namespace GOTHIC_ENGINE {
     zCView* valueView;
     zCView* predictView;
     zCView* focusView;
-    int talent;
-    int talentMax;
     zCArray<zSTRING> symbols;
+    zSTRING name;
 
     bool Init();
     bool IsBarActive();
@@ -35,6 +36,7 @@ namespace GOTHIC_ENGINE {
     enum ValueMode {
       Disabled,
       Above,
+      PointToCenter,
       Inside
     };
 

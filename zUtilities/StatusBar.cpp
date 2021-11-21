@@ -36,22 +36,26 @@ namespace GOTHIC_ENGINE {
 
   bool StatusBar::Init() {
     if ( bar == ogame->hpBar ) {
-      talent = NPC_ATR_HITPOINTS;
-      talentMax = NPC_ATR_HITPOINTSMAX;
       symbols.Insert( "NAME_BONUS_HP" );
+      if ( Options::StatusBarNames.GetNum() >= 1 )
+        name = Z Options::StatusBarNames[0];
       return true;
     }
 
     if ( bar == ogame->manaBar ) {
-      talent = NPC_ATR_MANA;
-      talentMax = NPC_ATR_MANAMAX;
       symbols.Insert( "NAME_BONUS_MANA" );
+      if ( Options::StatusBarNames.GetNum() >= 2 )
+        name = Z Options::StatusBarNames[1];
       return true;
     }
 
     if ( bar == ogame->focusBar ) {
-      talent = NPC_ATR_HITPOINTS;
-      talentMax = NPC_ATR_HITPOINTSMAX;
+      return true;
+    }
+
+    if ( bar == ogame->swimBar ) {
+      if ( Options::StatusBarNames.GetNum() >= 3 )
+        name = Z Options::StatusBarNames[2];
       return true;
     }
 
@@ -62,7 +66,7 @@ namespace GOTHIC_ENGINE {
     if ( !player->inventory2.IsOpen() )
       return 0;
 
-    if ( player->attribute[talent] == player->attribute[talentMax] )
+    if ( (int)bar->currentValue == (int)bar->maxHigh )
       return 0;
 
     oCItem* item = player->inventory2.GetSelectedItem();
@@ -72,27 +76,27 @@ namespace GOTHIC_ENGINE {
     if ( !item->onState[0] )
       return 0;
 
-    if ( talent == NPC_ATR_HITPOINTS )
+    if ( bar == ogame->hpBar )
       return GetValueFromItem( item );
 
-    if ( talent == NPC_ATR_MANA )
+    if ( bar == ogame->manaBar )
       return GetValueFromItem( item );
 
     return 0;
   }
 
   void StatusBar::DrawPrediction( int value ) {
-    int currentHpPercent = player->attribute[talent] * 100 / player->attribute[talentMax];
-    int bonusHpPercent = min( value * 100 / player->attribute[talentMax], 100 );
+    int current = (int)bar->currentValue * 100 / (int)bar->maxHigh;
+    int bonus = min( value * 100 / (int)bar->maxHigh, 100 );
 
-    if ( bonusHpPercent + currentHpPercent > 100 )
-      bonusHpPercent = 100 - currentHpPercent;
+    if ( bonus + current > 100 )
+      bonus = 100 - current;
 
-    int start = currentHpPercent * 8192 / 100;
+    int start = current * 8192 / 100;
 
     int x1 = max( start, 0 );
     int y1 = bar->range_bar->py1;
-    int x2 = min( bonusHpPercent * 8192 / 100 + start, 8192 );
+    int x2 = min( bonus * 8192 / 100 + start, 8192 );
     int y2 = bar->range_bar->py2;
 
     predictView = new zCView( x1, y1, x2, y2 );
@@ -125,7 +129,7 @@ namespace GOTHIC_ENGINE {
     if ( !Options::StatusBarValueMode )
       return;
 
-    zCView* insertView = (Options::StatusBarValueMode == Above) ? screen : bar->range_bar;
+    zCView* insertView = (Options::StatusBarValueMode == Inside) ? bar->range_bar : screen;
 
     if ( valueView ) {
       valueView->ClrPrintwin();
@@ -137,16 +141,35 @@ namespace GOTHIC_ENGINE {
       return;
 
     valueView = new zCView( 0, 0, 8192, 8192 );
-    int min = npc->attribute[talent];
-    int max = npc->attribute[talentMax];
-    zSTRING str = Z min + "/" + Z max;
+    zSTRING str = Z( int )bar->currentValue + "/" + Z( int )bar->maxHigh;
+    if ( name && name.Length() )
+      str = name + ": " + str;
 
     insertView->InsertItem( valueView );
 
-    if ( Options::StatusBarValueMode == Above ) {
-      int x = bar->vposx + bar->vsizex / 2 - valueView->FontSize( str ) / 2;
+    if ( Options::StatusBarValueMode != Inside ) {
       int offsetY = bar->vsizey / 2 + valueView->FontY();
-      int y = (!Options::ShowEnemyBarAboveHim && bar == ogame->focusBar) ? bar->vposy + offsetY : bar->vposy - offsetY;
+      int x = bar->vposx + bar->vsizex / 2 - valueView->FontSize( str ) / 2;
+      int y = bar->vposy;
+      bool center = false;
+
+      if ( bar == ogame->focusBar && Options::ShowEnemyBarAboveHim )
+        y -= offsetY;
+      else if ( Options::StatusBarValueMode == Above )
+        center = true;
+      else if ( bar->vposx + bar->vsizex < 3072 )
+        x = bar->vposx + bar->vsizex + valueView->FontY() / 2;
+      else if ( bar->vposx > 5120 )
+        x = bar->vposx - valueView->FontSize( str ) - valueView->FontY() / 2;
+      else
+        center = true;
+
+      if ( center )
+        if ( bar->vposy + bar->vsizey > 4092 )
+          y -= offsetY;
+        else
+          y += offsetY;
+
       valueView->Print( x, y, str );
       return;
     }
@@ -195,7 +218,7 @@ namespace GOTHIC_ENGINE {
       return;
 
     if ( valueView ) {
-      zCView* insertView = (Options::StatusBarValueMode == Above) ? screen : bar->range_bar;
+      zCView* insertView = (Options::StatusBarValueMode == Inside) ? bar->range_bar : screen;
       valueView->ClrPrintwin();
       insertView->RemoveItem( valueView );
       valueView = nullptr;
