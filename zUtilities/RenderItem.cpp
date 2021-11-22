@@ -63,6 +63,7 @@ namespace GOTHIC_ENGINE {
           RotateForInventory( 1 );
         }
 #endif
+        renderNow = false;
       }
 
 #if ENGINE >= Engine_G2
@@ -98,7 +99,6 @@ namespace GOTHIC_ENGINE {
           item->RenderItem( renderWld, renderView, renderRotate );
       }
 
-    renderNow = false;
     renderWld = nullptr;
     renderView = nullptr;
     renderRotate = 0;
