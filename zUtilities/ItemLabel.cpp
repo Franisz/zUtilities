@@ -31,12 +31,12 @@ namespace GOTHIC_ENGINE {
     return (maxIndex != -1) ? this->cond_atr[maxIndex] : -1;
   }
 
-  bool oCItem::HasStateFunc() {
-    for ( int i = 0; i < ITM_STATE_MAX; i++ ) {
+  int oCItem::GetStateFunc() {
+    for ( int i = 0; i < ITM_STATE_MAX; i++ )
       if ( this->onState[i] )
-        return true;
-    }
-    return false;
+        return this->onState[i];
+
+    return Invalid;
   }
 
   bool ItemLabel::CanDrawLabel() {
@@ -55,6 +55,7 @@ namespace GOTHIC_ENGINE {
     zCOLOR goldYellow = zCOLOR( 241, 196, 15 );
     zCOLOR grey = zCOLOR( 189, 195, 199 );
     zCOLOR lightBronze = zCOLOR( 205, 127, 50 );
+    zCOLOR statePink = zCOLOR( 255, 171, 243 );
 
     // ITEM_MISSION
     if ( Options::LabelMissionItems && item->HasFlag( ITM_FLAG_MI ) ) {
@@ -254,17 +255,17 @@ namespace GOTHIC_ENGINE {
       if ( item->GetSoundMaterial() == SND_MAT_STONE ) {
         color = grey;
         texture = "TABLET"; // https://game-icons.net/1x1/lorc/stone-tablet.html
-        return;
       }
-
-      if ( item->GetInstanceName().HasWord( "MAP" ) ) {
+      else if ( item->GetInstanceName().HasWord( "MAP" ) ) {
         color = goldYellow;
         texture = "MAP"; // https://game-icons.net/1x1/lorc/treasure-map.html
-        return;
+      }
+      else {
+        color = zCOLOR( 153, 128, 250 );
+        texture = "DOCS"; // https://game-icons.net/1x1/lorc/tied-scroll.html
       }
 
-      color = zCOLOR( 153, 128, 250 );
-      texture = "DOCS"; // https://game-icons.net/1x1/lorc/tied-scroll.html
+      color = (!playerStatus.KnowStateFunc( item )) ? statePink : color;
       return;
     }
 
@@ -304,8 +305,8 @@ namespace GOTHIC_ENGINE {
     }
 #endif
 
-    if ( item->HasStateFunc() )
-      color = zCOLOR( 255, 171, 243 );
+    if ( item->GetStateFunc() != Invalid )
+      color = statePink;
   }
 
   ItemLabel::ItemLabel( oCItem* renderedItem, zCViewBase* viewBase ) {

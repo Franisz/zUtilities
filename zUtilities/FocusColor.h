@@ -36,12 +36,9 @@ namespace GOTHIC_ENGINE {
     bool TryPrintFocus( int x, int y, zSTRING name, zCVob* vob );
 
   public:
-    zCArray<zSTRING> stateFuncs;
     bool CanPrintFocus( zCView* view, int x, int y, const zSTRING& text );
     void Clear();
     void Loop();
-    void Archive();
-    void Unarchive();
   };
 
   FocusColor focusColor;

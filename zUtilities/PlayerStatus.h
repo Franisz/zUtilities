@@ -30,11 +30,17 @@ namespace GOTHIC_ENGINE {
     void FactorMotion();
 
   public:
+    zCArray<zSTRING> interStateFuncs;
+    zCArray<zSTRING> stateFuncItems;
     oCNpc* traderNpc;
     StatusBar* focusBar;
+    bool KnowStateFunc( zCVob* vob );
+    void TryAddStateFunc( zCVob* vob );
     void ResetTimeMultiplier();
     void Clear();
     void Loop();
+    void Archive();
+    void Unarchive();
   };
 
   PlayerStatus playerStatus;

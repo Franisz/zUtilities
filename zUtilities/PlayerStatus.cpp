@@ -2,6 +2,129 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
+  HOOK Ivk_CallOnStateFunc_Union PATCH( &oCMobInter::CallOnStateFunc, &oCMobInter::CallOnStateFunc_Union );
+  void oCMobInter::CallOnStateFunc_Union( oCNpc* npc, int a1 ) {
+    THISCALL( Ivk_CallOnStateFunc_Union )(npc, a1);
+
+    if ( npc == player )
+      playerStatus.TryAddStateFunc( this );
+  }
+
+  HOOK Ivk_EV_UseItemToState_Union PATCH( &oCNpc::EV_UseItemToState, &oCNpc::EV_UseItemToState_Union );
+  int oCNpc::EV_UseItemToState_Union( oCMsgManipulate* msg ) {
+    int result = THISCALL( Ivk_EV_UseItemToState_Union )(msg);
+
+    if ( msg->targetVob && this == player )
+      playerStatus.TryAddStateFunc( msg->targetVob->CastTo<oCItem>() );
+
+    return result;
+  }
+
+  bool PlayerStatus::KnowStateFunc( zCVob* vob ) {
+    if ( !vob )
+      return false;
+
+    if ( oCItem* item = vob->CastTo<oCItem>() ) {
+      if ( stateFuncItems.IsInList( item->GetInstanceName() ) )
+        return true;
+
+      int index = item->GetStateFunc();
+      if ( index == Invalid )
+        return false;
+
+      for ( int i = 0; i < interStateFuncs.GetNumInList(); i++ ) {
+        int idx = parser->GetIndex( interStateFuncs[i] + "_s1" );
+        if ( idx == index )
+          return true;
+      }
+    }
+    else if ( oCMobInter* inter = vob->CastTo<oCMobInter>() ) {
+      if ( interStateFuncs.IsInList( inter->onStateFuncName ) )
+        return true;
+
+      int index = parser->GetIndex( inter->onStateFuncName + "_s1" );
+      if ( index == Invalid )
+        return false;
+
+      for ( int i = 0; i < stateFuncItems.GetNumInList(); i++ ) {
+        oCItem* itm = new oCItem( stateFuncItems[i], 1 );
+        if ( !itm ) continue;
+        int idx = itm->GetStateFunc();
+        itm->Release();
+        if ( idx == index )
+          return true;
+      }
+    }
+
+    return false;
+  }
+
+  void PlayerStatus::TryAddStateFunc( zCVob* vob ) {
+    if ( !vob )
+      return;
+
+    if ( KnowStateFunc( vob ) )
+      return;
+
+    if ( oCItem* item = vob->CastTo<oCItem>() )
+      stateFuncItems.Insert( item->GetInstanceName() );
+    else if ( oCMobInter* inter = vob->CastTo<oCMobInter>() )
+      interStateFuncs.Insert( inter->onStateFuncName );
+  }
+
+  void PlayerStatus::Archive() {
+    int slotID = SaveLoadGameInfo.slotID;
+    if ( slotID < 0 )
+      return;
+
+    zCArchiver* ar = zarcFactory->CreateArchiverWrite( Z GetArchivePath( PLUGIN_NAME ), zARC_MODE_ASCII, 0, 0 );
+    if ( !ar )
+      return;
+
+    ar->WriteInt( "interStateFuncsCount", interStateFuncs.GetNum() );
+    for ( uint i = 0; i < interStateFuncs.GetNum(); i++ )
+      ar->WriteString( "interStateFuncs", interStateFuncs[i] );
+
+    ar->WriteInt( "stateFuncItemsCount", stateFuncItems.GetNum() );
+    for ( uint i = 0; i < stateFuncItems.GetNum(); i++ )
+      ar->WriteString( "stateFuncItems", stateFuncItems[i] );
+
+    ar->Close();
+    ar->Release();
+  }
+
+  void PlayerStatus::Unarchive() {
+    int slotID = SaveLoadGameInfo.slotID;
+    if ( slotID < 0 )
+      return;
+
+    interStateFuncs.EmptyList();
+    stateFuncItems.EmptyList();
+
+    zCArchiver* ar = zarcFactory->CreateArchiverRead( Z GetArchivePath( PLUGIN_NAME ), 0 );
+    if ( !ar )
+      return;
+
+    int interStateFuncsCount;
+    ar->ReadInt( "interStateFuncsCount", interStateFuncsCount );
+    for ( int i = 0; i < interStateFuncsCount; i++ ) {
+      zSTRING str;
+      ar->ReadString( "interStateFuncs", str );
+      interStateFuncs.Insert( str );
+    };
+
+    int stateFuncItemsCount;
+    ar->ReadInt( "stateFuncItemsCount", stateFuncItemsCount );
+    for ( int i = 0; i < stateFuncItemsCount; i++ ) {
+      zSTRING str;
+      ar->ReadString( "stateFuncItems", str );
+      stateFuncItems.Insert( str );
+    };
+
+    ar->Close();
+    ar->Release();
+  }
+
 #if ENGINE < Engine_G2
   HOOK Hook_zCAICamera_CheckKeys PATCH( &zCAICamera::CheckKeys, &zCAICamera::CheckKeys_Union );
   void zCAICamera::CheckKeys_Union() {

@@ -2,14 +2,6 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-  HOOK Ivk_CallOnStateFunc_Union PATCH( &oCMobInter::CallOnStateFunc, &oCMobInter::CallOnStateFunc_Union );
-  void oCMobInter::CallOnStateFunc_Union( oCNpc* npc, int a1 ) {
-    THISCALL( Ivk_CallOnStateFunc_Union )(npc, a1);
-
-    if ( npc == player && !focusColor.stateFuncs.IsInList( onStateFuncName ) )
-      focusColor.stateFuncs.Insert( onStateFuncName );
-  }
-
   HOOK Ivk_Print_Union PATCH( &zCView::Print, &zCView::Print_Union );
   void zCView::Print_Union( int x, int y, const zSTRING& text ) {
     if ( focusColor.CanPrintFocus( this, x, y, text ) )
@@ -24,47 +16,6 @@ namespace GOTHIC_ENGINE {
       return 0;
 
     return this->aiscriptvars[sym->single_intdata];
-  }
-
-  void FocusColor::Archive() {
-    int slotID = SaveLoadGameInfo.slotID;
-    if ( slotID < 0 )
-      return;
-
-    zCArchiver* ar = zarcFactory->CreateArchiverWrite( Z GetArchivePath( PLUGIN_NAME ), zARC_MODE_ASCII, 0, 0 );
-    if ( !ar )
-      return;
-
-    ar->WriteInt( "stateFuncsCount", stateFuncs.GetNum() );
-    for ( uint i = 0; i < stateFuncs.GetNum(); i++ ) {
-      ar->WriteString( "stateFuncs", stateFuncs[i] );
-    }
-
-    ar->Close();
-    ar->Release();
-  }
-
-  void FocusColor::Unarchive() {
-    int slotID = SaveLoadGameInfo.slotID;
-    if ( slotID < 0 )
-      return;
-
-    stateFuncs.EmptyList();
-
-    zCArchiver* ar = zarcFactory->CreateArchiverRead( Z GetArchivePath( PLUGIN_NAME ), 0 );
-    if ( !ar )
-      return;
-
-    int stateFuncsCount;
-    ar->ReadInt( "stateFuncsCount", stateFuncsCount );
-    for ( int i = 0; i < stateFuncsCount; i++ ) {
-      zSTRING funcName;
-      ar->ReadString( "stateFuncs", funcName );
-      stateFuncs.Insert( funcName );
-    };
-
-    ar->Close();
-    ar->Release();
   }
 
   void FocusColor::InitData() {
@@ -313,7 +264,7 @@ namespace GOTHIC_ENGINE {
     if ( inter->GetScemeName() != "BOOK" )
       return colDefault;
 
-    if ( stateFuncs.IsInList( inter->onStateFuncName ) )
+    if ( playerStatus.KnowStateFunc( inter ) )
       return colDefault;
 
     return zCOLOR( 30, 220, 30 );
