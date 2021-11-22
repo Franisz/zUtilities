@@ -145,5 +145,7 @@ namespace GOTHIC_ENGINE {
     StatusBars();
     FactorMotion();
     ShowGameTime();
+    HandleMunitionLoop();
+    RenderSelectedItem();
   }
 }

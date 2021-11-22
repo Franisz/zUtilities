@@ -31,7 +31,6 @@ namespace GOTHIC_ENGINE {
 
     quickSave->Loop();
     playerStatus.Loop();
-    HandleMunitionLoop();
   }
 
   void Game_PostLoop() {

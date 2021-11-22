@@ -13,6 +13,11 @@ namespace GOTHIC_ENGINE {
     THISCALL( Hook_CMovementTracker_UpdatePlayerPos )(position);
   }
 
+  zCWorld* renderWld;
+  zCViewBase* renderView;
+  float renderRotate = 0;
+  bool renderNow = false;
+
   HOOK Hook_oCItem_RenderItem PATCH( &oCItem::RenderItem, &oCItem::RenderItem_Union );
   void oCItem::RenderItem_Union( zCWorld* wld, zCViewBase* view, float rotate ) {
     if ( Options::CenterInvItems ) {
@@ -27,6 +32,13 @@ namespace GOTHIC_ENGINE {
 
         zCView* itemView = static_cast<zCView*>(view);
         IsCenterItem = true;
+
+        if ( !renderNow ) {
+          renderWld = wld;
+          renderView = view;
+          renderRotate = rotate;
+          return;
+        }
 
         // Item scale
         float scale = 2.5;
@@ -72,5 +84,23 @@ namespace GOTHIC_ENGINE {
     }
 
     THISCALL( Hook_oCItem_RenderItem )(wld, view, rotate);
+  }
+
+  void RenderSelectedItem() {
+    if ( !Options::CenterInvItems )
+      return;
+
+    if ( player->inventory2.IsOpen() )
+      if ( oCItem* item = player->inventory2.GetSelectedItem() ) {
+        renderNow = true;
+
+        if ( renderWld && renderView )
+          item->RenderItem( renderWld, renderView, renderRotate );
+      }
+
+    renderNow = false;
+    renderWld = nullptr;
+    renderView = nullptr;
+    renderRotate = 0;
   }
 }

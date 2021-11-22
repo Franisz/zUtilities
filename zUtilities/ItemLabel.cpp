@@ -31,6 +31,14 @@ namespace GOTHIC_ENGINE {
     return (maxIndex != -1) ? this->cond_atr[maxIndex] : -1;
   }
 
+  bool oCItem::HasStateFunc() {
+    for ( int i = 0; i < ITM_STATE_MAX; i++ ) {
+      if ( this->onState[i] )
+        return true;
+    }
+    return false;
+  }
+
   bool ItemLabel::CanDrawLabel() {
     return canDrawLabels;
   }
@@ -279,33 +287,25 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    for ( int i = 0; i < ITM_STATE_MAX; i++ ) {
-      if ( !item->onState[i] ) continue;
-      color = zCOLOR( 255, 191, 246 );
-      texture = "USABLE"; // https://game-icons.net/1x1/delapouite/perspective-dice-six-faces-random.html
-      return;
-    }
-
     if ( item->GetInstanceName().StartWith( "ITKE" ) ) {
       color = zCOLOR( 113, 128, 147 );
       texture = "KEY"; // https://game-icons.net/1x1/lorc/key.html
-      return;
     }
 
     if ( item->GetInstanceName().StartWith( "ITAT" ) ) {
       color = lightBronze;
       texture = "TROPHY"; // https://game-icons.net/1x1/lorc/flat-paw-print.html
-      return;
     }
-
 
 #if ENGINE >= Engine_G2
     if ( item->GetInstanceName().HasWord( "SILVER" ) || item->GetInstanceName().HasWord( "GOLD" ) ) {
       color = zCOLOR( 72, 219, 251 );
       texture = "VALUABLES"; // https://game-icons.net/1x1/lorc/cut-diamond.html
-      return;
     }
 #endif
+
+    if ( item->HasStateFunc() )
+      color = zCOLOR( 255, 171, 243 );
   }
 
   ItemLabel::ItemLabel( oCItem* renderedItem, zCViewBase* viewBase ) {
