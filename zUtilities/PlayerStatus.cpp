@@ -10,12 +10,21 @@ namespace GOTHIC_ENGINE {
       playerStatus.TryAddStateFunc( this );
   }
 
+  HOOK Ivk_GetStateEffectFunc_Union PATCH( &oCItem::GetStateEffectFunc, &oCItem::GetStateEffectFunc_Union );
+  int oCItem::GetStateEffectFunc_Union( int a1 ) {
+    int result = THISCALL( Ivk_GetStateEffectFunc_Union )(a1);
+    playerStatus.stateFuncItem = (a1 == 0) ? this : nullptr;
+    return result;
+  }
+
   HOOK Ivk_EV_UseItemToState_Union PATCH( &oCNpc::EV_UseItemToState, &oCNpc::EV_UseItemToState_Union );
   int oCNpc::EV_UseItemToState_Union( oCMsgManipulate* msg ) {
     int result = THISCALL( Ivk_EV_UseItemToState_Union )(msg);
 
-    if ( msg->targetVob && this == player )
-      playerStatus.TryAddStateFunc( msg->targetVob->CastTo<oCItem>() );
+    if ( this == player && msg && msg->targetVob && playerStatus.stateFuncItem && playerStatus.stateFuncItem == msg->targetVob ) {
+      playerStatus.TryAddStateFunc( msg->targetVob );
+      playerStatus.stateFuncItem = nullptr;
+    }
 
     return result;
   }

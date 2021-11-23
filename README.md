@@ -47,7 +47,7 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
 
   - Focused npc hp bar is displayed right above his name. This can be disabled with `ShowEnemyBarAboveHim` option.
   - Added option to show numeric values of status bars. Change `StatusBarValueMode` option for different style or disable: `0` - _Disabled_, `1` - _Above_, `2` - _PointToCenter_, `3` - _Inside_. By default, option to show value above bar is active.
-  - Optionally, text labels can be set to be displayed right next to the bar value. Set `StatusBarNames` like so: 'Health|Mana|Stamina'. Leave empty and no text will appear.
+  - Optionally, text labels can be set to be displayed right next to the bar value. Set `StatusBarNames` like so: `Health|Mana|Stamina`. Leave empty and no text will appear.
 
 - Allows to change world speed multiplier.
 

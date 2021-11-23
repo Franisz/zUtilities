@@ -32,6 +32,7 @@ namespace GOTHIC_ENGINE {
   public:
     zCArray<zSTRING> interStateFuncs;
     zCArray<zSTRING> stateFuncItems;
+    oCItem* stateFuncItem;
     oCNpc* traderNpc;
     StatusBar* focusBar;
     bool KnowStateFunc( zCVob* vob );
