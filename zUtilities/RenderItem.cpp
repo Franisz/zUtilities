@@ -13,8 +13,8 @@ namespace GOTHIC_ENGINE {
     THISCALL( Hook_CMovementTracker_UpdatePlayerPos )(position);
   }
 
-  zCWorld* renderWld;
-  zCViewBase* renderView;
+  zCWorld* renderWld = nullptr;
+  zCViewBase* renderView = nullptr;
   float renderRotate = 0;
   bool renderNow = false;
 
@@ -91,13 +91,14 @@ namespace GOTHIC_ENGINE {
     if ( !Options::CenterInvItems )
       return;
 
-    if ( player->inventory2.IsOpen() )
-      if ( oCItem* item = player->inventory2.GetSelectedItem() ) {
-        renderNow = true;
+    if ( player->inventory2.IsOpen() ) {
+      oCItemContainer* leftInv = player->inventory2.GetNextContainerLeft( &player->inventory2 );
+      oCItem* item = (leftInv && leftInv->IsActive()) ? leftInv->GetSelectedItem() : player->inventory2.GetSelectedItem();
 
-        if ( renderWld && renderView )
-          item->RenderItem( renderWld, renderView, renderRotate );
-      }
+      renderNow = true;
+      if ( item && renderWld && renderView )
+        item->RenderItem( renderWld, renderView, renderRotate );
+    }
 
     renderWld = nullptr;
     renderView = nullptr;

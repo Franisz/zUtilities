@@ -67,7 +67,9 @@ namespace GOTHIC_ENGINE {
 #endif
       if ( oCItem* armor = npc->GetEquippedArmor() ) {
         AddSeparator( "Armor" );
-        Print( textView, "VisualFile", armor->GetVisual()->GetVisualName() );
+        if ( zCVisual* armorVisual = npc->GetVisual() )
+          Print( textView, "VisualFile", armorVisual->GetVisualName() );
+
         Print( textView, "VisualChange", armor->GetVisualChange() );
 #if ENGINE == Engine_G2A
         Print( textView, "EffectName", armor->GetEffectName() );
@@ -99,6 +101,8 @@ namespace GOTHIC_ENGINE {
       Print( textView, "PROT_FALL", Z item->GetProtectionByIndex( oEDamageIndex_Fall ) );
       Print( sideView, "DAM_FALL", Z item->GetDamageByIndex( oEDamageIndex_Fall ) );
       Print( textView, "TotalDamage", Z item->damageTotal );
+      Print( sideView, "Range", Z item->range );
+      AddSeparator();
     }
     else if ( item->spell ) {
       AddSeparator( "Spell" );
@@ -108,6 +112,7 @@ namespace GOTHIC_ENGINE {
       oCSpell* spl = new oCSpell( item->spell );
       Print( textView, "SpellName", spl->GetName() );
       spl->Release();
+      AddSeparator();
     }
     else
       AddSeparator();
@@ -256,11 +261,9 @@ namespace GOTHIC_ENGINE {
     }
 
     if ( mainView == nullptr ) {
-      float sysScale;
-      Union.GetSysPackOption().Read( sysScale, "INTERFACE", "Scale", 1.0f );
-      int scaleBonus = 512 * sysScale;
+      int offset = 512 * playerHelper.GetSysScale();
 
-      mainView = new zCView( 0, 1024 - scaleBonus, 2304 + scaleBonus, 7168 + scaleBonus );
+      mainView = new zCView( 0, 1024 - offset, 2304 + offset, 7168 + offset );
       mainView->InsertBack( "BLACKBACK" );
       mainView->SetAlphaBlendFunc( zRND_ALPHA_FUNC_BLEND );
       mainView->SetTransparency( 150 );

@@ -3,7 +3,7 @@
 
 namespace GOTHIC_ENGINE {
 #define PLUGIN_NAME "ZUTILITIES"
-#define VERSION_NUMBER "0.18"
+#define VERSION_NUMBER "0.19"
 #define printWin(a) ogame->GetTextView()->Printwin(a)
 
   namespace Options {

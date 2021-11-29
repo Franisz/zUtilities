@@ -53,9 +53,10 @@ namespace GOTHIC_ENGINE {
     unsigned long seed = ptd->_holdrand;
 #endif
 
-    int isCrit = false;
+    bool isCrit = false;
     int initialHp = this->attribute[NPC_ATR_HITPOINTS];
 
+    oCNpc::oSDamageDescriptor descOld = desc;
     THISCALL( Ivk_OnDamage_Hit_Union )(desc);
 
     int hpDiff = initialHp - this->attribute[NPC_ATR_HITPOINTS];
@@ -69,7 +70,7 @@ namespace GOTHIC_ENGINE {
     isCrit = IsCrit( desc );
 #endif
 
-    new DamagePopup( this, desc, hpDiff, isCrit );
+    new DamagePopup( this, descOld, hpDiff, isCrit );
   }
 
   int DamagePopup::GetTopDmgIndex() {
@@ -188,12 +189,16 @@ namespace GOTHIC_ENGINE {
     scale = (playerHelper.GetSysScale()) ? 1.15f : 1.0f;
     scale *= Options::DamagePopupScale;
 
+    float baseScale = scale;
+
     if ( dmgAmount > 0 ) {
       scale += scale * (float)dmgAmount / (float)target->attribute[NPC_ATR_HITPOINTSMAX] / 1.75f;
 
       if ( isCrit )
         scale *= 1.4f;
     }
+
+    scale = min( scale, baseScale * 3.5f );
   }
 
   float DamagePopup::GetRandomDist( float start, int random, bool invertable ) {
