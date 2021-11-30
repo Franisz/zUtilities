@@ -4,13 +4,16 @@
 namespace GOTHIC_ENGINE {
   namespace Options {
     int RecoveryVisualization, StatusBarValueMode, ShowEnemyBarAboveHim;
-    Array<string> StatusBarNames;
+    Array<string> StatusBarNames, HealthBarPos, ManaBarPos, SwimBarPos;
 
     void StatusBar() {
       RecoveryVisualization = zoptions->ReadInt( PLUGIN_NAME, "RecoveryVisualization", true );
       StatusBarValueMode = zoptions->ReadInt( PLUGIN_NAME, "StatusBarValueMode", 1 );
       ShowEnemyBarAboveHim = zoptions->ReadInt( PLUGIN_NAME, "ShowEnemyBarAboveHim", true );
       StatusBarNames = (A zoptions->ReadString( PLUGIN_NAME, "StatusBarNames", "" )).Split( "|" );
+      HealthBarPos = (A zoptions->ReadString( PLUGIN_NAME, "HealthBarPos", "" )).Split( "|" );
+      ManaBarPos = (A zoptions->ReadString( PLUGIN_NAME, "ManaBarPos", "" )).Split( "|" );
+      SwimBarPos = (A zoptions->ReadString( PLUGIN_NAME, "SwimBarPos", "" )).Split( "|" );
     }
   }
 
@@ -22,6 +25,7 @@ namespace GOTHIC_ENGINE {
     zCView* focusView;
     zCArray<zSTRING> symbols;
     zSTRING name;
+    Array<string> userPos;
 
     bool Init();
     bool IsBarActive();
@@ -31,6 +35,7 @@ namespace GOTHIC_ENGINE {
     void PredictHeal();
     void PrintValue( oCNpc* npc );
     void MoveFocusBar( int x, int y, oCNpc* npc );
+    void ChangeBarPos();
 
   public:
     enum ValueMode {

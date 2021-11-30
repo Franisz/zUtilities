@@ -15,10 +15,15 @@ namespace GOTHIC_ENGINE {
     }
 
     void AddTrivias() {
+      string nline = "\r\n; ";
+
       zoptions->AddTrivia( PLUGIN_NAME, "RecoveryVisualization", "... enables (1) or disables (0) visualization of healing that hovered in the inventory item gives" );
       zoptions->AddTrivia( PLUGIN_NAME, "StatusBarValueMode", "... specifies mode of showing status bar value, (0) - 'Disabled', (1) - 'Above', (2) - 'PointToCenter', (3) - 'Inside'" );
       zoptions->AddTrivia( PLUGIN_NAME, "ShowEnemyBarAboveHim", "... enables (1) or disables (0) showing enemy hp bar above his head" );
       zoptions->AddTrivia( PLUGIN_NAME, "StatusBarNames", "... defines text label for status bars like so: 'Health|Mana|Stamina', leave empty if text is unwanted" );
+      zoptions->AddTrivia( PLUGIN_NAME, "HealthBarPos", "... defines position of health bar like so: 'x1|y1|x2|y2'" + nline + "... default position for scale 1 is: '43|7873|1122|8085' and for scale 0: '43|7964|811|8116'" + nline + "... leave empty to use default position" );
+      zoptions->AddTrivia( PLUGIN_NAME, "ManaBarPos", "... defines position of mana bar like so: 'x1|y1|x2|y2'" + nline + "... default position for scale 1 is: '7053|7873|8132|8085' and for scale 0: '7381|7964|8149|8116'" + nline + "... leave empty to use default position" );
+      zoptions->AddTrivia( PLUGIN_NAME, "SwimBarPos", "... defines position of swim bar like so: 'x1|y1|x2|y2'" + nline + "... default position for scale 1 is: '3556|7873|4635|8085' and for scale 0: '3712|7964|4480|8116'" + nline + "... leave empty to use default position" );
 
       zoptions->AddTrivia( PLUGIN_NAME, "ShowGameTime", "... enables (1) or disables (0) on screen display of in game time" );
       zoptions->AddTrivia( PLUGIN_NAME, "UseTimeMultiplier", "... enables (1) or disables (0) time speed multiplier" );

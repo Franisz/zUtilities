@@ -35,10 +35,17 @@ namespace GOTHIC_ENGINE {
   }
 
   bool StatusBar::Init() {
+    if ( bar == ogame->focusBar )
+      return true;
+
     if ( bar == ogame->hpBar ) {
       symbols.Insert( "NAME_BONUS_HP" );
       if ( Options::StatusBarNames.GetNum() >= 1 )
         name = Z Options::StatusBarNames[0];
+
+      if ( Options::HealthBarPos.GetNum() == 4 )
+        userPos = Options::HealthBarPos;
+
       return true;
     }
 
@@ -46,16 +53,20 @@ namespace GOTHIC_ENGINE {
       symbols.Insert( "NAME_BONUS_MANA" );
       if ( Options::StatusBarNames.GetNum() >= 2 )
         name = Z Options::StatusBarNames[1];
-      return true;
-    }
 
-    if ( bar == ogame->focusBar ) {
+      if ( Options::ManaBarPos.GetNum() == 4 )
+        userPos = Options::ManaBarPos;
+
       return true;
     }
 
     if ( bar == ogame->swimBar ) {
       if ( Options::StatusBarNames.GetNum() >= 3 )
         name = Z Options::StatusBarNames[2];
+
+      if ( Options::SwimBarPos.GetNum() == 4 )
+        userPos = Options::SwimBarPos;
+
       return true;
     }
 
@@ -204,6 +215,29 @@ namespace GOTHIC_ENGINE {
     bar->SetPos( x, y );
   }
 
+  void StatusBar::ChangeBarPos() {
+    if ( userPos.GetNum() != 4 )
+      return;
+
+    if ( !IsBarActive() )
+      return;
+
+    int x1 = userPos[0].ToInt32();
+    int y1 = userPos[1].ToInt32();
+
+    if ( x1 < 0 || x1 > 8192 || y1 < 0 || y1 > 8192 )
+      return;
+
+    int x2 = userPos[2].ToInt32() - x1;
+    int y2 = userPos[3].ToInt32() - y1;
+
+    if ( x2 <= 0 || y2 <= 0 )
+      return;
+
+    bar->SetPos( x1, y1 );
+    bar->SetSize( x2, y2 );
+  }
+
   bool StatusBar::NeedAdjustPosition( int x, int y, oCNpc* npc ) {
     if ( !ogame->focusBar || !npc || npc->attribute[NPC_ATR_HITPOINTS] <= 0 )
       return false;
@@ -244,6 +278,7 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
+    ChangeBarPos();
     PredictHeal();
     PrintValue( player );
   }
