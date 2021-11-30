@@ -69,7 +69,7 @@ namespace GOTHIC_ENGINE {
     ogame->WriteSavegame( iLastSaveSlot, true );
 
     // SaveInfo
-    auto info = ogame->savegameManager->GetSavegame( iLastSaveSlot );
+    oCSavegameInfo* info = ogame->savegameManager->GetSavegame( iLastSaveSlot );
 
     info->m_Name = Z Options::SaveName + Z iLastSaveNumber;
     info->m_WorldName = ogame->GetGameWorld()->GetWorldName();
@@ -82,7 +82,7 @@ namespace GOTHIC_ENGINE {
     info->UpdateThumbPic( thumb );
     delete thumb;
 
-    ogame->savegameManager->SetAndWriteSavegame( iLastSaveSlot, info );
+    ogame->savegameManager->SetAndWriteSavegame( info->m_SlotNr, info );
   }
 
   void QuickSave::CheckLoad() {
@@ -94,13 +94,15 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    if ( !ogame->savegameManager->GetSavegame( iLastSaveSlot )->DoesSavegameExist() ) {
+    oCSavegameInfo* info = ogame->savegameManager->GetSavegame( iLastSaveSlot );
+
+    if ( !info || !info->DoesSavegameExist() ) {
       ogame->GetTextView()->Printwin( Z Options::NoSave + " (" + Z iLastSaveSlot + ")" );
       return;
     }
 
     ToggleShowStatus();
-    ogame->LoadSavegame( iLastSaveSlot, true );
+    ogame->LoadSavegame( info->m_SlotNr, true );
   }
 
   void QuickSave::ToggleShowStatus() {
