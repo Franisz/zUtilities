@@ -48,6 +48,12 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
   - Focused npc hp bar is displayed right above his name. This can be disabled with `ShowEnemyBarAboveHim` option.
   - Added option to show numeric values of status bars. Change `StatusBarValueMode` option for different style or disable: `0` - _Disabled_, `1` - _Above_, `2` - _PointToCenter_, `3` - _Inside_. By default, option to show value above bar is active.
   - Optionally, text labels can be set to be displayed right next to the bar value. Set `StatusBarNames` like so: `Health|Mana|Stamina`. Leave empty and no text will appear.
+  - Health, mana and swim status bars position can be changed with `HealthBarPos`, `ManaBarPos` and `SwimBarPos` options.
+    - Four positions need to be defined in a form `x1|y1|x2|y2` that reflects a virtual position in `0|0|8192|8192` scope.
+    - Default health bar position for systempack `Scale=1` is: '43|7873|1122|8085' and for `Scale=0`: '43|7964|811|8116'
+    - Default mana bar position for systempack `Scale=1` is: '7053|7873|8132|8085' and for `Scale=0`: '7381|7964|8149|8116'
+    - Default swim bar position for systempack `Scale=1` is: '3556|7873|4635|8085' and for `Scale=0`: '3712|7964|4480|8116'
+    - Leave options empty to use default positions.
 
 - Allows to change world speed multiplier.
 
@@ -118,6 +124,21 @@ ShowEnemyBarAboveHim=1
 
 StatusBarNames=
 ; ... defines text label for status bars like so: 'Health|Mana|Stamina', leave empty if text is unwanted
+
+HealthBarPos=
+; ... defines position of health bar like so: 'x1|y1|x2|y2'
+; ... default position for scale 1 is: '43|7873|1122|8085' and for scale 0: '43|7964|811|8116'
+; ... leave empty to use default position
+
+ManaBarPos=
+; ... defines position of mana bar like so: 'x1|y1|x2|y2'
+; ... default position for scale 1 is: '7053|7873|8132|8085' and for scale 0: '7381|7964|8149|8116'
+; ... leave empty to use default position
+
+SwimBarPos=
+; ... defines position of swim bar like so: 'x1|y1|x2|y2'
+; ... default position for scale 1 is: '3556|7873|4635|8085' and for scale 0: '3712|7964|4480|8116'
+; ... leave empty to use default position
 
 UseQuickSave=1
 ; ... enables (1) or disables (0) QuickSaving with [F10] and QuickLoading with [F12]
