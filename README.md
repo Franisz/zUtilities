@@ -50,9 +50,9 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
   - Optionally, text labels can be set to be displayed right next to the bar value. Set `StatusBarNames` like so: `Health|Mana|Stamina`. Leave empty and no text will appear.
   - Health, mana and swim status bars position can be changed with `HealthBarPos`, `ManaBarPos` and `SwimBarPos` options.
     - Four positions need to be defined in a form `x1|y1|x2|y2` that reflects a virtual position in `0|0|8192|8192` scope.
-    - Default health bar position for systempack `Scale=1` is: '43|7873|1122|8085' and for `Scale=0`: '43|7964|811|8116'
-    - Default mana bar position for systempack `Scale=1` is: '7053|7873|8132|8085' and for `Scale=0`: '7381|7964|8149|8116'
-    - Default swim bar position for systempack `Scale=1` is: '3556|7873|4635|8085' and for `Scale=0`: '3712|7964|4480|8116'
+    - Default health bar position for systempack `Scale=1` is: `43|7873|1122|8085` and for `Scale=0`: `43|7964|811|8116`
+    - Default mana bar position for systempack `Scale=1` is: `7053|7873|8132|8085` and for `Scale=0`: `7381|7964|8149|8116`
+    - Default swim bar position for systempack `Scale=1` is: `3556|7873|4635|8085` and for `Scale=0`: `3712|7964|4480|8116`
     - Leave options empty to use default positions.
 
 - Allows to change world speed multiplier.
