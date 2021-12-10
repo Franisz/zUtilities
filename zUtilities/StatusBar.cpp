@@ -152,7 +152,13 @@ namespace GOTHIC_ENGINE {
       return;
 
     valueView = new zCView( 0, 0, 8192, 8192 );
-    zSTRING str = Z( int )bar->currentValue + "/" + Z( int )bar->maxHigh;
+
+    zSTRING str;
+    if ( bar == ogame->swimBar )
+      str = Z( int )(bar->currentValue / 100) + "/" + Z( int )(bar->maxHigh / 100);
+    else
+      str = Z( int )bar->currentValue + "/" + Z( int )bar->maxHigh;
+
     if ( name && name.Length() )
       str = name + ": " + str;
 
@@ -181,6 +187,7 @@ namespace GOTHIC_ENGINE {
         else
           y += offsetY;
 
+      valueView->SetFontColor( zCOLOR( valueView->color.r, valueView->color.g, valueView->color.b, bar->alpha ) );
       valueView->Print( x, y, str );
       return;
     }
