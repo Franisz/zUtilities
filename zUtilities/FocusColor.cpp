@@ -366,7 +366,7 @@ namespace GOTHIC_ENGINE {
     vobOnScreen = false;
 
     zCVob* vob = player->GetFocusVob();
-    if ( !vob || quickSave->isSaving || ogame->IsOnPause() ) {
+    if ( !vob || quickSave->IsBusy() || ogame->IsOnPause() ) {
       Clear();
       return;
     }

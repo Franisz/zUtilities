@@ -267,7 +267,7 @@ namespace GOTHIC_ENGINE {
     if ( !ogame || !player )
       return;
 
-    if ( quickSave->isSaving ) {
+    if ( quickSave->IsBusy() ) {
       Clear();
       return;
     }

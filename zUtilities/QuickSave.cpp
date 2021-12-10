@@ -27,13 +27,17 @@ namespace GOTHIC_ENGINE {
   }
 
   int QuickSave::InInteraction() {
-    if ( isSaving ) return true;
+    if ( IsBusy() ) return true;
     if ( playerHelper.IsBusy() ) return true;
     if ( player->bodyState == BS_TAKEITEM ) return true;
     if ( player->bodyState == BS_MOBINTERACT ) return true;
     if ( player->bodyState & BS_FLAG_INTERRUPTABLE && !(player->bodyState & BS_FLAG_FREEHANDS) ) return true;
 
     return false;
+  }
+
+  bool QuickSave::IsBusy() {
+    return isSaving || isLoading;
   }
 
   int QuickSave::CanSave() {
@@ -65,11 +69,16 @@ namespace GOTHIC_ENGINE {
     zrenderer->Vid_GetFrontBufferCopy( *thumb );
 
     // SaveGame
-    ToggleShowStatus();
+    isSaving = true;
+    StartSaveLoad();
+#if ENGINE == Engine_G1A
     ogame->WriteSavegame( iLastSaveSlot, true );
+#else
+    gameMan->Write_Savegame( iLastSaveSlot );
+#endif
 
     // SaveInfo
-    oCSavegameInfo* info = ogame->savegameManager->GetSavegame( iLastSaveSlot );
+    oCSavegameInfo* info = gameMan->savegameManager->GetSavegame( iLastSaveSlot );
 
     info->m_Name = Z Options::SaveName + Z iLastSaveNumber;
     info->m_WorldName = ogame->GetGameWorld()->GetWorldName();
@@ -82,7 +91,7 @@ namespace GOTHIC_ENGINE {
     info->UpdateThumbPic( thumb );
     delete thumb;
 
-    ogame->savegameManager->SetAndWriteSavegame( info->m_SlotNr, info );
+    gameMan->savegameManager->SetAndWriteSavegame( info->m_SlotNr, info );
   }
 
   void QuickSave::CheckLoad() {
@@ -94,32 +103,47 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    oCSavegameInfo* info = ogame->savegameManager->GetSavegame( iLastSaveSlot );
+    oCSavegameInfo* info = gameMan->savegameManager->GetSavegame( iLastSaveSlot );
 
     if ( !info || !info->DoesSavegameExist() ) {
       ogame->GetTextView()->Printwin( Z Options::NoSave + " (" + Z iLastSaveSlot + ")" );
       return;
     }
 
-    ToggleShowStatus();
+    isLoading = true;
+    StartSaveLoad();
+#if ENGINE == Engine_G1A
     ogame->LoadSavegame( info->m_SlotNr, true );
+#else
+    gameMan->Read_Savegame( info->m_SlotNr );
+#endif
   }
 
-  void QuickSave::ToggleShowStatus() {
-    if ( !oldShowStatus ) return;
+  void QuickSave::StartSaveLoad() {
+    if ( ogame->GetShowPlayerStatus() ) {
+      disabledStatus = true;
+      ogame->SetShowPlayerStatus( false );
+    }
+  }
 
-    isSaving = (isSaving) ? false : true;
-    ogame->SetShowPlayerStatus( toggledShowStatus );
-    toggledShowStatus = !toggledShowStatus;
+  void QuickSave::EndSaveLoad() {
+    isSaving = false;
+    isLoading = false;
+
+    if ( disabledStatus ) {
+      disabledStatus = false;
+      ogame->SetShowPlayerStatus( true );
+      playerStatus.Loop();
+    }
   }
 
   void QuickSave::Loop() {
+    if ( isLoading && !ogame->IsOnPause() )
+      EndSaveLoad();
+
     if ( !Options::UseQuickSave ) return;
 
-    if ( !toggledShowStatus )
-      oldShowStatus = ogame->GetShowPlayerStatus();
-    else
-      ToggleShowStatus();
+    if ( ogame->IsOnPause() ) return;
 
     CheckLoad();
     CheckSave();

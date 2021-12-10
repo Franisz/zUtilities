@@ -43,14 +43,17 @@ namespace GOTHIC_ENGINE {
   TSaveLoadGameInfo& SaveLoadGameInfo = UnionCore::SaveLoadGameInfo;
 
   void Game_SaveBegin() {
+    quickSave->isSaving = true;
     playerStatus.Clear();
   }
 
   void Game_SaveEnd() {
+    quickSave->EndSaveLoad();
     playerStatus.Archive();
   }
 
   void LoadBegin() {
+    quickSave->isLoading = true;
     playerStatus.Clear();
     for ( uint i = 0; i < popups.GetNum(); i++ )
       delete popups[i];

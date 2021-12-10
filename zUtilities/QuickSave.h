@@ -59,8 +59,7 @@ namespace GOTHIC_ENGINE {
 
   class QuickSave {
   private:
-    bool oldShowStatus = false;
-    bool toggledShowStatus = false;
+    bool disabledStatus = false;
 
     int iLastSaveSlot;
     int iLastSaveNumber;
@@ -70,10 +69,13 @@ namespace GOTHIC_ENGINE {
     int InInteraction();
     void CheckSave();
     void CheckLoad();
-    void ToggleShowStatus();
+    void StartSaveLoad();
 
   public:
     bool isSaving = false;
+    bool isLoading = false;
+    void EndSaveLoad();
+    bool IsBusy();
     void Loop();
     QuickSave();
   };

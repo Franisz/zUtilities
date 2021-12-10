@@ -31,7 +31,7 @@ namespace GOTHIC_ENGINE {
     if ( !ogame || !player )
       return;
 
-    if ( quickSave->isSaving || !ogame->GetShowPlayerStatus() || ogame->IsOnPause() || playerHelper.IsInInfo() || player->attribute[NPC_ATR_HITPOINTS] <= 0 || playerHelper.IsConUp() )
+    if ( quickSave->IsBusy() || !ogame->GetShowPlayerStatus() || ogame->IsOnPause() || playerHelper.IsInInfo() || player->attribute[NPC_ATR_HITPOINTS] <= 0 || playerHelper.IsConUp() )
       return;
 
     vx = x;

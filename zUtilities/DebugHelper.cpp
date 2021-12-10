@@ -253,7 +253,7 @@ namespace GOTHIC_ENGINE {
     if ( !Options::UsingDebugHelper
       || ogame->pause_screen
       || playerHelper.IsConUp()
-      || quickSave->isSaving
+      || quickSave->IsBusy()
       || !ogame->GetShowPlayerStatus()
       || player->inventory2.GetNextContainerLeft( &player->inventory2 ) ) {
       Clear();
