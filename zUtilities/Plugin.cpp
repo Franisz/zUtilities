@@ -48,7 +48,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_SaveEnd() {
-    quickSave->EndSaveLoad();
+    quickSave->saveEnd = true;
     playerStatus.Archive();
   }
 

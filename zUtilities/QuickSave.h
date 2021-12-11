@@ -72,6 +72,7 @@ namespace GOTHIC_ENGINE {
     void StartSaveLoad();
 
   public:
+    bool saveEnd = false;
     bool isSaving = false;
     bool isLoading = false;
     void EndSaveLoad();

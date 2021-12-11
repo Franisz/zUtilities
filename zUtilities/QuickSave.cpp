@@ -129,16 +129,16 @@ namespace GOTHIC_ENGINE {
   void QuickSave::EndSaveLoad() {
     isSaving = false;
     isLoading = false;
+    saveEnd = false;
 
     if ( disabledStatus ) {
       disabledStatus = false;
       ogame->SetShowPlayerStatus( true );
-      playerStatus.Loop();
     }
   }
 
   void QuickSave::Loop() {
-    if ( isLoading && !ogame->IsOnPause() )
+    if ( (isLoading && !ogame->IsOnPause()) || (isSaving && saveEnd) )
       EndSaveLoad();
 
     if ( !Options::UseQuickSave ) return;
