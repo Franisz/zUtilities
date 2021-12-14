@@ -66,66 +66,30 @@ namespace GOTHIC_ENGINE {
 
     // Melee
     if ( item->HasFlag( ITM_CAT_NF ) ) {
-
-      if ( item->HasFlag( ITM_FLAG_2HD_AXE ) || item->HasFlag( ITM_FLAG_2HD_SWD ) ) {
-        if ( condAtr == NPC_ATR_MANAMAX || item->mag_circle ) {
-          color = manaBlue;
-          texture = "WPN_MANA_2H"; // https://game-icons.net/1x1/lorc/moebius-star.html
-          return;
-        }
-
-        if ( condAtr == NPC_ATR_DEXTERITY ) {
-          color = dexGreen;
-          texture = "WPN_DEX_2H"; // https://game-icons.net/1x1/lorc/barbed-spear.html
-          return;
-        }
-
-        if ( item->damageTypes == oEDamageType_Blunt ) {
-          color = bluntYellow;
-          texture = "WPN_MACE_2H"; // https://game-icons.net/1x1/lorc/gavel.html
-          return;
-        }
-
-        if ( item->HasFlag( ITM_FLAG_2HD_AXE ) ) {
-          color = strRed;
-          texture = "WPN_AXE_2H"; // https://game-icons.net/1x1/lorc/battle-axe.html
-          return;
-        }
-
+      if ( condAtr == NPC_ATR_MANAMAX || item->mag_circle )
+        color = manaBlue;
+      else if ( condAtr == NPC_ATR_DEXTERITY )
+        color = dexGreen;
+      else if ( item->damageTypes & oEDamageType_Blunt )
+        color = bluntYellow;
+      else
         color = strRed;
-        texture = "WPN_SWORD_2H"; // https://game-icons.net/1x1/lorc/shard-sword.html
-        return;
-      }
 
-      if ( item->HasFlag( ITM_FLAG_SWD ) || item->HasFlag( ITM_FLAG_AXE ) || item->HasFlag( ITM_FLAG_DAG ) ) {
-        if ( condAtr == NPC_ATR_MANAMAX ) {
-          color = manaBlue;
-          texture = "WPN_MANA"; // https://game-icons.net/1x1/lorc/rune-sword.html
-          return;
-        }
+      if ( item->damageTypes & oEDamageType_Magic )
+        texture = "WPN_MANA"; // https://game-icons.net/1x1/lorc/barbed-spear.html
+      else if ( item->damageTypes & oEDamageType_Point )
+        texture = "WPN_DEX"; // https://game-icons.net/1x1/lorc/barbed-spear.html
+      else if ( item->damageTypes & oEDamageType_Blunt )
+        texture = "WPN_MACE"; // https://game-icons.net/1x1/lorc/gavel.html
+      else if ( item->HasFlag( ITM_FLAG_2HD_AXE ) )
+        texture = "WPN_AXE"; // https://game-icons.net/1x1/lorc/battle-axe.html
+      else
+        texture = "WPN_SWORD"; // https://game-icons.net/1x1/lorc/shard-sword.html
 
-        if ( condAtr == NPC_ATR_DEXTERITY || item->HasFlag( ITM_FLAG_DAG ) ) {
-          color = dexGreen;
-          texture = "WPN_DEX"; // https://game-icons.net/1x1/lorc/sacrificial-dagger.html
-          return;
-        }
+      if ( item->HasFlag( ITM_FLAG_2HD_AXE ) || item->HasFlag( ITM_FLAG_2HD_SWD ) )
+        texture = texture + "_2H";
 
-        if ( item->damageTypes == oEDamageType_Blunt ) {
-          color = bluntYellow;
-          texture = "WPN_MACE"; // https://game-icons.net/1x1/lorc/spiked-mace.html
-          return;
-        }
-
-        if ( item->HasFlag( ITM_FLAG_AXE ) ) {
-          color = strRed;
-          texture = "WPN_AXE"; // https://game-icons.net/1x1/lorc/battered-axe.html
-          return;
-        }
-
-        color = strRed;
-        texture = "WPN_SWORD"; // https://game-icons.net/1x1/skoll/gladius.html
-        return;
-      }
+      return;
     }
 
     // Ranged
