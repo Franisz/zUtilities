@@ -66,7 +66,7 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
 
   - This is disabled by default and can be enabled with `ShowGameTime` option.
 
-- Allows to display currently used munition.
+- Allows to display currently used munition amount.
 
   - This is disabled by default and can be enabled with `ShowMunitionAmount` option.
 
