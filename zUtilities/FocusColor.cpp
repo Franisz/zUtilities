@@ -330,7 +330,11 @@ namespace GOTHIC_ENGINE {
       y = ogame->focusBar->vposy + ogame->focusBar->vsizey / 2 + focusView->FontY();
     }
 
-    focusView->SetFontColor( col );
+    if( ogame->hpBar )
+      focusView->SetFontColor( zCOLOR( col.r, col.g, col.b, ogame->hpBar->alpha ) );
+    else
+      focusView->SetFontColor( col );
+
     focusView->Print( x, y, name );
     vobOnScreen = true;
     return true;
