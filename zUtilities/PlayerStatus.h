@@ -3,11 +3,12 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int ShowGameTime, UseTimeMultiplier, KeyTimeMultiplier;
+    int ShowGameTime, ShowMunitionAmount, UseTimeMultiplier, KeyTimeMultiplier;
     Array<float> TimeMultipliers;
 
     void PlayerStatus() {
       ShowGameTime = zoptions->ReadInt( PLUGIN_NAME, "ShowGameTime", false );
+      ShowMunitionAmount = zoptions->ReadInt( PLUGIN_NAME, "ShowMunitionAmount", false );
       UseTimeMultiplier = zoptions->ReadInt( PLUGIN_NAME, "UseTimeMultiplier", false );
       KeyTimeMultiplier = GetEmulationKeyCode( zoptions->ReadString( PLUGIN_NAME, "KeyTimeMultiplier", "KEY_Z" ) );
       string MulString = A zoptions->ReadString( PLUGIN_NAME, "TimeMultipliers", "1.0|2.5" );
@@ -24,8 +25,10 @@ namespace GOTHIC_ENGINE {
     StatusBar* manaBar;
     StatusBar* swimBar;
     int multiplierIndex = 0;
+    int infoIcons = 0;
 
     void ShowGameTime();
+    void ShowMunitionAmount();
     void StatusBars();
     void FactorMotion();
 

@@ -205,6 +205,9 @@ namespace GOTHIC_ENGINE {
     if ( !Options::ShowGameTime && !Options::UseTimeMultiplier )
       return;
 
+    if ( playerHelper.LeftInvOpen() )
+      return;
+
     zSTRING str = "";
     zCOLOR color = zCOLOR( 255, 255, 255 );
 
@@ -224,7 +227,48 @@ namespace GOTHIC_ENGINE {
       return;
 
     zSTRING texture = "ICON_CLOCK"; // https://game-icons.net/1x1/lorc/empty-hourglass.html
-    new IconInfo( screen->FontY(), screen->FontY() * 2.5, color, texture, str );
+
+    infoIcons++;
+    new IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, color, texture, str );
+  }
+
+  void PlayerStatus::ShowMunitionAmount() {
+    if ( !Options::ShowMunitionAmount )
+      return;
+
+    if ( playerHelper.LeftInvOpen() )
+      return;
+
+    oCItem* weapon = player->GetEquippedRangedWeapon();
+
+    if ( !weapon ) weapon = player->GetWeapon();
+
+    if ( !weapon || !weapon->HasFlag( ITM_CAT_FF ) || weapon->munition <= 0 )
+      return;
+
+    int amount = 0;
+    zCOLOR color = zCOLOR( 255, 255, 255 );
+
+    player->inventory2.UnpackAllItems();
+    if ( oCItem* munition = player->IsInInv( weapon->munition, 1 ) )
+      amount += munition->amount;
+
+    if ( oCItem* handItem = player->GetRightHand()->CastTo<oCItem>() )
+      amount += handItem->instanz == weapon->munition;
+
+    if ( amount == 0 )
+      color = zCOLOR( 255, 0, 0 );
+    else if ( amount < 10 )
+      color = zCOLOR( 231, 76, 60 );
+    else if ( amount < 25 )
+      color = zCOLOR( 255, 175, 0 );
+    else if ( amount < 50 )
+      color = zCOLOR( 255, 218, 121 );
+
+    zSTRING texture = (weapon->HasFlag( ITM_FLAG_BOW )) ? "LABEL_MUN_BOW" : "LABEL_MUN_CROSSBOW";
+
+    infoIcons++;
+    new IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, color, texture, Z amount );
   }
 
   void PlayerStatus::StatusBars() {
@@ -272,11 +316,14 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
+    infoIcons = 0;
+
     debugHelper.Loop();
     focusColor.Loop();
     StatusBars();
     FactorMotion();
     ShowGameTime();
+    ShowMunitionAmount();
     HandleMunitionLoop();
     RenderSelectedItem();
   }

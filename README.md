@@ -66,6 +66,10 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
 
   - This is disabled by default and can be enabled with `ShowGameTime` option.
 
+- Allows to display currently used munition.
+
+  - This is disabled by default and can be enabled with `ShowMunitionAmount` option.
+
 - Allows killing meatbugs by stepping on them.
 
   - This feature can be disabled in `gothic.ini` with `TrampleMeatbugs` option.

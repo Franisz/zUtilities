@@ -36,7 +36,7 @@ namespace GOTHIC_ENGINE {
 
     vx = x;
     vy = y;
-    vsize = screen->FontY() * 1.1f;
+    vsize = screen->FontY() * 0.9f;
     color = col;
 
     DrawIcon( texName );

@@ -37,6 +37,10 @@ namespace GOTHIC_ENGINE {
 
       return false;
     }
+
+    bool LeftInvOpen() {
+      return player->inventory2.IsOpen() && player->inventory2.GetNextContainerLeft( &player->inventory2 );
+    }
   };
 
   PlayerHelper playerHelper;

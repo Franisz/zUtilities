@@ -255,7 +255,7 @@ namespace GOTHIC_ENGINE {
       || playerHelper.IsConUp()
       || quickSave->IsBusy()
       || !ogame->GetShowPlayerStatus()
-      || player->inventory2.GetNextContainerLeft( &player->inventory2 ) ) {
+      || playerHelper.LeftInvOpen() ) {
       Clear();
       return;
     }
