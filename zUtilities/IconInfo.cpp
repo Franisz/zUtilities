@@ -27,7 +27,7 @@ namespace GOTHIC_ENGINE {
     screen->RemoveItem( &view );
   }
 
-  IconInfo::IconInfo( int x, int y, zCOLOR col, zSTRING texName, zSTRING text = "" ) {
+  IconInfo::IconInfo( int x, int y, int size, zCOLOR col, zSTRING texName, zSTRING text = "" ) {
     if ( !ogame || !player )
       return;
 
@@ -36,7 +36,7 @@ namespace GOTHIC_ENGINE {
 
     vx = x;
     vy = y;
-    vsize = screen->FontY() * 0.9f;
+    vsize = size;
     color = col;
 
     DrawIcon( texName );

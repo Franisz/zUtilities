@@ -19,6 +19,6 @@ namespace GOTHIC_ENGINE {
     void PrintText( zSTRING text );
 
   public:
-    IconInfo( int x, int y, zCOLOR col, zSTRING texName, zSTRING text );
+    IconInfo( int x, int y, int size, zCOLOR col, zSTRING texName, zSTRING text );
   };
 }

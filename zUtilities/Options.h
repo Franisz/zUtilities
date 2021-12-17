@@ -3,7 +3,7 @@
 
 namespace GOTHIC_ENGINE {
 #define PLUGIN_NAME "ZUTILITIES"
-#define VERSION_NUMBER "0.22"
+#define VERSION_NUMBER "0.23"
 #define printWin(a) ogame->GetTextView()->Printwin(a)
 
   namespace Options {
@@ -27,6 +27,9 @@ namespace GOTHIC_ENGINE {
 
       zoptions->AddTrivia( PLUGIN_NAME, "ShowGameTime", "... enables (1) or disables (0) on screen display of in game time" );
       zoptions->AddTrivia( PLUGIN_NAME, "ShowMunitionAmount", "... enables (1) or disables (0) on screen display of currently used munition amount" );
+#if ENGINE >= Engine_G2
+      zoptions->AddTrivia( PLUGIN_NAME, "ShowPickpocketIcon", "... enables (1) or disables (0) coin icon next to the focused npc name when it can be pickpocketed" );
+#endif
       zoptions->AddTrivia( PLUGIN_NAME, "UseTimeMultiplier", "... enables (1) or disables (0) time speed multiplier" );
       zoptions->AddTrivia( PLUGIN_NAME, "KeyTimeMultiplier", "... key for cycling time speed" );
       zoptions->AddTrivia( PLUGIN_NAME, "TimeMultipliers", "... defines time multipliers" );

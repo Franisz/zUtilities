@@ -87,6 +87,9 @@ namespace GOTHIC_ENGINE {
     if ( !item->onState[0] )
       return 0;
 
+    if ( !item->HasFlag( ITM_CAT_FOOD ) && !item->HasFlag( ITM_CAT_POTION ) )
+      return 0;
+
     if ( bar == ogame->hpBar )
       return GetValueFromItem( item );
 
@@ -113,7 +116,7 @@ namespace GOTHIC_ENGINE {
     predictView = new zCView( x1, y1, x2, y2 );
     predictView->InsertBack( bar->texValue );
     predictView->SetAlphaBlendFunc( zRND_ALPHA_FUNC_BLEND );
-    predictView->SetTransparency( 125 );
+    predictView->SetTransparency( 85 );
     bar->range_bar->InsertItem( predictView );
   }
 

@@ -54,6 +54,9 @@ namespace GOTHIC_ENGINE {
 
   void LoadBegin() {
     quickSave->isLoading = true;
+#if ENGINE >= Engine_G2
+    playerStatus.pickpocketInfos.EmptyList();
+#endif
     playerStatus.Clear();
     for ( uint i = 0; i < popups.GetNum(); i++ )
       delete popups[i];
@@ -61,6 +64,9 @@ namespace GOTHIC_ENGINE {
 
   void LoadEnd() {
     playerStatus.Unarchive();
+#if ENGINE >= Engine_G2
+    playerStatus.GetPickpocketInfos();
+#endif
   }
 
   void Game_LoadBegin_NewGame() {

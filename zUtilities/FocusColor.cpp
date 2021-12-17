@@ -337,6 +337,17 @@ namespace GOTHIC_ENGINE {
 
     focusView->Print( x, y, name );
     vobOnScreen = true;
+
+#if ENGINE >= Engine_G2
+    if ( Options::ShowPickpocketIcon )
+      if ( oCNpc* npc = vob->CastTo<oCNpc>() )
+        if ( playerStatus.CanPickpocketNpc( npc ) ) {
+          zCOLOR color = zCOLOR( 241, 196, 15, ogame->hpBar->alpha );
+          zSTRING texture = "LABEL_MONEY"; // https://game-icons.net/1x1/delapouite/two-coins.html
+          new IconInfo( x + focusView->FontSize( name ) + focusView->FontY() * 0.1f, y, focusView->FontY() * 0.55f, color, texture );
+        }
+#endif
+
     return true;
   }
 

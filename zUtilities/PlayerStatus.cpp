@@ -29,6 +29,52 @@ namespace GOTHIC_ENGINE {
     return result;
   }
 
+  void PlayerStatus::GetPickpocketInfos() {
+    auto list = ogame->GetInfoManager()->infoList.next;
+    while ( list ) {
+      auto info = list->data;
+      list = list->next;
+
+      // Whenever the icon will visible or not is based on the npc dialogue including PICKPOCKET word which seems to be used consistently in mods as well.
+      if ( !info->name.HasWord( "PICKPOCKET" ) )
+        continue;
+
+      // To avoid targeting possible dialogues related to pickpocketing quests or teach options.
+      int idx = parser->GetIndex( info->name + "_DOIT" );
+      if ( idx == Invalid )
+        continue;
+
+      if ( !pickpocketInfos.IsInList( info ) )
+        pickpocketInfos.Insert( info );
+    }
+  }
+
+  bool PlayerStatus::CanPickpocketNpc( oCNpc* npc ) {
+    //auto sym = parser->GetSymbol( "NPC_TALENT_PICKPOCKET" );
+    //if ( !sym )
+    //  return false;
+
+    //if ( !player->GetTalentSkill( sym->single_intdata ) )
+    //  return false;
+
+    //if ( npc->GetAivar( "AIV_PLAYERHASPICKEDMYPOCKET" ) )
+    //  return false;
+
+    for ( int i = 0; i < pickpocketInfos.GetNumInList(); i++ ) {
+      auto info = pickpocketInfos[i];
+
+      if ( info->GetNpcID() != npc->GetInstance() )
+        continue;
+
+      parser->SetInstance( "SELF", npc );
+      parser->SetInstance( "OTHER", player );
+
+      return info->InfoConditions();
+    }
+
+    return false;
+  }
+
   bool PlayerStatus::KnowStateFunc( zCVob* vob ) {
     if ( !vob )
       return false;
@@ -39,7 +85,7 @@ namespace GOTHIC_ENGINE {
 
       int index = item->GetStateFunc();
       if ( index == Invalid )
-        return false;
+        return true;
 
       for ( int i = 0; i < interStateFuncs.GetNumInList(); i++ ) {
         int idx = parser->GetIndex( interStateFuncs[i] + "_s1" );
@@ -53,7 +99,7 @@ namespace GOTHIC_ENGINE {
 
       int index = parser->GetIndex( inter->onStateFuncName + "_s1" );
       if ( index == Invalid )
-        return false;
+        return true;
 
       for ( int i = 0; i < stateFuncItems.GetNumInList(); i++ ) {
         oCItem* itm = new oCItem( stateFuncItems[i], 1 );
@@ -229,7 +275,7 @@ namespace GOTHIC_ENGINE {
     zSTRING texture = "ICON_CLOCK"; // https://game-icons.net/1x1/lorc/empty-hourglass.html
 
     infoIcons++;
-    new IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, color, texture, str );
+    new IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, screen->FontY() * 0.9f, color, texture, str );
   }
 
   void PlayerStatus::ShowMunitionAmount() {
@@ -268,7 +314,7 @@ namespace GOTHIC_ENGINE {
     zSTRING texture = (weapon->HasFlag( ITM_FLAG_BOW )) ? "LABEL_MUN_BOW" : "LABEL_MUN_CROSSBOW";
 
     infoIcons++;
-    new IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, color, texture, Z amount );
+    new IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, screen->FontY() * 0.9f, color, texture, Z amount );
   }
 
   void PlayerStatus::StatusBars() {

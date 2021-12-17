@@ -3,12 +3,15 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int ShowGameTime, ShowMunitionAmount, UseTimeMultiplier, KeyTimeMultiplier;
+    int ShowGameTime, ShowMunitionAmount, ShowPickpocketIcon, UseTimeMultiplier, KeyTimeMultiplier;
     Array<float> TimeMultipliers;
 
     void PlayerStatus() {
       ShowGameTime = zoptions->ReadInt( PLUGIN_NAME, "ShowGameTime", false );
       ShowMunitionAmount = zoptions->ReadInt( PLUGIN_NAME, "ShowMunitionAmount", false );
+#if ENGINE >= Engine_G2
+      ShowPickpocketIcon = zoptions->ReadInt( PLUGIN_NAME, "ShowPickpocketIcon", true );
+#endif
       UseTimeMultiplier = zoptions->ReadInt( PLUGIN_NAME, "UseTimeMultiplier", false );
       KeyTimeMultiplier = GetEmulationKeyCode( zoptions->ReadString( PLUGIN_NAME, "KeyTimeMultiplier", "KEY_Z" ) );
       string MulString = A zoptions->ReadString( PLUGIN_NAME, "TimeMultipliers", "1.0|2.5" );
@@ -33,11 +36,14 @@ namespace GOTHIC_ENGINE {
     void FactorMotion();
 
   public:
+    zCArray<oCInfo*> pickpocketInfos;
     zCArray<zSTRING> interStateFuncs;
     zCArray<zSTRING> stateFuncItems;
     oCItem* stateFuncItem;
     oCNpc* traderNpc;
     StatusBar* focusBar;
+    bool CanPickpocketNpc( oCNpc* npc );
+    void GetPickpocketInfos();
     bool KnowStateFunc( zCVob* vob );
     void TryAddStateFunc( zCVob* vob );
     void ResetTimeMultiplier();
