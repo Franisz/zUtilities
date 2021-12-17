@@ -62,6 +62,11 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
   - World speed will cycle in the order of set multipliers after pressing `Z`. Shortcut can also be changed with `KeyTimeMultiplier` option.
   - Currently used multiplier will be shown next to the time icon.
 
+- Allows coin icon display next to the focused npc name if player can pickpocket him.
+
+  - This feature can be disabled in `gothic.ini` with `ShowPickpocketIcon` option.
+  - Works in G2/G2A only.
+
 - Allows to display current in game time.
 
   - This is disabled by default and can be enabled with `ShowGameTime` option.
