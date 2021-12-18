@@ -60,6 +60,9 @@ namespace GOTHIC_ENGINE {
     //if ( npc->GetAivar( "AIV_PLAYERHASPICKEDMYPOCKET" ) )
     //  return false;
 
+    if ( npc->attribute[NPC_ATR_HITPOINTS] <= 0 )
+      return false;
+
     for ( int i = 0; i < pickpocketInfos.GetNumInList(); i++ ) {
       auto info = pickpocketInfos[i];
 
@@ -251,7 +254,7 @@ namespace GOTHIC_ENGINE {
     if ( !Options::ShowGameTime && !Options::UseTimeMultiplier )
       return;
 
-    if ( playerHelper.LeftInvOpen() )
+    if ( playerHelper.LeftInvOpen() || playerHelper.IsConUp() )
       return;
 
     zSTRING str = "";
@@ -282,7 +285,7 @@ namespace GOTHIC_ENGINE {
     if ( !Options::ShowMunitionAmount )
       return;
 
-    if ( playerHelper.LeftInvOpen() )
+    if ( playerHelper.LeftInvOpen() || playerHelper.IsConUp() )
       return;
 
     oCItem* weapon = player->GetEquippedRangedWeapon();
