@@ -244,6 +244,9 @@
     <Filter Include="Plugin\Workspace\Features\PlayerStatus\IconInfo">
       <UniqueIdentifier>{ad1d68b4-22dc-4e58-914f-444545260f86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\Workspace\Features\Dialogue">
+      <UniqueIdentifier>{35e89ac9-bfa9-44ec-aff5-6dc4ea3d4bef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2882,6 +2885,9 @@
     </ClInclude>
     <ClInclude Include="IconInfo.h">
       <Filter>Plugin\Workspace\Features\PlayerStatus\IconInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialogue.cpp">
+      <Filter>Plugin\Workspace\Features\Dialogue</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

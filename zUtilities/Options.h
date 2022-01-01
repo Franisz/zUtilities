@@ -3,15 +3,16 @@
 
 namespace GOTHIC_ENGINE {
 #define PLUGIN_NAME "ZUTILITIES"
-#define VERSION_NUMBER "0.23"
+#define VERSION_NUMBER "0.24"
 #define printWin(a) ogame->GetTextView()->Printwin(a)
 
   namespace Options {
-    int TrampleMeatbugs, CenterInvItems, ActivateUsedMunition;
+    int TrampleMeatbugs, CenterInvItems, ActivateUsedMunition, AlternativeDialogueBoxes;
     void Misc() {
       TrampleMeatbugs = zoptions->ReadInt( PLUGIN_NAME, "TrampleMeatbugs", true );
       CenterInvItems = zoptions->ReadInt( PLUGIN_NAME, "CenterInvItems", true );
       ActivateUsedMunition = zoptions->ReadInt( PLUGIN_NAME, "ActivateUsedMunition", true );
+      AlternativeDialogueBoxes = zoptions->ReadInt( PLUGIN_NAME, "AlternativeDialogueBoxes", false );
     }
 
     void AddTrivias() {
@@ -63,6 +64,7 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "TrampleMeatbugs", "... enables (1) or disables (0) a way of killing meatbugs by stepping on them" );
       zoptions->AddTrivia( PLUGIN_NAME, "CenterInvItems", "... enables (1) or disables (0) inventory item rendering in the center of the screen instead of the item description box" );
       zoptions->AddTrivia( PLUGIN_NAME, "ActivateUsedMunition", "... enables (1) or disables (0) highlighting currently used ranged weapon munition in the inventory" );
+      zoptions->AddTrivia( PLUGIN_NAME, "AlternativeDialogueBoxes", "... enables (1) or disables (0) alternative dialogue boxes style" );
     }
   }
 
