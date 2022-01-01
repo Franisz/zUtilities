@@ -231,7 +231,7 @@ namespace GOTHIC_ENGINE {
     if ( !Options::TimeMultipliers.GetNum() || playerHelper.IsConUp() )
       return;
 
-    if ( playerHelper.IsDead() || !oCInformationManager::GetInformationManager().IsDone || ogame->IsOnPause() ) {
+    if ( playerHelper.IsDead() || playerHelper.IsInInfo() || ogame->IsOnPause() ) {
       if ( ztimer->factorMotion != 1.0f )
         ztimer->factorMotion = 1.0f;
       return;
