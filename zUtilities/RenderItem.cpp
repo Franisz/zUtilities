@@ -96,8 +96,10 @@ namespace GOTHIC_ENGINE {
       oCItem* item = (leftInv && leftInv->IsActive()) ? leftInv->GetSelectedItem() : player->inventory2.GetSelectedItem();
 
       renderNow = true;
-      if ( item && renderWld && renderView )
+      if ( item && renderWld && renderView ) {
         item->RenderItem( renderWld, renderView, renderRotate );
+        zrenderer->SetViewport( 0, 0, zrenderer->vid_xdim, zrenderer->vid_ydim );
+      }
     }
 
     renderWld = nullptr;
