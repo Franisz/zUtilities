@@ -65,7 +65,7 @@ namespace GOTHIC_ENGINE {
     }
 
     // Melee
-    if ( item->HasFlag( ITM_CAT_NF ) ) {
+    if ( item->HasFlag( ITM_CAT_NF ) && !item->HasFlag( ITM_FLAG_SHIELD ) ) {
       if ( condAtr == NPC_ATR_MANAMAX || item->mag_circle )
         color = manaBlue;
       else if ( condAtr == NPC_ATR_DEXTERITY )
@@ -122,6 +122,13 @@ namespace GOTHIC_ENGINE {
       }
     }
 
+    // Shield
+    if ( item->HasFlag( ITM_FLAG_SHIELD ) ) {
+      color = zCOLOR( 247, 143, 179 );
+      texture = "SHIELD"; // https://game-icons.net/1x1/lorc/checked-shield.html
+      return;
+    }
+
     // Armors
     if ( item->HasFlag( ITM_CAT_ARMOR ) ) {
       if ( item->wear == ITM_WEAR_HEAD ) {
@@ -144,12 +151,6 @@ namespace GOTHIC_ENGINE {
 
       color = strRed;
       texture = "ARM_STR"; // https://game-icons.net/1x1/lorc/lamellar.html
-      return;
-    }
-
-    if ( item->HasFlag( ITM_FLAG_SHIELD ) ) {
-      color = zCOLOR( 247, 143, 179 );
-      texture = "SHIELD"; // https://game-icons.net/1x1/lorc/checked-shield.html
       return;
     }
 
