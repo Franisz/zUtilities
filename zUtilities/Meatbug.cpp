@@ -2,12 +2,9 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-
   // Inspiration @G2-Ucieczka - https://github.com/TheKetrab/G2-Ucieczka
-
   HOOK Hook_oCNpc_OnTouch PATCH( &oCNpc::OnTouch, &oCNpc::OnChrzonszcz );
   void oCNpc::OnChrzonszcz( zCVob* vob ) {
-
     oCNpc* npc = vob->CastTo<oCNpc>();
 
     if ( !npc || !this->IsSelfPlayer() || !Options::TrampleMeatbugs ) {
@@ -35,5 +32,4 @@ namespace GOTHIC_ENGINE {
 
     THISCALL( Hook_oCNpc_OnTouch )(vob);
   }
-
 }

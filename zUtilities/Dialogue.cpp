@@ -39,7 +39,6 @@ namespace GOTHIC_ENGINE {
 
     bool offLimits = VirtualSize.Y - SizeMargin[0].Y - SizeMargin[1].Y - screen->FontY() * (ListTextLines.GetNumInList() + 1) < 0;
     if ( !offLimits ) {
-
       int vy = VirtualSize.Y / 2 - screen->FontY() / 2 * ListTextLines.GetNumInList();
       vy += screen->FontY() * choiceTextLine;
       choiceTextLine++;

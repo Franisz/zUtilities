@@ -20,7 +20,6 @@ namespace GOTHIC_ENGINE {
       MaxSaveSlot = zoptions->ReadInt( PLUGIN_NAME, "MaxSaveSlot", 15 );
 #endif
 
-
       switch ( Union.GetSystemLanguage() )
       {
       case Lang_Rus:
