@@ -88,6 +88,10 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
   - Heal value is based on the `count` value of the item associated with the `text` that is equal to the original recovery string variables `NAME_BONUS_HP` and `NAME_BONUS_MANA`.
   - This feature can be disabled in `gothic.ini` with `RecoveryVisualization` option.
 
+- Allows to use alternative dialogue boxes when talking.
+
+  - This is disabled by default and can be enabled with `AlternativeDialogueBoxes` option.
+
 - Allows to display debug info data about focused vob or selected in the inventory item.
 
   - Use `zutilities debug` command to toggle on/off.
@@ -110,8 +114,17 @@ CenterInvItems=1
 ActivateUsedMunition=1
 ; ... enables (1) or disables (0) highlighting currently used ranged weapon munition in the inventory
 
+AlternativeDialogueBoxes=0
+; ... enables (1) or disables (0) alternative dialogue boxes style
+
 ShowGameTime=0
 ; ... enables (1) or disables (0) on screen display of in game time
+
+ShowMunitionAmount=0
+; ... enables (1) or disables (0) on screen display of currently used munition amount
+
+ShowPickpocketIcon=1
+; ... enables (1) or disables (0) coin icon next to the focused npc name when it can be pickpocketed
 
 UseTimeMultiplier=0
 ; ... enables (1) or disables (0) time speed multiplier
