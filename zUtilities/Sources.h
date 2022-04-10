@@ -4,6 +4,7 @@
 // Automatically generated block
 #pragma region Includes
 #include "Misc.cpp"
+#include "User.cpp"
 #include "Commands.cpp"
 #include "IconInfo.cpp"
 #include "DebugHelper.cpp"

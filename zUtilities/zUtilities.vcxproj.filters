@@ -2814,6 +2814,9 @@
     <ClInclude Include="Misc.cpp">
       <Filter>Plugin\Workspace\Misc</Filter>
     </ClInclude>
+    <ClInclude Include="User.cpp">
+      <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
     <ClInclude Include="PlayerHelper.h">
       <Filter>Plugin\Workspace\Misc</Filter>
     </ClInclude>
