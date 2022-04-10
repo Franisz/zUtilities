@@ -24,7 +24,7 @@ namespace GOTHIC_ENGINE {
     screen->InsertItem( &view );
     view.Print( x, y, text );
     view.BlitText();
-    screen->RemoveItem( &view );
+    delete& view;
   }
 
   IconInfo::IconInfo( int x, int y, int size, zCOLOR col, zSTRING texName, zSTRING text = "" ) {

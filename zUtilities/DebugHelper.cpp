@@ -239,12 +239,9 @@ namespace GOTHIC_ENGINE {
   void DebugHelper::Clear() {
     if ( mainView == nullptr ) return;
 
-    mainView->RemoveItem( textView );
-    mainView->RemoveItem( sideView );
-    screen->RemoveItem( mainView );
-    textView = nullptr;
-    sideView = nullptr;
-    mainView = nullptr;
+    del( textView );
+    del( sideView );
+    del( mainView );
   }
 
   void DebugHelper::Loop() {

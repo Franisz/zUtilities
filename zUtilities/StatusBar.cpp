@@ -124,10 +124,7 @@ namespace GOTHIC_ENGINE {
     if ( !Options::RecoveryVisualization )
       return;
 
-    if ( predictView ) {
-      bar->range_bar->RemoveItem( predictView );
-      predictView = nullptr;
-    }
+    del( predictView );
 
     if ( !IsBarActive() )
       return;
@@ -143,13 +140,7 @@ namespace GOTHIC_ENGINE {
     if ( !Options::StatusBarValueMode )
       return;
 
-    zCView* insertView = (Options::StatusBarValueMode == Inside) ? bar->range_bar : screen;
-
-    if ( valueView ) {
-      valueView->ClrPrintwin();
-      insertView->RemoveItem( valueView );
-      valueView = nullptr;
-    }
+    del( valueView );
 
     if ( !IsBarActive() )
       return;
@@ -165,7 +156,8 @@ namespace GOTHIC_ENGINE {
     if ( name && name.Length() )
       str = name + ": " + str;
 
-    insertView->InsertItem( valueView );
+    zCView* ownerView = (Options::StatusBarValueMode == Inside) ? bar->range_bar : screen;
+    ownerView->InsertItem( valueView );
 
     if ( Options::StatusBarValueMode != Inside ) {
       int offsetY = bar->vsizey / 2 + valueView->FontY();
@@ -261,17 +253,8 @@ namespace GOTHIC_ENGINE {
     if ( !bar )
       return;
 
-    if ( valueView ) {
-      zCView* insertView = (Options::StatusBarValueMode == Inside) ? bar->range_bar : screen;
-      valueView->ClrPrintwin();
-      insertView->RemoveItem( valueView );
-      valueView = nullptr;
-    }
-
-    if ( predictView ) {
-      bar->range_bar->RemoveItem( predictView );
-      predictView = nullptr;
-    }
+    del( valueView );
+    del( predictView );
   }
 
   void StatusBar::Loop() {

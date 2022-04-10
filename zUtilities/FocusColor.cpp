@@ -366,12 +366,10 @@ namespace GOTHIC_ENGINE {
   }
 
   void FocusColor::Clear() {
-    if ( focusView ) {
-      focusView->ClrPrintwin();
-      screen->RemoveItem( focusView );
-      focusView = nullptr;
+    if ( focusView )
       vobOnScreen = false;
-    }
+
+    del( focusView );
   }
 
   void FocusColor::Loop() {

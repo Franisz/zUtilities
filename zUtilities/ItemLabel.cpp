@@ -297,6 +297,6 @@ namespace GOTHIC_ENGINE {
     labelView.SetColor( color );
     itemView->InsertItem( &labelView );
     labelView.Blit();
-    itemView->RemoveItem( &labelView );
+    delete& labelView;
   }
 }
