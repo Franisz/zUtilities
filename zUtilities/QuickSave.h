@@ -27,11 +27,6 @@ namespace GOTHIC_ENGINE {
         CantLoad = "Игра не может быть загружена!";
         NoSave = "Такого сохранения не существует!";
         break;
-      case Lang_Eng:
-        CantSave = "The game cannot be saved now!";
-        CantLoad = "The game cannot be loaded now!";
-        NoSave = "Such a save does not exist!";
-        break;
       case Lang_Ger:
         CantSave = "Das Spiel kann jetzt nicht gespeichert werden!";
         CantLoad = "Das Spiel kann jetzt nicht geladen werden!";

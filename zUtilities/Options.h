@@ -3,7 +3,7 @@
 
 namespace GOTHIC_ENGINE {
 #define PLUGIN_NAME "ZUTILITIES"
-#define VERSION_NUMBER "0.24"
+#define VERSION_NUMBER "0.25"
 #define printWin(a) ogame->GetTextView()->Printwin(a)
 
   namespace Options {
@@ -16,7 +16,7 @@ namespace GOTHIC_ENGINE {
     }
 
     void AddTrivias() {
-      string nline = "\r\n; ";
+      const string nline = "\r\n; ";
 
       zoptions->AddTrivia( PLUGIN_NAME, "RecoveryVisualization", "... enables (1) or disables (0) visualization of healing that hovered in the inventory item gives" );
       zoptions->AddTrivia( PLUGIN_NAME, "StatusBarValueMode", "... specifies mode of showing status bar value, (0) - 'Disabled', (1) - 'Above', (2) - 'PointToCenter', (3) - 'Inside'" );
