@@ -7,12 +7,12 @@ namespace GOTHIC_ENGINE {
     Array<float> TimeMultipliers;
 
     void PlayerStatus() {
-      ShowGameTime = zoptions->ReadInt( PLUGIN_NAME, "ShowGameTime", false );
-      ShowMunitionAmount = zoptions->ReadInt( PLUGIN_NAME, "ShowMunitionAmount", false );
+      ShowGameTime = zoptions->ReadBool( PLUGIN_NAME, "ShowGameTime", false );
+      ShowMunitionAmount = zoptions->ReadBool( PLUGIN_NAME, "ShowMunitionAmount", false );
 #if ENGINE >= Engine_G2
-      ShowPickpocketIcon = zoptions->ReadInt( PLUGIN_NAME, "ShowPickpocketIcon", true );
+      ShowPickpocketIcon = zoptions->ReadBool( PLUGIN_NAME, "ShowPickpocketIcon", true );
 #endif
-      UseTimeMultiplier = zoptions->ReadInt( PLUGIN_NAME, "UseTimeMultiplier", false );
+      UseTimeMultiplier = zoptions->ReadBool( PLUGIN_NAME, "UseTimeMultiplier", false );
       KeyTimeMultiplier = GetEmulationKeyCode( zoptions->ReadString( PLUGIN_NAME, "KeyTimeMultiplier", "KEY_Z" ) );
       string MulString = A zoptions->ReadString( PLUGIN_NAME, "TimeMultipliers", "1.0|2.5" );
 

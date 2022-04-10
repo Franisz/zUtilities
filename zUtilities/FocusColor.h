@@ -6,10 +6,10 @@ namespace GOTHIC_ENGINE {
     int ColorNpcs, ColorLockables, ColorItems, ColorInter;
 
     void FocusColor() {
-      ColorNpcs = zoptions->ReadInt( PLUGIN_NAME, "ColorNpcs", true );
-      ColorLockables = zoptions->ReadInt( PLUGIN_NAME, "ColorLockables", true );
-      ColorItems = zoptions->ReadInt( PLUGIN_NAME, "ColorItems", true );
-      ColorInter = zoptions->ReadInt( PLUGIN_NAME, "ColorInter", true );
+      ColorNpcs = zoptions->ReadBool( PLUGIN_NAME, "ColorNpcs", true );
+      ColorLockables = zoptions->ReadBool( PLUGIN_NAME, "ColorLockables", true );
+      ColorItems = zoptions->ReadBool( PLUGIN_NAME, "ColorItems", true );
+      ColorInter = zoptions->ReadBool( PLUGIN_NAME, "ColorInter", true );
     }
   }
 

@@ -7,9 +7,9 @@ namespace GOTHIC_ENGINE {
     Array<string> StatusBarNames, HealthBarPos, ManaBarPos, SwimBarPos;
 
     void StatusBar() {
-      RecoveryVisualization = zoptions->ReadInt( PLUGIN_NAME, "RecoveryVisualization", true );
+      RecoveryVisualization = zoptions->ReadBool( PLUGIN_NAME, "RecoveryVisualization", true );
       StatusBarValueMode = zoptions->ReadInt( PLUGIN_NAME, "StatusBarValueMode", 1 );
-      ShowEnemyBarAboveHim = zoptions->ReadInt( PLUGIN_NAME, "ShowEnemyBarAboveHim", true );
+      ShowEnemyBarAboveHim = zoptions->ReadBool( PLUGIN_NAME, "ShowEnemyBarAboveHim", true );
       StatusBarNames = (A zoptions->ReadString( PLUGIN_NAME, "StatusBarNames", "" )).Split( "|" );
       HealthBarPos = (A zoptions->ReadString( PLUGIN_NAME, "HealthBarPos", "" )).Split( "|" );
       ManaBarPos = (A zoptions->ReadString( PLUGIN_NAME, "ManaBarPos", "" )).Split( "|" );

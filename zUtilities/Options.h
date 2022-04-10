@@ -9,10 +9,10 @@ namespace GOTHIC_ENGINE {
   namespace Options {
     int TrampleMeatbugs, CenterInvItems, ActivateUsedMunition, AlternativeDialogueBoxes;
     void Misc() {
-      TrampleMeatbugs = zoptions->ReadInt( PLUGIN_NAME, "TrampleMeatbugs", true );
-      CenterInvItems = zoptions->ReadInt( PLUGIN_NAME, "CenterInvItems", true );
-      ActivateUsedMunition = zoptions->ReadInt( PLUGIN_NAME, "ActivateUsedMunition", true );
-      AlternativeDialogueBoxes = zoptions->ReadInt( PLUGIN_NAME, "AlternativeDialogueBoxes", false );
+      TrampleMeatbugs = zoptions->ReadBool( PLUGIN_NAME, "TrampleMeatbugs", true );
+      CenterInvItems = zoptions->ReadBool( PLUGIN_NAME, "CenterInvItems", true );
+      ActivateUsedMunition = zoptions->ReadBool( PLUGIN_NAME, "ActivateUsedMunition", true );
+      AlternativeDialogueBoxes = zoptions->ReadBool( PLUGIN_NAME, "AlternativeDialogueBoxes", false );
     }
 
     void AddTrivias() {

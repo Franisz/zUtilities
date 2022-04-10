@@ -7,7 +7,7 @@ namespace GOTHIC_ENGINE {
     string CantSave, CantLoad, NoSave, SaveName;
 
     void QuickSave() {
-      UseQuickSave = zoptions->ReadInt( PLUGIN_NAME, "UseQuickSave", true );
+      UseQuickSave = zoptions->ReadBool( PLUGIN_NAME, "UseQuickSave", true );
 
       KeyQuickSave = GetEmulationKeyCode( zoptions->ReadString( PLUGIN_NAME, "KeyQuickSave", "KEY_F10" ) );
       KeyQuickLoad = GetEmulationKeyCode( zoptions->ReadString( PLUGIN_NAME, "KeyQuickLoad", "KEY_F12" ) );

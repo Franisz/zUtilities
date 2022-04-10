@@ -7,10 +7,10 @@ namespace GOTHIC_ENGINE {
     float LabelScale;
 
     void ItemLabel() {
-      LabelItems = zoptions->ReadInt( PLUGIN_NAME, "LabelItems", true );
+      LabelItems = zoptions->ReadBool( PLUGIN_NAME, "LabelItems", true );
       LabelScale = zoptions->ReadReal( PLUGIN_NAME, "LabelScale", 1.25f );
-      LabelMissionItems = zoptions->ReadInt( PLUGIN_NAME, "LabelMissionItems", false );
-      PutLabelBehind = zoptions->ReadInt( PLUGIN_NAME, "PutLabelBehind", false );
+      LabelMissionItems = zoptions->ReadBool( PLUGIN_NAME, "LabelMissionItems", false );
+      PutLabelBehind = zoptions->ReadBool( PLUGIN_NAME, "PutLabelBehind", false );
     }
   }
 
