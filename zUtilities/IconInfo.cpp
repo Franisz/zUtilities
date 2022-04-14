@@ -19,12 +19,12 @@ namespace GOTHIC_ENGINE {
     int x = vx + vsize + screen->FontY() / 10;
     int y = vy + (screen->any( py2 ) - vy) / 2 - screen->FontY() / 2;
 
-    zCView view( 0, 0, 8192, 8192 );
-    view.SetFontColor( zCOLOR( 255, 255, 255, color.alpha ) );
-    screen->InsertItem( &view );
-    view.Print( x, y, text );
-    view.BlitText();
-    delete& view;
+    zCView* view = new zCView( 0, 0, 8192, 8192 );
+    view->SetFontColor( zCOLOR( 255, 255, 255, color.alpha ) );
+    screen->InsertItem( view );
+    view->Print( x, y, text );
+    view->BlitText();
+    delete view;
   }
 
   IconInfo::IconInfo( int x, int y, int size, zCOLOR col, zSTRING texName, zSTRING text = "" ) {

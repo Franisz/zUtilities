@@ -290,13 +290,13 @@ namespace GOTHIC_ENGINE {
 
     int endPos = startPos + 2000 * Options::LabelScale;
 
-    zCView labelView( startPos, startPos, endPos, endPos );
-    labelView.InsertBack( "LABEL_" + texture );
-    labelView.SetAlphaBlendFunc( zRND_ALPHA_FUNC_BLEND );
-    labelView.SetTransparency( 255 );
-    labelView.SetColor( color );
-    itemView->InsertItem( &labelView );
-    labelView.Blit();
-    delete& labelView;
+    zCView* labelView = new zCView( startPos, startPos, endPos, endPos );
+    labelView->InsertBack( "LABEL_" + texture );
+    labelView->SetAlphaBlendFunc( zRND_ALPHA_FUNC_BLEND );
+    labelView->SetTransparency( 255 );
+    labelView->SetColor( color );
+    itemView->InsertItem( labelView );
+    labelView->Blit();
+    delete labelView;
   }
 }
