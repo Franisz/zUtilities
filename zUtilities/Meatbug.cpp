@@ -7,7 +7,7 @@ namespace GOTHIC_ENGINE {
   void oCNpc::OnChrzonszcz( zCVob* vob ) {
     oCNpc* npc = vob->CastTo<oCNpc>();
 
-    if ( !npc || !this->IsSelfPlayer() || !Options::TrampleMeatbugs ) {
+    if ( !npc || !this->IsSelfPlayer() || !this->IsHuman() || this->idx == npc->idx || !Options::TrampleMeatbugs ) {
       THISCALL( Hook_oCNpc_OnTouch )(vob);
       return;
     }
