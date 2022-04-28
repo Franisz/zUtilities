@@ -254,7 +254,7 @@ namespace GOTHIC_ENGINE {
     if ( !Options::ShowGameTime && !Options::UseTimeMultiplier )
       return;
 
-    if ( playerHelper.LeftInvOpen() || playerHelper.IsConUp() )
+    if ( playerHelper.LeftInvOpen() || playerHelper.IsConUp() || !ogame->GetShowPlayerStatus() || !ogame->hpBar )
       return;
 
     zSTRING str = "";
@@ -278,6 +278,7 @@ namespace GOTHIC_ENGINE {
     zSTRING texture = "ICON_CLOCK"; // https://game-icons.net/1x1/lorc/empty-hourglass.html
 
     infoIcons++;
+    color.alpha = ogame->hpBar->alpha;
     new IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, screen->FontY() * 0.9f, color, texture, str );
   }
 
@@ -285,7 +286,7 @@ namespace GOTHIC_ENGINE {
     if ( !Options::ShowMunitionAmount )
       return;
 
-    if ( playerHelper.LeftInvOpen() || playerHelper.IsConUp() )
+    if ( playerHelper.LeftInvOpen() || playerHelper.IsConUp() || !ogame->GetShowPlayerStatus() || !ogame->hpBar )
       return;
 
     oCItem* weapon = player->GetEquippedRangedWeapon();
@@ -317,6 +318,7 @@ namespace GOTHIC_ENGINE {
     zSTRING texture = (weapon->HasFlag( ITM_FLAG_BOW )) ? "LABEL_MUN_BOW" : "LABEL_MUN_CROSSBOW";
 
     infoIcons++;
+    color.alpha = ogame->hpBar->alpha;
     new IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, screen->FontY() * 0.9f, color, texture, Z amount );
   }
 
