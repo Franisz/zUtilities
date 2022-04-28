@@ -249,7 +249,7 @@ namespace GOTHIC_ENGINE {
       || ogame->pause_screen
       || playerHelper.IsConUp()
       || quickSave->IsBusy()
-      || !ogame->GetShowPlayerStatus()
+      || !ogame->game_drawall
       || playerHelper.LeftInvOpen() ) {
       Clear();
       return;

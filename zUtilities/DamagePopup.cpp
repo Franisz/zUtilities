@@ -297,6 +297,9 @@ namespace GOTHIC_ENGINE {
   }
 
   void DamagePopup::Print( zCView* view, const zVEC3& pos, const zVEC2& scaling ) {
+    if ( !ogame->game_drawall )
+      return;
+
     zVEC2 viewPos;
     if ( !WorldToView( pos, view, viewPos ) )
       return;
