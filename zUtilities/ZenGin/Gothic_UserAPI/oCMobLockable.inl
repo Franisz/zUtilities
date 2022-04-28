@@ -3,3 +3,4 @@
 // User API for oCMobLockable
 // Add your methods here
 
+int __thiscall PickLock_Union( oCNpc*, char );

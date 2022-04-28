@@ -4,3 +4,4 @@
 // Add your methods here
 
 void __thiscall CallOnStateFunc_Union( oCNpc*, int );
+void __thiscall StopInteraction_Union( oCNpc* );

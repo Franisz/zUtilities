@@ -2829,6 +2829,9 @@
     <ClInclude Include="Meatbug.cpp">
       <Filter>Plugin\Workspace\Features</Filter>
     </ClInclude>
+    <ClInclude Include="Lockable.cpp">
+      <Filter>Plugin\Workspace\Features</Filter>
+    </ClInclude>
     <ClInclude Include="Commands.cpp">
       <Filter>Plugin\Workspace\Features</Filter>
     </ClInclude>

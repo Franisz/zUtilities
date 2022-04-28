@@ -11,6 +11,7 @@
 #include "FocusColor.cpp"
 #include "QuickSave.cpp"
 #include "Meatbug.cpp"
+#include "Lockable.cpp"
 #include "ItemLabel.cpp"
 #include "RenderItem.cpp"
 #include "DamagePopup.cpp"

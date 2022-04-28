@@ -8,10 +8,11 @@ namespace GOTHIC_ENGINE {
 #define del(x) { delete x; x = nullptr; }
 
   namespace Options {
-    int TrampleMeatbugs, CenterInvItems, ActivateUsedMunition, AlternativeDialogueBoxes;
+    int TrampleMeatbugs, CenterInvItems, RememberLockCombination, ActivateUsedMunition, AlternativeDialogueBoxes;
     void Misc() {
       TrampleMeatbugs = zoptions->ReadBool( PLUGIN_NAME, "TrampleMeatbugs", true );
       CenterInvItems = zoptions->ReadBool( PLUGIN_NAME, "CenterInvItems", true );
+      RememberLockCombination = zoptions->ReadBool( PLUGIN_NAME, "RememberLockCombination", false );
       ActivateUsedMunition = zoptions->ReadBool( PLUGIN_NAME, "ActivateUsedMunition", true );
       AlternativeDialogueBoxes = zoptions->ReadBool( PLUGIN_NAME, "AlternativeDialogueBoxes", false );
     }
@@ -64,6 +65,7 @@ namespace GOTHIC_ENGINE {
 
       zoptions->AddTrivia( PLUGIN_NAME, "TrampleMeatbugs", "... enables (1) or disables (0) a way of killing meatbugs by stepping on them" );
       zoptions->AddTrivia( PLUGIN_NAME, "CenterInvItems", "... enables (1) or disables (0) inventory item rendering in the center of the screen instead of the item description box" );
+      zoptions->AddTrivia( PLUGIN_NAME, "RememberLockCombination", "... enables (1) or disables (0) alternative way of opening locks, where discovered combination doesn't reset after fail" );
       zoptions->AddTrivia( PLUGIN_NAME, "ActivateUsedMunition", "... enables (1) or disables (0) highlighting currently used ranged weapon munition in the inventory" );
       zoptions->AddTrivia( PLUGIN_NAME, "AlternativeDialogueBoxes", "... enables (1) or disables (0) alternative dialogue boxes style" );
     }
