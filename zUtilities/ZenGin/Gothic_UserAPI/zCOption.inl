@@ -4,3 +4,4 @@
 // Add your methods here
 
 void AddTrivia( const string sectionName, const string entryName, string endTrivia );
+zCOLOR* ReadColor( zSTRING const&, zSTRING const&, char const* );

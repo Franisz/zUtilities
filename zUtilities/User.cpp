@@ -33,4 +33,27 @@ namespace GOTHIC_ENGINE {
 
     section->entryList.InsertAtPos( triviaEntry, nextPos );
   }
+
+  zCOLOR* zCOption::ReadColor( zSTRING const& sectionName, zSTRING const& entryName, char const* text ) {
+    Array<string> splitted = (A zoptions->ReadString( sectionName, entryName, text )).Split( "|" );
+    Array<int> channels;
+
+    for ( int i = 0; i < splitted.GetNum(); i++ ) {
+      splitted[i] = splitted[i].Shrink();
+      if ( !splitted[i].IsNumber() ) return nullptr;
+
+      int value = splitted[i].ToInt32();
+      if ( value < 0 || value > 255 ) return nullptr;
+
+      channels.Insert( value );
+    }
+
+    int size = channels.GetNum();
+    if ( size != 3 && size != 4 )
+      return nullptr;
+
+    zCOLOR* color = new zCOLOR( channels[0], channels[1], channels[2] );
+    if ( size == 4 ) color->alpha = channels[3];
+    return color;
+  }
 }
