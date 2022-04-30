@@ -9,12 +9,14 @@ namespace GOTHIC_ENGINE {
 
   namespace Options {
     int TrampleMeatbugs, CenterInvItems, RememberLockCombination, ActivateUsedMunition, AlternativeDialogueBoxes;
+    zCOLOR* SelectedDialogueColor;
     void Misc() {
       TrampleMeatbugs = zoptions->ReadBool( PLUGIN_NAME, "TrampleMeatbugs", true );
       CenterInvItems = zoptions->ReadBool( PLUGIN_NAME, "CenterInvItems", true );
       RememberLockCombination = zoptions->ReadBool( PLUGIN_NAME, "RememberLockCombination", false );
       ActivateUsedMunition = zoptions->ReadBool( PLUGIN_NAME, "ActivateUsedMunition", true );
       AlternativeDialogueBoxes = zoptions->ReadBool( PLUGIN_NAME, "AlternativeDialogueBoxes", false );
+      SelectedDialogueColor = zoptions->ReadColor( PLUGIN_NAME, "SelectedDialogueColor", "" );
     }
 
     void AddTrivias() {
@@ -68,6 +70,7 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "RememberLockCombination", "... enables (1) or disables (0) alternative way of opening locks, where discovered combination doesn't reset after fail" );
       zoptions->AddTrivia( PLUGIN_NAME, "ActivateUsedMunition", "... enables (1) or disables (0) highlighting currently used ranged weapon munition in the inventory" );
       zoptions->AddTrivia( PLUGIN_NAME, "AlternativeDialogueBoxes", "... enables (1) or disables (0) alternative dialogue boxes style" );
+      zoptions->AddTrivia( PLUGIN_NAME, "SelectedDialogueColor", "... defines color of selected line in dialogues" + nline + "... use 'R|G|B' or 'R|G|B|A' format" + nline + "... leave empty to use default color" );
     }
   }
 }
