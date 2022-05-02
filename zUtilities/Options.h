@@ -22,6 +22,8 @@ namespace GOTHIC_ENGINE {
     void AddTrivias() {
       const string nline = "\r\n; ";
 
+      zoptions->AddTrivia( PLUGIN_NAME, "LogBookColoring", "... enables (1) or disables (0) coloring of new and unread topics in logbook" );
+
       zoptions->AddTrivia( PLUGIN_NAME, "RecoveryVisualization", "... enables (1) or disables (0) visualization of healing that hovered in the inventory item gives" );
       zoptions->AddTrivia( PLUGIN_NAME, "StatusBarValueMode", "... specifies mode of showing status bar value, (0) - 'Disabled', (1) - 'Above', (2) - 'PointToCenter', (3) - 'Inside'" );
       zoptions->AddTrivia( PLUGIN_NAME, "ShowEnemyBarAboveHim", "... enables (1) or disables (0) showing enemy hp bar above his head" );

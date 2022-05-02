@@ -852,6 +852,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DllMain.cpp" />
+    <ClInclude Include="Archive.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Commands.cpp">
       <SubType>
       </SubType>
@@ -905,6 +909,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="KeyCode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LogBook.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="LogBook.h">
       <SubType>
       </SubType>
     </ClInclude>

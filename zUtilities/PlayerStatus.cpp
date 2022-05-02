@@ -130,15 +130,7 @@ namespace GOTHIC_ENGINE {
       interStateFuncs.Insert( inter->onStateFuncName );
   }
 
-  void PlayerStatus::Archive() {
-    int slotID = SaveLoadGameInfo.slotID;
-    if ( slotID < 0 )
-      return;
-
-    zCArchiver* ar = zarcFactory->CreateArchiverWrite( Z GetArchivePath( PLUGIN_NAME ), zARC_MODE_ASCII, 0, 0 );
-    if ( !ar )
-      return;
-
+  void PlayerStatus::Archive( zCArchiver* ar ) {
     ar->WriteInt( "interStateFuncsCount", interStateFuncs.GetNum() );
     for ( uint i = 0; i < interStateFuncs.GetNum(); i++ )
       ar->WriteString( "interStateFuncs", interStateFuncs[i] );
@@ -146,41 +138,20 @@ namespace GOTHIC_ENGINE {
     ar->WriteInt( "stateFuncItemsCount", stateFuncItems.GetNum() );
     for ( uint i = 0; i < stateFuncItems.GetNum(); i++ )
       ar->WriteString( "stateFuncItems", stateFuncItems[i] );
-
-    ar->Close();
-    ar->Release();
   }
 
-  void PlayerStatus::Unarchive() {
-    int slotID = SaveLoadGameInfo.slotID;
-    if ( slotID < 0 )
-      return;
-
+  void PlayerStatus::Unarchive( zCArchiver* ar ) {
     interStateFuncs.EmptyList();
     stateFuncItems.EmptyList();
 
-    zCArchiver* ar = zarcFactory->CreateArchiverRead( Z GetArchivePath( PLUGIN_NAME ), 0 );
     if ( !ar )
       return;
 
-    int interStateFuncsCount;
-    ar->ReadInt( "interStateFuncsCount", interStateFuncsCount );
-    for ( int i = 0; i < interStateFuncsCount; i++ ) {
-      zSTRING str;
-      ar->ReadString( "interStateFuncs", str );
-      interStateFuncs.Insert( str );
-    };
+    for ( int i = 0; i < ar->ReadIntSafe( "interStateFuncsCount" ); i++ )
+      interStateFuncs.Insert( ar->ReadString( "interStateFuncs" ) );
 
-    int stateFuncItemsCount;
-    ar->ReadInt( "stateFuncItemsCount", stateFuncItemsCount );
-    for ( int i = 0; i < stateFuncItemsCount; i++ ) {
-      zSTRING str;
-      ar->ReadString( "stateFuncItems", str );
-      stateFuncItems.Insert( str );
-    };
-
-    ar->Close();
-    ar->Release();
+    for ( int i = 0; i < ar->ReadIntSafe( "stateFuncItemsCount" ); i++ )
+      stateFuncItems.Insert( ar->ReadString( "stateFuncItems" ) );
   }
 
 #if ENGINE < Engine_G2

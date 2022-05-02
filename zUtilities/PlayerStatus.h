@@ -49,8 +49,8 @@ namespace GOTHIC_ENGINE {
     void ResetTimeMultiplier();
     void Clear();
     void Loop();
-    void Archive();
-    void Unarchive();
+    void Archive( zCArchiver* ar );
+    void Unarchive( zCArchiver* ar );
   };
 
   PlayerStatus playerStatus;

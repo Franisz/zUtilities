@@ -247,6 +247,9 @@
     <Filter Include="Plugin\Workspace\Features\Dialogue">
       <UniqueIdentifier>{35e89ac9-bfa9-44ec-aff5-6dc4ea3d4bef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\Workspace\Features\LogBook">
+      <UniqueIdentifier>{0ac56923-5c8c-490c-9e49-20bf92031a95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2894,6 +2897,15 @@
     </ClInclude>
     <ClInclude Include="Inventory.cpp">
       <Filter>Plugin\Workspace\Features\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="LogBook.cpp">
+      <Filter>Plugin\Workspace\Features\LogBook</Filter>
+    </ClInclude>
+    <ClInclude Include="LogBook.h">
+      <Filter>Plugin\Workspace\Features\LogBook</Filter>
+    </ClInclude>
+    <ClInclude Include="Archive.cpp">
+      <Filter>Plugin\Workspace\Misc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

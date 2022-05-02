@@ -8,6 +8,7 @@ namespace GOTHIC_ENGINE {
 
   void Game_Init() {
     Options::Misc();
+    Options::LogBook();
     Options::PlayerStatus();
     Options::StatusBar();
     Options::QuickSave();
@@ -49,7 +50,7 @@ namespace GOTHIC_ENGINE {
 
   void Game_SaveEnd() {
     quickSave->saveEnd = true;
-    playerStatus.Archive();
+    Archive();
   }
 
   void LoadBegin() {
@@ -63,7 +64,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void LoadEnd() {
-    playerStatus.Unarchive();
+    Unarchive();
 #if ENGINE >= Engine_G2
     playerStatus.GetPickpocketInfos();
 #endif
