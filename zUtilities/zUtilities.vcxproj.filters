@@ -2832,9 +2832,6 @@
     <ClInclude Include="Lockable.cpp">
       <Filter>Plugin\Workspace\Features</Filter>
     </ClInclude>
-    <ClInclude Include="Commands.cpp">
-      <Filter>Plugin\Workspace\Features</Filter>
-    </ClInclude>
     <ClInclude Include="QuickSave.cpp">
       <Filter>Plugin\Workspace\Features\QuickSave</Filter>
     </ClInclude>
@@ -2868,9 +2865,6 @@
     <ClInclude Include="DebugHelper.h">
       <Filter>Plugin\Workspace\Features\DebugHelper</Filter>
     </ClInclude>
-    <ClInclude Include="Inventory.cpp">
-      <Filter>Plugin\Workspace\Features</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerStatus.cpp">
       <Filter>Plugin\Workspace\Features\PlayerStatus</Filter>
     </ClInclude>
@@ -2894,6 +2888,12 @@
     </ClInclude>
     <ClInclude Include="Dialogue.cpp">
       <Filter>Plugin\Workspace\Features\Dialogue</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands.cpp">
+      <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.cpp">
+      <Filter>Plugin\Workspace\Features\Inventory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
