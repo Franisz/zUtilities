@@ -1,10 +1,10 @@
 # zUtilities
 
-This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/) **1.0l** for Gothic 1 and 2.
+This is a plugin with a set of many quality-of-life and utility features made in [Union](https://worldofplayers.ru/threads/40376/) **1.0l** for Gothic 1 and 2 games. Plugin can also be found on [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2792434617).
 
 ### Features
 
-- Allows to quickly save / load game with `F10` and `F12` keys.
+- Quickly save / load game with `F10` and `F12` keys.
 
   - Shortcuts can be changed with `KeyQuickSave` and `KeyQuickLoad` options. A full list of available keys to choose from is [there](https://github.com/Franisz/zUtilities/blob/master/zUtilities/KeyCode.h).
   - Range of save slots used for quick save can be adjusted in `gothic.ini` with `MinSaveSlot`, `MaxSaveSlot` options. Default, it's 6 bottom slots.
@@ -62,10 +62,25 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
   - World speed will cycle in the order of set multipliers after pressing `Z`. Shortcut can also be changed with `KeyTimeMultiplier` option.
   - Currently used multiplier will be shown next to the time icon.
 
-- Allows coin icon display next to the focused npc name if player can pickpocket him.
+- Displays coin icon next to the focused npc name if player can pickpocket him.
 
   - This feature can be disabled in `gothic.ini` with `ShowPickpocketIcon` option.
   - Works in G2/G2A only.
+
+- Changes color of log entry titles in player's log book.
+
+  - New log entries will appear green and updated ones will be orange.
+  - This feature can be disabled in `gothic.ini` with `LogBookColoring` option.
+
+- Allows to change color of selected text line in dialogues with `SelectedDialogueColor` option.
+
+  - Enter any color in 'R|G|B' or 'R|G|B|A' format, e.g.: `30|200|60|255`
+  - Leave option empty to keep using default color.
+
+- Allows to use alternative way of opening locks with lockpicks.
+
+  - Essentially, the combination doesn't reset after fail. The player can keep going forward without the need to reenter the already discovered combination over again after every fail.
+  - This is disabled by default and can be enabled with `RememberLockCombination` option.
 
 - Allows to display current in game time.
 
@@ -79,11 +94,11 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
 
   - This feature can be disabled in `gothic.ini` with `TrampleMeatbugs` option.
 
-- Allows to highlight munition used by currently equipped ranged weapon.
+- Highlights munition used by currently equipped ranged weapon.
 
   - This feature can be disabled in `gothic.ini` with `ActivateUsedMunition` option.
 
-- Allows to see on the status bars how much hovered item will heal.
+- Displays on the status bars how much hovered item will heal.
 
   - Heal value is based on the `count` value of the item associated with the `text` that is equal to the original recovery string variables `NAME_BONUS_HP` and `NAME_BONUS_MANA`.
   - This feature can be disabled in `gothic.ini` with `RecoveryVisualization` option.
@@ -92,11 +107,11 @@ This is a simple plugin made in [Union](https://worldofplayers.ru/threads/40376/
 
   - This is disabled by default and can be enabled with `AlternativeDialogueBoxes` option.
 
-- Allows to display debug info data about focused vob or selected in the inventory item.
+- Display debug info data about focused vob or selected in the inventory item.
 
   - Use `zutilities debug` command to toggle on/off.
 
-- Allows to check currently used plugin version through in game console with `zutilities version` command.
+- Check currently used plugin version through in game console with `zutilities version` command.
 
 ### Options
 
@@ -111,11 +126,22 @@ TrampleMeatbugs=1
 CenterInvItems=1
 ; ... enables (1) or disables (0) inventory item rendering in the center of the screen instead of the item description box
 
+RememberLockCombination=0
+; ... enables (1) or disables (0) alternative way of opening locks, where discovered combination doesn't reset after fail
+
 ActivateUsedMunition=1
 ; ... enables (1) or disables (0) highlighting currently used ranged weapon munition in the inventory
 
 AlternativeDialogueBoxes=0
 ; ... enables (1) or disables (0) alternative dialogue boxes style
+
+SelectedDialogueColor=
+; ... defines color of selected line in dialogues
+; ... use 'R|G|B' or 'R|G|B|A' format
+; ... leave empty to use default color
+
+LogBookColoring=1
+; ... enables (1) or disables (0) coloring of new and unread topics in logbook
 
 ShowGameTime=0
 ; ... enables (1) or disables (0) on screen display of in game time
