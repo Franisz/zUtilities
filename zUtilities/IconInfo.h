@@ -15,10 +15,14 @@ namespace GOTHIC_ENGINE {
     int psize;
 
     zCOLOR color;
-    void DrawIcon( zSTRING texName );
-    void PrintText( zSTRING text );
+    zSTRING texName;
+    zSTRING text;
+
+    void Draw();
+    void DrawIcon();
+    void PrintText();
 
   public:
-    IconInfo( int x, int y, int size, zCOLOR col, zSTRING texName, zSTRING text );
+    IconInfo( int x, int y, int size, zCOLOR color, zSTRING texName, zSTRING text );
   };
 }

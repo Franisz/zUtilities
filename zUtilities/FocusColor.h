@@ -34,6 +34,7 @@ namespace GOTHIC_ENGINE {
     zCOLOR NpcColor( oCNpc* npc );
     zCOLOR ItemColor( oCItem* item );
     bool TryPrintFocus( int x, int y, zSTRING name, zCVob* vob );
+    void TryAddIcons( int x, int y, zSTRING name, oCNpc* npc );
 
   public:
     bool CanPrintFocus( zCView* view, int x, int y, const zSTRING& text );

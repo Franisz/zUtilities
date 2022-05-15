@@ -250,7 +250,7 @@ namespace GOTHIC_ENGINE {
 
     infoIcons++;
     color.alpha = ogame->hpBar->alpha;
-    new IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, screen->FontY() * 0.9f, color, texture, str );
+    IconInfo icon = IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, screen->FontY() * 0.9f, color, texture, str );
   }
 
   void PlayerStatus::ShowMunitionAmount() {
@@ -290,7 +290,7 @@ namespace GOTHIC_ENGINE {
 
     infoIcons++;
     color.alpha = ogame->hpBar->alpha;
-    new IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, screen->FontY() * 0.9f, color, texture, Z amount );
+    IconInfo icon = IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, screen->FontY() * 0.9f, color, texture, Z amount );
   }
 
   void PlayerStatus::StatusBars() {

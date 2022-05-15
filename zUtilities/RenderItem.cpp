@@ -77,11 +77,11 @@ namespace GOTHIC_ENGINE {
     if ( Options::LabelItems ) {
       if ( !Options::PutLabelBehind ) {
         THISCALL( Hook_oCItem_RenderItem )(wld, view, rotate);
-        new ItemLabel( this, view );
+        ItemLabel label = ItemLabel( this, view );
         return;
       }
 
-      new ItemLabel( this, view );
+      ItemLabel label = ItemLabel( this, view );
     }
 
     THISCALL( Hook_oCItem_RenderItem )(wld, view, rotate);

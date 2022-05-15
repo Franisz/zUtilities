@@ -338,17 +338,28 @@ namespace GOTHIC_ENGINE {
     focusView->Print( x, y, name );
     vobOnScreen = true;
 
-#if ENGINE >= Engine_G2
-    if ( Options::ShowPickpocketIcon )
-      if ( oCNpc* npc = vob->CastTo<oCNpc>() )
-        if ( playerStatus.CanPickpocketNpc( npc ) ) {
-          zCOLOR color = zCOLOR( 241, 196, 15, ogame->hpBar->alpha );
-          zSTRING texture = "LABEL_MONEY"; // https://game-icons.net/1x1/delapouite/two-coins.html
-          new IconInfo( x + focusView->FontSize( name ) + focusView->FontY() * 0.1f, y, focusView->FontY() * 0.55f, color, texture );
-        }
-#endif
+    if ( oCNpc* npc = vob->CastTo<oCNpc>() )
+      TryAddIcons( x, y, name, npc );
 
     return true;
+  }
+
+  void FocusColor::TryAddIcons( int x, int y, zSTRING name, oCNpc* npc ) {
+    if ( npc->attribute[NPC_ATR_HITPOINTSMAX] <= 0 )
+      return;
+
+    int iconNr = 1;
+    int startX = x + focusView->FontSize( name );
+    int margin = focusView->FontY() * 0.1f;
+    int size = focusView->FontY() * 0.55f;
+
+#if ENGINE >= Engine_G2
+    if ( Options::ShowPickpocketIcon && playerStatus.CanPickpocketNpc( npc ) ) {
+      zCOLOR color = zCOLOR( 241, 196, 15, ogame->hpBar->alpha );
+      zSTRING texture = "LABEL_MONEY"; // https://game-icons.net/1x1/delapouite/two-coins.html
+      IconInfo icon = IconInfo( startX + margin * iconNr + size * (iconNr++ - 1), y, size, color, texture );
+    }
+#endif
   }
 
   bool FocusColor::CanPrintFocus( zCView* view, int x, int y, const zSTRING& text ) {

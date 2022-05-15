@@ -241,14 +241,14 @@
     <Filter Include="Plugin\Workspace\Features\PlayerStatus\StatusBar">
       <UniqueIdentifier>{f5a6fe54-5837-452a-8b39-b2eea83b3d9f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Plugin\Workspace\Features\PlayerStatus\IconInfo">
-      <UniqueIdentifier>{ad1d68b4-22dc-4e58-914f-444545260f86}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Plugin\Workspace\Features\Dialogue">
       <UniqueIdentifier>{35e89ac9-bfa9-44ec-aff5-6dc4ea3d4bef}</UniqueIdentifier>
     </Filter>
     <Filter Include="Plugin\Workspace\Features\LogBook">
       <UniqueIdentifier>{0ac56923-5c8c-490c-9e49-20bf92031a95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugin\Workspace\Features\IconInfo">
+      <UniqueIdentifier>{ad1d68b4-22dc-4e58-914f-444545260f86}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2884,10 +2884,10 @@
       <Filter>Plugin\Workspace\Misc</Filter>
     </ClInclude>
     <ClInclude Include="IconInfo.cpp">
-      <Filter>Plugin\Workspace\Features\PlayerStatus\IconInfo</Filter>
+      <Filter>Plugin\Workspace\Features\IconInfo</Filter>
     </ClInclude>
     <ClInclude Include="IconInfo.h">
-      <Filter>Plugin\Workspace\Features\PlayerStatus\IconInfo</Filter>
+      <Filter>Plugin\Workspace\Features\IconInfo</Filter>
     </ClInclude>
     <ClInclude Include="Dialogue.cpp">
       <Filter>Plugin\Workspace\Features\Dialogue</Filter>
