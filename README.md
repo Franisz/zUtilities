@@ -17,7 +17,7 @@ This is a plugin with a set of many quality-of-life and utility features made in
   - Lockables: `Red` - locked on key, `Orange` - locked, `Light red` - can be opened with a key or lockpick, `Green` - open with items, `Grey` - permanently closed or opened and empty.
   - Items: `White` - default / item can be taken, `Slightly orange` - someone will catch the hero stealing.
   - Intractable book stands: `Green` - unread, `White` - default / read.
-  - Each group can be disabled separately in `gothic.ini` with `ColorNpcs`, `ColorLockables` and `ColorItems` options.
+  - Each group can be disabled separately in `gothic.ini` with `ColorNpcs`, `ColorLockables`, `ColorItems` and `ColorInter` options.
 
 - Renders the selected inventory item in the center of the screen instead of in the item description box.
 
@@ -74,7 +74,7 @@ This is a plugin with a set of many quality-of-life and utility features made in
 
 - Allows to change color of selected text line in dialogues with `SelectedDialogueColor` option.
 
-  - Enter any color in 'R|G|B' or 'R|G|B|A' format, e.g.: `30|200|60|255`
+  - Enter any color in `R|G|B` or `R|G|B|A` format, e.g.: `30|200|60|255`
   - Leave option empty to keep using default color.
 
 - Allows to use alternative way of opening locks with lockpicks.

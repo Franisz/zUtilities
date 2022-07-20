@@ -7,14 +7,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_Init() {
-    Options::Misc();
-    Options::LogBook();
-    Options::PlayerStatus();
-    Options::StatusBar();
-    Options::QuickSave();
-    Options::FocusColor();
-    Options::ItemLabel();
-    Options::DamagePopup();
+    Options::ReadOptions();
     Options::AddTrivias();
     RegisterCommands();
     quickSave = new QuickSave();
@@ -104,6 +97,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_Unpause() {
+    Options::ReadOptions();
   }
 
   void Game_DefineExternals() {

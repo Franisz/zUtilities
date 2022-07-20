@@ -17,6 +17,7 @@ namespace GOTHIC_ENGINE {
       string MulString = A zoptions->ReadString( PLUGIN_NAME, "TimeMultipliers", "1.0|2.5" );
 
       Array<string> MulStrings = MulString.Split( "|" );
+      TimeMultipliers.Clear();
       for ( int i = 0; i < MulStrings.GetNum(); i++ )
         TimeMultipliers.Insert( MulStrings[i].Shrink().ToReal32() );
     }

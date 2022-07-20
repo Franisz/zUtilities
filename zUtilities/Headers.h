@@ -3,9 +3,9 @@
 
 // Automatically generated block
 #pragma region Includes
+#include "Const.h"
 #include "Randomizer.h"
 #include "KeyCode.h"
-#include "Options.h"
 #include "IconInfo.h"
 #include "PlayerHelper.h"
 #include "DebugHelper.h"
@@ -16,6 +16,7 @@
 #include "StatusBar.h"
 #include "LogBook.h"
 #include "PlayerStatus.h"
+#include "Options.h"
 #include "Plugin.h"
 #pragma endregion
 
