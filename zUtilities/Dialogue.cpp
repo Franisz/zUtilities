@@ -64,12 +64,4 @@ namespace GOTHIC_ENGINE {
 
     THISCALL( Hook_zCView_DialogMessageCXY )(a1, a2, a3, a4);
   }
-
-  HOOK Hook_zCViewDialogChoice_ShowSelected PATCH( &zCViewDialogChoice::ShowSelected, &zCViewDialogChoice::ShowSelected_Union );
-  void zCViewDialogChoice::ShowSelected_Union() {
-    if ( Options::SelectedDialogueColor )
-      ColorSelected = *Options::SelectedDialogueColor;
-
-    THISCALL( Hook_zCViewDialogChoice_ShowSelected )();
-  }
 }
