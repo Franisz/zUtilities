@@ -4,6 +4,10 @@ This is a plugin with a set of many quality-of-life and utility features made in
 
 ### Features
 
+> Plugin options can be changed in `gothic.ini`.
+
+> Some of the options can also be changed via ingame menu. (Requires Union 1.0m or higher.)
+
 - Quickly save / load game with `F10` and `F12` keys.
 
   - Shortcuts can be changed with `KeyQuickSave` and `KeyQuickLoad` options. A full list of available keys to choose from is [there](https://github.com/Franisz/zUtilities/blob/master/zUtilities/KeyCode.h).
