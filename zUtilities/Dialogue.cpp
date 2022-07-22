@@ -6,7 +6,7 @@ namespace GOTHIC_ENGINE {
 
   HOOK Hook_zCViewPrint_Blit PATCH( &zCViewPrint::Blit, &zCViewPrint::Blit_Union );
   void zCViewPrint::Blit_Union() {
-    if ( !Options::AlternativeDialogueBoxes || !playerHelper.IsInInfo() ) {
+    if ( !Options::AlternativeDialogueBoxes || this != oCInformationManager::GetInformationManager().DlgChoice ) {
       THISCALL( Hook_zCViewPrint_Blit )();
       return;
     }
@@ -28,7 +28,7 @@ namespace GOTHIC_ENGINE {
 
   HOOK Hook_zCViewPrint_BlitTextCharacters PATCH( &zCViewPrint::BlitTextCharacters, &zCViewPrint::BlitTextCharacters_Union );
   void zCViewPrint::BlitTextCharacters_Union( zCViewText2* a1, zCFont* a2, zCOLOR& a3 ) {
-    if ( !Options::AlternativeDialogueBoxes || !playerHelper.IsInInfo() ) {
+    if ( !Options::AlternativeDialogueBoxes || this != oCInformationManager::GetInformationManager().DlgChoice ) {
       THISCALL( Hook_zCViewPrint_BlitTextCharacters )(a1, a2, a3);
       return;
     }
