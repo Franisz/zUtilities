@@ -7,19 +7,25 @@ namespace GOTHIC_ENGINE {
 
     int latestNr = 0;
     int latestSaveSlot = Invalid;
+    
 
-    for ( int i = 0; i < saveList.GetNum(); i++ ) {
-      if ( saveList[i]->m_SlotNr < Options::MinSaveSlot || saveList[i]->m_SlotNr > Options::MaxSaveSlot )
-        continue;
+    if ( UseQuickSave ) {
 
-      if ( !saveList[i]->GetName().HasWord( Options::SaveName ) )
-        continue;
+    }
+    else {
+        for ( int i = 0; i < saveList.GetNum(); i++ ) {
+            if ( saveList[i]->m_SlotNr < Options::MinSaveSlot || saveList[i]->m_SlotNr > Options::MaxSaveSlot )
+                continue;
 
-      int nr = saveList[i]->GetName().Cut( 0, Options::SaveName.Length() ).ToInt32();
-      if ( nr > latestNr ) {
-        latestNr = nr;
-        latestSaveSlot = saveList[i]->m_SlotNr;
-      }
+            if ( !saveList[i]->GetName().HasWord( Options::SaveName ) )
+                continue;
+
+            int nr = saveList[i]->GetName().Cut( 0, Options::SaveName.Length() ).ToInt32();
+            if ( nr > latestNr ) {
+                latestNr = nr;
+                latestSaveSlot = saveList[i]->m_SlotNr;
+            }
+        }
     }
 
     iLastSaveNumber = latestNr;
