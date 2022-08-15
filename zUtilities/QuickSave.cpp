@@ -7,9 +7,16 @@ namespace GOTHIC_ENGINE {
 
     int latestNr = 0;
     int latestSaveSlot = Invalid;
-    
 
-    if ( UseQuickSave ) {
+    if ( Options::UseQuickSave ) {
+
+        int slotIndicies[1024] = { 0 }; // safe buffer for saveSlots
+        int slotNames[1024] = { 0 };
+        int length = 0;
+        int maxName = -1; // initialize with negative, so we get a slotName = 0 with correct index
+        int maxNameIndex = -1;
+
+
         // The algorithm looks very like adding numbers in binary.
         // The idea behind using a binary addition is too use some SaveSlots
         // more frequently then others. for example:
@@ -46,6 +53,32 @@ namespace GOTHIC_ENGINE {
         // The problem in implementing that, is to create a naming system that
         // can determine the Spot to Save, at any give point in time.
         // Even after exit/restart of the game.
+
+        for ( int i = 0; i < saveList.GetNum(); i++ ) {
+            if ( saveList[i]->m_SlotNr < Options::MinSaveSlot || saveList[i]->m_SlotNr > Options::MaxSaveSlot )
+                continue;
+            // XXX: does m_slotNr is a increesing value for SaveSlots
+            //      do I need to use a for loop, or can I just use MinSaveSlot and MaxSaveSlot for knowing the available slotNumbers?
+            slotIndicies[i] = saveList[i]->m_SlotNr;
+            slotNames[i] = saveList[i]->GetName().Cut( 0, Options::SaveName.Length() ).ToInt32()
+            length++;
+            if (slotNames[i] > maxName ) {
+                maxName = slotNames[i];
+                maxNameIndex = slotIndicies[i];
+            }
+        }
+
+        // we had some slots to save on, but we did not found a slot already saved.
+        // We are saving for the first time probably
+        if ( length > 0 && maxNameIndex < 0 ) {
+            latestNr = 0; 
+            latestSaveSlots = slotIndicies[0]; // use first available slot (will be MinSaveSlot)
+        }
+        // we had some slots to save on, and we found flot with existing save.
+        // now we need to figure out, on which slot to put next save.
+        else if ( length > 0 ) {
+
+        }
     }
     else {
         for ( int i = 0; i < saveList.GetNum(); i++ ) {
