@@ -387,8 +387,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -412,8 +411,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -437,8 +435,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -462,8 +459,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -487,8 +483,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -512,8 +507,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -541,8 +535,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -570,8 +563,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -599,8 +591,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -628,8 +619,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -657,8 +647,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -686,8 +675,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -715,8 +703,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -744,8 +731,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -773,8 +759,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -802,8 +787,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -831,8 +815,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -860,8 +843,7 @@
       <ProgramDatabaseFile>$(SolutionDir)PDB\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(ALLUSERSPROFILE)\Union\SDK\Union\v1.0l\Build\beforebuild.exe $(SolutionDir)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
