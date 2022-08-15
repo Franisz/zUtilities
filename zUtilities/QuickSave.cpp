@@ -10,7 +10,42 @@ namespace GOTHIC_ENGINE {
     
 
     if ( UseQuickSave ) {
-
+        // The algorithm looks very like adding numbers in binary.
+        // The idea behind using a binary addition is too use some SaveSlots
+        // more frequently then others. for example:
+        // Slot0 -> will be used 50%
+        // Slot1 -> will be used 25%
+        // Slot2 -> will be used 12%
+        // Slot3 -> will be used  6%
+        // Slot4 -> will be used  3%
+        // Slot5 -> will be used  1%
+        // Thanks to that, we have Slot5, Slot4 keeping the oldest (in actual date time) Saves
+        // Whiles Slot0, Slot1, keeping the newest (in actual date time) Saves
+        // This will give the ability to Load old save from Slot5, that was saved (lets say 2 ^ 5 = 32 saves ago)
+        // And at the same time, we have Slot1, Slot2 with newest saves (lets say last save)
+        //
+        // Example of such saving, I will mark a SaveSpot with brackets (numbers are an ID of a save):
+        //  -   [1]   1   [3]   3   [5]   5   [7]   7
+        //  -    -   [2]   2    2    2   [6]   6    6
+        //  -    -    -    -   [4]   4    4    4    4
+        //  -    -    -    -    -    -    -    -   [8]
+        //  
+        // And their binary representation (numbers are a binary tree that helps me to determine SaveSpot):
+        //  0   [1]   0   [1]   0   [1]   0   [1]   0
+        //  0    0   [1]   1    0    0   [1]   1    0
+        //  0    0    0    0   [1]   1    1    1    0
+        //  0    0    0    0    0    0    0    0   [1]
+        // 
+        // And their decimal representation:
+        //  0    1    2    3    4    5    6    7    8
+        // 
+        // As you can see, the SaveSpots (brackets), are in a places where the
+        // number changed from 0 -> 1, number changing from 1 -> 0 does not matter.
+        // 
+        // 
+        // The problem in implementing that, is to create a naming system that
+        // can determine the Spot to Save, at any give point in time.
+        // Even after exit/restart of the game.
     }
     else {
         for ( int i = 0; i < saveList.GetNum(); i++ ) {
