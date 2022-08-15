@@ -59,7 +59,7 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    if ( Options::UseQuickSave ) {
+    if ( Options::UseBinarySave ) {
         // The algorithm looks very like adding numbers in binary.
         // The idea behind using a binary addition is too use some SaveSlots
         // more frequently then others. for example:
@@ -100,19 +100,19 @@ namespace GOTHIC_ENGINE {
         // We are saving for the first time probably
         if ( iLastSaveNumber == Invalid) {
             iLastSaveSlot = Options::MinSaveSlot;
-            iLastSaveNumber = 1; // I could use ZERO as a first SaveName, it doesnt matter. number ONE is just more pleasant to the eye
+            iLastSaveNumber = 1; // I could use ZERO as a first SaveName, it doesn't matter. number ONE is just more pleasant to the eye
         }
         // we need to figure out, on which slot to put next save.
         else {
-            iLastSaveNumber++;
-            int const nextName = maxName + 1;
+            int const curName = iLastSaveNumber;
+            int const nextName = curName + 1;
             // Now we need to find a change from 0 -> 1 between maxName and nextName
             int changeIndex = -1;
             int mask = 0x100000; // 10...0
             // XXX: Not sure of `size(int) - 1`, it takes one of the save spots out.
             //      But I am also nervous of checking 2^32 This needs to be tested.
             for ( int i = 0; i < sizeof(int) - 1; ++i) {
-                if ( nextName & mask > maxName & mask ) {
+                if ( nextName & mask > curName & mask ) {
                     changeIndex = i;
                     break;
                 }
@@ -132,6 +132,7 @@ namespace GOTHIC_ENGINE {
                     changeIndex -= slots;
                 }
                 iLastSaveSlot = Options::MinSaveSlot + changeIndex;
+                iLastSaveNumber++;
             }
         }
     }
