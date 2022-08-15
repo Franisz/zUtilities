@@ -105,16 +105,33 @@ namespace GOTHIC_ENGINE {
         // we need to figure out, on which slot to put next save.
         else {
             iLastSaveNumber++;
-            int nextName = maxName + 1;
-            // now we need to find a change from 0 -> 1 between maxName and nextName
-            int changeIndex = 0;
+            int const nextName = maxName + 1;
+            // Now we need to find a change from 0 -> 1 between maxName and nextName
+            int changeIndex = -1;
             int mask = 0x100000; // 10...0
+            // XXX: Not sure of `size(int) - 1`, it takes one of the save spots out.
+            //      But I am also nervous of checking 2^32 This needs to be tested.
             for ( int i = 0; i < sizeof(int) - 1; ++i) {
-                if (nextName & mask > maxName & mask) {
-                    iLastSaveSlot = i; // TODO
+                if ( nextName & mask > maxName & mask ) {
+                    changeIndex = i;
                     break;
                 }
+                // this operation moves 1 to the right, and resets first bit to 0, in order to check next bit
                 mask = (mask > 1) & 0x7FFFFF; // 01...1
+            }
+
+            if ( changeIndex != -1 ) {
+                // We found an index where change happens, but this index is between 0 and 31.
+                // We need to cap it between Options::MinSaveSlot and Options::MaxSaveSlot
+                // To do it, I will wrap the number system around
+                // 
+                // XXX: depending if MaxSaveSlot count that slot, `slots` will require +1 or +0
+                int const slots = Options::MaxSaveSlot - Options::MinSaveSlot;
+                while ( changeIndex > slots ) {
+                    // this operation moves the index one to the left, in order to fit in number of available slots
+                    changeIndex -= slots;
+                }
+                iLastSaveSlot = Options::MinSaveSlot + changeIndex;
             }
         }
     }
