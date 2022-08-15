@@ -8,91 +8,17 @@ namespace GOTHIC_ENGINE {
     int latestNr = 0;
     int latestSaveSlot = Invalid;
 
-    if ( Options::UseQuickSave ) {
+    for ( int i = 0; i < saveList.GetNum(); i++ ) {
+        if ( saveList[i]->m_SlotNr < Options::MinSaveSlot || saveList[i]->m_SlotNr > Options::MaxSaveSlot )
+            continue;
 
-        int slotIndicies[1024] = { 0 }; // safe buffer for saveSlots
-        int slotNames[1024] = { 0 };
-        int length = 0;
-        int maxName = -1; // initialize with negative, so we get a slotName = 0 with correct index
-        int maxNameIndex = -1;
+        if ( !saveList[i]->GetName().HasWord( Options::SaveName ) )
+            continue;
 
-
-        // The algorithm looks very like adding numbers in binary.
-        // The idea behind using a binary addition is too use some SaveSlots
-        // more frequently then others. for example:
-        // Slot0 -> will be used 50%
-        // Slot1 -> will be used 25%
-        // Slot2 -> will be used 12%
-        // Slot3 -> will be used  6%
-        // Slot4 -> will be used  3%
-        // Slot5 -> will be used  1%
-        // Thanks to that, we have Slot5, Slot4 keeping the oldest (in actual date time) Saves
-        // Whiles Slot0, Slot1, keeping the newest (in actual date time) Saves
-        // This will give the ability to Load old save from Slot5, that was saved (lets say 2 ^ 5 = 32 saves ago)
-        // And at the same time, we have Slot1, Slot2 with newest saves (lets say last save)
-        //
-        // Example of such saving, I will mark a SaveSpot with brackets (numbers are an ID of a save):
-        //  -   [1]   1   [3]   3   [5]   5   [7]   7
-        //  -    -   [2]   2    2    2   [6]   6    6
-        //  -    -    -    -   [4]   4    4    4    4
-        //  -    -    -    -    -    -    -    -   [8]
-        //  
-        // And their binary representation (numbers are a binary tree that helps me to determine SaveSpot):
-        //  0   [1]   0   [1]   0   [1]   0   [1]   0
-        //  0    0   [1]   1    0    0   [1]   1    0
-        //  0    0    0    0   [1]   1    1    1    0
-        //  0    0    0    0    0    0    0    0   [1]
-        // 
-        // And their decimal representation:
-        //  0    1    2    3    4    5    6    7    8
-        // 
-        // As you can see, the SaveSpots (brackets), are in a places where the
-        // number changed from 0 -> 1, number changing from 1 -> 0 does not matter.
-        // 
-        // 
-        // The problem in implementing that, is to create a naming system that
-        // can determine the Spot to Save, at any give point in time.
-        // Even after exit/restart of the game.
-
-        for ( int i = 0; i < saveList.GetNum(); i++ ) {
-            if ( saveList[i]->m_SlotNr < Options::MinSaveSlot || saveList[i]->m_SlotNr > Options::MaxSaveSlot )
-                continue;
-            // XXX: does m_slotNr is a increesing value for SaveSlots
-            //      do I need to use a for loop, or can I just use MinSaveSlot and MaxSaveSlot for knowing the available slotNumbers?
-            slotIndicies[i] = saveList[i]->m_SlotNr;
-            slotNames[i] = saveList[i]->GetName().Cut( 0, Options::SaveName.Length() ).ToInt32()
-            length++;
-            if (slotNames[i] > maxName ) {
-                maxName = slotNames[i];
-                maxNameIndex = slotIndicies[i];
-            }
-        }
-
-        // we had some slots to save on, but we did not found a slot already saved.
-        // We are saving for the first time probably
-        if ( length > 0 && maxNameIndex < 0 ) {
-            latestNr = 0; 
-            latestSaveSlots = slotIndicies[0]; // use first available slot (will be MinSaveSlot)
-        }
-        // we had some slots to save on, and we found flot with existing save.
-        // now we need to figure out, on which slot to put next save.
-        else if ( length > 0 ) {
-
-        }
-    }
-    else {
-        for ( int i = 0; i < saveList.GetNum(); i++ ) {
-            if ( saveList[i]->m_SlotNr < Options::MinSaveSlot || saveList[i]->m_SlotNr > Options::MaxSaveSlot )
-                continue;
-
-            if ( !saveList[i]->GetName().HasWord( Options::SaveName ) )
-                continue;
-
-            int nr = saveList[i]->GetName().Cut( 0, Options::SaveName.Length() ).ToInt32();
-            if ( nr > latestNr ) {
-                latestNr = nr;
-                latestSaveSlot = saveList[i]->m_SlotNr;
-            }
+        int nr = saveList[i]->GetName().Cut( 0, Options::SaveName.Length() ).ToInt32();
+        if ( nr > latestNr ) {
+            latestNr = nr;
+            latestSaveSlot = saveList[i]->m_SlotNr;
         }
     }
 
@@ -133,10 +59,67 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    iLastSaveSlot++;
-    iLastSaveNumber++;
-    if ( iLastSaveSlot > Options::MaxSaveSlot || iLastSaveSlot < Options::MinSaveSlot )
-      iLastSaveSlot = Options::MinSaveSlot;
+    if ( Options::UseQuickSave ) {
+        // The algorithm looks very like adding numbers in binary.
+        // The idea behind using a binary addition is too use some SaveSlots
+        // more frequently then others. for example:
+        //     Slot0 -> will be used 50%
+        //     Slot1 -> will be used 25%
+        //     Slot2 -> will be used 12%
+        //     Slot3 -> will be used  6%
+        //     Slot4 -> will be used  3%
+        //     Slot5 -> will be used  1%
+        // Thanks to that, we have Slot5, Slot4 keeping the oldest (in actual date time) Saves
+        // Whiles Slot0, Slot1, keeping the newest (in actual date time) Saves
+        // This will give the ability to Load old save from Slot5, that was saved (lets say 2 ^ 5 = 32 saves ago)
+        // And at the same time, we have Slot1, Slot2 with newest saves (lets say last save)
+        //
+        // Example of such saving, I will mark a SaveSpot with brackets (numbers are an ID of a save):
+        //  -   [1]   1   [3]   3   [5]   5   [7]   7
+        //  -    -   [2]   2    2    2   [6]   6    6
+        //  -    -    -    -   [4]   4    4    4    4
+        //  -    -    -    -    -    -    -    -   [8]
+        //  
+        // And their binary representation (numbers are a binary tree that helps me to determine SaveSpot):
+        //  0   [1]   0   [1]   0   [1]   0   [1]   0
+        //  0    0   [1]   1    0    0   [1]   1    0
+        //  0    0    0    0   [1]   1    1    1    0
+        //  0    0    0    0    0    0    0    0   [1]
+        // 
+        // And their decimal representation:
+        //  0    1    2    3    4    5    6    7    8
+        // 
+        // As you can see, the SaveSpots (brackets), are in a places where the
+        // number changed from 0 -> 1, number changing from 1 -> 0 does not matter.
+        // 
+        // 
+        // The problem in implementing that, is to create a naming system that
+        // can determine the Spot to Save, at any give point in time.
+        // Even after exit/restart of the game.
+
+        // We are saving for the first time probably
+        if ( iLastSaveNumber == Invalid) {
+            iLastSaveSlot = Options::MinSaveSlot;
+            iLastSaveNumber = 1; // I could use ZERO as a first SaveName, it doesnt matter. number ONE is just more pleasant to the eye
+        }
+        // we need to figure out, on which slot to put next save.
+        else {
+            int nextName = maxName + 1;
+            // now we need to find a change from 0 -> 1 between maxName and nextName
+            int changeIndex = 0;
+            int mask = 0x100000; // 10...0
+            if (nextName & mask > maxName & mask) {
+                latestNr = -1; // TODO
+                latestSaveSlot = -1; // TODO
+            }
+        }
+    }
+    else {
+        iLastSaveSlot++;
+        iLastSaveNumber++;
+        if (iLastSaveSlot > Options::MaxSaveSlot || iLastSaveSlot < Options::MinSaveSlot)
+            iLastSaveSlot = Options::MinSaveSlot;
+    }
 
     // Thumbnail
     zCTextureConvert* thumb = zrenderer->CreateTextureConvert();
