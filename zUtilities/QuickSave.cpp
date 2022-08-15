@@ -108,24 +108,20 @@ namespace GOTHIC_ENGINE {
             int const nextName = curName + 1;
             // Now we need to find a change from 0 -> 1 between maxName and nextName
             int changeIndex = -1;
-            int mask = 0x100000; // 10...0
-            // XXX: Not sure of `size(int) - 1`, it takes one of the save spots out.
-            //      But I am also nervous of checking 2^32 This needs to be tested.
-            for ( int i = 0; i < sizeof(int) - 1; ++i) {
-                if ( nextName & mask > curName & mask ) {
+            int mask = ((int)1); // 0...01
+            for ( int i = 0; i < (sizeof(int) * 8) - 1; ++i) {
+                if (( nextName & mask ) > ( curName & mask )) {
                     changeIndex = i;
                     break;
                 }
                 // this operation moves 1 to the right, and resets first bit to 0, in order to check next bit
-                mask = (mask > 1) & 0x7FFFFF; // 01...1
+                mask = (mask << 1) & (~((int)1)); // 1...10
             }
 
             if ( changeIndex != -1 ) {
                 // We found an index where change happens, but this index is between 0 and 31.
                 // We need to cap it between Options::MinSaveSlot and Options::MaxSaveSlot
                 // To do it, I will wrap the number system around
-                // 
-                // XXX: depending if MaxSaveSlot count that slot, `slots` will require +1 or +0
                 int const slots = Options::MaxSaveSlot - Options::MinSaveSlot;
                 while ( changeIndex > slots ) {
                     // this operation moves the index one to the left, in order to fit in number of available slots
