@@ -104,13 +104,17 @@ namespace GOTHIC_ENGINE {
         }
         // we need to figure out, on which slot to put next save.
         else {
+            iLastSaveNumber++;
             int nextName = maxName + 1;
             // now we need to find a change from 0 -> 1 between maxName and nextName
             int changeIndex = 0;
             int mask = 0x100000; // 10...0
-            if (nextName & mask > maxName & mask) {
-                latestNr = -1; // TODO
-                latestSaveSlot = -1; // TODO
+            for ( int i = 0; i < sizeof(int) - 1; ++i) {
+                if (nextName & mask > maxName & mask) {
+                    iLastSaveSlot = i; // TODO
+                    break;
+                }
+                mask = (mask > 1) & 0x7FFFFF; // 01...1
             }
         }
     }
