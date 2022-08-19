@@ -54,8 +54,8 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "KeyTimeMultiplier", "... key for cycling time speed" );
       zoptions->AddTrivia( PLUGIN_NAME, "TimeMultipliers", "... defines time multipliers" );
 
-      zoptions->AddTrivia( PLUGIN_NAME, "UseQuickSave", "... enables (1) or disables (0) QuickSaving with [F10] and QuickLoading with [F12]");
-      zoptions->AddTrivia( PLUGIN_NAME, "UseBinarySave", "... enables (1) or disables (0) Binary saving, that helps to save bigger span of gameplay");
+      zoptions->AddTrivia( PLUGIN_NAME, "UseQuickSave", "... enables (1) or disables (0) QuickSaving with [F10] and QuickLoading with [F12]" );
+      zoptions->AddTrivia( PLUGIN_NAME, "UseBinarySave", "... enables (1) or disables (0) Binary saving, that helps to save bigger span of gameplay" );
       zoptions->AddTrivia( PLUGIN_NAME, "KeyQuickSave", "... key for QuickSave" );
       zoptions->AddTrivia( PLUGIN_NAME, "KeyQuickLoad", "... key for QuickLoad" );
       zoptions->AddTrivia( PLUGIN_NAME, "MinSaveSlot", "... defines min range of used save slots" );
