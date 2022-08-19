@@ -327,25 +327,25 @@ instance MenuItem_Opt_Page1_UseTimeMultiplier_Choice(C_MENU_ITEM_DEF)
   text[0]               = "Off|On";
 };
 
-instance MenuItem_Opt_Page1_UseQuickSave(C_MENU_ITEM)
+instance MenuItem_Opt_Page1_QuickSaveMode(C_MENU_ITEM)
 {
   CurrentMenuItem_PY = 4;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
   
-  text[0] = "UseQuickSave";
+  text[0] = "QuickSaveMode";
   text[1] = "quick save / load";
 };
 
-instance MenuItem_Opt_Page1_UseQuickSave_Choice(C_MENU_ITEM_DEF)
+instance MenuItem_Opt_Page1_QuickSaveMode_Choice(C_MENU_ITEM_DEF)
 {
   C_MENUITEM_CHOICE_BASE();
   posy += Menu_DY * CurrentMenuItem_PY;
   
-  onchgsetoption        = "UseQuickSave";
+  onchgsetoption        = "QuickSaveMode";
   onchgsetoptionsection = "zUtilities";
-  text[0]               = "Off|On";
+  text[0]               = "Off|Standard|Alternative";
 };
 
 instance MenuItem_Opt_Page1_ShowGameTime(C_MENU_ITEM)

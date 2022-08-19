@@ -54,8 +54,7 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "KeyTimeMultiplier", "... key for cycling time speed" );
       zoptions->AddTrivia( PLUGIN_NAME, "TimeMultipliers", "... defines time multipliers" );
 
-      zoptions->AddTrivia( PLUGIN_NAME, "UseQuickSave", "... enables (1) or disables (0) QuickSaving with [F10] and QuickLoading with [F12]" );
-      zoptions->AddTrivia( PLUGIN_NAME, "UseBinarySave", "... enables (1) or disables (0) Binary saving, that helps to save bigger span of gameplay" );
+      zoptions->AddTrivia( PLUGIN_NAME, "QuickSaveMode", "... specifies QuickSave mode, (0) - 'Disabled', (1) - 'Standard', (2) - 'Alternative'" + nline + "... QuickSave with [F10] and QuickLoad with [F12]" );
       zoptions->AddTrivia( PLUGIN_NAME, "KeyQuickSave", "... key for QuickSave" );
       zoptions->AddTrivia( PLUGIN_NAME, "KeyQuickLoad", "... key for QuickLoad" );
       zoptions->AddTrivia( PLUGIN_NAME, "MinSaveSlot", "... defines min range of used save slots" );
@@ -75,7 +74,7 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "LabelMissionItems", "... enables (1) or disables (0) labeling of item missions, this will overwrite previous label on any item with ITEM_MISSION flag" );
       zoptions->AddTrivia( PLUGIN_NAME, "PutLabelBehind", "... specifies if the label should be rendered behind the item" );
 
-      zoptions->AddTrivia( PLUGIN_NAME, "DamagePopupMode", "... specifies DamagePopup mode, (0) - Disabled, (1) - 'Alter Damage', (2) - 'New World'" );
+      zoptions->AddTrivia( PLUGIN_NAME, "DamagePopupMode", "... specifies DamagePopup mode, (0) - 'Disabled', (1) - 'Alter Damage', (2) - 'New World'" );
       zoptions->AddTrivia( PLUGIN_NAME, "DamagePopupScale", "... defines base scale of the popup" );
       zoptions->AddTrivia( PLUGIN_NAME, "DamagePopupShowIcons", "... enables (1) or disables (0) icons for the popup" );
       zoptions->AddTrivia( PLUGIN_NAME, "DamagePopupColorDmgTypes", "... enables (1) or disables (0) popup coloring by the damage type" );

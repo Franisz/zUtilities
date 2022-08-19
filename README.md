@@ -13,7 +13,8 @@ This is a plugin with a set of many quality-of-life and utility features made in
   - Shortcuts can be changed with `KeyQuickSave` and `KeyQuickLoad` options. A full list of available keys to choose from is [there](https://github.com/Franisz/zUtilities/blob/master/zUtilities/KeyCode.h).
   - Range of save slots used for quick save can be adjusted in `gothic.ini` with `MinSaveSlot`, `MaxSaveSlot` options. Default, it's 6 bottom slots.
   - Notice strings are set automatically depending on system language but still can be changed manually in `gothic.ini` with `CantSave`, `CantLoad` and `NoSave` options.
-  - This feature can be disabled in `gothic.ini` with `UseQuickSave` option.
+  - This feature can be disabled in `gothic.ini` with `QuickSaveMode` option.
+  - Change `QuickSaveMode` option for different style or disable: `0` - _Disabled_, `1` - _Standard_, `2` - _Alternative_.
 
 - Changes name color of focused npcs, containers, doors and items.
 
@@ -192,8 +193,9 @@ SwimBarPos=
 ; ... default position for scale 1 is: '3556|7873|4635|8085' and for scale 0: '3712|7964|4480|8116'
 ; ... leave empty to use default position
 
-UseQuickSave=1
-; ... enables (1) or disables (0) QuickSaving with [F10] and QuickLoading with [F12]
+QuickSaveMode=1
+; ... specifies QuickSave mode, (0) - 'Disabled', (1) - 'Standard', (2) - 'Alternative'
+; ... QuickSave with [F10] and QuickLoad with [F12]
 
 KeyQuickSave=KEY_F10
 ; ... key for QuickSave
@@ -244,7 +246,7 @@ PutLabelBehind=0
 ; ... specifies if the label should be rendered behind the item
 
 DamagePopupMode=1
-; ... specifies DamagePopup mode, (0) - Disabled, (1) - 'Alter Damage', (2) - 'New World'
+; ... specifies DamagePopup mode, (0) - 'Disabled', (1) - 'Alter Damage', (2) - 'New World'
 
 DamagePopupScale=1.10000002
 ; ... defines base scale of the popup

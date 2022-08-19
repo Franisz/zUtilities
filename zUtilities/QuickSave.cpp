@@ -59,7 +59,7 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    if ( Options::UseBinarySave ) {
+    if ( Options::QuickSaveMode == QuickSaveMode::Alternative ) {
       // The algorithm looks very like adding numbers in binary.
       // The idea behind using a binary addition is too use some SaveSlots
       // more frequently then others. for example:
@@ -216,7 +216,7 @@ namespace GOTHIC_ENGINE {
     if ( (isLoading && !ogame->IsOnPause()) || (isSaving && saveEnd) )
       EndSaveLoad();
 
-    if ( !Options::UseQuickSave ) return;
+    if ( !Options::QuickSaveMode ) return;
 
     if ( ogame->IsOnPause() ) return;
 
