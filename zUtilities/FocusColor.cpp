@@ -370,10 +370,10 @@ namespace GOTHIC_ENGINE {
     if ( !vob ) return false;
 
     zSTRING name = GetName( vob );
-    if ( text != name + "\n" && text != name )
+    if ( text != name + "\n" && text != name + " (locked)\n" )
       return false;
 
-    return focusColor.TryPrintFocus( x, y, name, vob );
+    return focusColor.TryPrintFocus( x, y, text, vob );
   }
 
   void FocusColor::Clear() {
