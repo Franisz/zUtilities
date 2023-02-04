@@ -1,6 +1,6 @@
 # zUtilities
 
-This is a plugin with a set of many quality-of-life and utility features made in [Union](https://worldofplayers.ru/threads/40376/) **1.0l** for Gothic 1 and 2 games. Plugin can also be found on [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2792434617).
+This is a plugin with a set of many quality-of-life and utility features made for [Union](https://worldofplayers.ru/threads/40376/) **1.0m** for Gothic 1 and 2 games. Plugin can also be found on [Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=2792434617).
 
 ### Features
 
