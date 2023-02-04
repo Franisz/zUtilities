@@ -11,7 +11,12 @@ namespace GOTHIC_ENGINE {
       RememberLockCombination = zoptions->ReadBool( PLUGIN_NAME, "RememberLockCombination", false );
       ActivateUsedMunition = zoptions->ReadBool( PLUGIN_NAME, "ActivateUsedMunition", true );
       AlternativeDialogueBoxes = zoptions->ReadBool( PLUGIN_NAME, "AlternativeDialogueBoxes", false );
+
+      if ( SelectedDialogueColor )
+        delete SelectedDialogueColor;
+
       SelectedDialogueColor = zoptions->ReadColor( PLUGIN_NAME, "SelectedDialogueColor", "" );
+
       if ( SelectedDialogueColor ) {
         oCInformationManager::GetInformationManager().DlgChoice->ColorSelected = *SelectedDialogueColor;
         oCInformationManager::GetInformationManager().DlgStatus->ColorSelected = *SelectedDialogueColor;

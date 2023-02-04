@@ -23,8 +23,10 @@ namespace GOTHIC_ENGINE {
 
     zSTRING nextLine = section->entryList[nextPos]->varValue;
 
-    if ( nextLine.StartWith( "; " + trivia ) )
+    if ( nextLine.StartWith( "; " + trivia ) ) {
+      delete triviaEntry;
       return;
+    }
 
     if ( nextLine.StartWith( "; " ) ) {
       section->entryList[nextPos] = triviaEntry;
