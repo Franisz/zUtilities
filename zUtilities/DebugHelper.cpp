@@ -60,6 +60,7 @@ namespace GOTHIC_ENGINE {
     if ( zCVisual* visual = npc->GetVisual() ) {
       AddSeparator( "Visual" );
       Print( textView, "VisualFile", visual->GetVisualName() );
+      Print( textView, "ModelScale", Z npc->model_scale[0] + Z " " + npc->model_scale[1] + Z " " + npc->model_scale[2] );
       Print( textView, "BodyName", npc->GetVisualBody() );
       Print( textView, "HeadName", npc->GetVisualHead() );
 #if ENGINE == Engine_G2A
