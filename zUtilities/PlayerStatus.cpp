@@ -147,10 +147,12 @@ namespace GOTHIC_ENGINE {
     if ( !ar )
       return;
 
-    for ( int i = 0; i < ar->ReadIntSafe( "interStateFuncsCount" ); i++ )
+    int interStateFuncsCount = ar->ReadIntSafe( "interStateFuncsCount" );
+    for ( int i = 0; i < interStateFuncsCount; i++ )
       interStateFuncs.Insert( ar->ReadString( "interStateFuncs" ) );
 
-    for ( int i = 0; i < ar->ReadIntSafe( "stateFuncItemsCount" ); i++ )
+    int stateFuncItemsCount = ar->ReadIntSafe( "stateFuncItemsCount" );
+    for ( int i = 0; i < stateFuncItemsCount; i++ )
       stateFuncItems.Insert( ar->ReadString( "stateFuncItems" ) );
   }
 
