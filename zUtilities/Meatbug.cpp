@@ -6,7 +6,7 @@ namespace GOTHIC_ENGINE {
   HOOK Hook_oCNpc_OnTouch PATCH( &oCNpc::OnTouch, &oCNpc::OnChrzonszcz );
   void oCNpc::OnChrzonszcz( zCVob* vob ) {
     oCNpc* npc = vob->CastTo<oCNpc>();
-    zCVisual* visual = npc->GetVisual();
+    zCVisual* visual = vob->GetVisual();
 
     if ( !npc || !visual || !this->IsSelfPlayer() || !this->IsHuman() || this->idx == npc->idx || npc->guild != NPC_GIL_MEATBUG || npc->HasFlag( NPC_FLAG_IMMORTAL ) || !Options::TrampleMeatbugs ) {
       THISCALL( Hook_oCNpc_OnTouch )(vob);
