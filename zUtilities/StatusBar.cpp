@@ -10,7 +10,9 @@ namespace GOTHIC_ENGINE {
     return Invalid;
   }
 
-  int StatusBar::GetValueFromItem( oCItem* item ) {
+  int StatusBar::GetValueFromItem( oCItem* item, int atr ) {
+    int healValue = 0;
+
     for ( int i = 0; i < symbols.GetNumInList(); i++ ) {
       auto sym = parser->GetSymbol( symbols[i] );
       if ( !sym )
@@ -24,10 +26,18 @@ namespace GOTHIC_ENGINE {
       if ( line == Invalid )
         continue;
 
-      return item->count[line];
+      if ( symbols[i].EndWith( "_FULL" ) ) {
+        return player->GetAttribute( atr );
+      }
+      else if ( symbols[i].EndWith( "_PERC" ) ) {
+        healValue += player->GetAttribute( atr ) * item->count[line] / 100;
+      }
+      else {
+        healValue += item->count[line];
+      }
     }
 
-    return 0;
+    return healValue;
   }
 
   bool StatusBar::IsBarActive() {
@@ -39,7 +49,9 @@ namespace GOTHIC_ENGINE {
       return true;
 
     if ( bar == ogame->hpBar ) {
-      symbols.Insert( "NAME_BONUS_HP" );
+      symbols.Insert( "NAME_BONUS_HP_FULL" ); // Full Heal
+      symbols.Insert( "NAME_BONUS_HP_PERC" ); // Percentage Heal
+      symbols.Insert( "NAME_BONUS_HP" ); // Flat Heal
       if ( Options::StatusBarNames.GetNum() >= 1 )
         name = Z Options::StatusBarNames[0];
 
@@ -50,7 +62,9 @@ namespace GOTHIC_ENGINE {
     }
 
     if ( bar == ogame->manaBar ) {
-      symbols.Insert( "NAME_BONUS_MANA" );
+      symbols.Insert( "NAME_BONUS_MANA_FULL" ); // Full Heal
+      symbols.Insert( "NAME_BONUS_MANA_PERC" ); // Percentage Heal
+      symbols.Insert( "NAME_BONUS_MANA" ); // Flat Heal
       if ( Options::StatusBarNames.GetNum() >= 2 )
         name = Z Options::StatusBarNames[1];
 
@@ -91,10 +105,10 @@ namespace GOTHIC_ENGINE {
       return 0;
 
     if ( bar == ogame->hpBar )
-      return GetValueFromItem( item );
+      return GetValueFromItem( item, NPC_ATR_HITPOINTSMAX );
 
     if ( bar == ogame->manaBar )
-      return GetValueFromItem( item );
+      return GetValueFromItem( item, NPC_ATR_MANAMAX );
 
     return 0;
   }

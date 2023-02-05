@@ -29,7 +29,7 @@ namespace GOTHIC_ENGINE {
 
     bool Init();
     bool IsBarActive();
-    int GetValueFromItem( oCItem* item );
+    int GetValueFromItem( oCItem* item, int atr );
     int GetHealValue();
     void DrawPrediction( int value );
     void PredictHeal();
