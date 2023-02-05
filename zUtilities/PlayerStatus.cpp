@@ -41,8 +41,12 @@ namespace GOTHIC_ENGINE {
 
       // To avoid targeting possible dialogues related to pickpocketing quests or teach options.
       int idx = parser->GetIndex( info->name + "_DOIT" );
-      if ( idx == Invalid )
-        continue;
+      if ( idx == Invalid ) {
+        // Alternative pickpocket instance name
+        idx = parser->GetIndex( info->name + "_TRY" );
+        if ( idx == Invalid )
+          continue;
+      }
 
       if ( !pickpocketInfos.IsInList( info ) )
         pickpocketInfos.Insert( info );
