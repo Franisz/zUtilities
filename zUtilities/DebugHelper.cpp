@@ -34,12 +34,20 @@ namespace GOTHIC_ENGINE {
 #endif
     AddSeparator();
     Print( textView, "PROT_EDGE", Z npc->GetProtectionByIndex( oEDamageIndex_Edge ) );
+    Print( sideView, "DAM_EDGE", Z npc->GetDamageByIndex( oEDamageIndex_Edge ) );
     Print( textView, "PROT_BLUNT", Z npc->GetProtectionByIndex( oEDamageIndex_Blunt ) );
+    Print( sideView, "DAM_BLUNT", Z npc->GetDamageByIndex( oEDamageIndex_Blunt ) );
     Print( textView, "PROT_POINT", Z npc->GetProtectionByIndex( oEDamageIndex_Point ) );
+    Print( sideView, "DAM_POINT", Z npc->GetDamageByIndex( oEDamageIndex_Point ) );
     Print( textView, "PROT_FIRE", Z npc->GetProtectionByIndex( oEDamageIndex_Fire ) );
+    Print( sideView, "DAM_FIRE", Z npc->GetDamageByIndex( oEDamageIndex_Fire ) );
     Print( textView, "PROT_MAGIC", Z npc->GetProtectionByIndex( oEDamageIndex_Magic ) );
+    Print( sideView, "DAM_MAGIC", Z npc->GetDamageByIndex( oEDamageIndex_Magic ) );
     Print( textView, "PROT_FLY", Z npc->GetProtectionByIndex( oEDamageIndex_Fly ) );
+    Print( sideView, "DAM_FLY", Z npc->GetDamageByIndex( oEDamageIndex_Fly ) );
     Print( textView, "PROT_FALL", Z npc->GetProtectionByIndex( oEDamageIndex_Fall ) );
+    Print( sideView, "DAM_FALL", Z npc->GetDamageByIndex( oEDamageIndex_Fall ) );
+    Print( textView, "DamageType", Z npc->damagetype );
     AddSeparator();
     Print( textView, "Waypoint", npc->wpname );
     Print( textView, "Flags", Z npc->variousFlags );
@@ -85,7 +93,7 @@ namespace GOTHIC_ENGINE {
     Print( textView, "Description", Z item->GetDescription() );
     Print( textView, "Value", Z item->GetValue() );
 
-    if ( item->HasFlag( ITM_CAT_ARMOR ) || item->HasFlag( ITM_CAT_NF ) || item->HasFlag( ITM_CAT_FF ) ) {
+    if ( item->HasFlag( ITM_CAT_ARMOR ) || item->HasFlag( ITM_CAT_NF ) || item->HasFlag( ITM_CAT_FF ) || item->HasFlag( ITM_CAT_MUN ) ) {
       AddSeparator();
       Print( textView, "PROT_EDGE", Z item->GetProtectionByIndex( oEDamageIndex_Edge ) );
       Print( sideView, "DAM_EDGE", Z item->GetDamageByIndex( oEDamageIndex_Edge ) );
@@ -103,6 +111,7 @@ namespace GOTHIC_ENGINE {
       Print( sideView, "DAM_FALL", Z item->GetDamageByIndex( oEDamageIndex_Fall ) );
       Print( textView, "TotalDamage", Z item->damageTotal );
       Print( sideView, "Range", Z item->range );
+      Print( textView, "DamageTypes", Z item->damageTypes );
       AddSeparator();
     }
     else if ( item->spell ) {
