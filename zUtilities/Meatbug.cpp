@@ -2,13 +2,23 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
+  oCNpc* playerTrfCopy = nullptr;
+
+  HOOK Hook_oCNpc_CopyTransformSpellInvariantValuesTo PATCH( &oCNpc::CopyTransformSpellInvariantValuesTo, &oCNpc::CopyTransformSpellInvariantValuesTo_Union );
+  void oCNpc::CopyTransformSpellInvariantValuesTo_Union( oCNpc* npc ) {
+    if ( this == player )
+      playerTrfCopy = this;
+
+    THISCALL( Hook_oCNpc_CopyTransformSpellInvariantValuesTo )(npc);
+  }
+
   // Inspiration @G2-Ucieczka - https://github.com/TheKetrab/G2-Ucieczka
   HOOK Hook_oCNpc_OnTouch PATCH( &oCNpc::OnTouch, &oCNpc::OnChrzonszcz );
   void oCNpc::OnChrzonszcz( zCVob* vob ) {
     oCNpc* npc = vob->CastTo<oCNpc>();
     zCVisual* visual = vob->GetVisual();
 
-    if ( !npc || !visual || !this->IsSelfPlayer() || !this->IsHuman() || this->idx == npc->idx || npc->guild != NPC_GIL_MEATBUG || npc->HasFlag( NPC_FLAG_IMMORTAL ) || !Options::TrampleMeatbugs ) {
+    if ( !npc || !visual || !this->IsSelfPlayer() || !this->IsHuman() || vob == playerTrfCopy || npc->guild != NPC_GIL_MEATBUG || npc->HasFlag( NPC_FLAG_IMMORTAL ) || !Options::TrampleMeatbugs ) {
       THISCALL( Hook_oCNpc_OnTouch )(vob);
       return;
     }
