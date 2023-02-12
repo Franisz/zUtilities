@@ -64,6 +64,22 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
+    const zCPar_Symbol* sym = parser->GetSymbol( "ITEM_ARMREIF" );
+    const int ITM_FLAG_ARMREIF = (sym) ? sym->single_intdata : Invalid;
+
+    if ( ITM_FLAG_ARMREIF && item->HasFlag( ITM_CAT_MAGIC ) ) {
+      if ( item->GetInstanceName().StartWith( "ITBR" ) ) {
+        color = zCOLOR( 83, 64, 214 );
+        texture = "BRACELET"; // https://game-icons.net/1x1/cathelineau/torc.html
+        return;
+      }
+      else if ( item->GetInstanceName().StartWith( "ITAR" ) ) {
+        color = zCOLOR( 199, 169, 149 );
+        texture = "SHOES"; // https://game-icons.net/1x1/lorc/tread.html
+        return;
+      }
+    }
+
     // Melee
     if ( item->HasFlag( ITM_CAT_NF ) && !item->HasFlag( ITM_FLAG_SHIELD ) ) {
       if ( condAtr == NPC_ATR_MANAMAX || item->mag_circle )
