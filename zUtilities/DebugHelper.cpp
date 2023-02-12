@@ -62,6 +62,11 @@ namespace GOTHIC_ENGINE {
     Print( sideView, "DailyRoutine", Z npc->daily_routine );
     Print( textView, "FightMode", Z npc->fmode );
     Print( sideView, "FightTactic", Z npc->fighttactic );
+    AddSeparator();
+    Print( textView, "FightRangeBase", Z npc->GetFightRangeBase() );
+    Print( sideView, "FightRangeFist", Z npc->GetFightRangeFist() );
+    Print( textView, "FightRangeDynamic", Z npc->GetFightRangeDynamic() );
+    Print( sideView, "FightRange", Z npc->GetFightRange() );
     if ( npc->enemy != nullptr )
       Print( textView, "Enemy", npc->enemy->GetInstanceName() );
 
