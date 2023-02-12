@@ -68,4 +68,38 @@ namespace GOTHIC_ENGINE {
 
     return this->GetWeaponDamageIndex();
   }
+
+  oCPortalRoom* zCVob::GetCurrentPortalRoom() {
+    oCPortalRoomManager* rooms = ogame->GetPortalRoomManager();
+
+    if ( !rooms ) return nullptr;
+
+    const zSTRING* portalName = this->GetSectorNameVobIsIn();
+
+    if ( !portalName ) return nullptr;
+
+    int portalIndex = rooms->GetPortalRoomIndex( *portalName );
+
+    if ( portalIndex == Invalid ) return nullptr;
+
+    return rooms->portals[portalIndex];
+  }
+
+  bool zCVob::IsInRoomWith( zCVob* vob ) {
+    oCPortalRoom* room = this->GetCurrentPortalRoom();
+    if ( room == nullptr )
+      return false;
+
+    return room == vob->GetCurrentPortalRoom();
+  }
+
+  float zCVob::GetHeightDifferenceToVob( zCVob* vob ) {
+    float sourceX, sourceY, sourceZ, targetX, targetY, targetZ;
+    this->GetPositionWorld( sourceX, sourceY, sourceZ );
+    vob->GetPositionWorld( targetX, targetY, targetZ );
+
+    float heightDifference = sourceY - targetY;
+
+    return (heightDifference >= 0) ? heightDifference : heightDifference * -1;
+  }
 }

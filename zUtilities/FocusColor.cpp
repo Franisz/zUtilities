@@ -29,17 +29,21 @@ namespace GOTHIC_ENGINE {
   }
 
   bool FocusColor::CanStealNow( oCItem* item ) {
-    int ZS_Clear = parser->GetIndex( "ZS_ClearRoom" );
+    const int ZS_Clear = parser->GetIndex( "ZS_ClearRoom" );
 
 #if ENGINE >= Engine_G2
-    int ZS_Observe = parser->GetIndex( "ZS_ObservePlayer" );
+    const int ZS_Observe = parser->GetIndex( "ZS_ObservePlayer" );
 #else
-    int ZS_Observe = parser->GetIndex( "ZS_ObservePerson" );
+    const int ZS_Observe = parser->GetIndex( "ZS_ObservePerson" );
 #endif
 
     if ( !ZS_Observe || !ZS_Clear )
       return false;
 
+    const zCPar_Symbol* sym = parser->GetSymbol( "PERC_DIST_INDOOR_HEIGHT" );
+    const int PERC_DIST_INDOOR_HEIGHT = (sym) ? sym->single_intdata : Invalid;
+
+    oCPortalRoom* playerRoom = player->GetCurrentPortalRoom();
     auto list = ogame->GetGameWorld()->voblist_npcs->GetNextInList();
 
     while ( list != nullptr ) {
@@ -54,16 +58,23 @@ namespace GOTHIC_ENGINE {
       if ( !npc->IsInPerceptionRange( NPC_PERC_ASSESSTHEFT, (int)npc->GetDistanceToVob( *player ) ) )
         continue;
 
-#if ENGINE < Engine_G2
+#if ENGINE >= Engine_G2
+      if ( PERC_DIST_INDOOR_HEIGHT > 0 && playerRoom && playerRoom->GetOwnerGuild() >= NPC_GIL_NONE && (int)player->GetHeightDifferenceToVob( npc ) > PERC_DIST_INDOOR_HEIGHT ) {
+        continue;
+      }
+#else
       if ( npc->HasVobDetected( player ) && npc->GetAivar( "AIV_ITEMSCHWEIN" ) )
         return false;
 #endif
 
-      if ( ogame->GetGuilds()->GetAttitude( npc->guild, player->guild ) == NPC_ATT_FRIENDLY ) continue;
-      if ( npc->IsFriendly( player ) || npc->npcType == TYPE_FRIEND ) continue;
+      if ( ogame->GetGuilds()->GetAttitude( npc->guild, player->guild ) == NPC_ATT_FRIENDLY )
+        continue;
 
-      if ( !npc->HasVobDetected( player ) ) {
-        if ( npc->IsAIState( ZS_Clear ) || npc->IsAIState( ZS_Observe ) )
+      if ( npc->IsFriendly( player ) || npc->npcType == TYPE_FRIEND )
+        continue;
+
+      if ( !npc->CanSee( player, 0 ) ) {
+        if ( (npc->IsAIState( ZS_Clear ) || npc->IsAIState( ZS_Observe )) && npc->IsInRoomWith( player ) )
           return false;
 
         continue;
