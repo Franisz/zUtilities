@@ -16,6 +16,7 @@ namespace GOTHIC_ENGINE {
   class FocusColor {
   private:
     zCView* focusView;
+    zCView* protView;
     zCOLOR colDefault = zCOLOR( 255, 255, 255 );
     bool vobOnScreen = false;
 
@@ -35,6 +36,7 @@ namespace GOTHIC_ENGINE {
     zCOLOR ItemColor( oCItem* item );
     bool TryPrintFocus( int x, int y, zSTRING name, zCVob* vob );
     void TryAddIcons( int x, int y, zSTRING name, oCNpc* npc );
+    void TryShowProt( oCNpc* npc );
 
   public:
     bool CanPrintFocus( zCView* view, int x, int y, const zSTRING& text );

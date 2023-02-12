@@ -2910,6 +2910,12 @@
     <ClInclude Include="Const.h">
       <Filter>Plugin\Workspace\Misc</Filter>
     </ClInclude>
+    <ClInclude Include="Colors.h">
+      <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Extensions.h">
+      <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl">

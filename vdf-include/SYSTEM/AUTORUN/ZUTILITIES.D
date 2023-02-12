@@ -522,6 +522,27 @@ instance MenuItem_Opt_Page2_LabelMissionItems_Choice(C_MENU_ITEM_DEF)
   text[0]               = "Off|On";
 };
 
+instance MenuItem_Opt_Page2_ShowTargetProtection(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 5;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "ShowTargetProtection";
+  text[1] = "protection icon and value next to the focused npc hp bar";
+};
+
+instance MenuItem_Opt_Page2_ShowTargetProtection_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_BASE();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "ShowTargetProtection";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Off|On";
+};
+
 // Page 3
 instance MenuItem_Opt_Page3_Headline(C_MENU_ITEM)
 {

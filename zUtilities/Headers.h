@@ -4,6 +4,8 @@
 // Automatically generated block
 #pragma region Includes
 #include "Const.h"
+#include "Colors.h"
+#include "Extensions.h"
 #include "Randomizer.h"
 #include "KeyCode.h"
 #include "IconInfo.h"

@@ -3,12 +3,13 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int ShowGameTime, ShowMunitionAmount, ShowPickpocketIcon, UseTimeMultiplier, KeyTimeMultiplier;
+    int ShowGameTime, ShowMunitionAmount, ShowTargetProtection, ShowPickpocketIcon, UseTimeMultiplier, KeyTimeMultiplier;
     Array<float> TimeMultipliers;
 
     void PlayerStatus() {
       ShowGameTime = zoptions->ReadBool( PLUGIN_NAME, "ShowGameTime", false );
       ShowMunitionAmount = zoptions->ReadBool( PLUGIN_NAME, "ShowMunitionAmount", false );
+      ShowTargetProtection = zoptions->ReadBool( PLUGIN_NAME, "ShowTargetProtection", true );
 #if ENGINE >= Engine_G2
       ShowPickpocketIcon = zoptions->ReadBool( PLUGIN_NAME, "ShowPickpocketIcon", true );
 #endif

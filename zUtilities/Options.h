@@ -52,6 +52,7 @@ namespace GOTHIC_ENGINE {
 
       zoptions->AddTrivia( PLUGIN_NAME, "ShowGameTime", "... enables (1) or disables (0) on screen display of in game time" );
       zoptions->AddTrivia( PLUGIN_NAME, "ShowMunitionAmount", "... enables (1) or disables (0) on screen display of currently used munition amount" );
+      zoptions->AddTrivia( PLUGIN_NAME, "ShowTargetProtection", "... enables (1) or disables (0) protection icon and value next to the focused npc hp bar" );
 #if ENGINE >= Engine_G2
       zoptions->AddTrivia( PLUGIN_NAME, "ShowPickpocketIcon", "... enables (1) or disables (0) coin icon next to the focused npc name when it can be pickpocketed" );
 #endif

@@ -73,19 +73,6 @@ namespace GOTHIC_ENGINE {
     new DamagePopup( this, descOld, hpDiff, isCrit );
   }
 
-  int DamagePopup::GetTopDmgIndex() {
-    int topDmgAmount = 0, topDmgIndex = 0;
-
-    for ( int i = 0; i < (int)oEDamageIndex::oEDamageIndex_MAX; i++ )
-      if ( (oEDamageType)(1 << (oEDamageIndex)i) & desc->enuModeDamage )
-        if ( (int)desc->aryDamageEffective[i] >= topDmgAmount ) {
-          topDmgAmount = (int)desc->aryDamageEffective[i];
-          topDmgIndex = i;
-        }
-
-    return topDmgIndex;
-  }
-
   void DamagePopup::SetMoveMode() {
     switch ( mode )
     {
@@ -353,7 +340,11 @@ namespace GOTHIC_ENGINE {
     this->desc = &desc;
     this->isCrit = isCrit;
 
-    dmgIndex = GetTopDmgIndex();
+    int aryDamageEffective[oEDamageIndex::oEDamageIndex_MAX];
+    for ( int i = 0; i < oEDamageIndex::oEDamageIndex_MAX; i++ )
+      aryDamageEffective[i] = (int)this->desc->aryDamageEffective[i];
+
+    dmgIndex = GetTopDmgIndex( aryDamageEffective, this->desc->enuModeDamage );
     SetMoveMode();
     SetColor();
     SetIcon();

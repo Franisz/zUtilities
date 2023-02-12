@@ -321,9 +321,16 @@ namespace GOTHIC_ENGINE {
     if ( focusView == nullptr ) {
       focusView = new zCView( 0, 0, 8192, 8192 );
       screen->InsertItem( focusView );
+
+      if ( protView == nullptr ) {
+        protView = new zCView( 0, 0, 8192, 8192 );
+        focusView->InsertItem( protView );
+      }
     }
-    else
+    else {
+      protView->ClrPrintwin();
       focusView->ClrPrintwin();
+    }
 
     if ( playerStatus.focusBar && playerStatus.focusBar->NeedAdjustPosition( x, y, vob->CastTo<oCNpc>() ) ) {
       x = ogame->focusBar->vposx + ogame->focusBar->vsizex / 2 - focusView->FontSize( name ) / 2;
@@ -331,21 +338,22 @@ namespace GOTHIC_ENGINE {
     }
 
     if ( ogame->hpBar )
-      focusView->SetFontColor( zCOLOR( col.r, col.g, col.b, ogame->hpBar->alpha ) );
-    else
-      focusView->SetFontColor( col );
+      col.alpha = ogame->hpBar->alpha;
 
+    focusView->SetFontColor( col );
     focusView->Print( x, y, name );
     vobOnScreen = true;
 
-    if ( oCNpc* npc = vob->CastTo<oCNpc>() )
+    if ( oCNpc* npc = vob->CastTo<oCNpc>() ) {
       TryAddIcons( x, y, name, npc );
+      TryShowProt( npc );
+    }
 
     return true;
   }
 
   void FocusColor::TryAddIcons( int x, int y, zSTRING name, oCNpc* npc ) {
-    if ( npc->attribute[NPC_ATR_HITPOINTSMAX] <= 0 )
+    if ( npc->attribute[NPC_ATR_HITPOINTS] <= 0 )
       return;
 
     int iconNr = 1;
@@ -360,6 +368,50 @@ namespace GOTHIC_ENGINE {
       IconInfo icon = IconInfo( startX + margin * iconNr + size * (iconNr++ - 1), y, size, color, texture );
     }
 #endif
+  }
+
+  void FocusColor::TryShowProt( oCNpc* npc ) {
+    if ( !Options::ShowTargetProtection )
+      return;
+
+    if ( npc->attribute[NPC_ATR_HITPOINTS] <= 0 )
+      return;
+
+    if ( player->IsInFightMode_S( 0 ) )
+      return;
+
+    oCViewStatusBar* bar = ogame->focusBar;
+
+    if ( !bar )
+      return;
+
+    int dmgIndex = player->GetActiveDamageIndex();
+    if ( !dmgIndex )
+      return;
+
+    int protection = npc->GetProtectionByIndex( (oEIndexDamage)dmgIndex );
+    bool isImmune = protection < 0 || npc->HasFlag( NPC_FLAG_IMMORTAL );
+
+    int margin = protView->FontY() * 0.1f;
+    int size = protView->FontY() * 0.75f;
+
+    int startX = bar->vposx + bar->vsizex;
+    int iconY = bar->vposy + bar->vsizey / 2 - size;
+    int fontY = bar->vposy + bar->vsizey / 2 - protView->FontY() / 2;
+
+    int iconNr = 1;
+
+    zCOLOR color = isImmune ? Colors::Gray : Colors::GetColorByDamageIndex( (oEIndexDamage)dmgIndex );
+    if ( ogame->hpBar )
+      color.alpha = ogame->hpBar->alpha;
+
+    zSTRING texture = "ICON_PROTECTIONS"; // https://game-icons.net/1x1/lorc/cracked-shield.html
+    IconInfo icon = IconInfo( startX + margin * iconNr + size * (iconNr++ - 1), iconY, size, color, texture );
+
+    if ( !isImmune ) {
+      protView->SetFontColor( color );
+      protView->Print( startX + margin * iconNr + size * (iconNr++ - 1), fontY, A protection );
+    }
   }
 
   bool FocusColor::CanPrintFocus( zCView* view, int x, int y, const zSTRING& text ) {
@@ -380,12 +432,15 @@ namespace GOTHIC_ENGINE {
     if ( focusView )
       vobOnScreen = false;
 
+    del( protView );
     del( focusView );
   }
 
   void FocusColor::Loop() {
-    if ( focusView )
+    if ( focusView ) {
+      protView->ClrPrintwin();
       focusView->ClrPrintwin();
+    }
 
     vobOnScreen = false;
 

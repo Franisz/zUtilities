@@ -44,7 +44,6 @@ namespace GOTHIC_ENGINE {
     float alpha = 255.0f;
     float scale;
 
-    int GetTopDmgIndex();
     void SetMoveMode();
     void SetColor();
     void SetIcon();

@@ -67,6 +67,10 @@ This is a plugin with a set of many quality-of-life and utility features made fo
   - World speed will cycle in the order of set multipliers after pressing `Z`. Shortcut can also be changed with `KeyTimeMultiplier` option.
   - Currently used multiplier will be shown next to the time icon.
 
+- Displays protection icon and value next to the focused npc hp bar.
+
+  - This feature can be disabled in `gothic.ini` with `ShowTargetProtection` option.
+
 - Displays coin icon next to the focused npc name if player can pickpocket him.
 
   - This feature can be disabled in `gothic.ini` with `ShowPickpocketIcon` option.
@@ -153,6 +157,9 @@ ShowGameTime=0
 
 ShowMunitionAmount=0
 ; ... enables (1) or disables (0) on screen display of currently used munition amount
+
+ShowTargetProtection=1
+; ... enables (1) or disables (0) protection icon and value next to the focused npc hp bar
 
 ShowPickpocketIcon=1
 ; ... enables (1) or disables (0) coin icon next to the focused npc name when it can be pickpocketed
