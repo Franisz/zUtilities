@@ -94,12 +94,6 @@ namespace GOTHIC_ENGINE {
   }
 
   float zCVob::GetHeightDifferenceToVob( zCVob* vob ) {
-    float sourceX, sourceY, sourceZ, targetX, targetY, targetZ;
-    this->GetPositionWorld( sourceX, sourceY, sourceZ );
-    vob->GetPositionWorld( targetX, targetY, targetZ );
-
-    float heightDifference = sourceY - targetY;
-
-    return (heightDifference >= 0) ? heightDifference : heightDifference * -1;
+    return std::abs( this->GetPositionWorld()[VY] - vob->GetPositionWorld()[VY] );
   }
 }
