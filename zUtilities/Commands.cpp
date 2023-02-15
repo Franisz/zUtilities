@@ -4,40 +4,11 @@
 namespace GOTHIC_ENGINE {
   int (*innerEvalFunc)(const zSTRING&, zSTRING&);
 
-  int ConsoleEvalFunc( const zSTRING& inpstr, zSTRING& msg ) {
-    if ( innerEvalFunc && innerEvalFunc( inpstr, msg ) )
-      return true;
-
-    zSTRING w1 = inpstr.PickWord_Old( 1, " " );
-    if ( w1 != "zUtilities" ) return false;
-
-    zSTRING w2 = inpstr.PickWord_Old( 2, " " );
-    if ( w2 == "Version" ) {
-      msg = "Currently using zUtilities v" + Z VERSION_NUMBER;
-      return true;
-    }
-
-    if ( w2 == "Debug" ) {
-      Options::UsingDebugHelper = (Options::UsingDebugHelper) ? false : true;
-      zSTRING state = (Options::UsingDebugHelper) ? "ON" : "OFF";
-      msg = "zUtilites debug helper " + state;
-      return true;
-    }
-
-    if (w2 == "GiveAllItems") {
-        auto result = GiveAllItems();
-        msg = "Created " + Z result + " instances.";
-
-        return true;
-    }
-
-    return false;
-  }
-
   int GiveAllItems() {
       auto c_item = parser->GetIndex(oCItem::classDef->scriptClassName);
-      if (c_item == -1)
-          c_item = -2;
+      if (c_item == -1) {
+          return 0;
+      }
 
       int itemsCreated = 0;
       for (int i = 0; i < parser->symtab.GetNumInList(); i++) {
@@ -69,6 +40,36 @@ namespace GOTHIC_ENGINE {
       }
 
       return itemsCreated;
+  }
+
+  int ConsoleEvalFunc( const zSTRING& inpstr, zSTRING& msg ) {
+    if ( innerEvalFunc && innerEvalFunc( inpstr, msg ) )
+      return true;
+
+    zSTRING w1 = inpstr.PickWord_Old( 1, " " );
+    if ( w1 != "zUtilities" ) return false;
+
+    zSTRING w2 = inpstr.PickWord_Old( 2, " " );
+    if ( w2 == "Version" ) {
+      msg = "Currently using zUtilities v" + Z VERSION_NUMBER;
+      return true;
+    }
+
+    if ( w2 == "Debug" ) {
+      Options::UsingDebugHelper = (Options::UsingDebugHelper) ? false : true;
+      zSTRING state = (Options::UsingDebugHelper) ? "ON" : "OFF";
+      msg = "zUtilites debug helper " + state;
+      return true;
+    }
+
+    if (w2 == "GiveAllItems") {
+        auto result = GiveAllItems();
+        msg = "Created " + Z result + " instances.";
+
+        return true;
+    }
+
+    return false;
   }
 
   void RegisterEvalFunc() {
