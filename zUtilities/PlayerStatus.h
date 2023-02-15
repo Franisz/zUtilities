@@ -3,7 +3,8 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int ShowGameTime, ShowMunitionAmount, ShowTargetProtection, ShowPickpocketIcon, UseTimeMultiplier, KeyTimeMultiplier;
+    bool ShowGameTime, ShowMunitionAmount, ShowTargetProtection, ShowPickpocketIcon, UseTimeMultiplier;
+    int KeyTimeMultiplier;
     Array<float> TimeMultipliers;
 
     void PlayerStatus() {

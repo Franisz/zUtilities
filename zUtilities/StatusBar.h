@@ -3,7 +3,8 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int RecoveryVisualization, StatusBarValueMode, ShowEnemyBarAboveHim;
+    bool RecoveryVisualization, ShowEnemyBarAboveHim;
+    int StatusBarValueMode;
     Array<string> StatusBarNames, HealthBarPos, ManaBarPos, SwimBarPos;
 
     void StatusBar() {

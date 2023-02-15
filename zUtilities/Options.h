@@ -3,7 +3,7 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int TrampleMeatbugs, CenterInvItems, RememberLockCombination, ActivateUsedMunition, AlternativeDialogueBoxes;
+    bool TrampleMeatbugs, CenterInvItems, RememberLockCombination, ActivateUsedMunition, AlternativeDialogueBoxes;
     zCOLOR* SelectedDialogueColor;
     void Misc() {
       TrampleMeatbugs = zoptions->ReadBool( PLUGIN_NAME, "TrampleMeatbugs", true );

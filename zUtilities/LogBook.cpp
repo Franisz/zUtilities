@@ -86,11 +86,11 @@ namespace GOTHIC_ENGINE {
 
   void LogBook::Archive( zCArchiver* ar ) {
     ar->WriteInt( "unreadTopicsCount", unreadTopics.GetNum() );
-    for ( uint i = 0; i < unreadTopics.GetNum(); i++ )
+    for ( int i = 0; i < unreadTopics.GetNum(); i++ )
       ar->WriteString( "unreadTopics", unreadTopics[i] );
 
     ar->WriteInt( "newTopicsCount", newTopics.GetNum() );
-    for ( uint i = 0; i < newTopics.GetNum(); i++ )
+    for ( int i = 0; i < newTopics.GetNum(); i++ )
       ar->WriteString( "newTopics", newTopics[i] );
   }
 
@@ -101,10 +101,12 @@ namespace GOTHIC_ENGINE {
     if ( !ar )
       return;
 
-    for ( int i = 0; i < ar->ReadIntSafe( "unreadTopicsCount" ); i++ )
+    int unreadTopicsCount = ar->ReadIntSafe( "unreadTopicsCount" );
+    for ( int i = 0; i < unreadTopicsCount; i++ )
       unreadTopics.Insert( ar->ReadString( "unreadTopics" ) );
 
-    for ( int i = 0; i < ar->ReadIntSafe( "newTopicsCount" ); i++ )
+    int newTopicsCount = ar->ReadIntSafe( "newTopicsCount" );
+    for ( int i = 0; i < newTopicsCount; i++ )
       newTopics.Insert( ar->ReadString( "newTopics" ) );
   }
 }

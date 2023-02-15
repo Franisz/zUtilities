@@ -3,7 +3,8 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int DamagePopupMode, DamagePopupShowIcons, DamagePopupColorDmgTypes, DamagePopupColorOnlyIcon;
+    bool DamagePopupShowIcons, DamagePopupColorDmgTypes, DamagePopupColorOnlyIcon;
+    int DamagePopupMode;
     float DamagePopupScale;
 
     void DamagePopup() {

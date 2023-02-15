@@ -136,11 +136,11 @@ namespace GOTHIC_ENGINE {
 
   void PlayerStatus::Archive( zCArchiver* ar ) {
     ar->WriteInt( "interStateFuncsCount", interStateFuncs.GetNum() );
-    for ( uint i = 0; i < interStateFuncs.GetNum(); i++ )
+    for ( int i = 0; i < interStateFuncs.GetNum(); i++ )
       ar->WriteString( "interStateFuncs", interStateFuncs[i] );
 
     ar->WriteInt( "stateFuncItemsCount", stateFuncItems.GetNum() );
-    for ( uint i = 0; i < stateFuncItems.GetNum(); i++ )
+    for ( int i = 0; i < stateFuncItems.GetNum(); i++ )
       ar->WriteString( "stateFuncItems", stateFuncItems[i] );
   }
 

@@ -54,8 +54,8 @@ namespace GOTHIC_ENGINE {
     if ( size != 3 && size != 4 )
       return nullptr;
 
-    zCOLOR* color = new zCOLOR( channels[0], channels[1], channels[2] );
-    if ( size == 4 ) color->alpha = channels[3];
+    zCOLOR* color = new zCOLOR( channels[CR], channels[CG], channels[CB] );
+    if ( size == 4 ) color->alpha = channels[CA];
     return color;
   }
 }

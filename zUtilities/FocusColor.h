@@ -3,7 +3,7 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int ColorNpcs, ColorLockables, ColorItems, ColorInter;
+    bool ColorNpcs, ColorLockables, ColorItems, ColorInter;
 
     void FocusColor() {
       ColorNpcs = zoptions->ReadBool( PLUGIN_NAME, "ColorNpcs", true );

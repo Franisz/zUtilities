@@ -3,7 +3,7 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int LabelItems, PutLabelBehind, LabelMissionItems;
+    bool LabelItems, PutLabelBehind, LabelMissionItems;
     float LabelScale;
 
     void ItemLabel() {

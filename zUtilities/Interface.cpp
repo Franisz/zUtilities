@@ -5,7 +5,6 @@
 #pragma comment (lib,"Gdiplus.lib")
 using namespace Gdiplus;
 
-
 // Static RTTI DynamicCast pointer
 #if _DLL != 1
 extern void* __cdecl __RTDynamicCast( void*, long, void*, void*, int );
@@ -13,14 +12,12 @@ extern "C" __declspec(dllexport)
 uint RTDynamicCast_MT = (uint)__RTDynamicCast;
 #endif
 
-
 // Check executed engine with current source code
 #define CHECK_THIS_ENGINE (Union.GetEngineVersion() == ENGINE)
 #define Engine_G1  1
 #define Engine_G1A 2
 #define Engine_G2  3
 #define Engine_G2A 4
-
 
 // Include headers
 #ifdef __G1
@@ -43,7 +40,6 @@ uint RTDynamicCast_MT = (uint)__RTDynamicCast;
 #define ENGINE Engine_G2A
 #include "Headers.h"
 #endif
-
 
 // Include source files (with same as header parameters)
 #ifdef __G1

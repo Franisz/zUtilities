@@ -218,7 +218,7 @@ namespace GOTHIC_ENGINE {
     zVEC3 viewPos = cam->GetTransform( zTCamTrafoType::zCAM_TRAFO_VIEW ) * npc->GetPositionWorld();
     int posx, posy;
     cam->Project( &viewPos, posx, posy );
-    if ( viewPos[2] <= cam->nearClipZ )
+    if ( viewPos[VZ] <= cam->nearClipZ )
       return;
 
     x = x + screen->FontSize( npc->name[0] ) / 2 - bar->vsizex / 2;

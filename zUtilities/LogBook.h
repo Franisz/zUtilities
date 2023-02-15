@@ -3,7 +3,7 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int LogBookColoring;
+    bool LogBookColoring;
 
     void LogBook() {
       LogBookColoring = zoptions->ReadBool( PLUGIN_NAME, "LogBookColoring", true );

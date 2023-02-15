@@ -2,6 +2,13 @@
 // Union HEADER file
 
 namespace GOTHIC_ENGINE {
+  enum {
+    CR,
+    CG,
+    CB,
+    CA
+  };
+
   namespace Colors {
     const zCOLOR White = zCOLOR( 255, 255, 255 );
     const zCOLOR Gray = zCOLOR( 148, 144, 136 );
