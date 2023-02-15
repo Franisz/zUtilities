@@ -280,8 +280,8 @@ namespace GOTHIC_ENGINE {
     if ( oCItem* munition = player->IsInInv( weapon->munition, 1 ) )
       amount += munition->amount;
 
-    if ( oCItem* handItem = player->GetRightHand()->CastTo<oCItem>() )
-      amount += handItem->instanz == weapon->munition;
+    if ( oCItem* munition = player->GetHandMunition() )
+      amount += munition->instanz == weapon->munition;
 
     if ( amount == 0 )
       color = zCOLOR( 255, 0, 0 );

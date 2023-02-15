@@ -30,15 +30,15 @@ namespace GOTHIC_ENGINE {
     if ( !weapon->HasFlag( ITM_CAT_FF ) || weapon->munition <= 0 )
       return index;
 
-    oCItem* arrow = this->GetRightHand()->CastTo<oCItem>();
+    oCItem* munition = this->GetHandMunition();
 
-    if ( !arrow )
+    if ( !munition )
       return index;
 
-    if ( arrow->instanz != weapon->munition )
+    if ( munition->instanz != weapon->munition )
       return index;
 
-    return GetTopDmgIndex( arrow->damage, arrow->damageTypes );
+    return GetTopDmgIndex( munition->damage, munition->damageTypes );
   }
 
   int oCNpc::GetSpellDamageIndex() {
@@ -95,5 +95,17 @@ namespace GOTHIC_ENGINE {
 
   float zCVob::GetHeightDifferenceToVob( zCVob* vob ) {
     return std::abs( this->GetPositionWorld()[VY] - vob->GetPositionWorld()[VY] );
+  }
+
+  oCItem* oCNpc::GetHandMunition() {
+    oCItem* weapon = this->GetWeapon();
+
+    if ( !weapon )
+      return nullptr;
+
+    if ( !weapon->HasFlag( ITM_CAT_FF ) || weapon->munition <= 0 )
+      return nullptr;
+
+    return (weapon->HasFlag( ITM_FLAG_CROSSBOW )) ? this->GetLeftHand()->CastTo<oCItem>() : this->GetRightHand()->CastTo<oCItem>();
   }
 }
