@@ -120,6 +120,8 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
   - Use `zutilities debug` command to toggle on/off.
 
+- Insert all items into inventory with `zutilities giveallitems` command.
+
 - Check currently used plugin version through in game console with `zutilities version` command.
 
 ### Options
