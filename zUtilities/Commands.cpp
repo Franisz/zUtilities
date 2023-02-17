@@ -4,6 +4,49 @@
 namespace GOTHIC_ENGINE {
   int (*innerEvalFunc)(const zSTRING&, zSTRING&);
 
+  int GiveAllItems() {
+      auto c_item = parser->GetIndex(oCItem::classDef->scriptClassName);
+      if (c_item == -1) {
+          return 0;
+      }
+
+      int itemsCreated = 0;
+      for (int i = 0; i < parser->symtab.GetNumInList(); i++) {
+          zCPar_Symbol* symbol = parser->symtab.table[i];
+
+          if (i == parser->instance_help) {
+              continue;
+          }
+
+          if (symbol->type != zPAR_TYPE_INSTANCE) {
+              continue;
+          }
+
+          //  Instance isn't global scope
+          if (symbol->name.HasWord(".")) {
+              continue;
+          }
+
+          auto baseClass = parser->GetBaseClass(symbol);
+
+          // Symbol isn't a item class
+          if (baseClass != c_item) {
+              continue;
+          }
+
+          oCItem* item = static_cast<oCItem*>(ogame->GetGameWorld()->CreateVob(zVOB_TYPE_ITEM, i));
+          if (item->HasFlag(ITM_FLAG_MULTI)) {
+              item->amount = 50;
+          }
+
+          player->PutInInv(item);
+          item->Release();
+          itemsCreated++;
+      }
+
+      return itemsCreated;
+  }
+
   int ConsoleEvalFunc( const zSTRING& inpstr, zSTRING& msg ) {
     if ( innerEvalFunc && innerEvalFunc( inpstr, msg ) )
       return true;
@@ -24,6 +67,13 @@ namespace GOTHIC_ENGINE {
       return true;
     }
 
+    if (w2 == "GiveAllItems") {
+        auto result = GiveAllItems();
+        msg = "Created " + Z result + " instances.";
+
+        return true;
+    }
+
     return false;
   }
 
@@ -42,5 +92,6 @@ namespace GOTHIC_ENGINE {
     RegisterEvalFunc();
     zcon->Register( "zUtilities Version", "Shows version number" );
     zcon->Register( "zUtilities Debug", "Toggles debug mode" );
+    zcon->Register( "zUtilities GiveAllItems", "Gives all items" );
   }
 }
