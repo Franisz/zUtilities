@@ -14,6 +14,10 @@ namespace GOTHIC_ENGINE {
       for (int i = 0; i < parser->symtab.GetNumInList(); i++) {
           zCPar_Symbol* symbol = parser->symtab.table[i];
 
+          if (i == parser->instance_help) {
+              continue;
+          }
+
           if (symbol->type != zPAR_TYPE_INSTANCE) {
               continue;
           }
@@ -30,12 +34,13 @@ namespace GOTHIC_ENGINE {
               continue;
           }
 
-          auto item = new oCItem(symbol->name, 1);
+          oCItem* item = static_cast<oCItem*>(ogame->GetGameWorld()->CreateVob(zVOB_TYPE_ITEM, i));
           if (item->HasFlag(ITM_FLAG_MULTI)) {
               item->amount = 50;
           }
 
           player->PutInInv(item);
+          item->Release();
           itemsCreated++;
       }
 
