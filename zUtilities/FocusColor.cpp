@@ -29,19 +29,19 @@ namespace GOTHIC_ENGINE {
   }
 
   bool FocusColor::CanStealNow( oCItem* item ) {
-    const int ZS_Clear = parser->GetIndex( "ZS_ClearRoom" );
+    static const int ZS_Clear = parser->GetIndex( "ZS_ClearRoom" );
 
 #if ENGINE >= Engine_G2
-    const int ZS_Observe = parser->GetIndex( "ZS_ObservePlayer" );
+    static const int ZS_Observe = parser->GetIndex( "ZS_ObservePlayer" );
 #else
-    const int ZS_Observe = parser->GetIndex( "ZS_ObservePerson" );
+    static const int ZS_Observe = parser->GetIndex( "ZS_ObservePerson" );
 #endif
 
     if ( !ZS_Observe || !ZS_Clear )
       return false;
 
-    const zCPar_Symbol* sym = parser->GetSymbol( "PERC_DIST_INDOOR_HEIGHT" );
-    const int PERC_DIST_INDOOR_HEIGHT = (sym) ? sym->single_intdata : Invalid;
+    static const zCPar_Symbol* sym = parser->GetSymbol( "PERC_DIST_INDOOR_HEIGHT" );
+    static const int PERC_DIST_INDOOR_HEIGHT = (sym) ? sym->single_intdata : Invalid;
 
     oCPortalRoom* playerRoom = player->GetCurrentPortalRoom();
     auto list = ogame->GetGameWorld()->voblist_npcs->GetNextInList();
@@ -121,40 +121,34 @@ namespace GOTHIC_ENGINE {
   }
 
   int FocusColor::GetAbsolutionLevel( oCNpc* slf ) {
-    zCPar_Symbol* sym = nullptr;
+    static const zCPar_Symbol* NPCTYPE_OCAMBIENT = parser->GetSymbol( "NPCTYPE_OCAMBIENT" );
+    static const zCPar_Symbol* NPCTYPE_OCMAIN = parser->GetSymbol( "NPCTYPE_OCMAIN" );
+    static const zCPar_Symbol* NPCTYPE_BL_AMBIENT = parser->GetSymbol( "NPCTYPE_BL_AMBIENT" );
+    static const zCPar_Symbol* NPCTYPE_BL_MAIN = parser->GetSymbol( "NPCTYPE_BL_MAIN" );
 
-    sym = parser->GetSymbol( "NPCTYPE_OCAMBIENT" );
-    int TYPE_OCAMBIENT = (sym) ? sym->single_intdata : Invalid;
+    static const zCPar_Symbol* ABSOLUTIONLEVEL_OldCamp = parser->GetSymbol( "ABSOLUTIONLEVEL_OldCamp" );
+    static const zCPar_Symbol* ABSOLUTIONLEVEL_City = parser->GetSymbol( "ABSOLUTIONLEVEL_City" );
+    static const zCPar_Symbol* ABSOLUTIONLEVEL_Monastery = parser->GetSymbol( "ABSOLUTIONLEVEL_Monastery" );
+    static const zCPar_Symbol* ABSOLUTIONLEVEL_Farm = parser->GetSymbol( "ABSOLUTIONLEVEL_Farm" );
+    static const zCPar_Symbol* ABSOLUTIONLEVEL_BL = parser->GetSymbol( "ABSOLUTIONLEVEL_BL" );
 
-    sym = parser->GetSymbol( "NPCTYPE_OCMAIN" );
-    int TYPE_OCMAIN = (sym) ? sym->single_intdata : Invalid;
-
-    sym = parser->GetSymbol( "NPCTYPE_BL_AMBIENT" );
-    int TYPE_BL_AMBIENT = (sym) ? sym->single_intdata : Invalid;
-
-    sym = parser->GetSymbol( "NPCTYPE_BL_MAIN" );
-    int TYPE_BL_MAIN = (sym) ? sym->single_intdata : Invalid;
-
-    if ( (TYPE_OCAMBIENT && slf->npcType == TYPE_OCAMBIENT) || (TYPE_OCMAIN && slf->npcType == TYPE_OCMAIN) ) {
+    if ( (NPCTYPE_OCAMBIENT && slf->npcType == NPCTYPE_OCAMBIENT->single_intdata)
+      || (NPCTYPE_OCMAIN && slf->npcType == NPCTYPE_OCMAIN->single_intdata) ) {
       if ( slf->guild == NPC_GIL_PALADIN || slf->guild == NPC_GIL_MILIZ || slf->guild == NPC_GIL_VOLK )
-        if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_OldCamp" ) )
-          return sym->single_intdata;
+        if ( ABSOLUTIONLEVEL_OldCamp ) return ABSOLUTIONLEVEL_OldCamp->single_intdata;
     }
     else if ( slf->guild == NPC_GIL_PALADIN || slf->guild == NPC_GIL_MILIZ || slf->guild == NPC_GIL_VOLK ) {
-      if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_City" ) )
-        return sym->single_intdata;
+      if ( ABSOLUTIONLEVEL_City ) return ABSOLUTIONLEVEL_City->single_intdata;
     }
     else if ( slf->guild == NPC_GIL_FEUERKREIS || slf->guild == NPC_GIL_NOVIZE ) {
-      if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_Monastery" ) )
-        return sym->single_intdata;
+      if ( ABSOLUTIONLEVEL_Monastery ) return ABSOLUTIONLEVEL_Monastery->single_intdata;
     }
     else if ( slf->guild == NPC_GIL_BAUERN ) {
-      if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_Farm" ) )
-        return sym->single_intdata;
+      if ( ABSOLUTIONLEVEL_Farm ) return ABSOLUTIONLEVEL_Farm->single_intdata;
     }
-    else if ( (TYPE_BL_AMBIENT && slf->npcType == TYPE_BL_AMBIENT) || (TYPE_BL_MAIN && slf->npcType == TYPE_BL_MAIN) ) {
-      if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_BL" ) )
-        return sym->single_intdata;
+    else if ( (NPCTYPE_BL_AMBIENT && slf->npcType == NPCTYPE_BL_AMBIENT->single_intdata)
+      || (NPCTYPE_BL_MAIN && slf->npcType == NPCTYPE_BL_MAIN->single_intdata) ) {
+      if ( ABSOLUTIONLEVEL_BL ) return ABSOLUTIONLEVEL_BL->single_intdata;
     }
 
     return 0;
@@ -183,15 +177,15 @@ namespace GOTHIC_ENGINE {
         return colDefault;
     }
 
-    bool inAttack = npc->IsAIState( parser->GetIndex( "ZS_Attack" ) );
-    bool inReact = npc->IsAIState( parser->GetIndex( "ZS_ReactToDamage" ) );
+    static const int ZS_Attack = parser->GetIndex( "ZS_Attack" );
+    static const int ZS_ReactToDamage = parser->GetIndex( "ZS_ReactToDamage" );
 
 #if ENGINE >= Engine_G2
     if ( npc->IsHostile( player ) && npc->GetPermAttitude( player ) == NPC_ATT_HOSTILE
-      || (npc->enemy == player && inAttack && HasReasonToKill( npc )) )
+      || (npc->enemy == player && npc->IsAIState( ZS_Attack ) && HasReasonToKill( npc )) )
       return zCOLOR( 255, 0, 0 );
 
-    if ( npc->IsAngry( player ) || (npc->enemy == player && inAttack) )
+    if ( npc->IsAngry( player ) || (npc->enemy == player && npc->IsAIState( ZS_Attack )) )
       return zCOLOR( 255, 180, 0 );
 
     int day, hour, min;
@@ -203,14 +197,14 @@ namespace GOTHIC_ENGINE {
       return zCOLOR( 255, 180, 0 );
 #else
     if ( (npc->IsHostile( player ) && npc->GetPermAttitude( player ) == NPC_ATT_HOSTILE)
-      || (npc->enemy == player && inAttack && npc->GetAivar( "AIV_ATTACKREASON" )) )
+      || (npc->enemy == player && npc->IsAIState( ZS_Attack ) && npc->GetAivar( "AIV_ATTACKREASON" )) )
       return zCOLOR( 255, 0, 0 );
 
-    if ( (npc->IsAngry( player ) || npc->enemy == player) && (inAttack || inReact) )
+    if ( (npc->IsAngry( player ) || npc->enemy == player) && (npc->IsAIState( ZS_Attack ) || npc->IsAIState( ZS_ReactToDamage )) )
       return zCOLOR( 255, 180, 0 );
 #endif
 
-    if ( inReact )
+    if ( npc->IsAIState( ZS_ReactToDamage ) )
       return colDefault;
 
     if ( npc->GetAivar( "AIV_PARTYMEMBER" ) )

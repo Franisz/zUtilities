@@ -64,8 +64,8 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    const zCPar_Symbol* sym = parser->GetSymbol( "ITEM_ARMREIF" );
-    const int ITM_FLAG_ARMREIF = (sym) ? sym->single_intdata : Invalid;
+    static const zCPar_Symbol* ITEM_ARMREIF = parser->GetSymbol( "ITEM_ARMREIF" );
+    static const int ITM_FLAG_ARMREIF = (ITEM_ARMREIF) ? ITEM_ARMREIF->single_intdata : Invalid;
 
     if ( ITM_FLAG_ARMREIF && item->HasFlag( ITM_CAT_MAGIC ) ) {
       if ( item->GetInstanceName().StartWith( "ITBR" ) ) {
@@ -256,12 +256,12 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    if ( auto sym = parser->GetSymbol( "TRADE_CURRENCY_INSTANCE" ) )
-      if ( item->GetInstanceName() == sym->stringdata ) {
-        color = goldYellow;
-        texture = "MONEY"; // https://game-icons.net/1x1/delapouite/two-coins.html
-        return;
-      }
+    static const zCPar_Symbol* TRADE_CURRENCY_INSTANCE = parser->GetSymbol( "TRADE_CURRENCY_INSTANCE" );
+    if ( TRADE_CURRENCY_INSTANCE && TRADE_CURRENCY_INSTANCE->stringdata == item->GetInstanceName()  ) {
+      color = goldYellow;
+      texture = "MONEY"; // https://game-icons.net/1x1/delapouite/two-coins.html
+      return;
+    }
 
     if ( item->GetInstanceName().StartWith( "ITSE" ) ) {
       color = goldYellow;
