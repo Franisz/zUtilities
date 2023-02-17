@@ -40,17 +40,24 @@ namespace GOTHIC_ENGINE {
     if ( !ZS_Observe || !ZS_Clear )
       return false;
 
-    static const zCPar_Symbol* sym = parser->GetSymbol( "PERC_DIST_INDOOR_HEIGHT" );
-    static const int PERC_DIST_INDOOR_HEIGHT = (sym) ? sym->single_intdata : Invalid;
+    static const zCPar_Symbol* sym1 = parser->GetSymbol( "PERC_DIST_INDOOR_HEIGHT" );
+    static const int PERC_DIST_INDOOR_HEIGHT = (sym1) ? sym1->single_intdata : 250;
+
+    static const zCPar_Symbol* sym2 = parser->GetSymbol( "PERC_DIST_ACTIVE_MAX" );
+    static const int PERC_DIST_ACTIVE_MAX = (sym2) ? sym2->single_intdata : 2000;
 
     oCPortalRoom* playerRoom = player->GetCurrentPortalRoom();
-    auto list = ogame->GetGameWorld()->voblist_npcs->GetNextInList();
 
-    while ( list != nullptr ) {
-      oCNpc* npc = list->GetData();
-      list = list->GetNextInList();
+    zCArray<zCVob*> vobs;
+    player->CreateVobList( vobs, PERC_DIST_ACTIVE_MAX );
 
-      if ( npc->attribute[NPC_ATR_HITPOINTS] <= 0 || npc == player ) continue;
+    for ( int i = 0; i < vobs.GetNum(); i++ ) {
+      oCNpc* npc = vobs[i]->CastTo<oCNpc>();
+      if ( !npc || !npc->homeWorld )
+        continue;
+
+      if ( npc->attribute[NPC_ATR_HITPOINTS] <= 0 || npc == player )
+        continue;
 
       if ( !npc->HasPerception( NPC_PERC_ASSESSTHEFT ) )
         continue;
@@ -59,7 +66,7 @@ namespace GOTHIC_ENGINE {
         continue;
 
 #if ENGINE >= Engine_G2
-      if ( PERC_DIST_INDOOR_HEIGHT > 0 && playerRoom && playerRoom->GetOwnerGuild() >= NPC_GIL_NONE && (int)player->GetHeightDifferenceToVob( npc ) > PERC_DIST_INDOOR_HEIGHT ) {
+      if ( playerRoom && playerRoom->GetOwnerGuild() >= NPC_GIL_NONE && (int)player->GetHeightDifferenceToVob( npc ) > PERC_DIST_INDOOR_HEIGHT ) {
         continue;
       }
 #else
