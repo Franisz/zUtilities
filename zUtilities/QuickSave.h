@@ -12,19 +12,13 @@ namespace GOTHIC_ENGINE {
       KeyQuickSave = GetEmulationKeyCode( zoptions->ReadString( PLUGIN_NAME, "KeyQuickSave", "KEY_F10" ) );
       KeyQuickLoad = GetEmulationKeyCode( zoptions->ReadString( PLUGIN_NAME, "KeyQuickLoad", "KEY_F12" ) );
 
-      int SaveSlots = 0;
-      for ( int i = 0; i < zCMenuItem::itemList.GetNum(); i++ )
-        if ( zCMenuItem::itemList[i]->m_parOnSelAction_S[1] == "SAVEGAME_SAVE" )
-          SaveSlots++;
-
 #if ENGINE >= Engine_G2
-      if ( SaveSlots == 0 ) SaveSlots = 20;
+      MinSaveSlot = zoptions->ReadInt( PLUGIN_NAME, "MinSaveSlot", 15 );
+      MaxSaveSlot = zoptions->ReadInt( PLUGIN_NAME, "MaxSaveSlot", 20 );
 #else
-      if ( SaveSlots == 0 ) SaveSlots = 15;
+      MinSaveSlot = zoptions->ReadInt( PLUGIN_NAME, "MinSaveSlot", 10 );
+      MaxSaveSlot = zoptions->ReadInt( PLUGIN_NAME, "MaxSaveSlot", 15 );
 #endif
-
-      MinSaveSlot = zoptions->ReadInt( PLUGIN_NAME, "MinSaveSlot", SaveSlots - 5 );
-      MaxSaveSlot = zoptions->ReadInt( PLUGIN_NAME, "MaxSaveSlot", SaveSlots );
 
       switch ( Union.GetSystemLanguage() )
       {
