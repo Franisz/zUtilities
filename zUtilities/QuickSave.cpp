@@ -47,6 +47,16 @@ namespace GOTHIC_ENGINE {
     //if ( ogame->game_testmode ) return false;
     //if ( !player->IsInFightMode_S(0) ) return false;
 
+    zSTRING saveMenu = gameMan->menu_save_savegame ? gameMan->menu_save_savegame->name : "MENU_SAVEGAME_SAVE";
+
+    for ( int i = 0; i < zCMenuItem::itemList.GetNum(); i++ ) {
+      zCMenuItem* item = zCMenuItem::itemList[i];
+      if ( item->m_parOnSelAction_S[0] == saveMenu ) {
+        bool cantSave = item->m_parItemFlags & IT_DISABLED || item->m_parItemFlags & IT_ONLY_OUT_GAME;
+        return !cantSave;
+      }
+    }
+
     return true;
   }
 
