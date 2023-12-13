@@ -44,6 +44,7 @@ namespace GOTHIC_ENGINE {
     if ( playerHelper.IsDead() ) return false;
     if ( InInteraction() ) return false;
     if ( player->GetAnictrl()->state != zCAIPlayer::zMV_STATE_STAND ) return false;
+    if (player->HasBodyStateModifier(BS_MOD_TRANSFORMED)) return false;
     //if ( ogame->game_testmode ) return false;
     //if ( !player->IsInFightMode_S(0) ) return false;
 
