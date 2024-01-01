@@ -35,6 +35,9 @@ namespace GOTHIC_ENGINE {
     if ( !Options::ActivateUsedMunition )
       return;
 
+    if (!player->inventory2.IsOpen())
+        return;
+
     if (lastActiveMunition) {
         if (player->inventory2.IsIn(lastActiveMunition, 1) == nullptr
             && player->GetLeftHand() != lastActiveMunition
@@ -47,9 +50,6 @@ namespace GOTHIC_ENGINE {
       HandleMunition( nullptr );
       return;
     }
-
-    if ( !player->inventory2.IsOpen() )
-      return;
 
     oCItem* weapon = player->GetEquippedRangedWeapon();
 
