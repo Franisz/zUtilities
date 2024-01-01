@@ -35,6 +35,14 @@ namespace GOTHIC_ENGINE {
     if ( !Options::ActivateUsedMunition )
       return;
 
+    if (lastActiveMunition) {
+        if (player->inventory2.IsIn(lastActiveMunition, 1) == nullptr
+            && player->GetLeftHand() != lastActiveMunition
+            && player->GetRightHand() != lastActiveMunition) {
+            lastActiveMunition = nullptr;
+        }
+    }
+
     if ( playerStatus.traderNpc ) {
       HandleMunition( nullptr );
       return;
