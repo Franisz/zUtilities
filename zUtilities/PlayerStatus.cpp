@@ -2,6 +2,50 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
+#if ENGINE >= Engine_G2
+  std::vector<oCVisualFX*> vfxs;
+  HOOK Ivk_InitEffect_Union PATCH( &oCVisualFX::InitEffect, &oCVisualFX::InitEffect_Union );
+  void oCVisualFX::InitEffect_Union() {
+
+    if ( visName_S.Search( ".SLW", 1 ) == -1 )
+    {
+      THISCALL( Ivk_InitEffect_Union )();
+      return;
+    }
+    
+    vfxs.push_back( this );
+    playerStatus.ResetTimeMultiplier();
+
+    THISCALL( Ivk_InitEffect_Union )();
+  }
+
+  HOOK Ivk_EndEffect_Union PATCH(&oCVisualFX::EndEffect, &oCVisualFX::EndEffect_Union);
+  void oCVisualFX::EndEffect_Union( const int kill ) {
+    if ( visName_S.Search( ".SLW", 1 ) == -1 )
+    {
+      THISCALL( Ivk_EndEffect_Union )( kill );
+      return;
+    }
+
+    auto it = std::find( vfxs.begin(), vfxs.end(), this );
+    if (it != vfxs.end())
+    {
+      vfxs.erase( std::remove( vfxs.begin(), vfxs.end(), this ), vfxs.end() );
+    }
+
+    THISCALL( Ivk_EndEffect_Union )( kill );
+  }
+#endif
+
+  bool PlayerStatus::CanChangeZtimer()
+  {
+#if ENGINE >= Engine_G2
+    return vfxs.empty();
+#endif
+    return true;
+  }
+
+
   HOOK Ivk_CallOnStateFunc_Union PATCH( &oCMobInter::CallOnStateFunc, &oCMobInter::CallOnStateFunc_Union );
   void oCMobInter::CallOnStateFunc_Union( oCNpc* npc, int a1 ) {
     THISCALL( Ivk_CallOnStateFunc_Union )(npc, a1);
@@ -36,17 +80,15 @@ namespace GOTHIC_ENGINE {
       list = list->next;
 
       // Whenever the icon will visible or not is based on the npc dialogue including PICKPOCKET word which seems to be used consistently in mods as well.
-      if ( !info->name.HasWord( "PICKPOCKET" ) )
+      if ( !info->name.HasWordI( "pickpocket" ) && !info->name.HasWordI( "_steal" ) && !info->name.HasWordI( "pickme" ) )
+        continue;      
+      
+      if ( info->name.HasWordI( "_DOIT" ) || info->name.HasWordI( "_TRY" ) )
         continue;
 
       // To avoid targeting possible dialogues related to pickpocketing quests or teach options.
-      int idx = parser->GetIndex( info->name + "_DOIT" );
-      if ( idx == Invalid ) {
-        // Alternative pickpocket instance name
-        idx = parser->GetIndex( info->name + "_TRY" );
-        if ( idx == Invalid )
-          continue;
-      }
+      if ( parser->GetIndex( info->name + "_DOIT" ) == Invalid && parser->GetIndex( info->name + "_TRY" ) == Invalid )
+        continue;
 
       if ( !pickpocketInfos.IsInList( info ) )
         pickpocketInfos.Insert( info );
@@ -163,7 +205,7 @@ namespace GOTHIC_ENGINE {
 #if ENGINE < Engine_G2
   HOOK Hook_zCAICamera_CheckKeys PATCH( &zCAICamera::CheckKeys, &zCAICamera::CheckKeys_Union );
   void zCAICamera::CheckKeys_Union() {
-    if ( !Options::UseTimeMultiplier || ztimer->factorMotion == 1.0f ) {
+    if ( !Options::UseTimeMultiplier || ztimer->factorMotion == 1.0f || !playerStatus.CanChangeZtimer() ) {
       THISCALL( Hook_zCAICamera_CheckKeys )();
       return;
     }
@@ -179,7 +221,7 @@ namespace GOTHIC_ENGINE {
 
   HOOK Hook_oCAIHuman_PC_Turnings PATCH( &oCAIHuman::PC_Turnings, &oCAIHuman::PC_Turnings_Union );
   void oCAIHuman::PC_Turnings_Union( int forceRotation ) {
-    if ( !Options::UseTimeMultiplier || ztimer->factorMotion == 1.0f || Pressed( GAME_LEFT ) || Pressed( GAME_RIGHT ) ) {
+    if ( !Options::UseTimeMultiplier || ztimer->factorMotion == 1.0f || Pressed( GAME_LEFT ) || Pressed( GAME_RIGHT ) || !playerStatus.CanChangeZtimer() ) {
       THISCALL( Hook_oCAIHuman_PC_Turnings )(forceRotation);
       return;
     }
@@ -201,11 +243,23 @@ namespace GOTHIC_ENGINE {
     ztimer->factorMotion = 1.0f;
   }
 
+  void PlayerStatus::ResetSaveReminder() {
+    if (SaveLoadGameInfo.changeLevel)
+    {
+      return;
+    }
+
+    lastSaveTime = std::chrono::high_resolution_clock::now();
+  }
+
   void PlayerStatus::FactorMotion() {
     if ( !Options::UseTimeMultiplier )
       return;
 
     if ( !Options::TimeMultipliers.GetNum() || playerHelper.IsConUp() )
+      return;
+
+    if ( !CanChangeZtimer() )
       return;
 
     if ( playerHelper.IsDead() || playerHelper.IsInInfo() || ogame->IsOnPause() ) {
@@ -299,6 +353,36 @@ namespace GOTHIC_ENGINE {
     IconInfo icon = IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, screen->FontY() * 0.9f, color, texture, Z amount );
   }
 
+  void PlayerStatus::ShowSaveReminder() {
+    if (
+      Options::SaveReminder == Invalid
+      || !ogame
+      || !player
+      || playerHelper.IsBusy()
+      || quickSave->IsBusy()
+      || playerHelper.IsDead()
+      || playerHelper.IsConUp()
+      || !ogame->GetShowPlayerStatus()
+      || !ogame->game_drawall
+      )
+    {
+      return;
+    }
+
+    auto ElapsedTime = std::chrono::high_resolution_clock::now() - lastSaveTime;
+    auto ElapsedMins = std::chrono::duration_cast<std::chrono::minutes>(ElapsedTime);
+    auto ElapsedSeconds = std::chrono::duration_cast<std::chrono::seconds>(ElapsedTime - ElapsedMins);
+    if ( ElapsedTime >= static_cast<std::chrono::minutes>( Options::SaveReminder ) )
+    {
+      zSTRING str = ( ElapsedMins.count() < 10 ? "0" : "" ) + Z ElapsedMins.count() + ":" + ( ElapsedSeconds.count() < 10 ? "0" : "" ) + Z static_cast<int>( ElapsedSeconds.count() );
+
+      zSTRING texture = "ICON_SAVE"; // https://game-icons.net/1x1/lorc/disc.html
+
+      infoIcons++;
+      IconInfo icon = IconInfo(screen->FontY(), screen->FontY() * 2.5 * infoIcons, screen->FontY() * 0.9f, GFX_RED, texture, str);
+    }
+  }
+
   void PlayerStatus::StatusBars() {
     if ( !hpBar )
       hpBar = new StatusBar( ogame->hpBar );
@@ -352,6 +436,7 @@ namespace GOTHIC_ENGINE {
     FactorMotion();
     ShowGameTime();
     ShowMunitionAmount();
+    ShowSaveReminder();
     HandleMunitionLoop();
     RenderSelectedItem();
   }

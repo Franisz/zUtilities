@@ -22,4 +22,20 @@ namespace GOTHIC_ENGINE {
     string archivePath = string::Combine( "%s\\%s\\%s\.sav", savesDir, slotDir, sav );
     return archivePath;
   }
+
+  zSTRING GetAttributeName( int att ) {
+    switch ( att )
+    {
+    case NPC_ATR_HITPOINTSMAX:
+      return "HP";
+    case NPC_ATR_MANAMAX:
+      return "MANA";
+    case NPC_ATR_STRENGTH:
+      return "STR";
+    case NPC_ATR_DEXTERITY:
+      return "DEX";
+    default:
+      return "<Unknown>";
+    }
+  }
 }

@@ -74,6 +74,13 @@ namespace GOTHIC_ENGINE {
         return true;
     }
 
+    if (w2 == "ShowTriggers") {
+      Options::ShowTriggers = !Options::ShowTriggers;
+      zSTRING state = (Options::ShowTriggers) ? "ON" : "OFF";
+      msg = "zUtilities showing triggers " + state;
+      return true;
+    }
+
     return false;
   }
 
@@ -93,5 +100,6 @@ namespace GOTHIC_ENGINE {
     zcon->Register( "zUtilities Version", "Shows version number" );
     zcon->Register( "zUtilities Debug", "Toggles debug mode" );
     zcon->Register( "zUtilities GiveAllItems", "Gives all items" );
+    zcon->Register( "zUtilities ShowTriggers", "Toggles the display of invisible triggers in debug mode" );
   }
 }
