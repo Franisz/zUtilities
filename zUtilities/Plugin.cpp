@@ -25,6 +25,7 @@ namespace GOTHIC_ENGINE {
 
     quickSave->Loop();
     playerStatus.Loop();
+    saveReminder.Loop();
   }
 
   void Game_PostLoop() {
@@ -44,6 +45,7 @@ namespace GOTHIC_ENGINE {
   void Game_SaveEnd() {
     quickSave->saveEnd = true;
     Archive();
+    saveReminder.ResetTimer(true);
   }
 
   void LoadBegin() {
@@ -61,6 +63,7 @@ namespace GOTHIC_ENGINE {
 #if ENGINE >= Engine_G2
     playerStatus.GetPickpocketInfos();
 #endif
+    saveReminder.ResetTimer(true);
   }
 
   void Game_LoadBegin_NewGame() {
@@ -98,6 +101,7 @@ namespace GOTHIC_ENGINE {
 
   void Game_Unpause() {
     Options::ReadOptions();
+    saveReminder.ResetTimer(Options::ReminderNeedReset);
   }
 
   void Game_DefineExternals() {

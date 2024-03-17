@@ -9,6 +9,7 @@ namespace GOTHIC_ENGINE {
     if ( quickSave->IsBusy() || !ogame->GetShowPlayerStatus() || !ogame->game_drawall || ogame->IsOnPause() || playerHelper.IsInInfo() || player->attribute[NPC_ATR_HITPOINTS] <= 0 )
       return;
 
+    RestoreViewport(); //because some plugins don't restore viewport after Blitting, so it messes with prints in other plugins
     DrawIcon();
     PrintText();
   }
@@ -39,6 +40,12 @@ namespace GOTHIC_ENGINE {
     view->Print( x, y, text );
     view->BlitText();
     delete view;
+  }
+
+  void IconInfo::RestoreViewport() {
+      int ScreenX, ScreenY, ScreenSX, ScreenSY;
+      screen->GetViewport(ScreenX, ScreenY, ScreenSX, ScreenSY);
+      zrenderer->SetViewport(ScreenX, ScreenY, ScreenSX, ScreenSY);
   }
 
   IconInfo::IconInfo( int x, int y, int size, zCOLOR color, zSTRING texName, zSTRING text = "" )

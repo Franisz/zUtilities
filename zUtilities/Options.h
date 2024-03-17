@@ -35,6 +35,7 @@ namespace GOTHIC_ENGINE {
       FocusColor();
       ItemLabel();
       DamagePopup();
+      SaveReminder();
     }
 
     void AddTrivias() {
@@ -92,6 +93,11 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "ActivateUsedMunition", "... enables (1) or disables (0) highlighting currently used ranged weapon munition in the inventory" );
       zoptions->AddTrivia( PLUGIN_NAME, "AlternativeDialogueBoxes", "... enables (1) or disables (0) alternative dialogue boxes style" );
       zoptions->AddTrivia( PLUGIN_NAME, "SelectedDialogueColor", "... defines color of selected line in dialogues" + nline + "... use 'R|G|B' or 'R|G|B|A' format" + nline + "... leave empty to use default color" );
+
+      zoptions->AddTrivia( PLUGIN_NAME, "ReminderEnabled", "... enables (1) or disables (0) the reminder about saving a game frequently" );
+      zoptions->AddTrivia( PLUGIN_NAME, "ReminderAfterMin", "... Time in minutes after which the reminder to save the game appears on the screen" );
+      zoptions->AddTrivia( PLUGIN_NAME, "ReminderMessage", "... Message that shows up on the screen after the defined time has passed without saving the game" + nline + "... string '${minutes}' will be replaced with the exact time that passed since last game save" );
+      zoptions->AddTrivia( PLUGIN_NAME, "ReminderAdditionalMessage", "... Additional message that shows up on the screen" );
     }
   }
 }

@@ -36,17 +36,15 @@ namespace GOTHIC_ENGINE {
       list = list->next;
 
       // Whenever the icon will visible or not is based on the npc dialogue including PICKPOCKET word which seems to be used consistently in mods as well.
-      if ( !info->name.HasWord( "PICKPOCKET" ) )
+      if ( !info->name.HasWordI( "pickpocket" ) && !info->name.HasWordI( "_steal" ) && !info->name.HasWordI( "pickme" ) )
+        continue;      
+      
+      if ( info->name.HasWordI( "_DOIT" ) || info->name.HasWordI( "_TRY" ) )
         continue;
 
       // To avoid targeting possible dialogues related to pickpocketing quests or teach options.
-      int idx = parser->GetIndex( info->name + "_DOIT" );
-      if ( idx == Invalid ) {
-        // Alternative pickpocket instance name
-        idx = parser->GetIndex( info->name + "_TRY" );
-        if ( idx == Invalid )
-          continue;
-      }
+      if ( parser->GetIndex( info->name + "_DOIT" ) == Invalid && parser->GetIndex( info->name + "_TRY" ) == Invalid )
+        continue;
 
       if ( !pickpocketInfos.IsInList( info ) )
         pickpocketInfos.Insert( info );

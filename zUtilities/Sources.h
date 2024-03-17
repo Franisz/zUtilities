@@ -21,6 +21,7 @@
 #include "LogBook.cpp"
 #include "PlayerStatus.cpp"
 #include "Archive.cpp"
+#include "SaveReminder.cpp"
 #include "Plugin.cpp"
 #pragma endregion
 

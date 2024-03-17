@@ -944,6 +944,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="SaveReminder.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SaveReminder.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="User.cpp">
       <SubType>
       </SubType>

@@ -122,7 +122,11 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
 - Insert all items into inventory with `zutilities giveallitems` command.
 
-- Check currently used plugin version through in game console with `zutilities version` command.
+- Check currently used plugin version through in game console with `zutilities version` command.  
+  
+- Reminds the player to save the game after playing without saving the game for too long
+  - This feature can be disabled in `gothic.ini` with `ReminderEnabled` option.
+  - By default, it reminds the player after 15 minutes since the last save game. It can be changed in `gothic.ini` with `ReminderAfterMin` option.
 
 ### Options
 

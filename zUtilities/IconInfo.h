@@ -21,6 +21,7 @@ namespace GOTHIC_ENGINE {
     void Draw();
     void DrawIcon();
     void PrintText();
+    void RestoreViewport();
 
   public:
     IconInfo( int x, int y, int size, zCOLOR color, zSTRING texName, zSTRING text );

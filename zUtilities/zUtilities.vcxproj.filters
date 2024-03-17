@@ -250,6 +250,9 @@
     <Filter Include="Plugin\Workspace\Features\IconInfo">
       <UniqueIdentifier>{ad1d68b4-22dc-4e58-914f-444545260f86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\Workspace\Features\SaveReminder">
+      <UniqueIdentifier>{ff3f0506-e0a6-45c4-8037-88ca6c7df177}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2915,6 +2918,12 @@
     </ClInclude>
     <ClInclude Include="Extensions.h">
       <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveReminder.cpp">
+      <Filter>Plugin\Workspace\Features\SaveReminder</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveReminder.h">
+      <Filter>Plugin\Workspace\Features\SaveReminder</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

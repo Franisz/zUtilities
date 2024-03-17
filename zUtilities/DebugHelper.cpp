@@ -1,228 +1,268 @@
-// Supported with union (c) 2020 Union team
+// Supported with union ( c ) 2020 Union team
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
   void DebugHelper::InfoNpc( oCNpc* npc ) {
-    Print( textView, "Instance", npc->GetInstanceName() + " (" + Z npc->instanz + ")" );
-    Print( textView, "Name", npc->GetName( 0 ) );
-    Print( textView, "Guild", npc->GetGuildName() + " (" + Z npc->GetGuild() + ")" );
-    Print( sideView, "Level", Z npc->level );
-    AddSeparator();
-    Print( textView, "HP", Z npc->GetAttribute( NPC_ATR_HITPOINTS ) + "/" + Z npc->GetAttribute( NPC_ATR_HITPOINTSMAX ) );
-#if ENGINE >= Engine_G2
-    Print( sideView, "1H", Z npc->GetHitChance( NPC_HITCHANCE_1H ) );
-#else
-    Print( sideView, "1H", Z npc->GetTalentValue( NPC_HITCHANCE_1H ) );
-#endif
-    Print( textView, "MANA", Z npc->GetAttribute( NPC_ATR_MANA ) + "/" + Z npc->GetAttribute( NPC_ATR_MANAMAX ) );
-#if ENGINE >= Engine_G2
-    Print( sideView, "2H", Z npc->GetHitChance( NPC_HITCHANCE_2H ) );
-#else
-    Print( sideView, "2H", Z npc->GetTalentValue( NPC_HITCHANCE_2H ) );
-#endif
-    Print( textView, "STR", Z npc->GetAttribute( NPC_ATR_STRENGTH ) );
-#if ENGINE >= Engine_G2
-    Print( sideView, "BOW", Z npc->GetHitChance( NPC_HITCHANCE_BOW ) );
-#else
-    Print( sideView, "BOW", Z npc->GetTalentValue( NPC_HITCHANCE_BOW ) );
-#endif
-    Print( textView, "DEX", Z npc->GetAttribute( NPC_ATR_DEXTERITY ) );
-#if ENGINE >= Engine_G2
-    Print( sideView, "CBOW", Z npc->GetHitChance( NPC_HITCHANCE_CROSSBOW ) );
-#else
-    Print( sideView, "CBOW", Z npc->GetTalentValue( NPC_HITCHANCE_CROSSBOW ) );
-#endif
-    AddSeparator();
-    Print( textView, "PROT_EDGE", Z npc->GetProtectionByIndex( oEDamageIndex_Edge ) );
-    Print( sideView, "DAM_EDGE", Z npc->GetDamageByIndex( oEDamageIndex_Edge ) );
-    Print( textView, "PROT_BLUNT", Z npc->GetProtectionByIndex( oEDamageIndex_Blunt ) );
-    Print( sideView, "DAM_BLUNT", Z npc->GetDamageByIndex( oEDamageIndex_Blunt ) );
-    Print( textView, "PROT_POINT", Z npc->GetProtectionByIndex( oEDamageIndex_Point ) );
-    Print( sideView, "DAM_POINT", Z npc->GetDamageByIndex( oEDamageIndex_Point ) );
-    Print( textView, "PROT_FIRE", Z npc->GetProtectionByIndex( oEDamageIndex_Fire ) );
-    Print( sideView, "DAM_FIRE", Z npc->GetDamageByIndex( oEDamageIndex_Fire ) );
-    Print( textView, "PROT_MAGIC", Z npc->GetProtectionByIndex( oEDamageIndex_Magic ) );
-    Print( sideView, "DAM_MAGIC", Z npc->GetDamageByIndex( oEDamageIndex_Magic ) );
-    Print( textView, "PROT_FLY", Z npc->GetProtectionByIndex( oEDamageIndex_Fly ) );
-    Print( sideView, "DAM_FLY", Z npc->GetDamageByIndex( oEDamageIndex_Fly ) );
-    Print( textView, "PROT_FALL", Z npc->GetProtectionByIndex( oEDamageIndex_Fall ) );
-    Print( sideView, "DAM_FALL", Z npc->GetDamageByIndex( oEDamageIndex_Fall ) );
-    Print( textView, "DamageType", Z npc->damagetype );
-    AddSeparator();
-    Print( textView, "Waypoint", npc->wpname );
-    Print( textView, "Flags", Z npc->variousFlags );
-    Print( sideView, "NpcType", Z npc->npcType );
-    Print( textView, "Attitude", Z npc->GetAttitude( player ) );
-    Print( sideView, "PermAttitude", Z npc->GetPermAttitude( player ) );
-    Print( textView, "SensesRange", Z npc->senses_range );
-    Print( sideView, "DistToPlayer", Z( int )npc->GetDistanceToVob( *player ) );
-    Print( textView, "DetectedPlayer", Z npc->HasVobDetected( player ) );
-    Print( sideView, "Voice", Z npc->voice );
-    Print( textView, "AIState", Z npc->GetAIState() );
-    Print( sideView, "DailyRoutine", Z npc->daily_routine );
-    Print( textView, "FightMode", Z npc->fmode );
-    Print( sideView, "FightTactic", Z npc->fighttactic );
-    AddSeparator();
-    Print( textView, "FightRangeBase", Z npc->GetFightRangeBase() );
-    Print( sideView, "FightRangeFist", Z npc->GetFightRangeFist() );
-    Print( textView, "FightRangeDynamic", Z npc->GetFightRangeDynamic() );
-    Print( sideView, "FightRange", Z npc->GetFightRange() );
+    //LEFT SIDE
+    Print( leftView, "--- " + npc->_GetClassDef()->className, npc->GetInstanceName() + " ( " + Z npc->instanz + " )" );
+    Print( leftView, "Name", npc->GetName( 0 ) );
+    Print( leftView, "Level", Z npc->level );
+    Print( leftView, "Guild", npc->GetGuildName() + " ( " + Z npc->GetGuild() + " )" );
+    Print( leftView, "Voice", Z npc->voice );
+    Print( leftView, "Flags", Z npc->variousFlags );
+    Print( leftView, "NpcType", Z npc->npcType );
+    Print( leftView, "Attitude", Z npc->GetAttitude( player ) );
+    Print( leftView, "PermAttitude", Z npc->GetPermAttitude( player ) );
+    Print( leftView, "SensesRange", Z npc->senses_range );
+    Print( leftView, "DetectedPlayer", Z npc->HasVobDetected( player ) );
+    Print( leftView, "DistToPlayer", Z( int )npc->GetDistanceToVob( *player ) );
+
+    AddSeparator( leftView, "Fight AI" );
+    Print( leftView, "FightMode", Z npc->fmode );
+    Print( leftView, "FightTactic", Z npc->fighttactic );
+    Print( leftView, "FightRangeBase", Z npc->GetFightRangeBase() );
+    Print( leftView, "FightRangeFist", Z npc->GetFightRangeFist() );
+    Print( leftView, "FightRangeDynamic", Z npc->GetFightRangeDynamic() );
+    Print( leftView, "FightRange", Z npc->GetFightRange() );
     if ( npc->enemy != nullptr )
-      Print( textView, "Enemy", npc->enemy->GetInstanceName() );
+      Print( leftView, "Enemy", npc->enemy->GetInstanceName() );
 
+    AddSeparator( leftView, "Visual/Armor" );
     if ( zCVisual* visual = npc->GetVisual() ) {
-      AddSeparator( "Visual" );
-      Print( textView, "VisualFile", visual->GetVisualName() );
-      Print( textView, "ModelScale", Z npc->model_scale[VX] + Z " " + npc->model_scale[VY] + Z " " + npc->model_scale[VZ] );
-      Print( textView, "BodyName", npc->GetVisualBody() );
-      Print( textView, "HeadName", npc->GetVisualHead() );
+      Print( leftView, "VisualFile", visual->GetVisualName() );
+      Print( leftView, "ModelScale", Z npc->model_scale[VX] + Z " " + npc->model_scale[VY] + Z " " + npc->model_scale[VZ] );
+      Print( leftView, "BodyName", npc->GetVisualBody() );
+      Print( leftView, "HeadName", npc->GetVisualHead() );
 #if ENGINE == Engine_G2A
-      Print( textView, "EffectName", npc->effect );
+      Print( leftView, "EffectName", npc->effect );
 #endif
-      if ( oCItem* armor = npc->GetEquippedArmor() ) {
-        AddSeparator( "Armor" );
-        if ( zCVisual* armorVisual = npc->GetVisual() )
-          Print( textView, "VisualFile", armorVisual->GetVisualName() );
-
-        Print( textView, "VisualChange", armor->GetVisualChange() );
-#if ENGINE == Engine_G2A
-        Print( textView, "EffectName", armor->GetEffectName() );
-#endif
-      }
     }
+
+    if ( oCItem* armor = npc->GetEquippedArmor() ) {
+      Print( leftView, "VisualChange", armor->GetVisualChange() );
+#if ENGINE == Engine_G2A
+      Print( leftView, "EffectName", armor->GetEffectName() );
+#endif
+    }
+
+    AddSeparator( leftView, "Routine" );
+    Print( leftView, "Waypoint", npc->wpname );
+    if ( auto sym = parser->GetSymbol( npc->GetAIState() ) )
+    {
+      Print( leftView, "AIState", sym->name );
+    }
+    else
+    {
+      Print( leftView, "AIState", Z npc->GetAIState() );
+    }
+    if ( auto sym = parser->GetSymbol( npc->daily_routine ) )
+    {
+      Print( leftView, "DailyRoutine", sym->name );
+    }
+    else
+    {
+      Print( leftView, "DailyRoutine", Z npc->daily_routine );
+    }
+
+    //RIGHT SIDE
+    AddSeparator( rightView, "Attributes" );
+    Print( rightView, "HP", Z npc->GetAttribute( NPC_ATR_HITPOINTS ) + "/" + Z npc->GetAttribute( NPC_ATR_HITPOINTSMAX ) );
+    Print( rightView, "MANA", Z npc->GetAttribute( NPC_ATR_MANA ) + "/" + Z npc->GetAttribute( NPC_ATR_MANAMAX ) );
+    Print( rightView, "STR", Z npc->GetAttribute( NPC_ATR_STRENGTH ) );
+    Print( rightView, "DEX", Z npc->GetAttribute( NPC_ATR_DEXTERITY ) );
+
+    AddSeparator( rightView, "Fight talents" );
+#if ENGINE >= Engine_G2
+    Print( rightView, "1H", Z npc->GetHitChance( NPC_HITCHANCE_1H ) );
+    Print( rightView, "2H", Z npc->GetHitChance( NPC_HITCHANCE_2H ) );
+    Print( rightView, "BOW", Z npc->GetHitChance( NPC_HITCHANCE_BOW ) );
+    Print( rightView, "CBOW", Z npc->GetHitChance( NPC_HITCHANCE_CROSSBOW ) );
+#else
+    Print( rightView, "1H", Z npc->GetTalentValue( NPC_HITCHANCE_1H ) );
+    Print( rightView, "2H", Z npc->GetTalentValue( NPC_HITCHANCE_2H ) );
+    Print( rightView, "BOW", Z npc->GetTalentValue( NPC_HITCHANCE_BOW ) );
+    Print( rightView, "CBOW", Z npc->GetTalentValue( NPC_HITCHANCE_CROSSBOW ) );
+#endif
+
+    AddSeparator( rightView, "Damage" );
+    Print( rightView, "DAM_EDGE", Z npc->GetDamageByIndex( oEDamageIndex_Edge ) );
+    Print( rightView, "DAM_BLUNT", Z npc->GetDamageByIndex( oEDamageIndex_Blunt ) );
+    Print( rightView, "DAM_POINT", Z npc->GetDamageByIndex( oEDamageIndex_Point ) );
+    Print( rightView, "DAM_FIRE", Z npc->GetDamageByIndex( oEDamageIndex_Fire ) );
+    Print( rightView, "DAM_MAGIC", Z npc->GetDamageByIndex( oEDamageIndex_Magic ) );
+    Print( rightView, "DAM_FLY", Z npc->GetDamageByIndex( oEDamageIndex_Fly ) );
+    Print( rightView, "DAM_FALL", Z npc->GetDamageByIndex( oEDamageIndex_Fall ) );
+    Print( rightView, "DamageType", Z npc->damagetype );
+
+    AddSeparator( rightView, "Protection" );
+    Print( rightView, "PROT_EDGE", Z npc->GetProtectionByIndex( oEDamageIndex_Edge ) );
+    Print( rightView, "PROT_BLUNT", Z npc->GetProtectionByIndex( oEDamageIndex_Blunt ) );
+    Print( rightView, "PROT_POINT", Z npc->GetProtectionByIndex( oEDamageIndex_Point ) );
+    Print( rightView, "PROT_FIRE", Z npc->GetProtectionByIndex( oEDamageIndex_Fire ) );
+    Print( rightView, "PROT_MAGIC", Z npc->GetProtectionByIndex( oEDamageIndex_Magic ) );
+    Print( rightView, "PROT_FLY", Z npc->GetProtectionByIndex( oEDamageIndex_Fly ) );
+    Print( rightView, "PROT_FALL", Z npc->GetProtectionByIndex( oEDamageIndex_Fall ) );
   }
 
   void DebugHelper::InfoItem( oCItem* item ) {
-    Print( textView, "Instance", item->GetInstanceName() + " (" + Z item->instanz + ")" );
-    Print( textView, "Name", Z item->name );
-    Print( textView, "Description", Z item->GetDescription() );
-    Print( textView, "Value", Z item->GetValue() );
+    Print( leftView, "--- " + item->_GetClassDef()->className, item->GetInstanceName() + " ( " + Z item->instanz + " )" );
+    Print( leftView, "Name", Z item->name );
+    Print( leftView, "Description", Z item->GetDescription() );
+    Print( leftView, "Value", Z item->GetValue() );
+    Print( leftView, "Owner", Z item->owner );
+    if ( item->ownerGuild )
+      Print( leftView, "OwnerGuild", ogame->GetGuilds()->GetGuildName( item->ownerGuild ) + " ( " + Z item->ownerGuild + " )" );
+    Print( leftView, "SchemeName", Z item->GetSchemeName() );
+    Print( leftView, "Material", Z item->GetSoundMaterial() );
+    if ( auto symbol = parser->GetSymbol( item->GetStateFunc() ) )
+      Print( leftView, "onState", symbol->name );
+
 
     if ( item->HasFlag( ITM_CAT_ARMOR ) || item->HasFlag( ITM_CAT_NF ) || item->HasFlag( ITM_CAT_FF ) || item->HasFlag( ITM_CAT_MUN ) ) {
-      AddSeparator();
-      Print( textView, "PROT_EDGE", Z item->GetProtectionByIndex( oEDamageIndex_Edge ) );
-      Print( sideView, "DAM_EDGE", Z item->GetDamageByIndex( oEDamageIndex_Edge ) );
-      Print( textView, "PROT_BLUNT", Z item->GetProtectionByIndex( oEDamageIndex_Blunt ) );
-      Print( sideView, "DAM_BLUNT", Z item->GetDamageByIndex( oEDamageIndex_Blunt ) );
-      Print( textView, "PROT_POINT", Z item->GetProtectionByIndex( oEDamageIndex_Point ) );
-      Print( sideView, "DAM_POINT", Z item->GetDamageByIndex( oEDamageIndex_Point ) );
-      Print( textView, "PROT_FIRE", Z item->GetProtectionByIndex( oEDamageIndex_Fire ) );
-      Print( sideView, "DAM_FIRE", Z item->GetDamageByIndex( oEDamageIndex_Fire ) );
-      Print( textView, "PROT_MAGIC", Z item->GetProtectionByIndex( oEDamageIndex_Magic ) );
-      Print( sideView, "DAM_MAGIC", Z item->GetDamageByIndex( oEDamageIndex_Magic ) );
-      Print( textView, "PROT_FLY", Z item->GetProtectionByIndex( oEDamageIndex_Fly ) );
-      Print( sideView, "DAM_FLY", Z item->GetDamageByIndex( oEDamageIndex_Fly ) );
-      Print( textView, "PROT_FALL", Z item->GetProtectionByIndex( oEDamageIndex_Fall ) );
-      Print( sideView, "DAM_FALL", Z item->GetDamageByIndex( oEDamageIndex_Fall ) );
-      Print( textView, "TotalDamage", Z item->damageTotal );
-      Print( sideView, "Range", Z item->range );
-      Print( textView, "DamageTypes", Z item->damageTypes );
-      AddSeparator();
+      Print( leftView, "Range", Z item->range );
+
+      AddSeparator( rightView, "Damage" );
+      Print( rightView, "DAM_EDGE", Z item->GetDamageByIndex( oEDamageIndex_Edge ) );
+      Print( rightView, "DAM_BLUNT", Z item->GetDamageByIndex( oEDamageIndex_Blunt ) );
+      Print( rightView, "DAM_POINT", Z item->GetDamageByIndex( oEDamageIndex_Point ) );
+      Print( rightView, "DAM_FIRE", Z item->GetDamageByIndex( oEDamageIndex_Fire ) );
+      Print( rightView, "DAM_MAGIC", Z item->GetDamageByIndex( oEDamageIndex_Magic ) );
+      Print( rightView, "DAM_FLY", Z item->GetDamageByIndex( oEDamageIndex_Fly ) );
+      Print( rightView, "DAM_FALL", Z item->GetDamageByIndex( oEDamageIndex_Fall ) );
+      Print( rightView, "TotalDamage", Z item->damageTotal );
+      Print( rightView, "DamageTypes", Z item->damageTypes );
+
+      AddSeparator( rightView, "Protection" );
+      Print( rightView, "PROT_EDGE", Z item->GetProtectionByIndex( oEDamageIndex_Edge ) );
+      Print( rightView, "PROT_BLUNT", Z item->GetProtectionByIndex( oEDamageIndex_Blunt ) );
+      Print( rightView, "PROT_POINT", Z item->GetProtectionByIndex( oEDamageIndex_Point ) );
+      Print( rightView, "PROT_FIRE", Z item->GetProtectionByIndex( oEDamageIndex_Fire ) );
+      Print( rightView, "PROT_MAGIC", Z item->GetProtectionByIndex( oEDamageIndex_Magic ) );
+      Print( rightView, "PROT_FLY", Z item->GetProtectionByIndex( oEDamageIndex_Fly ) );
+      Print( rightView, "PROT_FALL", Z item->GetProtectionByIndex( oEDamageIndex_Fall ) );
     }
     else if ( item->spell ) {
-      AddSeparator( "Spell" );
-      Print( textView, "SpellID", Z item->spell );
-      Print( sideView, "Circle", Z item->mag_circle );
+      AddSeparator( rightView, "Spell" );
+      Print( rightView, "SpellID", Z item->spell );
+      Print( rightView, "Circle", Z item->mag_circle );
 
       oCSpell* spl = new oCSpell( item->spell );
-      Print( textView, "SpellName", spl->GetName() );
+      Print( rightView, "SpellName", spl->GetName() );
       spl->Release();
-      AddSeparator();
     }
-    else
-      AddSeparator();
 
+    AddSeparator( leftView, "Flags" );
+    Print( leftView, "Mainflag", Z item->mainflag );
+    Print( leftView, "Flags", Z item->flags );
+
+    AddSeparator( leftView, "Requirements" );
     for ( int i = 0; i < ITM_COND_MAX; i++ ) {
       if ( !item->cond_atr[i] ) continue;
-      Print( textView, "Cond" + Z i, Z item->cond_atr[i] + " (" + Z item->cond_value[i] + ")" );
+      Print( leftView, GetAttributeName( item->cond_atr[i] ), Z item->cond_value[i] );
     }
 
-    Print( textView, "Mainflag", Z item->mainflag );
-    Print( sideView, "Flags", Z item->flags );
-    Print( textView, "Owner", Z item->owner );
-    if ( item->ownerGuild )
-      Print( textView, "OwnerGuild", ogame->GetGuilds()->GetGuildName( item->ownerGuild ) + " (" + Z item->ownerGuild + ")" );
-    Print( textView, "SchemeName", Z item->GetSchemeName() );
-    Print( sideView, "Material", Z item->GetSoundMaterial() );
-
-    int onState = item->GetStateFunc();
-    if ( onState != Invalid )
-      Print( textView, "onState", Z onState );
-
     if ( zCVisual* visual = item->GetVisual() ) {
-      AddSeparator( "Visual" );
-      Print( textView, "VisualFile", visual->GetVisualName() );
-      Print( textView, "VisualChange", item->GetVisualChange() );
+      AddSeparator( leftView, "Visual" );
+      Print( leftView, "VisualFile", visual->GetVisualName() );
+      Print( leftView, "VisualChange", item->GetVisualChange() );
 #if ENGINE == Engine_G2A
-      Print( textView, "EffectName", item->GetEffectName() );
+      Print( leftView, "EffectName", item->GetEffectName() );
 #endif
     }
   }
 
   void DebugHelper::InfoMob( oCMOB* mob ) {
-    Print( textView, "MobName", mob->name );
-    Print( textView, "Name", mob->GetName() );
-    Print( textView, "Owner", mob->ownerStr );
-    Print( textView, "ScemeName", mob->GetScemeName() );
+    Print( leftView, "--- " + mob->_GetClassDef()->className, mob->name );
+    Print( leftView, "Name", mob->GetName() );
+    Print( leftView, "Owner", mob->ownerStr );
+    Print( leftView, "ScemeName", mob->GetScemeName() );
 
     if ( oCMobInter* inter = mob->CastTo<oCMobInter>() ) {
-      AddSeparator( "Inter" );
-      Print( textView, "UseItem", inter->useWithItem );
-      Print( textView, "ConditionFuncName", inter->conditionFunc );
-      Print( textView, "OnStateFuncName", inter->onStateFuncName );
+      AddSeparator( leftView, "Inter" );
+      Print( leftView, "TriggerTarget", inter->triggerTarget );
+      Print( leftView, "UseItem", inter->useWithItem );
+      Print( leftView, "ConditionFuncName", inter->conditionFunc );
+      Print( leftView, "OnStateFuncName", inter->onStateFuncName );
     }
 
     if ( oCMobLockable* lockable = mob->CastTo<oCMobLockable>() ) {
-      AddSeparator( "Lockable" );
-      Print( textView, "KeyInstance", lockable->keyInstance );
-      Print( textView, "LockString", lockable->pickLockStr );
-      Print( textView, "Locked", Z lockable->locked );
+      AddSeparator( rightView, "Lockable" );
+      Print( rightView, "KeyInstance", lockable->keyInstance );
+      Print( rightView, "LockString", lockable->pickLockStr );
+      Print( rightView, "Locked", Z lockable->locked );
+    }
+
+    if ( zCVisual* visual = mob->GetVisual() ) {
+      AddSeparator( leftView, "Visual" );
+      Print( leftView, "VisualFile", visual->GetVisualName() );
     }
 
     if ( oCMobContainer* container = mob->CastTo<oCMobContainer>() )
+    {
       if ( auto list = container->containList.GetNextInList() ) {
         int itemCount = container->containList.GetNumInList();
         int printedItems = 0;
 
-        AddSeparator( "Container" );
+        AddSeparator( leftView, "Container" );
         while ( list != nullptr ) {
-          Print( textView, list->GetData()->name, Z list->GetData()->amount );
+          Print( leftView, list->GetData()->name, Z list->GetData()->amount );
 
           printedItems++;
-          if ( itemCount > 5 && printedItems >= 5 ) {
-            Print( textView, "", "And " + Z( itemCount - printedItems ) + " more..." );
+          if ( itemCount > 15 && printedItems >= 15 ) {
+            Print( leftView, "", "And " + Z( itemCount - printedItems ) + " more..." );
             break;
           }
 
           list = list->GetNextInList();
         }
       }
-
-    if ( zCVisual* visual = mob->GetVisual() ) {
-      AddSeparator( "Visual" );
-      Print( textView, "VisualFile", visual->GetVisualName() );
     }
   }
 
-  void DebugHelper::AddSeparator( zSTRING str ) {
-    if ( textLines > 0 )
-      textLines++;
+  void DebugHelper::AddSeparator( zCView* view, zSTRING str ) {
+    int textLines;
+
+
+    if ( view == leftView )
+      textLinesLeft++;
+    else if ( view == rightView )
+      textLinesRight++;
 
     if ( !str.Length() )
       return;
 
-    textLines++;
-    textView->Print( 0, textHeight * textLines, "--- " + str );
+    if ( view == rightView )
+    {
+      textLinesRight++;
+
+      textLines = textLinesRight;
+    }
+    else
+    {
+      textLinesLeft++;
+
+      textLines = textLinesLeft;
+    }
+
+    view->Print( 0, textHeight * textLines, "--- " + str );
   }
 
   void DebugHelper::Print( zCView* view, zSTRING name, zSTRING value ) {
     if ( !value.Length() )
       value = "-";
 
-    zSTRING text = (name.Length()) ? name + ": " + value : value;
-
-    if ( view == textView )
-      textLines++;
+    zSTRING text = ( name.Length() ) ? name + ": " + value : value;
+    int textLines;
+    if ( view == rightView )
+    {
+      textLinesRight++;
+      textLines = textLinesRight;
+    }
+    else
+    {
+      textLinesLeft++;
+      textLines = textLinesLeft;
+    }
 
     view->Print( 0, textHeight * textLines, text );
   }
@@ -230,7 +270,6 @@ namespace GOTHIC_ENGINE {
   bool DebugHelper::TryPrintInfo() {
     if ( player->inventory2.IsOpen() )
       if ( oCItem* item = player->inventory2.GetSelectedItem() ) {
-        AddSeparator( item->_GetClassDef()->className );
         InfoItem( item );
         return true;
       }
@@ -238,8 +277,6 @@ namespace GOTHIC_ENGINE {
     zCVob* vob = player->GetFocusVob();
     if ( !vob )
       return false;
-
-    AddSeparator( vob->_GetClassDef()->className );
 
     if ( oCNpc* npc = vob->CastTo<oCNpc>() )
       InfoNpc( npc );
@@ -254,8 +291,8 @@ namespace GOTHIC_ENGINE {
   void DebugHelper::Clear() {
     if ( mainView == nullptr ) return;
 
-    del( textView );
-    del( sideView );
+    del( leftView );
+    del( rightView );
     del( mainView );
   }
 
@@ -273,7 +310,7 @@ namespace GOTHIC_ENGINE {
     if ( mainView == nullptr ) {
       int offset = 512 * playerHelper.GetSysScale();
 
-      mainView = new zCView( 0, 1024 - offset, 2304 + offset, 7168 + offset );
+      mainView = new zCView( 0, 1024 - offset, 3456 + offset, 7168 + offset );
       mainView->InsertBack( "BLACKBACK" );
       mainView->SetAlphaBlendFunc( zRND_ALPHA_FUNC_BLEND );
       mainView->SetTransparency( 150 );
@@ -282,15 +319,16 @@ namespace GOTHIC_ENGINE {
       textHeight = mainView->FontY();
       margin = textHeight;
 
-      textView = new zCView( margin, 0, 8192 - margin, 8192 );
-      sideView = new zCView( margin + 8192 * 0.6f, 0, 8192 - margin, 8192 );
-      mainView->InsertItem( textView );
-      mainView->InsertItem( sideView );
+      leftView = new zCView( margin, 0, 8192 - margin, 8192 );
+      rightView = new zCView( margin + 8192 * 0.6f, 0, 8192 - margin, 8192 );
+      mainView->InsertItem( leftView );
+      mainView->InsertItem( rightView );
     }
 
-    textView->ClrPrintwin();
-    sideView->ClrPrintwin();
-    textLines = 0;
+    leftView->ClrPrintwin();
+    rightView->ClrPrintwin();
+    textLinesLeft = 0;
+    textLinesRight = 0;
 
     if ( TryPrintInfo() )
       return;
