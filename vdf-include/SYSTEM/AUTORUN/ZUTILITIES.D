@@ -109,7 +109,7 @@ instance MenuItem_Opt_Headline(C_MENU_ITEM_DEF)
   flags   = flags & ~IT_SELECTABLE;
   flags   = flags | IT_TXT_CENTER;
   text[0] = Str_GetLocalizedString(
-    "ZUTILITIES НИСТРОЙКИ",
+    "ZUTILITIES НАСТРОЙКИ",
     "ZUTILITIES SETTINGS",
     "ZUTILITIES EINSTELLUNGEN",
     "USTAWIENIA ZUTILITIES"
@@ -132,7 +132,7 @@ instance MenuItem_Opt_Open_Link(C_MENU_ITEM_DEF)
   oneventaction[1] = Act_OpenWebLink;
   flags            = flags | IT_TXT_CENTER;
   text[0]          = Str_GetLocalizedString(
-    "Открыть јтраницј проекта",
+    "Открыть страницу проекта",
     "Open project page",
     "Projektseite öffnen",
     "Otwórz stronę projektu"
