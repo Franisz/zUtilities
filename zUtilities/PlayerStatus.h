@@ -27,9 +27,9 @@ namespace GOTHIC_ENGINE {
 
   class PlayerStatus {
   private:
-    StatusBar* hpBar;
-    StatusBar* manaBar;
-    StatusBar* swimBar;
+    HealthStatusBar* hpBar;
+    ManaStatusBar* manaBar;
+    SwimStatusBar* swimBar;
     int multiplierIndex = 0;
     int infoIcons = 0;
 
@@ -44,7 +44,7 @@ namespace GOTHIC_ENGINE {
     zCArray<zSTRING> stateFuncItems;
     oCItem* stateFuncItem;
     oCNpc* traderNpc;
-    StatusBar* focusBar;
+    FocusStatusBar* focusBar;
     bool CanPickpocketNpc( oCNpc* npc );
     void GetPickpocketInfos();
     bool KnowStateFunc( zCVob* vob );

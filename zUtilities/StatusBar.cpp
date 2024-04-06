@@ -45,72 +45,30 @@ namespace GOTHIC_ENGINE {
   }
 
   bool StatusBar::Init() {
-    if ( bar == ogame->focusBar )
-      return true;
-
-    if ( bar == ogame->hpBar ) {
-      symbols.Insert( "NAME_BONUS_HP_FULL" ); // Full Heal
-      symbols.Insert( "NAME_BONUS_HP_PERC" ); // Percentage Heal
-      symbols.Insert( "NAME_BONUS_HP" ); // Flat Heal
-      if ( Options::StatusBarNames.GetNum() >= 1 )
-        name = Z Options::StatusBarNames[0];
-
-      if ( Options::HealthBarPos.GetNum() == 4 )
-        userPos = Options::HealthBarPos;
-
-      return true;
-    }
-
-    if ( bar == ogame->manaBar ) {
-      symbols.Insert( "NAME_BONUS_MANA_FULL" ); // Full Heal
-      symbols.Insert( "NAME_BONUS_MANA_PERC" ); // Percentage Heal
-      symbols.Insert( "NAME_BONUS_MANA" ); // Flat Heal
-      if ( Options::StatusBarNames.GetNum() >= 2 )
-        name = Z Options::StatusBarNames[1];
-
-      if ( Options::ManaBarPos.GetNum() == 4 )
-        userPos = Options::ManaBarPos;
-
-      return true;
-    }
-
-    if ( bar == ogame->swimBar ) {
-      if ( Options::StatusBarNames.GetNum() >= 3 )
-        name = Z Options::StatusBarNames[2];
-
-      if ( Options::SwimBarPos.GetNum() == 4 )
-        userPos = Options::SwimBarPos;
-
-      return true;
-    }
-
-    return false;
+   return false;
   }
 
-  int StatusBar::GetHealValue() {
-    if ( !player->inventory2.IsOpen() )
-      return 0;
+  int StatusBar::GetRestoreValue() {
+	  if (restoreAttribute == -1)
+		  return 0;
 
-    if ( (int)bar->currentValue == (int)bar->maxHigh )
-      return 0;
+	  if (!player->inventory2.IsOpen())
+		  return 0;
 
-    oCItem* item = player->inventory2.GetSelectedItem();
-    if ( !item )
-      return 0;
+	  if ((int)bar->currentValue == (int)bar->maxHigh)
+		  return 0;
 
-    if ( !item->onState[0] )
-      return 0;
+	  oCItem* item = player->inventory2.GetSelectedItem();
+	  if (!item)
+		  return 0;
 
-    if ( !item->HasFlag( ITM_CAT_FOOD ) && !item->HasFlag( ITM_CAT_POTION ) )
-      return 0;
+	  if (!item->onState[0])
+		  return 0;
 
-    if ( bar == ogame->hpBar )
-      return GetValueFromItem( item, NPC_ATR_HITPOINTSMAX );
+	  if (!item->HasFlag(ITM_CAT_FOOD) && !item->HasFlag(ITM_CAT_POTION))
+		  return 0;
 
-    if ( bar == ogame->manaBar )
-      return GetValueFromItem( item, NPC_ATR_MANAMAX );
-
-    return 0;
+	  return GetValueFromItem(item, restoreAttribute);
   }
 
   void StatusBar::DrawPrediction( int value ) {
@@ -134,7 +92,7 @@ namespace GOTHIC_ENGINE {
     bar->range_bar->InsertItem( predictView );
   }
 
-  void StatusBar::PredictHeal() {
+  void StatusBar::PredictRestore() {
     if ( !Options::RecoveryVisualization )
       return;
 
@@ -143,11 +101,15 @@ namespace GOTHIC_ENGINE {
     if ( !IsBarActive() )
       return;
 
-    int value = GetHealValue();
+    int value = GetRestoreValue();
     if ( value <= 0 )
       return;
 
     DrawPrediction( value );
+  }
+
+  zSTRING StatusBar::GetBarValue() {
+	  return Z(int)bar->currentValue + "/" + Z(int)bar->maxHigh;
   }
 
   void StatusBar::PrintValue( oCNpc* npc ) {
@@ -161,14 +123,12 @@ namespace GOTHIC_ENGINE {
 
     valueView = new zCView( 0, 0, 8192, 8192 );
 
-    zSTRING str;
-    if ( bar == ogame->swimBar )
-      str = Z( int )(bar->currentValue / 100) + "/" + Z( int )(bar->maxHigh / 100);
-    else
-      str = Z( int )bar->currentValue + "/" + Z( int )bar->maxHigh;
+    auto str =  GetBarValue();
 
-    if ( name && name.Length() )
-      str = name + ": " + str;
+
+    if (name && name.Length()) {
+        str = name + ": " + str;
+    }
 
     zCView* ownerView = (Options::StatusBarValueMode == Inside) ? bar->range_bar : screen;
     ownerView->InsertItem( valueView );
@@ -179,7 +139,7 @@ namespace GOTHIC_ENGINE {
       int y = bar->vposy;
       bool center = false;
 
-      if ( bar == ogame->focusBar && Options::ShowEnemyBarAboveHim )
+      if (ShouldReverseValuePos())
         y -= offsetY;
       else if ( Options::StatusBarValueMode == Above )
         center = true;
@@ -203,32 +163,9 @@ namespace GOTHIC_ENGINE {
 
     valueView->PrintCXY( str );
   }
-
-  void StatusBar::MoveFocusBar( int x, int y, oCNpc* npc ) {
-    if ( !Options::ShowEnemyBarAboveHim )
-      return;
-
-    if ( bar != ogame->focusBar )
-      return;
-
-    if ( !IsBarActive() )
-      return;
-
-    zCCamera* cam = ogame->GetCamera();
-    zVEC3 viewPos = cam->GetTransform( zTCamTrafoType::zCAM_TRAFO_VIEW ) * npc->GetPositionWorld();
-    int posx, posy;
-    cam->Project( &viewPos, posx, posy );
-    if ( viewPos[VZ] <= cam->nearClipZ )
-      return;
-
-    x = x + screen->FontSize( npc->name[0] ) / 2 - bar->vsizex / 2;
-    if ( x + bar->vsizex > 8192 )
-      x = 8192 - bar->vsizex;
-
-    x = max( 0, x );
-    y = max( 0, y - screen->FontY() * 1.75 );
-
-    bar->SetPos( x, y );
+  
+  bool StatusBar::ShouldReverseValuePos() {
+      return false;
   }
 
   void StatusBar::ChangeBarPos() {
@@ -254,15 +191,6 @@ namespace GOTHIC_ENGINE {
     bar->SetSize( x2, y2 );
   }
 
-  bool StatusBar::NeedAdjustPosition( int x, int y, oCNpc* npc ) {
-    if ( !ogame->focusBar || !npc || npc->attribute[NPC_ATR_HITPOINTS] <= 0 )
-      return false;
-
-    playerStatus.focusBar->MoveFocusBar( x, y, npc );
-    playerStatus.focusBar->PrintValue( npc );
-    return Options::ShowEnemyBarAboveHim;
-  }
-
   void StatusBar::Clear() {
     if ( !bar )
       return;
@@ -271,22 +199,16 @@ namespace GOTHIC_ENGINE {
     del( predictView );
   }
 
+  bool StatusBar::CanLoop() {
+      return ogame && player && bar;
+  }
+
   void StatusBar::Loop() {
-    if ( !ogame || !player )
+    if (!CanLoop())
       return;
-
-    if ( !bar )
-      return;
-
-    if ( bar == ogame->focusBar ) {
-      if ( valueView )
-        valueView->ClrPrintwin();
-
-      return;
-    }
 
     ChangeBarPos();
-    PredictHeal();
+    PredictRestore();
     PrintValue( player );
   }
 

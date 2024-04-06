@@ -30,7 +30,7 @@ namespace GOTHIC_ENGINE {
       Misc();
       LogBook();
       PlayerStatus();
-      StatusBar();
+      LoadStatusBarSettings();
       QuickSave();
       FocusColor();
       ItemLabel();

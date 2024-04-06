@@ -900,6 +900,22 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="FocusStatusBar.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="FocusStatusBar.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="HealthStatusBar.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="HealthStatusBar.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="IconInfo.cpp">
       <SubType>
       </SubType>
@@ -932,6 +948,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ManaStatusBar.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ManaStatusBar.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Meatbug.cpp">
       <SubType>
       </SubType>
@@ -941,6 +965,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Misc.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SwimStatusBar.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SwimStatusBar.h">
       <SubType>
       </SubType>
     </ClInclude>
