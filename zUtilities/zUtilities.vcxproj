@@ -968,6 +968,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="NpcHelper.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="NpcHelper.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="SwimStatusBar.cpp">
       <SubType>
       </SubType>

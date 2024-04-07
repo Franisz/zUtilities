@@ -2,17 +2,24 @@
 // Union HEADER file
 
 namespace GOTHIC_ENGINE {
+	enum FocusStatusProtectionPlacement
+	{
+		NONE = 0,
+		TOP = 1,
+		RIGHT = 2
+	};
+
 	class FocusStatusBar : public StatusBar {
 	private:
 		zCView* protView;
 		void MoveFocusBar(int x, int y, oCNpc* npc);
 		bool TryShowProt(oCNpc* npc);
-		bool protRendered;
-		int RenderProtectionIcon(oCNpc* npc, oEIndexDamage damageIndex, int offset);
 		int GetProtMargin();
 		int GetProtSize();
-		int GetProtStartX();
-		int GetProtStartY();
+		int GetProtStartX(FocusStatusProtectionPlacement placement);
+		int GetProtStartY(FocusStatusProtectionPlacement placement);
+		int CalcProtRenderWidth(std::vector<NpcProtectionStatus> statuses);
+		FocusStatusProtectionPlacement GetProtPlacement(oCNpc* npc);
 		virtual void PrintValueOutside(zSTRING str, oCNpc* npc) override;
 
 	public:

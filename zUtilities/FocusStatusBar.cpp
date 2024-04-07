@@ -2,15 +2,6 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-	const int PROTECTION_DAMAGE_INDEXES[] = {
-		oEIndexDamage::oEDamageIndex_Edge,
-		oEIndexDamage::oEDamageIndex_Blunt,
-		oEIndexDamage::oEDamageIndex_Point,
-		oEIndexDamage::oEDamageIndex_Fire,
-		oEIndexDamage::oEDamageIndex_Magic,
-		oEIndexDamage::oEDamageIndex_Fly,
-		oEIndexDamage::oEDamageIndex_Fall
-	};
 
 	FocusStatusBar::FocusStatusBar() : StatusBar(ogame->focusBar)
 	{
@@ -38,92 +29,119 @@ namespace GOTHIC_ENGINE {
 		return protView->FontY() * 0.75f;
 	}
 
-	int FocusStatusBar::GetProtStartX() {
-		if (Options::ShowCurrWeapProtOnly) {
-			return bar->vposx + bar->vsizex;
+	int FocusStatusBar::GetProtStartX(FocusStatusProtectionPlacement placement) {
+		if (placement == FocusStatusProtectionPlacement::TOP) {
+			return bar->vposx;
 		}
 
-		return bar->vposx;
+		return bar->vposx + bar->vsizex;
 	}
 
-	int FocusStatusBar::GetProtStartY() {
-		if (Options::ShowCurrWeapProtOnly) {
-			return bar->vposy + bar->vsizey / 2 - GetProtSize();
+	FocusStatusProtectionPlacement FocusStatusBar::GetProtPlacement(oCNpc* npc)
+	{
+		auto count = npcHelper.GetProtectionStatusesVisibleCount(npc);
+		if (count <= 0) {
+			return FocusStatusProtectionPlacement::NONE;
 		}
 
-		return bar->vposy - GetProtMargin() - GetProtSize() - bar->vsizey;
+		if (count == 1) {
+			return FocusStatusProtectionPlacement::RIGHT;
+		}
+
+		return FocusStatusProtectionPlacement::TOP;
 	}
 
-	int FocusStatusBar::RenderProtectionIcon(oCNpc* npc, oEIndexDamage damageIndex, int offset) {
-		const zSTRING texture = "ICON_PROTECTIONS"; // https://game-icons.net/1x1/lorc/cracked-shield.html
-
-		int margin = GetProtMargin();
-		int size = GetProtSize();
-		int startX = GetProtStartX();
-		int iconY = GetProtStartY();
-
-		int protection = npc->GetProtectionByIndex(damageIndex);
-		bool isImmune = protection < 0 || npc->HasFlag(NPC_FLAG_IMMORTAL);
-		if (!Options::ShowCurrWeapProtOnly && protection <= 0) {
-			return 0;
+	int FocusStatusBar::GetProtStartY(FocusStatusProtectionPlacement placement) {
+		if (placement == FocusStatusProtectionPlacement::TOP) {
+			return bar->vposy - GetProtMargin() - GetProtSize() - bar->vsizey;
 		}
 
-		zSTRING protectionText = !isImmune ? zSTRING(protection) : "";
-		bool textCenter = !Options::ShowCurrWeapProtOnly;
-		zCOLOR color = isImmune ? Colors::Gray : Colors::GetColorByDamageIndex(damageIndex);
-		if (ogame->hpBar)
-		{
-			color.alpha = ogame->hpBar->alpha;
-		}
-
-		auto icon = IconInfo(startX + offset + margin, iconY, size, color, texture, protectionText);
-
-		return icon.GetSize() + margin;
+		return bar->vposy + bar->vsizey / 2 - GetProtSize();
 	}
 
 	void FocusStatusBar::PrintValueOutside(zSTRING str, oCNpc * npc)
 	{
+		auto protPlacement = GetProtPlacement(npc);
 		int offsetY = bar->vsizey / 2 + valueView->FontY();
 		int x = bar->vposx + bar->vsizex / 2 - valueView->FontSize(str) / 2;
 		int y = bar->vposy - offsetY;
 
-		if (protRendered && !Options::ShowCurrWeapProtOnly) {
-			y = GetProtStartY() - offsetY;
+		if (protPlacement == FocusStatusProtectionPlacement::TOP) {
+			y = GetProtStartY(protPlacement) - offsetY;
 		}
 
 		valueView->SetFontColor(zCOLOR(valueView->color.r, valueView->color.g, valueView->color.b, bar->alpha));
 		valueView->Print(x, y, str);
 	}
 
+	int FocusStatusBar::CalcProtRenderWidth(std::vector<NpcProtectionStatus> statuses) {
+		int width = 0;
+		int size = GetProtSize();
+		int margin = GetProtMargin();
+		for (int i = 0; i < statuses.size(); i++)
+		{
+			auto status = statuses[i];
+			if (status.immune)
+			{
+				width += size;
+				continue;
+			}
+
+			width += size + screen->FontY() / 10 + screen->FontSize(zSTRING(status.value));
+
+			if (i + 1 != statuses.size()) {
+				width += margin;
+			}
+		}
+
+		return width;
+	}
+
 	bool FocusStatusBar::TryShowProt(oCNpc* npc) {
+		const zSTRING texture = "ICON_PROTECTIONS"; // https://game-icons.net/1x1/lorc/cracked-shield.html
+
 		if (!Options::ShowTargetProtection)
 			return false;
 
 		if (npc->attribute[NPC_ATR_HITPOINTS] <= 0)
 			return false;
 
-		if (player->IsInFightMode_S(0) && (Options::ShowProtOnlyInFight || Options::ShowCurrWeapProtOnly))
-			return false;
-
 		if (!bar)
 			return false;
 
-		if (Options::ShowCurrWeapProtOnly) {
-			int dmgIndex = player->GetActiveDamageIndex();
-			if (!dmgIndex)
+
+		auto statuses = npcHelper.GetProtectionVisibleStatuses(npc);
+		if (statuses.size() == 0) {
+			return false;
+		}
+
+		auto placement = GetProtPlacement(npc);
+		int margin = GetProtMargin();
+		int size = GetProtSize();
+		int startX = GetProtStartX(placement);
+		int startY = GetProtStartY(placement);
+		int offset = 0;
+
+		if (placement == FocusStatusProtectionPlacement::TOP)
+		{
+			startX = startX + bar->vsizex / 2 - CalcProtRenderWidth(statuses) / 2 ;
+		}
+
+		for (int i = 0; i < statuses.size(); i++) {
+			auto status = statuses[i];
+
+			auto protectionText = !status.immune ? zSTRING(status.value) : "";
+			auto color = status.immune ? Colors::Gray : Colors::GetColorByDamageIndex(status.damageIndex);
+			if (ogame->hpBar)
 			{
-				return false;
+				color.alpha = ogame->hpBar->alpha;
 			}
 
-			return RenderProtectionIcon(npc, (oEIndexDamage)dmgIndex, 0) > 0;
+			auto icon = IconInfo(startX + offset + margin, startY, size, color, texture, protectionText);
+			offset += icon.GetSize();
 		}
 
-		int offset = 0;
-		for (auto damageIndex : PROTECTION_DAMAGE_INDEXES) {
-			offset += RenderProtectionIcon(npc, (oEIndexDamage)damageIndex, offset);
-		}
-
-		return offset > 0;
+		return true;
 	}
 
 	void FocusStatusBar::MoveFocusBar(int x, int y, oCNpc* npc) {
@@ -155,7 +173,7 @@ namespace GOTHIC_ENGINE {
 			return false;
 
 		MoveFocusBar(x, y, npc);
-		protRendered = TryShowProt(npc);
+		TryShowProt(npc);
 		PrintValue(npc);
 		return Options::ShowEnemyBarAboveHim;
 	}
