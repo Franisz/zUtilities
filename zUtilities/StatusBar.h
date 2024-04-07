@@ -56,6 +56,6 @@ namespace GOTHIC_ENGINE {
 
     virtual void Loop();
     virtual bool Init();
-    void Clear();
+    virtual void Clear();
   };
 }

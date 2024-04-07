@@ -4,7 +4,9 @@
 namespace GOTHIC_ENGINE {
     class FocusStatusBar : public StatusBar {
     private:
+        zCView* protView;
         void MoveFocusBar(int x, int y, oCNpc* npc);
+        void TryShowProt(oCNpc* npc);
 
     protected:
         virtual bool ShouldReverseValuePos() override;
@@ -14,5 +16,6 @@ namespace GOTHIC_ENGINE {
         bool NeedAdjustPosition(int x, int y, oCNpc* npc);
         virtual void Loop() override;
         virtual bool Init() override;
+        virtual void Clear() override;
     };
 }
