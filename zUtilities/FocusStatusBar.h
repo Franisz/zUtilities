@@ -7,6 +7,7 @@ namespace GOTHIC_ENGINE {
         zCView* protView;
         void MoveFocusBar(int x, int y, oCNpc* npc);
         void TryShowProt(oCNpc* npc);
+        int RenderProtectionIcon(oCNpc* npc, oEIndexDamage damageIndex, int offset);
 
     protected:
         virtual bool ShouldReverseValuePos() override;

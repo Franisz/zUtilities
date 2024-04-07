@@ -41,6 +41,14 @@ namespace GOTHIC_ENGINE {
     delete view;
   }
 
+  int IconInfo::GetSize() {
+      if (!text.Length()) {
+          return vsize;
+      }
+
+      return vsize + screen->FontY() / 10 + screen->FontSize(text);
+  }
+
   IconInfo::IconInfo( int x, int y, int size, zCOLOR color, zSTRING texName, zSTRING text = "" )
     : vx( x ), vy( y ), vsize( size ), color( color ), texName( texName ), text( text ) {
     Draw();

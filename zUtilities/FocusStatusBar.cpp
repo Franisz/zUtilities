@@ -22,6 +22,36 @@ namespace GOTHIC_ENGINE {
 		del(protView);
 	}
 
+	int FocusStatusBar::RenderProtectionIcon(oCNpc* npc, oEIndexDamage damageIndex, int offset) {
+		const zSTRING texture = "ICON_PROTECTIONS"; // https://game-icons.net/1x1/lorc/cracked-shield.html
+
+		auto bar = ogame->focusBar;
+		int margin = protView->FontY() * 0.1f;
+		int size = protView->FontY() * 0.75f;
+
+		int startX = bar->vposx + bar->vsizex;
+		int iconY = bar->vposy + bar->vsizey / 2 - size;
+
+		int fontY = bar->vposy + bar->vsizey / 2 - protView->FontY() / 2;
+		int protection = npc->GetProtectionByIndex(damageIndex);
+		bool isImmune = protection < 0 || npc->HasFlag(NPC_FLAG_IMMORTAL);
+		if (!Options::ShowCurrWeapProtOnly && protection <= 0) {
+			return 0;
+		}
+
+		zSTRING protectionText = !isImmune ? zSTRING(protection) : "";
+		bool textCenter = !Options::ShowCurrWeapProtOnly;
+		zCOLOR color = isImmune ? Colors::Gray : Colors::GetColorByDamageIndex(damageIndex);
+		if (ogame->hpBar)
+		{
+			color.alpha = ogame->hpBar->alpha;
+		}
+
+		auto icon = IconInfo(startX + offset + margin, iconY, size, color, texture, protectionText);
+
+		return icon.GetSize() + margin;
+	}
+
 	void FocusStatusBar::TryShowProt(oCNpc* npc) {
 		if (!Options::ShowTargetProtection)
 			return;
@@ -29,38 +59,38 @@ namespace GOTHIC_ENGINE {
 		if (npc->attribute[NPC_ATR_HITPOINTS] <= 0)
 			return;
 
-		if (player->IsInFightMode_S(0))
+		if (player->IsInFightMode_S(0) && (Options::ShowProtOnlyInFight || Options::ShowCurrWeapProtOnly))
 			return;
+
+		oCViewStatusBar* bar = ogame->focusBar;
 
 		if (!bar)
 			return;
 
-		int dmgIndex = player->GetActiveDamageIndex();
-		if (!dmgIndex)
+		if (Options::ShowCurrWeapProtOnly) {
+			int dmgIndex = player->GetActiveDamageIndex();
+			if (!dmgIndex)
+			{
+				return;
+			}
+
+			RenderProtectionIcon(npc, (oEIndexDamage)dmgIndex, 0);
 			return;
+		}
 
-		int protection = npc->GetProtectionByIndex((oEIndexDamage)dmgIndex);
-		bool isImmune = protection < 0 || npc->HasFlag(NPC_FLAG_IMMORTAL);
+		const int damageIndexes[] = {
+				oEIndexDamage::oEDamageIndex_Edge,
+				oEIndexDamage::oEDamageIndex_Blunt,
+				oEIndexDamage::oEDamageIndex_Point,
+				oEIndexDamage::oEDamageIndex_Fire,
+				oEIndexDamage::oEDamageIndex_Magic,
+				oEIndexDamage::oEDamageIndex_Fly,
+				oEIndexDamage::oEDamageIndex_Fall
+		};
 
-		int margin = protView->FontY() * 0.1f;
-		int size = protView->FontY() * 0.75f;
-
-		int startX = bar->vposx + bar->vsizex;
-		int iconY = bar->vposy + bar->vsizey / 2 - size;
-		int fontY = bar->vposy + bar->vsizey / 2 - protView->FontY() / 2;
-
-		int iconNr = 1;
-
-		zCOLOR color = isImmune ? Colors::Gray : Colors::GetColorByDamageIndex((oEIndexDamage)dmgIndex);
-		if (ogame->hpBar)
-			color.alpha = ogame->hpBar->alpha;
-
-		zSTRING texture = "ICON_PROTECTIONS"; // https://game-icons.net/1x1/lorc/cracked-shield.html
-		IconInfo icon = IconInfo(startX + margin * iconNr + size * (iconNr++ - 1), iconY, size, color, texture);
-
-		if (!isImmune) {
-			protView->SetFontColor(color);
-			protView->Print(startX + margin * iconNr + size * (iconNr++ - 1), fontY, A protection);
+		int offset = 0;
+		for (auto damageIndex : damageIndexes) {
+			offset += RenderProtectionIcon(npc, (oEIndexDamage)damageIndex, offset);
 		}
 	}
 
