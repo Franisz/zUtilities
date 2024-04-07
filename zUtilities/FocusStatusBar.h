@@ -7,12 +7,12 @@ namespace GOTHIC_ENGINE {
         void MoveFocusBar(int x, int y, oCNpc* npc);
 
     protected:
-        virtual bool Init() override;
         virtual bool ShouldReverseValuePos() override;
 
     public:
         FocusStatusBar();
         bool NeedAdjustPosition(int x, int y, oCNpc* npc);
         virtual void Loop() override;
+        virtual bool Init() override;
     };
 }

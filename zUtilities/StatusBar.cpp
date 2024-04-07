@@ -45,7 +45,7 @@ namespace GOTHIC_ENGINE {
   }
 
   bool StatusBar::Init() {
-   return false;
+	  return false;
   }
 
   int StatusBar::GetRestoreValue() {
@@ -214,9 +214,6 @@ namespace GOTHIC_ENGINE {
 
   StatusBar::StatusBar( oCViewStatusBar* bar ) {
     this->bar = bar;
-
-    if ( !Init() )
-      return;
 
     if ( Options::StatusBarValueMode == Inside && !playerHelper.GetSysScale() )
       this->bar->vsizey *= 1.15;

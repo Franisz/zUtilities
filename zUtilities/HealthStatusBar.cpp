@@ -2,11 +2,6 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-	HealthStatusBar::HealthStatusBar() : StatusBar(ogame->hpBar)
-	{
-        restoreAttribute = NPC_ATR_HITPOINTSMAX;
-	}
-
 	bool HealthStatusBar::Init() {
         symbols.Insert("NAME_BONUS_HP_FULL"); // Full Heal
         symbols.Insert("NAME_BONUS_HP_PERC"); // Percentage Heal
@@ -19,4 +14,9 @@ namespace GOTHIC_ENGINE {
 
         return true;
 	}
+
+    HealthStatusBar::HealthStatusBar() : StatusBar(ogame->hpBar)
+    {
+        restoreAttribute = NPC_ATR_HITPOINTSMAX;
+    }
 }

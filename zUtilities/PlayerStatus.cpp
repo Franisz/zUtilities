@@ -301,16 +301,28 @@ namespace GOTHIC_ENGINE {
 
   void PlayerStatus::StatusBars() {
    if ( !hpBar )
-      hpBar = new HealthStatusBar();
+   {
+       hpBar = new HealthStatusBar();
+       hpBar->Init();
+   }
 
     if ( !manaBar )
-      manaBar = new ManaStatusBar();
+    {
+        manaBar = new ManaStatusBar();
+        manaBar->Init();
+    }
 
     if ( !focusBar )
-      focusBar = new FocusStatusBar();
+    {
+        focusBar = new FocusStatusBar();
+        focusBar->Init();
+    }
 
     if ( !swimBar )
-      swimBar = new SwimStatusBar();
+    {
+        swimBar = new SwimStatusBar();
+        swimBar->Init();
+    }
 
     hpBar->Loop();
     manaBar->Loop();

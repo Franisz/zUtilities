@@ -5,10 +5,10 @@ namespace GOTHIC_ENGINE {
 	class SwimStatusBar : public StatusBar {
 
 	protected:
-		virtual bool Init() override;
 		virtual zSTRING GetBarValue() override;
 
 	public:
 		SwimStatusBar();
+		virtual bool Init() override;
 	};
 }

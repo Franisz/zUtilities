@@ -3,11 +3,8 @@
 
 namespace GOTHIC_ENGINE {
 	class HealthStatusBar : public StatusBar {
-
-	protected:
-		virtual bool Init() override;
-
 	public:
 		HealthStatusBar();
+		virtual bool Init() override;
 	};
 }

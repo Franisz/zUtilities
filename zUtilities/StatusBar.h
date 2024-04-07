@@ -42,7 +42,6 @@ namespace GOTHIC_ENGINE {
       void PrintValue(oCNpc* npc);
       bool IsBarActive();
       StatusBar(oCViewStatusBar* bar);
-      virtual bool Init();
       virtual zSTRING GetBarValue();
       bool CanLoop();
       virtual bool ShouldReverseValuePos();
@@ -56,6 +55,7 @@ namespace GOTHIC_ENGINE {
     };
 
     virtual void Loop();
+    virtual bool Init();
     void Clear();
   };
 }
