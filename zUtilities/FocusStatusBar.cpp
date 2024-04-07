@@ -2,13 +2,21 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
+	const int PROTECTION_DAMAGE_INDEXES[] = {
+		oEIndexDamage::oEDamageIndex_Edge,
+		oEIndexDamage::oEDamageIndex_Blunt,
+		oEIndexDamage::oEDamageIndex_Point,
+		oEIndexDamage::oEDamageIndex_Fire,
+		oEIndexDamage::oEDamageIndex_Magic,
+		oEIndexDamage::oEDamageIndex_Fly,
+		oEIndexDamage::oEDamageIndex_Fall
+	};
+
 	FocusStatusBar::FocusStatusBar() : StatusBar(ogame->focusBar)
 	{
 	}
 
 	bool FocusStatusBar::Init() {
-		protView = new zCView(0, 0, 8192, 8192);
-		screen->InsertItem(protView);
 		return true;
 	}
 
@@ -22,17 +30,38 @@ namespace GOTHIC_ENGINE {
 		del(protView);
 	}
 
+	int FocusStatusBar::GetProtMargin() {
+		return protView->FontY() * 0.1f;
+	}
+
+	int FocusStatusBar::GetProtSize() {
+		return protView->FontY() * 0.75f;
+	}
+
+	int FocusStatusBar::GetProtStartX() {
+		if (Options::ShowCurrWeapProtOnly) {
+			return bar->vposx + bar->vsizex;
+		}
+
+		return bar->vposx;
+	}
+
+	int FocusStatusBar::GetProtStartY() {
+		if (Options::ShowCurrWeapProtOnly) {
+			return bar->vposy + bar->vsizey / 2 - GetProtSize();
+		}
+
+		return bar->vposy - GetProtMargin() - GetProtSize() - bar->vsizey;
+	}
+
 	int FocusStatusBar::RenderProtectionIcon(oCNpc* npc, oEIndexDamage damageIndex, int offset) {
 		const zSTRING texture = "ICON_PROTECTIONS"; // https://game-icons.net/1x1/lorc/cracked-shield.html
 
-		auto bar = ogame->focusBar;
-		int margin = protView->FontY() * 0.1f;
-		int size = protView->FontY() * 0.75f;
+		int margin = GetProtMargin();
+		int size = GetProtSize();
+		int startX = GetProtStartX();
+		int iconY = GetProtStartY();
 
-		int startX = bar->vposx + bar->vsizex;
-		int iconY = bar->vposy + bar->vsizey / 2 - size;
-
-		int fontY = bar->vposy + bar->vsizey / 2 - protView->FontY() / 2;
 		int protection = npc->GetProtectionByIndex(damageIndex);
 		bool isImmune = protection < 0 || npc->HasFlag(NPC_FLAG_IMMORTAL);
 		if (!Options::ShowCurrWeapProtOnly && protection <= 0) {
@@ -52,46 +81,49 @@ namespace GOTHIC_ENGINE {
 		return icon.GetSize() + margin;
 	}
 
-	void FocusStatusBar::TryShowProt(oCNpc* npc) {
+	void FocusStatusBar::PrintValueOutside(zSTRING str, oCNpc * npc)
+	{
+		int offsetY = bar->vsizey / 2 + valueView->FontY();
+		int x = bar->vposx + bar->vsizex / 2 - valueView->FontSize(str) / 2;
+		int y = bar->vposy - offsetY;
+
+		if (protRendered && !Options::ShowCurrWeapProtOnly) {
+			y = GetProtStartY() - offsetY;
+		}
+
+		valueView->SetFontColor(zCOLOR(valueView->color.r, valueView->color.g, valueView->color.b, bar->alpha));
+		valueView->Print(x, y, str);
+	}
+
+	bool FocusStatusBar::TryShowProt(oCNpc* npc) {
 		if (!Options::ShowTargetProtection)
-			return;
+			return false;
 
 		if (npc->attribute[NPC_ATR_HITPOINTS] <= 0)
-			return;
+			return false;
 
 		if (player->IsInFightMode_S(0) && (Options::ShowProtOnlyInFight || Options::ShowCurrWeapProtOnly))
-			return;
-
-		oCViewStatusBar* bar = ogame->focusBar;
+			return false;
 
 		if (!bar)
-			return;
+			return false;
 
 		if (Options::ShowCurrWeapProtOnly) {
 			int dmgIndex = player->GetActiveDamageIndex();
 			if (!dmgIndex)
 			{
-				return;
+				return false;
 			}
 
-			RenderProtectionIcon(npc, (oEIndexDamage)dmgIndex, 0);
-			return;
+			return RenderProtectionIcon(npc, (oEIndexDamage)dmgIndex, 0) > 0;
 		}
-
-		const int damageIndexes[] = {
-				oEIndexDamage::oEDamageIndex_Edge,
-				oEIndexDamage::oEDamageIndex_Blunt,
-				oEIndexDamage::oEDamageIndex_Point,
-				oEIndexDamage::oEDamageIndex_Fire,
-				oEIndexDamage::oEDamageIndex_Magic,
-				oEIndexDamage::oEDamageIndex_Fly,
-				oEIndexDamage::oEDamageIndex_Fall
-		};
 
 		int offset = 0;
-		for (auto damageIndex : damageIndexes) {
+		for (auto damageIndex : PROTECTION_DAMAGE_INDEXES) {
 			offset += RenderProtectionIcon(npc, (oEIndexDamage)damageIndex, offset);
 		}
+
+		return offset > 0;
 	}
 
 	void FocusStatusBar::MoveFocusBar(int x, int y, oCNpc* npc) {
@@ -123,18 +155,18 @@ namespace GOTHIC_ENGINE {
 			return false;
 
 		MoveFocusBar(x, y, npc);
+		protRendered = TryShowProt(npc);
 		PrintValue(npc);
-		TryShowProt(npc);
-		return Options::ShowEnemyBarAboveHim;
-	}
-
-	bool FocusStatusBar::ShouldReverseValuePos() {
 		return Options::ShowEnemyBarAboveHim;
 	}
 
 	void FocusStatusBar::Loop() {
 		if (protView) {
 			protView->ClrPrintwin();
+		}
+		else {
+			protView = new zCView(0, 0, 8192, 8192);
+			screen->InsertItem(protView);
 		}
 
 		if (valueView) {

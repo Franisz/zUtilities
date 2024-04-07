@@ -44,3 +44,7 @@ namespace GOTHIC_ENGINE {
 
   FocusColor focusColor;
 }
+
+
+
+

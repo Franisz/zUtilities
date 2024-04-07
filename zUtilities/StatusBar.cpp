@@ -134,38 +134,36 @@ namespace GOTHIC_ENGINE {
     ownerView->InsertItem( valueView );
 
     if ( Options::StatusBarValueMode != Inside ) {
-      int offsetY = bar->vsizey / 2 + valueView->FontY();
-      int x = bar->vposx + bar->vsizex / 2 - valueView->FontSize( str ) / 2;
-      int y = bar->vposy;
-      bool center = false;
-
-      if (ShouldReverseValuePos())
-        y -= offsetY;
-      else if ( Options::StatusBarValueMode == Above )
-        center = true;
-      else if ( bar->vposx + bar->vsizex < 3072 )
-        x = bar->vposx + bar->vsizex + valueView->FontY() / 2;
-      else if ( bar->vposx > 5120 )
-        x = bar->vposx - valueView->FontSize( str ) - valueView->FontY() / 2;
-      else
-        center = true;
-
-      if ( center )
-        if ( bar->vposy + bar->vsizey > 4092 )
-          y -= offsetY;
-        else
-          y += offsetY;
-
-      valueView->SetFontColor( zCOLOR( valueView->color.r, valueView->color.g, valueView->color.b, bar->alpha ) );
-      valueView->Print( x, y, str );
-      return;
+        PrintValueOutside(str, npc);
+        return;
     }
 
     valueView->PrintCXY( str );
   }
-  
-  bool StatusBar::ShouldReverseValuePos() {
-      return false;
+
+  void StatusBar::PrintValueOutside(zSTRING str, oCNpc* npc) {
+      int offsetY = bar->vsizey / 2 + valueView->FontY();
+      int x = bar->vposx + bar->vsizex / 2 - valueView->FontSize(str) / 2;
+      int y = bar->vposy;
+      bool center = false;
+
+      if (Options::StatusBarValueMode == Above)
+          center = true;
+      else if (bar->vposx + bar->vsizex < 3072)
+          x = bar->vposx + bar->vsizex + valueView->FontY() / 2;
+      else if (bar->vposx > 5120)
+          x = bar->vposx - valueView->FontSize(str) - valueView->FontY() / 2;
+      else
+          center = true;
+
+      if (center)
+          if (bar->vposy + bar->vsizey > 4092)
+              y -= offsetY;
+          else
+              y += offsetY;
+
+      valueView->SetFontColor(zCOLOR(valueView->color.r, valueView->color.g, valueView->color.b, bar->alpha));
+      valueView->Print(x, y, str);
   }
 
   void StatusBar::ChangeBarPos() {
