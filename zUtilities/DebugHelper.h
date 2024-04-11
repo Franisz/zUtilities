@@ -4,24 +4,27 @@
 namespace GOTHIC_ENGINE {
   namespace Options {
     bool UsingDebugHelper = false;
+    bool ShowTriggers = false;
   }
 
   class DebugHelper {
   private:
     zCView* mainView;
-    zCView* textView;
-    zCView* sideView;
+    zCView* leftView;
+    zCView* rightView;
 
-    int textLines;
+    int textLinesLeft;
+    int textLinesRight;
     int textHeight;
     int margin;
 
     void InfoNpc( oCNpc* npc );
     void InfoItem( oCItem* item );
     void InfoMob( oCMOB* mob );
-    void AddSeparator( zSTRING str = "" );
+    void AddSeparator( zCView* view, zSTRING str = "" );
     void Print( zCView* view, zSTRING name, zSTRING value );
     bool TryPrintInfo();
+    void ShowTriggerBoxes();
 
   public:
     void Clear();

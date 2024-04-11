@@ -6,6 +6,7 @@ namespace GOTHIC_ENGINE {
     bool ShowGameTime, ShowMunitionAmount, ShowTargetProtection, ShowPickpocketIcon, UseTimeMultiplier;
     int KeyTimeMultiplier;
     Array<float> TimeMultipliers;
+    int SaveReminder;
 
     void PlayerStatus() {
       ShowGameTime = zoptions->ReadBool( PLUGIN_NAME, "ShowGameTime", false );
@@ -22,6 +23,8 @@ namespace GOTHIC_ENGINE {
       TimeMultipliers.Clear();
       for ( int i = 0; i < MulStrings.GetNum(); i++ )
         TimeMultipliers.Insert( MulStrings[i].Shrink().ToReal32() );
+
+      SaveReminder = zoptions->ReadInt(PLUGIN_NAME, "SaveReminder", 5);
     }
   }
 
@@ -32,9 +35,11 @@ namespace GOTHIC_ENGINE {
     StatusBar* swimBar;
     int multiplierIndex = 0;
     int infoIcons = 0;
+    std::chrono::high_resolution_clock::time_point lastSaveTime;
 
     void ShowGameTime();
     void ShowMunitionAmount();
+    void ShowSaveReminder();
     void StatusBars();
     void FactorMotion();
 
@@ -47,9 +52,11 @@ namespace GOTHIC_ENGINE {
     StatusBar* focusBar;
     bool CanPickpocketNpc( oCNpc* npc );
     void GetPickpocketInfos();
+    bool CanChangeZtimer();
     bool KnowStateFunc( zCVob* vob );
     void TryAddStateFunc( zCVob* vob );
     void ResetTimeMultiplier();
+    void ResetSaveReminder();
     void Clear();
     void Loop();
     void Archive( zCArchiver* ar );

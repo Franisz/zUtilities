@@ -122,7 +122,11 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
 - Insert all items into inventory with `zutilities giveallitems` command.
 
-- Check currently used plugin version through in game console with `zutilities version` command.
+- Check currently used plugin version through in game console with `zutilities version` command.  
+  
+- Reminds the player to save the game by displaying an icon with a timer after playing without saving the game for too long.
+  - By default, it reminds the player after 5 minutes since the last save game. It can be changed in `gothic.ini` with `SaveReminder` option.
+  - It can be turned off by setting `SaveReminder` to `-1`
 
 ### Options
 
@@ -174,6 +178,10 @@ KeyTimeMultiplier=KEY_Z
 
 TimeMultipliers=1.0|2.5
 ; ... defines time multipliers
+
+SaveReminder=5
+; ... Time in minutes after which the reminder to save the game appears on the screen
+; ... set to -1 to disable
 
 RecoveryVisualization=1
 ; ... enables (1) or disables (0) visualization of healing that hovered in the inventory item gives

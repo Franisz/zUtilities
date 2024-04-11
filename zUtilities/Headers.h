@@ -2,6 +2,7 @@
 // Add your headers this
 
 // Automatically generated block
+#include <chrono>
 #pragma region Includes
 #include "Const.h"
 #include "Colors.h"
