@@ -14,4 +14,28 @@ namespace GOTHIC_ENGINE {
       a.top <= b.bottom &&
       b.top <= a.bottom);
   }
+
+  string GetArchivePath( string sav ) {
+    int slotID = SaveLoadGameInfo.slotID;
+    string savesDir = zoptions->GetDirString( zTOptionPaths::DIR_SAVEGAMES );
+    string slotDir = SaveLoadGameInfo.GetSaveSlotName( SaveLoadGameInfo.slotID );
+    string archivePath = string::Combine( "%s\\%s\\%s\.sav", savesDir, slotDir, sav );
+    return archivePath;
+  }
+
+  zSTRING GetAttributeName( int att ) {
+    switch ( att )
+    {
+    case NPC_ATR_HITPOINTSMAX:
+      return "HP";
+    case NPC_ATR_MANAMAX:
+      return "MANA";
+    case NPC_ATR_STRENGTH:
+      return "STR";
+    case NPC_ATR_DEXTERITY:
+      return "DEX";
+    default:
+      return "<Unknown>";
+    }
+  }
 }

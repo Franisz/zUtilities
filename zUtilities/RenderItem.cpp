@@ -13,6 +13,11 @@ namespace GOTHIC_ENGINE {
     THISCALL( Hook_CMovementTracker_UpdatePlayerPos )(position);
   }
 
+  zCWorld* renderWld = nullptr;
+  zCViewBase* renderView = nullptr;
+  float renderRotate = 0;
+  bool renderNow = false;
+
   HOOK Hook_oCItem_RenderItem PATCH( &oCItem::RenderItem, &oCItem::RenderItem_Union );
   void oCItem::RenderItem_Union( zCWorld* wld, zCViewBase* view, float rotate ) {
     if ( Options::CenterInvItems ) {
@@ -27,6 +32,13 @@ namespace GOTHIC_ENGINE {
 
         zCView* itemView = static_cast<zCView*>(view);
         IsCenterItem = true;
+
+        if ( !renderNow ) {
+          renderWld = wld;
+          renderView = view;
+          renderRotate = rotate;
+          return;
+        }
 
         // Item scale
         float scale = 2.5;
@@ -51,6 +63,7 @@ namespace GOTHIC_ENGINE {
           RotateForInventory( 1 );
         }
 #endif
+        renderNow = false;
       }
 
 #if ENGINE >= Engine_G2
@@ -64,13 +77,33 @@ namespace GOTHIC_ENGINE {
     if ( Options::LabelItems ) {
       if ( !Options::PutLabelBehind ) {
         THISCALL( Hook_oCItem_RenderItem )(wld, view, rotate);
-        new ItemLabel( this, view );
+        ItemLabel label = ItemLabel( this, view );
         return;
       }
 
-      new ItemLabel( this, view );
+      ItemLabel label = ItemLabel( this, view );
     }
 
     THISCALL( Hook_oCItem_RenderItem )(wld, view, rotate);
+  }
+
+  void RenderSelectedItem() {
+    if ( !Options::CenterInvItems )
+      return;
+
+    if ( player->inventory2.IsOpen() ) {
+      oCItemContainer* leftInv = player->inventory2.GetNextContainerLeft( &player->inventory2 );
+      oCItem* item = (leftInv && leftInv->IsActive()) ? leftInv->GetSelectedItem() : player->inventory2.GetSelectedItem();
+
+      renderNow = true;
+      if ( item && renderWld && renderView ) {
+        item->RenderItem( renderWld, renderView, renderRotate );
+        zrenderer->SetViewport( 0, 0, zrenderer->vid_xdim, zrenderer->vid_ydim );
+      }
+    }
+
+    renderWld = nullptr;
+    renderView = nullptr;
+    renderRotate = 0;
   }
 }

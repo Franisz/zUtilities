@@ -3,3 +3,4 @@
 // User API for zCArchiver
 // Add your methods here
 
+int ReadIntSafe( char const* text );

@@ -3,11 +3,14 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int UseQuickSave, MinSaveSlot, MaxSaveSlot;
+    int QuickSaveMode, UseBinarySave, KeyQuickSave, KeyQuickLoad, MinSaveSlot, MaxSaveSlot;
     string CantSave, CantLoad, NoSave, SaveName;
 
     void QuickSave() {
-      UseQuickSave = zoptions->ReadInt( PLUGIN_NAME, "UseQuickSave", true );
+      QuickSaveMode = zoptions->ReadInt( PLUGIN_NAME, "QuickSaveMode", 1 );
+
+      KeyQuickSave = GetEmulationKeyCode( zoptions->ReadString( PLUGIN_NAME, "KeyQuickSave", "KEY_F10" ) );
+      KeyQuickLoad = GetEmulationKeyCode( zoptions->ReadString( PLUGIN_NAME, "KeyQuickLoad", "KEY_F12" ) );
 
 #if ENGINE >= Engine_G2
       MinSaveSlot = zoptions->ReadInt( PLUGIN_NAME, "MinSaveSlot", 15 );
@@ -17,18 +20,12 @@ namespace GOTHIC_ENGINE {
       MaxSaveSlot = zoptions->ReadInt( PLUGIN_NAME, "MaxSaveSlot", 15 );
 #endif
 
-
       switch ( Union.GetSystemLanguage() )
       {
       case Lang_Rus:
         CantSave = "Игра не может быть сохранена сейчас!";
         CantLoad = "Игра не может быть загружена!";
         NoSave = "Такого сохранения не существует!";
-        break;
-      case Lang_Eng:
-        CantSave = "The game cannot be saved now!";
-        CantLoad = "The game cannot be loaded now!";
-        NoSave = "Such a save does not exist!";
         break;
       case Lang_Ger:
         CantSave = "Das Spiel kann jetzt nicht gespeichert werden!";
@@ -56,8 +53,7 @@ namespace GOTHIC_ENGINE {
 
   class QuickSave {
   private:
-    bool oldShowStatus = false;
-    bool toggledShowStatus = false;
+    bool disabledStatus = false;
 
     int iLastSaveSlot;
     int iLastSaveNumber;
@@ -67,10 +63,21 @@ namespace GOTHIC_ENGINE {
     int InInteraction();
     void CheckSave();
     void CheckLoad();
-    void ToggleShowStatus();
+    void StartSaveLoad();
 
   public:
-    void QuickSaveLoop();
+    enum QuickSaveMode {
+      Disabled,
+      Standard,
+      Alternative
+    };
+
+    bool saveEnd = false;
+    bool isSaving = false;
+    bool isLoading = false;
+    void EndSaveLoad();
+    bool IsBusy();
+    void Loop();
     QuickSave();
   };
 

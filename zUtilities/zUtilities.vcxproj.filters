@@ -235,6 +235,21 @@
     <Filter Include="Plugin\Workspace\Features\DebugHelper">
       <UniqueIdentifier>{73fb9875-d712-4448-bc8b-4e3db8d224e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\Workspace\Features\PlayerStatus">
+      <UniqueIdentifier>{1a1d4b3f-f152-4f65-a537-f4f4cb926484}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugin\Workspace\Features\PlayerStatus\StatusBar">
+      <UniqueIdentifier>{f5a6fe54-5837-452a-8b39-b2eea83b3d9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugin\Workspace\Features\Dialogue">
+      <UniqueIdentifier>{35e89ac9-bfa9-44ec-aff5-6dc4ea3d4bef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugin\Workspace\Features\LogBook">
+      <UniqueIdentifier>{0ac56923-5c8c-490c-9e49-20bf92031a95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugin\Workspace\Features\IconInfo">
+      <UniqueIdentifier>{ad1d68b4-22dc-4e58-914f-444545260f86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2802,6 +2817,9 @@
     <ClInclude Include="Misc.cpp">
       <Filter>Plugin\Workspace\Misc</Filter>
     </ClInclude>
+    <ClInclude Include="User.cpp">
+      <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
     <ClInclude Include="PlayerHelper.h">
       <Filter>Plugin\Workspace\Misc</Filter>
     </ClInclude>
@@ -2814,7 +2832,7 @@
     <ClInclude Include="Meatbug.cpp">
       <Filter>Plugin\Workspace\Features</Filter>
     </ClInclude>
-    <ClInclude Include="Commands.cpp">
+    <ClInclude Include="Lockable.cpp">
       <Filter>Plugin\Workspace\Features</Filter>
     </ClInclude>
     <ClInclude Include="QuickSave.cpp">
@@ -2849,6 +2867,54 @@
     </ClInclude>
     <ClInclude Include="DebugHelper.h">
       <Filter>Plugin\Workspace\Features\DebugHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStatus.cpp">
+      <Filter>Plugin\Workspace\Features\PlayerStatus</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStatus.h">
+      <Filter>Plugin\Workspace\Features\PlayerStatus</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusBar.h">
+      <Filter>Plugin\Workspace\Features\PlayerStatus\StatusBar</Filter>
+    </ClInclude>
+    <ClInclude Include="StatusBar.cpp">
+      <Filter>Plugin\Workspace\Features\PlayerStatus\StatusBar</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyCode.h">
+      <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="IconInfo.cpp">
+      <Filter>Plugin\Workspace\Features\IconInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="IconInfo.h">
+      <Filter>Plugin\Workspace\Features\IconInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialogue.cpp">
+      <Filter>Plugin\Workspace\Features\Dialogue</Filter>
+    </ClInclude>
+    <ClInclude Include="Commands.cpp">
+      <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.cpp">
+      <Filter>Plugin\Workspace\Features\Inventory</Filter>
+    </ClInclude>
+    <ClInclude Include="LogBook.cpp">
+      <Filter>Plugin\Workspace\Features\LogBook</Filter>
+    </ClInclude>
+    <ClInclude Include="LogBook.h">
+      <Filter>Plugin\Workspace\Features\LogBook</Filter>
+    </ClInclude>
+    <ClInclude Include="Archive.cpp">
+      <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Const.h">
+      <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Colors.h">
+      <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Extensions.h">
+      <Filter>Plugin\Workspace\Misc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

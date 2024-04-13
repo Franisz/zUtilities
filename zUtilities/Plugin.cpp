@@ -7,11 +7,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_Init() {
-    Options::Misc();
-    Options::QuickSave();
-    Options::FocusColor();
-    Options::ItemLabel();
-    Options::DamagePopup();
+    Options::ReadOptions();
     Options::AddTrivias();
     RegisterCommands();
     quickSave = new QuickSave();
@@ -27,9 +23,8 @@ namespace GOTHIC_ENGINE {
     for ( uint i = 0; i < popups.GetNum(); i++ )
       popups[i]->Update();
 
-    debugHelper.DebugHelperLoop();
-    focusColor.FocusColorLoop();
-    quickSave->QuickSaveLoop();
+    quickSave->Loop();
+    playerStatus.Loop();
   }
 
   void Game_PostLoop() {
@@ -42,21 +37,32 @@ namespace GOTHIC_ENGINE {
   TSaveLoadGameInfo& SaveLoadGameInfo = UnionCore::SaveLoadGameInfo;
 
   void Game_SaveBegin() {
-    playerHelper.isSaving = true;
-    debugHelper.Clear();
+    quickSave->isSaving = true;
+    playerStatus.Clear();
   }
 
   void Game_SaveEnd() {
-    playerHelper.isSaving = false;
+    quickSave->saveEnd = true;
+    Archive();
+    playerStatus.ResetSaveReminder();
   }
 
   void LoadBegin() {
-    debugHelper.Clear();
+    quickSave->isLoading = true;
+#if ENGINE >= Engine_G2
+    playerStatus.pickpocketInfos.EmptyList();
+#endif
+    playerStatus.Clear();
     for ( uint i = 0; i < popups.GetNum(); i++ )
       delete popups[i];
   }
 
   void LoadEnd() {
+    Unarchive();
+#if ENGINE >= Engine_G2
+    playerStatus.GetPickpocketInfos();
+#endif
+    playerStatus.ResetSaveReminder();
   }
 
   void Game_LoadBegin_NewGame() {
@@ -93,6 +99,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_Unpause() {
+    Options::ReadOptions();
   }
 
   void Game_DefineExternals() {

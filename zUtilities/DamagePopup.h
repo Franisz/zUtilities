@@ -3,15 +3,16 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int DamagePopupMode, DamagePopupShowIcons, DamagePopupColorDmgTypes, DamagePopupColorOnlyIcon;
+    bool DamagePopupShowIcons, DamagePopupColorDmgTypes, DamagePopupColorOnlyIcon;
+    int DamagePopupMode;
     float DamagePopupScale;
 
     void DamagePopup() {
       DamagePopupMode = zoptions->ReadInt( PLUGIN_NAME, "DamagePopupMode", 1 );
       DamagePopupScale = zoptions->ReadReal( PLUGIN_NAME, "DamagePopupScale", 1.1f );
-      DamagePopupShowIcons = zoptions->ReadInt( PLUGIN_NAME, "DamagePopupShowIcons", true );
-      DamagePopupColorDmgTypes = zoptions->ReadInt( PLUGIN_NAME, "DamagePopupColorDmgTypes", true );
-      DamagePopupColorOnlyIcon = zoptions->ReadInt( PLUGIN_NAME, "DamagePopupColorOnlyIcon", false );
+      DamagePopupShowIcons = zoptions->ReadBool( PLUGIN_NAME, "DamagePopupShowIcons", true );
+      DamagePopupColorDmgTypes = zoptions->ReadBool( PLUGIN_NAME, "DamagePopupColorDmgTypes", true );
+      DamagePopupColorOnlyIcon = zoptions->ReadBool( PLUGIN_NAME, "DamagePopupColorOnlyIcon", false );
     }
   }
 
@@ -44,7 +45,6 @@ namespace GOTHIC_ENGINE {
     float alpha = 255.0f;
     float scale;
 
-    int GetTopDmgIndex();
     void SetMoveMode();
     void SetColor();
     void SetIcon();

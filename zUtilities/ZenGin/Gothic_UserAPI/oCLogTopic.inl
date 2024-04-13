@@ -3,3 +3,4 @@
 // User API for oCLogTopic
 // Add your methods here
 
+void __fastcall AddEntry_Union( zSTRING const& );

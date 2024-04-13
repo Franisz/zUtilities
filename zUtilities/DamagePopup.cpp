@@ -32,10 +32,10 @@ namespace GOTHIC_ENGINE {
       return false;
 
 #if ENGINE >= Engine_G2
-    if ( desc.pItemWeapon->HasFlag( ITM_FLAG_2HD_SWD ) || desc.pItemWeapon->HasFlag( ITM_FLAG_2HD_AXE ) )
-      return dmgRand <= desc.pNpcAttacker->GetHitChance( NPC_HITCHANCE_2H );
+    int talent = (desc.pItemWeapon->HasFlag( ITM_FLAG_2HD_SWD ) || desc.pItemWeapon->HasFlag( ITM_FLAG_2HD_AXE ))
+      ? NPC_HITCHANCE_2H : NPC_HITCHANCE_1H;
 
-    return dmgRand <= desc.pNpcAttacker->GetHitChance( NPC_HITCHANCE_1H );
+    return dmgRand < desc.pNpcAttacker->GetHitChance( talent );
 #else
     return desc.fDamageMultiplier > 1.0f;
 #endif
@@ -53,9 +53,10 @@ namespace GOTHIC_ENGINE {
     unsigned long seed = ptd->_holdrand;
 #endif
 
-    int isCrit = false;
+    bool isCrit = false;
     int initialHp = this->attribute[NPC_ATR_HITPOINTS];
 
+    oCNpc::oSDamageDescriptor descOld = desc;
     THISCALL( Ivk_OnDamage_Hit_Union )(desc);
 
     int hpDiff = initialHp - this->attribute[NPC_ATR_HITPOINTS];
@@ -69,20 +70,7 @@ namespace GOTHIC_ENGINE {
     isCrit = IsCrit( desc );
 #endif
 
-    new DamagePopup( this, desc, hpDiff, isCrit );
-  }
-
-  int DamagePopup::GetTopDmgIndex() {
-    int topDmgAmount = 0, topDmgIndex = 0;
-
-    for ( int i = 0; i < (int)oEDamageIndex::oEDamageIndex_MAX; i++ )
-      if ( (oEDamageType)(1 << (oEDamageIndex)i) & desc->enuModeDamage )
-        if ( (int)desc->aryDamageEffective[i] >= topDmgAmount ) {
-          topDmgAmount = (int)desc->aryDamageEffective[i];
-          topDmgIndex = i;
-        }
-
-    return topDmgIndex;
+    new DamagePopup( this, descOld, hpDiff, isCrit );
   }
 
   void DamagePopup::SetMoveMode() {
@@ -185,10 +173,10 @@ namespace GOTHIC_ENGINE {
   }
 
   void DamagePopup::SetScale() {
-    float sysScale;
-    Union.GetSysPackOption().Read( sysScale, "INTERFACE", "Scale", 1.0f );
-    scale = (sysScale) ? 1.15f : 1.0f;
+    scale = (playerHelper.GetSysScale()) ? 1.15f : 1.0f;
     scale *= Options::DamagePopupScale;
+
+    float baseScale = scale;
 
     if ( dmgAmount > 0 ) {
       scale += scale * (float)dmgAmount / (float)target->attribute[NPC_ATR_HITPOINTSMAX] / 1.75f;
@@ -196,6 +184,8 @@ namespace GOTHIC_ENGINE {
       if ( isCrit )
         scale *= 1.4f;
     }
+
+    scale = min( scale, baseScale * 3.5f );
   }
 
   float DamagePopup::GetRandomDist( float start, int random, bool invertable ) {
@@ -213,10 +203,10 @@ namespace GOTHIC_ENGINE {
 
     int x, y;
     cam->Project( &viewPos, x, y );
-    pos[0] = view->anx( x + 0.5f );
-    pos[1] = view->any( y + 0.5f );
+    pos[VX] = view->anx( x + 0.5f );
+    pos[VY] = view->any( y + 0.5f );
 
-    return viewPos[2] > cam->nearClipZ;
+    return viewPos[VZ] > cam->nearClipZ;
   }
 
   float DamagePopup::Scale( float p, float max ) {
@@ -225,22 +215,22 @@ namespace GOTHIC_ENGINE {
 
   void DamagePopup::CalcOffset( float lifetime ) {
     const zMAT4& viewTrafo = ogame->GetCamera()->GetTransform( zTCamTrafoType::zCAM_TRAFO_WORLDVIEW_INV );
-    offset = zVEC3( viewTrafo[0][0], viewTrafo[1][0], viewTrafo[2][0] ) * Scale( min( lifetime, horizontalMoveTime ), horizontalMoveTime ) * horizontalMoveDist;
-    offset[1] += Scale( min( lifetime, timeLimitInSecs ), timeLimitInSecs ) * verticalMoveDist;
+    offset = zVEC3( viewTrafo[VX][VX], viewTrafo[VY][VX], viewTrafo[VZ][VX] ) * Scale( min( lifetime, horizontalMoveTime ), horizontalMoveTime ) * horizontalMoveDist;
+    offset[VY] += Scale( min( lifetime, timeLimitInSecs ), timeLimitInSecs ) * verticalMoveDist;
   }
 
   void DamagePopup::CalcViewport( zSTRING& text, zCView* view, zVEC2 viewPos, const zVEC2& scaling ) {
-    float width = view->FontSize( text ) * scaling[0];
-    float height = view->FontY() * scaling[1];
+    float width = view->FontSize( text ) * scaling[VX];
+    float height = view->FontY() * scaling[VY];
 
     if ( Options::DamagePopupShowIcons )
       width += height;
 
-    viewPos[0] = CoerceInRange( viewPos[0] - width / 2, width, 0, 8191 );
-    viewPos[1] = CoerceInRange( viewPos[1] - height / 2, height, 0, 8191 );
+    viewPos[VX] = CoerceInRange( viewPos[VX] - width / 2, width, 0, 8191 );
+    viewPos[VY] = CoerceInRange( viewPos[VY] - height / 2, height, 0, 8191 );
 
-    vpPos.left = view->nax( viewPos[0] ) + vpOffset[0];
-    vpPos.top = view->nay( viewPos[1] ) + vpOffset[1];
+    vpPos.left = view->nax( viewPos[VX] ) + vpOffset[VX];
+    vpPos.top = view->nay( viewPos[VY] ) + vpOffset[VY];
     width = view->nax( width );
     height = view->nay( height );
     vpPos.right = vpPos.left + width;
@@ -251,7 +241,7 @@ namespace GOTHIC_ENGINE {
         int deltaY = (popups[i]->vpPos.bottom - vpPos.top) / 3.0f;
         vpPos.top += deltaY;
         vpPos.bottom += deltaY;
-        vpOffset[1] += deltaY;
+        vpOffset[VY] += deltaY;
       }
   }
 
@@ -266,8 +256,8 @@ namespace GOTHIC_ENGINE {
     if ( lastAnchorUpdate <= creationTimeInSecs ) {
       lastAnchorUpdate = ztimer->totalTimeFloat / 1000.0f;
       currentLifetimeLimit = max( currentLifetimeLimit, lifetime + prolongationInSecs );
-      anchorPos[0] = target->GetPositionWorld()[0];
-      anchorPos[2] = target->GetPositionWorld()[2];
+      anchorPos[VX] = target->GetPositionWorld()[VX];
+      anchorPos[VZ] = target->GetPositionWorld()[VZ];
     }
 
     if ( lifetime > currentLifetimeLimit ) {
@@ -294,6 +284,9 @@ namespace GOTHIC_ENGINE {
   }
 
   void DamagePopup::Print( zCView* view, const zVEC3& pos, const zVEC2& scaling ) {
+    if ( !ogame->game_drawall )
+      return;
+
     zVEC2 viewPos;
     if ( !WorldToView( pos, view, viewPos ) )
       return;
@@ -306,7 +299,7 @@ namespace GOTHIC_ENGINE {
     CalcViewport( text, view, viewPos, scaling );
 
     zCFont* font = view->GetFont();
-    float space = font->GetLetterDistance() * scaling[0];
+    float space = font->GetLetterDistance() * scaling[VX];
 
     float x = vpPos.left;
     float y = vpPos.top;
@@ -317,7 +310,7 @@ namespace GOTHIC_ENGINE {
       int charWidth;
       zVEC2 from, to;
       font->GetFontData( text[i], charWidth, from, to );
-      float fCharWidth = charWidth * scaling[0];
+      float fCharWidth = charWidth * scaling[VX];
 
       zrenderer->DrawTile( font->GetFontTexture(), zVEC2( x, y ), zVEC2( x + fCharWidth, y + height ), z, from, to, textColor );
       x += fCharWidth + space;
@@ -347,7 +340,11 @@ namespace GOTHIC_ENGINE {
     this->desc = &desc;
     this->isCrit = isCrit;
 
-    dmgIndex = GetTopDmgIndex();
+    int aryDamageEffective[oEDamageIndex::oEDamageIndex_MAX];
+    for ( int i = 0; i < oEDamageIndex::oEDamageIndex_MAX; i++ )
+      aryDamageEffective[i] = (int)this->desc->aryDamageEffective[i];
+
+    dmgIndex = GetTopDmgIndex( aryDamageEffective, this->desc->enuModeDamage );
     SetMoveMode();
     SetColor();
     SetIcon();
@@ -356,7 +353,7 @@ namespace GOTHIC_ENGINE {
     creationTimeInSecs = ztimer->totalTimeFloat / 1000.0f;
     lastAnchorUpdate = creationTimeInSecs;
     anchorPos = target->GetPositionWorld();
-    anchorPos[1] += (target->bbox3D.maxs[1] - target->bbox3D.mins[1]) * anchorStartPosMultiplier;
+    anchorPos[VY] += (target->bbox3D.maxs[VY] - target->bbox3D.mins[VY]) * anchorStartPosMultiplier;
     vpOffset = zVEC2( 0, 0 );
     CalcOffset( 0 );
     Update();

@@ -3,19 +3,22 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int ColorNpcs, ColorChests, ColorDoors, ColorItems;
+    bool ColorNpcs, ColorLockables, ColorItems, ColorInter;
 
     void FocusColor() {
-      ColorNpcs = zoptions->ReadInt( PLUGIN_NAME, "ColorNpcs", true );
-      ColorChests = zoptions->ReadInt( PLUGIN_NAME, "ColorChests", true );
-      ColorDoors = zoptions->ReadInt( PLUGIN_NAME, "ColorDoors", true );
-      ColorItems = zoptions->ReadInt( PLUGIN_NAME, "ColorItems", true );
+      ColorNpcs = zoptions->ReadBool( PLUGIN_NAME, "ColorNpcs", true );
+      ColorLockables = zoptions->ReadBool( PLUGIN_NAME, "ColorLockables", true );
+      ColorItems = zoptions->ReadBool( PLUGIN_NAME, "ColorItems", true );
+      ColorInter = zoptions->ReadBool( PLUGIN_NAME, "ColorInter", true );
     }
   }
 
   class FocusColor {
   private:
+    zCView* focusView;
+    zCView* protView;
     zCOLOR colDefault = zCOLOR( 255, 255, 255 );
+    bool vobOnScreen = false;
 
     int TYPE_FRIEND;
     int CRIME_MURDER;
@@ -25,19 +28,20 @@ namespace GOTHIC_ENGINE {
     bool HasReasonToKill( oCNpc* slf );
     bool CanStealNow( oCItem* item );
     bool CanTakeFromRoom( oCItem* item );
-    zSTRING GetName( zCVob* focusVob );
-    zCOLOR CheckFocus( zCVob* focusVob );
-    zCOLOR DoorColor( oCMobDoor* focusDoor );
-    zCOLOR ChestColor( oCMobContainer* focusContainer );
-    zCOLOR NpcColor( oCNpc* focusNpc );
-    zCOLOR ItemColor( oCItem* focusItem );
+    zSTRING GetName( zCVob* vob );
+    zCOLOR GetFocusColor( zCVob* vob );
+    zCOLOR LockableColor( oCMobLockable* lockable );
+    zCOLOR InterColor( oCMobInter* inter );
+    zCOLOR NpcColor( oCNpc* npc );
+    zCOLOR ItemColor( oCItem* item );
+    bool TryPrintFocus( int x, int y, zSTRING name, zCVob* vob );
+    void TryAddIcons( int x, int y, zSTRING name, oCNpc* npc );
+    void TryShowProt( oCNpc* npc );
 
   public:
-    zCView* focusView;
-    bool isNameOnScreen;
-    bool TryPrintName( int x, int y, const zSTRING& text );
-    void FocusColorLoop();
-    bool AllOptionsOff();
+    bool CanPrintFocus( zCView* view, int x, int y, const zSTRING& text );
+    void Clear();
+    void Loop();
   };
 
   FocusColor focusColor;

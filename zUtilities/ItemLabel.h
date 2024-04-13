@@ -3,14 +3,14 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int LabelItems, PutLabelBehind, LabelMissionItems;
+    bool LabelItems, PutLabelBehind, LabelMissionItems;
     float LabelScale;
 
     void ItemLabel() {
-      LabelItems = zoptions->ReadInt( PLUGIN_NAME, "LabelItems", true );
+      LabelItems = zoptions->ReadBool( PLUGIN_NAME, "LabelItems", true );
       LabelScale = zoptions->ReadReal( PLUGIN_NAME, "LabelScale", 1.25f );
-      LabelMissionItems = zoptions->ReadInt( PLUGIN_NAME, "LabelMissionItems", false );
-      PutLabelBehind = zoptions->ReadInt( PLUGIN_NAME, "PutLabelBehind", false );
+      LabelMissionItems = zoptions->ReadBool( PLUGIN_NAME, "LabelMissionItems", false );
+      PutLabelBehind = zoptions->ReadBool( PLUGIN_NAME, "PutLabelBehind", false );
     }
   }
 
@@ -22,7 +22,7 @@ namespace GOTHIC_ENGINE {
     zSTRING texture = "UNKNOWN"; // https://game-icons.net/1x1/lorc/swap-bag.html
 
     void SetLabelParams();
-    bool CanDrawLabel( zCViewBase* viewBase );
+    bool CanDrawLabel();
 
   public:
     ItemLabel( oCItem* item, zCViewBase* viewBase );

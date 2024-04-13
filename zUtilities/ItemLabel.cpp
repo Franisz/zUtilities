@@ -2,6 +2,22 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
+  bool canDrawLabels;
+
+  HOOK Hook_oCItemContainer_Draw PATCH( &oCItemContainer::Draw, &oCItemContainer::Draw_Union );
+  void oCItemContainer::Draw_Union() {
+    canDrawLabels = true;
+    THISCALL( Hook_oCItemContainer_Draw )();
+    canDrawLabels = false;
+  }
+
+  HOOK Hook_oCItemContainer_DrawItemInfo PATCH( &oCItemContainer::DrawItemInfo, &oCItemContainer::DrawItemInfo_Union );
+  void oCItemContainer::DrawItemInfo_Union( oCItem* item, zCWorld* world ) {
+    canDrawLabels = false;
+    THISCALL( Hook_oCItemContainer_DrawItemInfo )(item, world);
+    canDrawLabels = true;
+  }
+
   int oCItem::GetHighestCond() {
     int maxCond = 0;
     int maxIndex = -1;
@@ -15,25 +31,16 @@ namespace GOTHIC_ENGINE {
     return (maxIndex != -1) ? this->cond_atr[maxIndex] : -1;
   }
 
-  bool ItemLabel::CanDrawLabel( zCViewBase* viewBase ) {
-    auto list = oCItemContainer::contList.GetNextInList();
-    while ( list != nullptr ) {
-      oCItemContainer* container = list->GetData();
-      list = list->GetNextInList();
+  int oCItem::GetStateFunc() {
+    for ( int i = 0; i < ITM_STATE_MAX; i++ )
+      if ( this->onState[i] )
+        return this->onState[i];
 
-      if ( viewBase == container->viewItem
-#if ENGINE < Engine_G2
-        || viewBase == container->viewItemFocus
-        || viewBase == container->viewItemActiveFocus
-        || viewBase == container->viewItemHightlightedFocus
-        || viewBase == container->viewItemActiveHighlightedFocus
-#endif
-        || viewBase == container->viewItemActive
-        || viewBase == container->viewItemHightlighted
-        || viewBase == container->viewItemActiveHighlighted )
-        return true;
-    }
-    return false;
+    return Invalid;
+  }
+
+  bool ItemLabel::CanDrawLabel() {
+    return canDrawLabels;
   }
 
   void ItemLabel::SetLabelParams() {
@@ -48,6 +55,7 @@ namespace GOTHIC_ENGINE {
     zCOLOR goldYellow = zCOLOR( 241, 196, 15 );
     zCOLOR grey = zCOLOR( 189, 195, 199 );
     zCOLOR lightBronze = zCOLOR( 205, 127, 50 );
+    zCOLOR statePink = zCOLOR( 255, 171, 243 );
 
     // ITEM_MISSION
     if ( Options::LabelMissionItems && item->HasFlag( ITM_FLAG_MI ) ) {
@@ -56,68 +64,48 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
+    static const zCPar_Symbol* ITEM_ARMREIF = parser->GetSymbol( "ITEM_ARMREIF" );
+    static const int ITM_FLAG_ARMREIF = (ITEM_ARMREIF) ? ITEM_ARMREIF->single_intdata : Invalid;
+
+    if ( ITM_FLAG_ARMREIF && item->HasFlag( ITM_CAT_MAGIC ) ) {
+      if ( item->GetInstanceName().StartWith( "ITBR" ) ) {
+        color = zCOLOR( 83, 64, 214 );
+        texture = "BRACELET"; // https://game-icons.net/1x1/cathelineau/torc.html
+        return;
+      }
+      else if ( item->GetInstanceName().StartWith( "ITAR" ) ) {
+        color = zCOLOR( 199, 169, 149 );
+        texture = "SHOES"; // https://game-icons.net/1x1/lorc/tread.html
+        return;
+      }
+    }
+
     // Melee
-    if ( item->HasFlag( ITM_CAT_NF ) ) {
-
-      if ( item->HasFlag( ITM_FLAG_2HD_AXE ) || item->HasFlag( ITM_FLAG_2HD_SWD ) ) {
-        if ( condAtr == NPC_ATR_MANAMAX ) {
-          color = manaBlue;
-          texture = "WPN_MANA_2H"; // https://game-icons.net/1x1/lorc/moebius-star.html
-          return;
-        }
-
-        if ( condAtr == NPC_ATR_DEXTERITY ) {
-          color = dexGreen;
-          texture = "WPN_DEX_2H"; // https://game-icons.net/1x1/lorc/barbed-spear.html
-          return;
-        }
-
-        if ( item->damageTypes == oEDamageType_Blunt ) {
-          color = bluntYellow;
-          texture = "WPN_MACE_2H"; // https://game-icons.net/1x1/lorc/gavel.html
-          return;
-        }
-
-        if ( item->HasFlag( ITM_FLAG_2HD_AXE ) ) {
-          color = strRed;
-          texture = "WPN_AXE_2H"; // https://game-icons.net/1x1/lorc/battle-axe.html
-          return;
-        }
-
+    if ( item->HasFlag( ITM_CAT_NF ) && !item->HasFlag( ITM_FLAG_SHIELD ) ) {
+      if ( condAtr == NPC_ATR_MANAMAX || item->mag_circle )
+        color = manaBlue;
+      else if ( condAtr == NPC_ATR_DEXTERITY )
+        color = dexGreen;
+      else if ( item->damageTypes & oEDamageType_Blunt )
+        color = bluntYellow;
+      else
         color = strRed;
-        texture = "WPN_SWORD_2H"; // https://game-icons.net/1x1/lorc/shard-sword.html
-        return;
-      }
 
-      if ( item->HasFlag( ITM_FLAG_SWD ) || item->HasFlag( ITM_FLAG_AXE ) || item->HasFlag( ITM_FLAG_DAG ) ) {
-        if ( condAtr == NPC_ATR_MANAMAX ) {
-          color = manaBlue;
-          texture = "WPN_MANA"; // https://game-icons.net/1x1/lorc/rune-sword.html
-          return;
-        }
+      if ( item->damageTypes & oEDamageType_Magic )
+        texture = "WPN_MANA"; // https://game-icons.net/1x1/lorc/barbed-spear.html
+      else if ( item->damageTypes & oEDamageType_Point )
+        texture = "WPN_DEX"; // https://game-icons.net/1x1/lorc/barbed-spear.html
+      else if ( item->damageTypes & oEDamageType_Blunt )
+        texture = "WPN_MACE"; // https://game-icons.net/1x1/lorc/gavel.html
+      else if ( item->HasFlag( ITM_FLAG_2HD_AXE ) )
+        texture = "WPN_AXE"; // https://game-icons.net/1x1/lorc/battle-axe.html
+      else
+        texture = "WPN_SWORD"; // https://game-icons.net/1x1/lorc/shard-sword.html
 
-        if ( condAtr == NPC_ATR_DEXTERITY || item->HasFlag( ITM_FLAG_DAG ) ) {
-          color = dexGreen;
-          texture = "WPN_DEX"; // https://game-icons.net/1x1/lorc/sacrificial-dagger.html
-          return;
-        }
+      if ( item->HasFlag( ITM_FLAG_2HD_AXE ) || item->HasFlag( ITM_FLAG_2HD_SWD ) )
+        texture = texture + "_2H";
 
-        if ( item->damageTypes == oEDamageType_Blunt ) {
-          color = bluntYellow;
-          texture = "WPN_MACE"; // https://game-icons.net/1x1/lorc/spiked-mace.html
-          return;
-        }
-
-        if ( item->HasFlag( ITM_FLAG_AXE ) ) {
-          color = strRed;
-          texture = "WPN_AXE"; // https://game-icons.net/1x1/lorc/battered-axe.html
-          return;
-        }
-
-        color = strRed;
-        texture = "WPN_SWORD"; // https://game-icons.net/1x1/skoll/gladius.html
-        return;
-      }
+      return;
     }
 
     // Ranged
@@ -150,6 +138,13 @@ namespace GOTHIC_ENGINE {
       }
     }
 
+    // Shield
+    if ( item->HasFlag( ITM_FLAG_SHIELD ) ) {
+      color = zCOLOR( 247, 143, 179 );
+      texture = "SHIELD"; // https://game-icons.net/1x1/lorc/checked-shield.html
+      return;
+    }
+
     // Armors
     if ( item->HasFlag( ITM_CAT_ARMOR ) ) {
       if ( item->wear == ITM_WEAR_HEAD ) {
@@ -172,12 +167,6 @@ namespace GOTHIC_ENGINE {
 
       color = strRed;
       texture = "ARM_STR"; // https://game-icons.net/1x1/lorc/lamellar.html
-      return;
-    }
-
-    if ( item->HasFlag( ITM_FLAG_SHIELD ) ) {
-      color = zCOLOR( 247, 143, 179 );
-      texture = "SHIELD"; // https://game-icons.net/1x1/lorc/checked-shield.html
       return;
     }
 
@@ -226,7 +215,7 @@ namespace GOTHIC_ENGINE {
     }
 
     if ( item->HasFlag( ITM_CAT_RUNE ) ) {
-      if ( item->GetInstanceName().StartWith( "ITRU" ) || item->GetInstanceName().StartWith( "ITARRUNE" ) ) {
+      if ( !item->HasFlag( ITM_FLAG_MULTI ) ) {
         color = zCOLOR( 217, 128, 250 );
         texture = "RUNE"; // https://game-icons.net/1x1/lorc/cursed-star.html
         return;
@@ -247,17 +236,17 @@ namespace GOTHIC_ENGINE {
       if ( item->GetSoundMaterial() == SND_MAT_STONE ) {
         color = grey;
         texture = "TABLET"; // https://game-icons.net/1x1/lorc/stone-tablet.html
-        return;
       }
-
-      if ( item->GetInstanceName().HasWord( "MAP" ) ) {
+      else if ( item->GetInstanceName().HasWord( "MAP" ) ) {
         color = goldYellow;
         texture = "MAP"; // https://game-icons.net/1x1/lorc/treasure-map.html
-        return;
+      }
+      else {
+        color = zCOLOR( 153, 128, 250 );
+        texture = "DOCS"; // https://game-icons.net/1x1/lorc/tied-scroll.html
       }
 
-      color = zCOLOR( 153, 128, 250 );
-      texture = "DOCS"; // https://game-icons.net/1x1/lorc/tied-scroll.html
+      color = (!playerStatus.KnowStateFunc( item )) ? statePink : color;
       return;
     }
 
@@ -267,9 +256,10 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    if ( item->GetInstanceName().StartWith( "ITKE" ) ) {
-      color = zCOLOR( 113, 128, 147 );
-      texture = "KEY"; // https://game-icons.net/1x1/lorc/key.html
+    static const zCPar_Symbol* TRADE_CURRENCY_INSTANCE = parser->GetSymbol( "TRADE_CURRENCY_INSTANCE" );
+    if ( TRADE_CURRENCY_INSTANCE && TRADE_CURRENCY_INSTANCE->stringdata == item->GetInstanceName()  ) {
+      color = goldYellow;
+      texture = "MONEY"; // https://game-icons.net/1x1/delapouite/two-coins.html
       return;
     }
 
@@ -279,32 +269,31 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
+    if ( item->GetInstanceName().StartWith( "ITKE" ) ) {
+      color = zCOLOR( 113, 128, 147 );
+      texture = "KEY"; // https://game-icons.net/1x1/lorc/key.html
+    }
+
     if ( item->GetInstanceName().StartWith( "ITAT" ) ) {
       color = lightBronze;
       texture = "TROPHY"; // https://game-icons.net/1x1/lorc/flat-paw-print.html
-      return;
     }
-
-    if ( auto sym = parser->GetSymbol( "TRADE_CURRENCY_INSTANCE" ) )
-      if ( item->GetInstanceName() == sym->stringdata ) {
-        color = goldYellow;
-        texture = "MONEY"; // https://game-icons.net/1x1/delapouite/two-coins.html
-        return;
-      }
 
 #if ENGINE >= Engine_G2
     if ( item->GetInstanceName().HasWord( "SILVER" ) || item->GetInstanceName().HasWord( "GOLD" ) ) {
       color = zCOLOR( 72, 219, 251 );
       texture = "VALUABLES"; // https://game-icons.net/1x1/lorc/cut-diamond.html
-      return;
     }
 #endif
+
+    if ( item->GetStateFunc() != Invalid )
+      color = statePink;
   }
 
   ItemLabel::ItemLabel( oCItem* renderedItem, zCViewBase* viewBase ) {
     item = renderedItem;
 
-    if ( !CanDrawLabel( viewBase ) )
+    if ( !CanDrawLabel() )
       return;
 
     zCView* itemView = dynamic_cast<zCView*>(viewBase);
@@ -317,13 +306,13 @@ namespace GOTHIC_ENGINE {
 
     int endPos = startPos + 2000 * Options::LabelScale;
 
-    zCView labelView( startPos, startPos, endPos, endPos );
-    labelView.InsertBack( "LABEL_" + texture );
-    labelView.SetAlphaBlendFunc( zRND_ALPHA_FUNC_BLEND );
-    labelView.SetTransparency( 255 );
-    labelView.SetColor( color );
-    itemView->InsertItem( &labelView );
-    labelView.Blit();
-    itemView->RemoveItem( &labelView );
+    zCView* labelView = new zCView( startPos, startPos, endPos, endPos );
+    labelView->InsertBack( "LABEL_" + texture );
+    labelView->SetAlphaBlendFunc( zRND_ALPHA_FUNC_BLEND );
+    labelView->SetTransparency( 255 );
+    labelView->SetColor( color );
+    itemView->InsertItem( labelView );
+    labelView->Blit();
+    delete labelView;
   }
 }

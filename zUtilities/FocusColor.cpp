@@ -4,9 +4,8 @@
 namespace GOTHIC_ENGINE {
   HOOK Ivk_Print_Union PATCH( &zCView::Print, &zCView::Print_Union );
   void zCView::Print_Union( int x, int y, const zSTRING& text ) {
-    if ( player && !focusColor.AllOptionsOff() && !focusColor.isNameOnScreen && this != focusColor.focusView )
-      if ( focusColor.TryPrintName( x, y, text ) )
-        return;
+    if ( focusColor.CanPrintFocus( this, x, y, text ) )
+      return;
 
     THISCALL( Ivk_Print_Union )(x, y, text);
   }
@@ -29,25 +28,36 @@ namespace GOTHIC_ENGINE {
     CRIME_MURDER = (sym) ? sym->single_intdata : Invalid;
   }
 
-  bool FocusColor::CanStealNow( oCItem* focusItem ) {
-    int ZS_Clear = parser->GetIndex( "ZS_ClearRoom" );
+  bool FocusColor::CanStealNow( oCItem* item ) {
+    static const int ZS_Clear = parser->GetIndex( "ZS_ClearRoom" );
 
 #if ENGINE >= Engine_G2
-    int ZS_Observe = parser->GetIndex( "ZS_ObservePlayer" );
+    static const int ZS_Observe = parser->GetIndex( "ZS_ObservePlayer" );
 #else
-    int ZS_Observe = parser->GetIndex( "ZS_ObservePerson" );
+    static const int ZS_Observe = parser->GetIndex( "ZS_ObservePerson" );
 #endif
 
     if ( !ZS_Observe || !ZS_Clear )
       return false;
 
-    auto list = ogame->GetGameWorld()->voblist_npcs->GetNextInList();
+    static const zCPar_Symbol* sym1 = parser->GetSymbol( "PERC_DIST_INDOOR_HEIGHT" );
+    static const int PERC_DIST_INDOOR_HEIGHT = (sym1) ? sym1->single_intdata : 250;
 
-    while ( list != nullptr ) {
-      oCNpc* npc = list->GetData();
-      list = list->GetNextInList();
+    static const zCPar_Symbol* sym2 = parser->GetSymbol( "PERC_DIST_ACTIVE_MAX" );
+    static const int PERC_DIST_ACTIVE_MAX = (sym2) ? sym2->single_intdata : 2000;
 
-      if ( npc->attribute[NPC_ATR_HITPOINTS] <= 0 || npc == player ) continue;
+    oCPortalRoom* playerRoom = player->GetCurrentPortalRoom();
+
+    zCArray<zCVob*> vobs;
+    player->CreateVobList( vobs, PERC_DIST_ACTIVE_MAX );
+
+    for ( int i = 0; i < vobs.GetNum(); i++ ) {
+      oCNpc* npc = vobs[i]->CastTo<oCNpc>();
+      if ( !npc || !npc->homeWorld )
+        continue;
+
+      if ( npc->attribute[NPC_ATR_HITPOINTS] <= 0 || npc == player )
+        continue;
 
       if ( !npc->HasPerception( NPC_PERC_ASSESSTHEFT ) )
         continue;
@@ -55,23 +65,30 @@ namespace GOTHIC_ENGINE {
       if ( !npc->IsInPerceptionRange( NPC_PERC_ASSESSTHEFT, (int)npc->GetDistanceToVob( *player ) ) )
         continue;
 
-#if ENGINE < Engine_G2
-      if ( npc->GetAivar( "AIV_ITEMSCHWEIN" ) && npc->HasVobDetected( player ) )
+#if ENGINE >= Engine_G2
+      if ( playerRoom && playerRoom->GetOwnerGuild() >= NPC_GIL_NONE && (int)player->GetHeightDifferenceToVob( npc ) > PERC_DIST_INDOOR_HEIGHT ) {
+        continue;
+      }
+#else
+      if ( npc->HasVobDetected( player ) && npc->GetAivar( "AIV_ITEMSCHWEIN" ) )
         return false;
 #endif
 
-      if ( ogame->GetGuilds()->GetAttitude( npc->guild, player->guild ) == NPC_ATT_FRIENDLY ) continue;
-      if ( npc->IsFriendly( player ) || npc->npcType == TYPE_FRIEND ) continue;
+      if ( ogame->GetGuilds()->GetAttitude( npc->guild, player->guild ) == NPC_ATT_FRIENDLY )
+        continue;
 
-      if ( !npc->HasVobDetected( player ) ) {
-        if ( npc->IsAIState( ZS_Clear ) || npc->IsAIState( ZS_Observe ) )
+      if ( npc->IsFriendly( player ) || npc->npcType == TYPE_FRIEND )
+        continue;
+
+      if ( !npc->CanSee( player, 0 ) ) {
+        if ( (npc->IsAIState( ZS_Clear ) || npc->IsAIState( ZS_Observe )) && npc->IsInRoomWith( player ) )
           return false;
 
         continue;
       }
 
 #if ENGINE < Engine_G2
-      if ( !focusItem->owner && !focusItem->ownerGuild )
+      if ( !item->owner && !item->ownerGuild )
         continue;
 #endif
 
@@ -82,12 +99,12 @@ namespace GOTHIC_ENGINE {
   }
 
 #if ENGINE >= Engine_G2
-  bool FocusColor::CanTakeFromRoom( oCItem* focusItem ) {
+  bool FocusColor::CanTakeFromRoom( oCItem* item ) {
     oCPortalRoomManager* rooms = ogame->GetPortalRoomManager();
 
     if ( !rooms ) return true;
 
-    const zSTRING* portalName = focusItem->GetSectorNameVobIsIn();
+    const zSTRING* portalName = item->GetSectorNameVobIsIn();
 
     if ( !portalName ) return true;
 
@@ -111,40 +128,34 @@ namespace GOTHIC_ENGINE {
   }
 
   int FocusColor::GetAbsolutionLevel( oCNpc* slf ) {
-    zCPar_Symbol* sym = nullptr;
+    static const zCPar_Symbol* NPCTYPE_OCAMBIENT = parser->GetSymbol( "NPCTYPE_OCAMBIENT" );
+    static const zCPar_Symbol* NPCTYPE_OCMAIN = parser->GetSymbol( "NPCTYPE_OCMAIN" );
+    static const zCPar_Symbol* NPCTYPE_BL_AMBIENT = parser->GetSymbol( "NPCTYPE_BL_AMBIENT" );
+    static const zCPar_Symbol* NPCTYPE_BL_MAIN = parser->GetSymbol( "NPCTYPE_BL_MAIN" );
 
-    sym = parser->GetSymbol( "NPCTYPE_OCAMBIENT" );
-    int TYPE_OCAMBIENT = (sym) ? sym->single_intdata : Invalid;
+    static const zCPar_Symbol* ABSOLUTIONLEVEL_OldCamp = parser->GetSymbol( "ABSOLUTIONLEVEL_OldCamp" );
+    static const zCPar_Symbol* ABSOLUTIONLEVEL_City = parser->GetSymbol( "ABSOLUTIONLEVEL_City" );
+    static const zCPar_Symbol* ABSOLUTIONLEVEL_Monastery = parser->GetSymbol( "ABSOLUTIONLEVEL_Monastery" );
+    static const zCPar_Symbol* ABSOLUTIONLEVEL_Farm = parser->GetSymbol( "ABSOLUTIONLEVEL_Farm" );
+    static const zCPar_Symbol* ABSOLUTIONLEVEL_BL = parser->GetSymbol( "ABSOLUTIONLEVEL_BL" );
 
-    sym = parser->GetSymbol( "NPCTYPE_OCMAIN" );
-    int TYPE_OCMAIN = (sym) ? sym->single_intdata : Invalid;
-
-    sym = parser->GetSymbol( "NPCTYPE_BL_AMBIENT" );
-    int TYPE_BL_AMBIENT = (sym) ? sym->single_intdata : Invalid;
-
-    sym = parser->GetSymbol( "NPCTYPE_BL_MAIN" );
-    int TYPE_BL_MAIN = (sym) ? sym->single_intdata : Invalid;
-
-    if ( (TYPE_OCAMBIENT && slf->npcType == TYPE_OCAMBIENT) || (TYPE_OCMAIN && slf->npcType == TYPE_OCMAIN) ) {
+    if ( (NPCTYPE_OCAMBIENT && slf->npcType == NPCTYPE_OCAMBIENT->single_intdata)
+      || (NPCTYPE_OCMAIN && slf->npcType == NPCTYPE_OCMAIN->single_intdata) ) {
       if ( slf->guild == NPC_GIL_PALADIN || slf->guild == NPC_GIL_MILIZ || slf->guild == NPC_GIL_VOLK )
-        if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_OldCamp" ) )
-          return sym->single_intdata;
+        if ( ABSOLUTIONLEVEL_OldCamp ) return ABSOLUTIONLEVEL_OldCamp->single_intdata;
     }
     else if ( slf->guild == NPC_GIL_PALADIN || slf->guild == NPC_GIL_MILIZ || slf->guild == NPC_GIL_VOLK ) {
-      if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_City" ) )
-        return sym->single_intdata;
+      if ( ABSOLUTIONLEVEL_City ) return ABSOLUTIONLEVEL_City->single_intdata;
     }
     else if ( slf->guild == NPC_GIL_FEUERKREIS || slf->guild == NPC_GIL_NOVIZE ) {
-      if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_Monastery" ) )
-        return sym->single_intdata;
+      if ( ABSOLUTIONLEVEL_Monastery ) return ABSOLUTIONLEVEL_Monastery->single_intdata;
     }
     else if ( slf->guild == NPC_GIL_BAUERN ) {
-      if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_Farm" ) )
-        return sym->single_intdata;
+      if ( ABSOLUTIONLEVEL_Farm ) return ABSOLUTIONLEVEL_Farm->single_intdata;
     }
-    else if ( (TYPE_BL_AMBIENT && slf->npcType == TYPE_BL_AMBIENT) || (TYPE_BL_MAIN && slf->npcType == TYPE_BL_MAIN) ) {
-      if ( sym = parser->GetSymbol( "ABSOLUTIONLEVEL_BL" ) )
-        return sym->single_intdata;
+    else if ( (NPCTYPE_BL_AMBIENT && slf->npcType == NPCTYPE_BL_AMBIENT->single_intdata)
+      || (NPCTYPE_BL_MAIN && slf->npcType == NPCTYPE_BL_MAIN->single_intdata) ) {
+      if ( ABSOLUTIONLEVEL_BL ) return ABSOLUTIONLEVEL_BL->single_intdata;
     }
 
     return 0;
@@ -165,193 +176,286 @@ namespace GOTHIC_ENGINE {
   }
 #endif
 
-  zCOLOR FocusColor::NpcColor( oCNpc* focusNpc ) {
-    if ( focusNpc->attribute[NPC_ATR_HITPOINTS] <= 0 ) {
-      if ( !focusNpc->stealcontainer->contList.GetNumInList() )
+  zCOLOR FocusColor::NpcColor( oCNpc* npc ) {
+    if ( npc->attribute[NPC_ATR_HITPOINTS] <= 0 ) {
+      if ( !npc->stealcontainer->contList.GetNumInList() )
         return zCOLOR( 175, 175, 175 );
       else
         return colDefault;
     }
 
-    bool inAttack = focusNpc->IsAIState( parser->GetIndex( "ZS_Attack" ) );
-    bool inReact = focusNpc->IsAIState( parser->GetIndex( "ZS_ReactToDamage" ) );
+    static const int ZS_Attack = parser->GetIndex( "ZS_Attack" );
+    static const int ZS_ReactToDamage = parser->GetIndex( "ZS_ReactToDamage" );
 
 #if ENGINE >= Engine_G2
-    if ( focusNpc->IsHostile( player ) && focusNpc->GetPermAttitude( player ) == NPC_ATT_HOSTILE
-      || (focusNpc->enemy == player && inAttack && HasReasonToKill( focusNpc )) )
+    if ( npc->IsHostile( player ) && npc->GetPermAttitude( player ) == NPC_ATT_HOSTILE
+      || (npc->enemy == player && npc->IsAIState( ZS_Attack ) && HasReasonToKill( npc )) )
       return zCOLOR( 255, 0, 0 );
 
-    if ( focusNpc->IsAngry( player ) || (focusNpc->enemy == player && inAttack) )
+    if ( npc->IsAngry( player ) || (npc->enemy == player && npc->IsAIState( ZS_Attack )) )
       return zCOLOR( 255, 180, 0 );
 
     int day, hour, min;
     ogame->GetTime( day, hour, min );
 
-    if ( focusNpc->GetAivar( "AIV_NpcSawPlayerCommit" )
-      && !(focusNpc->GetAivar( "AIV_NpcSawPlayerCommit" ) < CRIME_MURDER && focusNpc->GetAivar( "AIV_NpcSawPlayerCommitDay" ) < day - 2)
-      && !(focusNpc->GetAivar( "AIV_CrimeAbsolutionLevel" ) < GetAbsolutionLevel( focusNpc )) )
+    if ( npc->GetAivar( "AIV_NpcSawPlayerCommit" )
+      && !(npc->GetAivar( "AIV_NpcSawPlayerCommit" ) < CRIME_MURDER && npc->GetAivar( "AIV_NpcSawPlayerCommitDay" ) < day - 2)
+      && !(npc->GetAivar( "AIV_CrimeAbsolutionLevel" ) < GetAbsolutionLevel( npc )) )
       return zCOLOR( 255, 180, 0 );
 #else
-    if ( (focusNpc->IsHostile( player ) && focusNpc->GetPermAttitude( player ) == NPC_ATT_HOSTILE)
-      || (focusNpc->enemy == player && inAttack && focusNpc->GetAivar( "AIV_ATTACKREASON" )) )
+    if ( (npc->IsHostile( player ) && npc->GetPermAttitude( player ) == NPC_ATT_HOSTILE)
+      || (npc->enemy == player && npc->IsAIState( ZS_Attack ) && npc->GetAivar( "AIV_ATTACKREASON" )) )
       return zCOLOR( 255, 0, 0 );
 
-    if ( (focusNpc->IsAngry( player ) || focusNpc->enemy == player) && (inAttack || inReact) )
+    if ( (npc->IsAngry( player ) || npc->enemy == player) && (npc->IsAIState( ZS_Attack ) || npc->IsAIState( ZS_ReactToDamage )) )
       return zCOLOR( 255, 180, 0 );
 #endif
 
-    if ( inReact )
+    if ( npc->IsAIState( ZS_ReactToDamage ) )
       return colDefault;
 
-    if ( focusNpc->GetAivar( "AIV_PARTYMEMBER" ) )
+    if ( npc->GetAivar( "AIV_PARTYMEMBER" ) )
       return zCOLOR( 51, 235, 255 );
 
-    if ( (focusNpc->IsFriendly( player ) || focusNpc->npcType == TYPE_FRIEND) )
+    if ( (npc->IsFriendly( player ) || npc->npcType == TYPE_FRIEND) )
       return zCOLOR( 0, 255, 0 );
 
-    if ( ogame->GetGuilds()->GetAttitude( focusNpc->guild, player->guild ) == NPC_ATT_FRIENDLY )
+    if ( ogame->GetGuilds()->GetAttitude( npc->guild, player->guild ) == NPC_ATT_FRIENDLY )
       return zCOLOR( 175, 255, 175 );
 
     return colDefault;
   }
 
-  zCOLOR FocusColor::ChestColor( oCMobContainer* focusContainer ) {
-    if ( focusContainer->locked )
-      if ( focusContainer->keyInstance != "" )
+  zCOLOR FocusColor::LockableColor( oCMobLockable* lockable ) {
+    if ( lockable->locked )
+      if ( lockable->keyInstance.Length() && lockable->pickLockStr.Length() )
+        return zCOLOR( 255, 135, 150 );
+      else if ( lockable->keyInstance.Length() )
         return zCOLOR( 255, 20, 20 );
-      else
+      else if ( lockable->pickLockStr.Length() )
         return zCOLOR( 255, 175, 0 );
-
-    if ( focusContainer->containList.GetNumInList() )
-      return zCOLOR( 0, 175, 0 );
-
-    return zCOLOR( 175, 175, 175 );
-  }
-
-  zCOLOR FocusColor::DoorColor( oCMobDoor* focusDoor ) {
-    if ( focusDoor->locked )
-      if ( focusDoor->keyInstance != "" )
-        return zCOLOR( 255, 20, 20 );
       else
-        return zCOLOR( 255, 175, 0 );
+        return zCOLOR( 175, 175, 175 );
+
+    if ( oCMobContainer* container = lockable->CastTo<oCMobContainer>() )
+      if ( container->containList.GetNumInList() )
+        return zCOLOR( 30, 220, 30 );
+      else
+        return zCOLOR( 175, 175, 175 );
 
     return colDefault;
   }
 
-  zCOLOR FocusColor::ItemColor( oCItem* focusItem ) {
+  zCOLOR FocusColor::ItemColor( oCItem* item ) {
 #if ENGINE >= Engine_G2
-    if ( focusItem->HasFlag( ITM_FLAG_DROPPED ) )
+    if ( item->HasFlag( ITM_FLAG_DROPPED ) )
       return colDefault;
 #endif
 
-    if ( focusItem->IsOwnedByNpc( player->GetInstance() ) )
+    if ( item->IsOwnedByNpc( player->GetInstance() ) )
       return colDefault;
 
-    if ( focusItem->IsOwnedByGuild( player->guild ) )
+    if ( item->IsOwnedByGuild( player->guild ) )
       return colDefault;
 
 #if ENGINE >= Engine_G2
-    if ( CanTakeFromRoom( focusItem ) )
+    if ( CanTakeFromRoom( item ) )
       return colDefault;
 #endif
 
-    if ( CanStealNow( focusItem ) )
+    if ( CanStealNow( item ) )
       return colDefault;
 
     return zCOLOR( 255, 200, 100 );
   }
 
-  zCOLOR FocusColor::CheckFocus( zCVob* focusVob ) {
+  zCOLOR FocusColor::InterColor( oCMobInter* inter ) {
+    if ( !inter->onStateFuncName.Length() )
+      return colDefault;
+
+    if ( inter->GetScemeName() != "BOOK" )
+      return colDefault;
+
+    if ( playerStatus.KnowStateFunc( inter ) )
+      return colDefault;
+
+    return zCOLOR( 30, 220, 30 );
+  }
+
+  zCOLOR FocusColor::GetFocusColor( zCVob* vob ) {
     if ( !TYPE_FRIEND || !CRIME_MURDER )
       InitData();
 
-    if ( Options::ColorChests )
-      if ( oCMobContainer* focusContainer = focusVob->CastTo<oCMobContainer>() )
-        return ChestColor( focusContainer );
-
-    if ( Options::ColorDoors )
-      if ( oCMobDoor* focusDoor = focusVob->CastTo<oCMobDoor>() )
-        return DoorColor( focusDoor );
+    if ( Options::ColorLockables )
+      if ( oCMobLockable* lockable = vob->CastTo<oCMobLockable>() )
+        return LockableColor( lockable );
 
     if ( Options::ColorNpcs )
-      if ( oCNpc* focusNpc = focusVob->CastTo<oCNpc>() )
-        return NpcColor( focusNpc );
+      if ( oCNpc* npc = vob->CastTo<oCNpc>() )
+        return NpcColor( npc );
 
     if ( Options::ColorItems )
-      if ( oCItem* focusItem = focusVob->CastTo<oCItem>() )
-        return ItemColor( focusItem );
+      if ( oCItem* item = vob->CastTo<oCItem>() )
+        return ItemColor( item );
+
+    if ( Options::ColorInter )
+      if ( oCMobInter* inter = vob->CastTo<oCMobInter>() )
+        return InterColor( inter );
 
     return colDefault;
   }
 
-  zSTRING FocusColor::GetName( zCVob* focusVob ) {
-    if ( Options::ColorChests )
-      if ( oCMobContainer* focusContainer = focusVob->CastTo<oCMobContainer>() )
-        return focusContainer->GetName();
+  zSTRING FocusColor::GetName( zCVob* vob ) {
+    if ( oCMobLockable* lockable = vob->CastTo<oCMobLockable>() )
+      return lockable->GetName();
 
-    if ( Options::ColorDoors )
-      if ( oCMobDoor* focusDoor = focusVob->CastTo<oCMobDoor>() )
-        return focusDoor->GetName();
+    if ( oCNpc* npc = vob->CastTo<oCNpc>() )
+      return npc->name[0];
 
-    if ( Options::ColorNpcs )
-      if ( oCNpc* focusNpc = focusVob->CastTo<oCNpc>() )
-        return focusNpc->name[0];
+    if ( oCItem* item = vob->CastTo<oCItem>() )
+      return item->name;
 
-    if ( Options::ColorItems )
-      if ( oCItem* focusItem = focusVob->CastTo<oCItem>() )
-        return focusItem->name;
+    if ( oCMobInter* inter = vob->CastTo<oCMobInter>() )
+      return inter->GetName();
 
     return "";
   }
 
-  bool FocusColor::TryPrintName( int x, int y, const zSTRING& text ) {
-    //if ( AllOptionsOff() )
-    //  return false;
-
-    if ( playerHelper.IsInInfo() )
-      return false;
-
-    zCVob* focusVob = player->GetFocusVob();
-    if ( !focusVob ) return false;
-
-    zSTRING name = GetName( focusVob );
-
-    if ( text != name + "\n" && text != name ) return false;
-
-    zCOLOR col = CheckFocus( focusVob );
+  bool FocusColor::TryPrintFocus( int x, int y, zSTRING name, zCVob* vob ) {
+    zCOLOR col = GetFocusColor( vob );
     if ( col.GetDescription() == colDefault.GetDescription() )
-      return false;
+      col = screen->GetColor();
 
     if ( focusView == nullptr ) {
       focusView = new zCView( 0, 0, 8192, 8192 );
       screen->InsertItem( focusView );
+
+      if ( protView == nullptr ) {
+        protView = new zCView( 0, 0, 8192, 8192 );
+        focusView->InsertItem( protView );
+      }
+    }
+    else {
+      protView->ClrPrintwin();
+      focusView->ClrPrintwin();
     }
 
-    focusView->ClrPrintwin();
+    if ( playerStatus.focusBar && playerStatus.focusBar->NeedAdjustPosition( x, y, vob->CastTo<oCNpc>() ) ) {
+      x = ogame->focusBar->vposx + ogame->focusBar->vsizex / 2 - focusView->FontSize( name ) / 2;
+      y = ogame->focusBar->vposy + ogame->focusBar->vsizey / 2 + focusView->FontY();
+    }
+
+    if ( ogame->hpBar )
+      col.alpha = ogame->hpBar->alpha;
+
     focusView->SetFontColor( col );
-    focusView->Print( x, y, text );
-    isNameOnScreen = true;
+    focusView->Print( x, y, name );
+    vobOnScreen = true;
+
+    if ( oCNpc* npc = vob->CastTo<oCNpc>() ) {
+      TryAddIcons( x, y, name, npc );
+      TryShowProt( npc );
+    }
+
     return true;
   }
 
-  bool FocusColor::AllOptionsOff() {
-    return !Options::ColorNpcs && !Options::ColorChests && !Options::ColorDoors && !Options::ColorItems;
+  void FocusColor::TryAddIcons( int x, int y, zSTRING name, oCNpc* npc ) {
+    if ( npc->attribute[NPC_ATR_HITPOINTS] <= 0 )
+      return;
+
+    int iconNr = 1;
+    int startX = x + focusView->FontSize( name );
+    int margin = focusView->FontY() * 0.1f;
+    int size = focusView->FontY() * 0.55f;
+
+#if ENGINE >= Engine_G2
+    if ( Options::ShowPickpocketIcon && playerStatus.CanPickpocketNpc( npc ) ) {
+      zCOLOR color = zCOLOR( 241, 196, 15, ogame->hpBar->alpha );
+      zSTRING texture = "LABEL_MONEY"; // https://game-icons.net/1x1/delapouite/two-coins.html
+      IconInfo icon = IconInfo( startX + margin * iconNr + size * (iconNr++ - 1), y, size, color, texture );
+    }
+#endif
   }
 
-  void FocusColor::FocusColorLoop() {
-    if ( AllOptionsOff() )
+  void FocusColor::TryShowProt( oCNpc* npc ) {
+    if ( !Options::ShowTargetProtection )
       return;
 
-    if ( focusView == nullptr )
+    if ( npc->attribute[NPC_ATR_HITPOINTS] <= 0 )
       return;
 
-    focusView->ClrPrintwin();
-    isNameOnScreen = false;
+    if ( player->IsInFightMode_S( 0 ) )
+      return;
 
-    zCVob* focusVob = player->GetFocusVob();
-    if ( !focusVob ) {
-      screen->RemoveItem( focusView );
-      focusView = nullptr;
-    };
+    oCViewStatusBar* bar = ogame->focusBar;
+
+    if ( !bar )
+      return;
+
+    int dmgIndex = player->GetActiveDamageIndex();
+    if ( !dmgIndex )
+      return;
+
+    int protection = npc->GetProtectionByIndex( (oEIndexDamage)dmgIndex );
+    bool isImmune = protection < 0 || npc->HasFlag( NPC_FLAG_IMMORTAL );
+
+    int margin = protView->FontY() * 0.1f;
+    int size = protView->FontY() * 0.75f;
+
+    int startX = bar->vposx + bar->vsizex;
+    int iconY = bar->vposy + bar->vsizey / 2 - size;
+    int fontY = bar->vposy + bar->vsizey / 2 - protView->FontY() / 2;
+
+    int iconNr = 1;
+
+    zCOLOR color = isImmune ? Colors::Gray : Colors::GetColorByDamageIndex( (oEIndexDamage)dmgIndex );
+    if ( ogame->hpBar )
+      color.alpha = ogame->hpBar->alpha;
+
+    zSTRING texture = "ICON_PROTECTIONS"; // https://game-icons.net/1x1/lorc/cracked-shield.html
+    IconInfo icon = IconInfo( startX + margin * iconNr + size * (iconNr++ - 1), iconY, size, color, texture );
+
+    if ( !isImmune ) {
+      protView->SetFontColor( color );
+      protView->Print( startX + margin * iconNr + size * (iconNr++ - 1), fontY, A protection );
+    }
+  }
+
+  bool FocusColor::CanPrintFocus( zCView* view, int x, int y, const zSTRING& text ) {
+    if ( !player || playerHelper.IsInInfo() || view == focusColor.focusView || focusColor.vobOnScreen )
+      return false;
+
+    zCVob* vob = player->GetFocusVob();
+    if ( !vob ) return false;
+
+    zSTRING name = GetName( vob );
+    if ( text != name + "\n" && text != name + " (locked)\n" )
+      return false;
+
+    return focusColor.TryPrintFocus( x, y, text, vob );
+  }
+
+  void FocusColor::Clear() {
+    if ( focusView )
+      vobOnScreen = false;
+
+    del( protView );
+    del( focusView );
+  }
+
+  void FocusColor::Loop() {
+    if ( focusView ) {
+      protView->ClrPrintwin();
+      focusView->ClrPrintwin();
+    }
+
+    vobOnScreen = false;
+
+    zCVob* vob = player->GetFocusVob();
+    if ( !vob || quickSave->IsBusy() || ogame->IsOnPause() ) {
+      Clear();
+      return;
+    }
   }
 }
