@@ -36,6 +36,7 @@ namespace GOTHIC_NAMESPACE
     void ReadOptions()
     {
       QuickSave();
+      DamagePopup();
     }
 
     void AddTrivias()

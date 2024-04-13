@@ -33,13 +33,17 @@ HOOKSPACE(Gothic_II_Addon, GetGameVersion() == ENGINE);
 #include "utils/Colors.h"
 #include "utils/Const.h"
 #include "utils/User.hpp"
+#include "utils/Misc.hpp"
 #include "utils/KeyCode.h"
+#include "utils/Extensions.h"
 #include "features/QuickSave/QuickSave.h"
+#include "features/DamagePopup/DamagePopup.h"
 #include "utils/PlayerHelper.h"
 #include "utils/Options.h"
-#include "Plugin.hpp"
 #include "features/Meatbug/Meatbug.hpp"
 #include "features/QuickSave/Quicksave.hpp"
+#include "features/DamagePopup/DamagePopup.hpp"
+#include "Plugin.hpp"
 #endif
 
 HOOKSPACE(Global, true);

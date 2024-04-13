@@ -2,8 +2,13 @@
 
 namespace GOTHIC_NAMESPACE
 {
+    // TSaveLoadGameInfo &SaveLoadGameInfo = Union::SaveLoadGameInfo;
+
     void Game_Loop()
     {
+        for (uint i = 0; i < popups.GetCount(); i++)
+            popups[i]->Update();
+
         quickSave->Loop();
     }
 
@@ -29,6 +34,9 @@ namespace GOTHIC_NAMESPACE
     void LoadBegin()
     {
         quickSave->isLoading = true;
+
+        for (uint i = 0; i < popups.GetCount(); i++)
+            delete popups[i];
     }
 
     void LoadEnd()
