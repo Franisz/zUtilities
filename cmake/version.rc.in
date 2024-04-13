@@ -1,0 +1,34 @@
+#include "winres.h"
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION @version_major@,@version_minor@,@version_patch@,@version_build@
+ PRODUCTVERSION @version_major@,@version_minor@,@version_patch@,@version_build@
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE @file_type@
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "0@lang_id@0@charset_id@"
+        BEGIN
+            VALUE "CompanyName", "@company_name@"
+            VALUE "FileDescription", "@file_description@"
+            VALUE "FileVersion", "@version_major@.@version_minor@.@version_patch@.@version_build@"
+            VALUE "InternalName", "@file_name@"
+            VALUE "LegalCopyright", "@company_name@ (©) @year@"
+            VALUE "OriginalFilename", "@file_name@"
+            VALUE "ProductName", "@product_name@"
+            VALUE "ProductVersion", "@version_major@.@version_minor@.@version_patch@.@version_build@"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x@lang_id@, @charset_id_int@
+    END
+END

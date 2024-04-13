@@ -1,6 +1,0 @@
-// Supported with union (c) 2020 Union team
-
-// User API for zCArchiver
-// Add your methods here
-
-int ReadIntSafe( char const* text );
