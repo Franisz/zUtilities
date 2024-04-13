@@ -29,12 +29,17 @@ HOOKSPACE(Gothic_II_Classic, GetGameVersion() == ENGINE);
 #define GOTHIC_NAMESPACE Gothic_II_Addon
 #define ENGINE Engine_G2A
 HOOKSPACE(Gothic_II_Addon, GetGameVersion() == ENGINE);
-#include "Const.h"
-#include "KeyCode.h"
-#include "QuickSave.h"
-#include "PlayerHelper.h"
+#include "utils/Randomizer.h"
+#include "utils/Colors.h"
+#include "utils/Const.h"
+#include "utils/User.hpp"
+#include "utils/KeyCode.h"
+#include "features/QuickSave/QuickSave.h"
+#include "utils/PlayerHelper.h"
+#include "utils/Options.h"
 #include "Plugin.hpp"
-#include "Quicksave.hpp"
+#include "features/Meatbug/Meatbug.hpp"
+#include "features/QuickSave/Quicksave.hpp"
 #endif
 
 HOOKSPACE(Global, true);

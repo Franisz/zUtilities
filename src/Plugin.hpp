@@ -9,7 +9,7 @@ namespace GOTHIC_NAMESPACE
 
     void ApplySettings()
     {
-        Options::QuickSave();
+        Options::ReadOptions();
     }
 
     void __fastcall Game_SaveBegin();
