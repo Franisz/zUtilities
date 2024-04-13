@@ -4,7 +4,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/")
 
 include(target_add_versioninfo)
 
-project(UnionApiBoilerplate
+project(zUtilities
 	DESCRIPTION "zUtilities"
 	VERSION 0.36
 )
