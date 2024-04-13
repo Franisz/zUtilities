@@ -58,6 +58,12 @@
     "xloctime": "cpp",
     "xmemory": "cpp",
     "xtr1common": "cpp",
-    "xutility": "cpp"
+    "xutility": "cpp",
+    "chrono": "cpp",
+    "forward_list": "cpp",
+    "iomanip": "cpp",
+    "random": "cpp",
+    "ratio": "cpp",
+    "sstream": "cpp"
   }
 }

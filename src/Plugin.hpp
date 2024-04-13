@@ -10,11 +10,13 @@ namespace GOTHIC_NAMESPACE
             popups[i]->Update();
 
         quickSave->Loop();
+        playerStatus->Loop();
     }
 
     void ApplySettings()
     {
         Options::ReadOptions();
+        Options::AddTrivias();
     }
 
     void __fastcall Game_SaveBegin();
@@ -22,6 +24,7 @@ namespace GOTHIC_NAMESPACE
     void __fastcall Game_SaveBegin()
     {
         quickSave->isSaving = true;
+        playerStatus->Clear();
     }
 
     void __fastcall Game_SaveEnd();
@@ -29,18 +32,35 @@ namespace GOTHIC_NAMESPACE
     void __fastcall Game_SaveEnd()
     {
         quickSave->saveEnd = true;
+        // Archive();
+        playerStatus->ResetSaveReminder();
     }
 
     void LoadBegin()
     {
         quickSave->isLoading = true;
-
+#if ENGINE >= Engine_G2
+        playerStatus->pickpocketInfos.EmptyList();
+#endif
+        playerStatus->Clear();
         for (uint i = 0; i < popups.GetCount(); i++)
             delete popups[i];
     }
 
+    void __fastcall Game_Unpause();
+    auto PartialHook_Game_Unpause = ::Union::CreatePartialHook((void *)(zSwitch(0x0063E2EE, 0x006650A9, 0x0066C0EE, 0x006C8E6E)), &Game_Unpause);
+    void __fastcall Game_Unpause()
+    {
+        Options::ReadOptions();
+    }
+
     void LoadEnd()
     {
+        // Unarchive();
+#if ENGINE >= Engine_G2
+        playerStatus->GetPickpocketInfos();
+#endif
+        playerStatus->ResetSaveReminder();
     }
 
     void __fastcall Game_LoadBegin_NewGame();
@@ -101,15 +121,24 @@ namespace GOTHIC_NAMESPACE
 
     void __fastcall Game_Init()
     {
+        debugHelper = std::make_unique<DebugHelper>();
         quickSave = std::make_unique<QuickSave>();
+        playerStatus = std::make_unique<PlayerStatus>();
+        focusColor = std::make_unique<FocusColor>();
+        logBook = std::make_unique<LogBook>();
         ogame->GetWorld()->RegisterPerFrameCallback(&pluginPerFrameCallback);
         ApplySettings();
+        RegisterCommands();
     }
 
     void __fastcall Game_Exit();
     auto PartialHook_Game_Exit = ::Union::CreatePartialHook((void *)(zSwitch(0x00424850 + 7, 0x00427310 + 7, 0x004251A0 + 7, 0x004254E0 + 7)), &Game_Exit);
     void __fastcall Game_Exit()
     {
+        debugHelper.release();
         quickSave.release();
+        playerStatus.release();
+        focusColor.release();
+        logBook.release();
     }
 }

@@ -8,38 +8,38 @@ namespace GOTHIC_NAMESPACE
   class PlayerHelper
   {
   public:
-    bool IsBusy()
+    static bool IsBusy()
     {
       return IsInInfo() || OnPause() || player->inventory2.IsOpen();
     }
 
-    bool IsInInfo()
+    static bool IsInInfo()
     {
       return !oCInformationManager::GetInformationManager().HasFinished();
     }
 
-    bool OnPause()
+    static bool OnPause()
     {
       return ogame->IsOnPause();
     }
 
-    bool IsDead()
+    static bool IsDead()
     {
       return player->attribute[NPC_ATR_HITPOINTS] <= 0;
     }
 
-    bool IsInCombat()
+    static bool IsInCombat()
     {
       return !IsDead() && player->enemy != nullptr;
     }
 
-    int GetSysScale()
+    static int GetSysScale()
     {
       // TODO: Load it from SystemPack.
       return 1;
     }
 
-    bool IsConUp()
+    static bool IsConUp()
     {
       for (int i = 0; i < zCConsole::active_consoles.GetNumInList(); i++)
         if (zCConsole::active_consoles[i]->IsVisible())
@@ -48,11 +48,9 @@ namespace GOTHIC_NAMESPACE
       return false;
     }
 
-    bool LeftInvOpen()
+    static bool LeftInvOpen()
     {
       return player->inventory2.IsOpen() && player->inventory2.GetNextContainerLeft(&player->inventory2);
     }
   };
-
-  PlayerHelper playerHelper;
 }

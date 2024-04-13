@@ -190,7 +190,7 @@ namespace GOTHIC_NAMESPACE
 
   void DamagePopup::SetScale()
   {
-    scale = (playerHelper.GetSysScale()) ? 1.15f : 1.0f;
+    scale = (PlayerHelper::GetSysScale()) ? 1.15f : 1.0f;
     scale *= Options::DamagePopupScale;
 
     float baseScale = scale;

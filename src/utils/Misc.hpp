@@ -20,14 +20,14 @@ namespace GOTHIC_NAMESPACE
             b.top <= a.bottom);
   }
 
-  Union::UnionStringA GetArchivePath(zSTRING sav)
+  zSTRING GetArchivePath(zSTRING sav)
   {
     // TODO: Handle last SaveLoadGameInfo
     int slotID = 1;
     auto savesDir = zoptions->GetDirString(zTOptionPaths::DIR_SAVEGAMES);
     auto slotDir = ogame->savegameManager->GetSlotDirName(slotID);
 
-    return Union::StringANSI::Format("{}\\{}\\{}.sav", savesDir, slotDir, sav);
+    return (zSTRING)Union::StringANSI::Format("{0}\\{1}\\{2}.sav", savesDir, slotDir, sav);
   }
 
   zSTRING GetAttributeName(int att)

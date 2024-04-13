@@ -35,7 +35,13 @@ namespace GOTHIC_NAMESPACE
 
     void ReadOptions()
     {
+      Misc();
+      LogBook();
+      PlayerStatus();
+      StatusBar();
       QuickSave();
+      FocusColor();
+      ItemLabel();
       DamagePopup();
     }
 

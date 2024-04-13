@@ -34,7 +34,7 @@ namespace GOTHIC_NAMESPACE
   {
     if (IsBusy())
       return true;
-    if (playerHelper.IsBusy())
+    if (PlayerHelper::IsBusy())
       return true;
     if (player->bodyState == BS_TAKEITEM)
       return true;
@@ -53,7 +53,7 @@ namespace GOTHIC_NAMESPACE
 
   int QuickSave::CanSave()
   {
-    if (playerHelper.IsDead())
+    if (PlayerHelper::IsDead())
       return false;
     if (InInteraction())
       return false;
@@ -223,7 +223,7 @@ namespace GOTHIC_NAMESPACE
 
     if (!info || !info->DoesSavegameExist())
     {
-      ogame->GetTextView()->Printwin(zSTRING(Union::StringANSI::Format("{} ({})", Options::NoSave, iLastSaveSlot)));
+      ogame->GetTextView()->Printwin(zSTRING(Union::StringANSI::Format("{0} ({1})", Options::NoSave, iLastSaveSlot)));
       return;
     }
 

@@ -5,6 +5,7 @@ namespace GOTHIC_NAMESPACE
 {
   void zCOption::AddTrivia(zSTRING sectionName, zSTRING entryName, zSTRING trivia)
   {
+    return;
     zCOption *const &option = this;
     zCOptionSection *section = option->GetSectionByName(sectionName, true);
 
@@ -16,7 +17,7 @@ namespace GOTHIC_NAMESPACE
     if (!entry)
       return;
 
-    zCOptionEntry *triviaEntry = new zCOptionEntry{zSTRING(""), zSTRING(Union::StringANSI::Format(": {}\r\n\n", trivia))};
+    zCOptionEntry *triviaEntry = new zCOptionEntry{zSTRING(""), zSTRING(Union::StringANSI::Format("; {0}\r\n\n", trivia))};
 
     int nextPos = section->entryList.Search(entry) + 1;
 

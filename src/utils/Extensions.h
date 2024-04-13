@@ -18,6 +18,39 @@ namespace GOTHIC_NAMESPACE
     return topDmgIndex;
   }
 
+  int oCItem::GetHighestCond()
+  {
+    int maxCond = 0;
+    int maxIndex = -1;
+
+    for (int i = 0; i < ITM_COND_MAX; i++)
+      if (this->cond_value[i] > maxCond)
+      {
+        maxIndex = i;
+        maxCond = this->cond_value[i];
+      }
+
+    return (maxIndex != -1) ? this->cond_atr[maxIndex] : -1;
+  }
+
+  int oCItem::GetStateFunc()
+  {
+    for (int i = 0; i < ITM_STATE_MAX; i++)
+      if (this->onState[i])
+        return this->onState[i];
+
+    return Invalid;
+  }
+
+  int oCItem::GetLineTextIsIn(zSTRING str)
+  {
+    for (int i = 0; i < ITM_TEXT_MAX; i++)
+      if (text[i] == str)
+        return i;
+
+    return Invalid;
+  }
+
   int oCNpc::GetAivar(zSTRING aivar)
   {
     auto sym = parser->GetSymbol(aivar);
