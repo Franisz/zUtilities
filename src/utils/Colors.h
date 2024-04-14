@@ -11,12 +11,20 @@ namespace GOTHIC_NAMESPACE
     CA
   };
 
-  namespace Colors
+  class Colors
   {
-    const zCOLOR White = zCOLOR(255, 255, 255);
-    const zCOLOR Gray = zCOLOR(148, 144, 136);
+  public:
+    static zCOLOR GetWhiteColor()
+    {
+      return zCOLOR(255, 255, 255);
+    }
 
-    zCOLOR GetColorByDamageIndex(oEIndexDamage index)
+    static zCOLOR GetGrayColor()
+    {
+      return zCOLOR(148, 144, 136);
+    }
+
+    static zCOLOR GetColorByDamageIndex(oEIndexDamage index)
     {
       switch (index)
       {
@@ -35,8 +43,9 @@ namespace GOTHIC_NAMESPACE
       case oEIndexDamage::oEDamageIndex_Fall:
         return zCOLOR(191, 222, 255);
       default:
-        return White;
+        return zCOLOR(255, 255, 255);
       }
     }
-  }
+  };
+
 }

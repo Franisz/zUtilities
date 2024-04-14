@@ -9,7 +9,7 @@ namespace GOTHIC_NAMESPACE
   auto Hook_zCViewPrint_Blit = CreateHook(reinterpret_cast<void *>(zSwitch(0x00756970, 0x00798DF0, 0x007A36F0, 0x006934A0)), &zCViewPrint_Blit);
   void __fastcall zCViewPrint_Blit(zCViewPrint *_this)
   {
-    if (!Options::AlternativeDialogueBoxes || _this != oCInformationManager::GetInformationManager().DlgChoice)
+    if (!zUtilitiesOptions->AlternativeDialogueBoxes || _this != oCInformationManager::GetInformationManager().DlgChoice)
     {
       Hook_zCViewPrint_Blit(_this);
       return;
@@ -36,7 +36,7 @@ namespace GOTHIC_NAMESPACE
   auto Hook_zCViewPrint_BlitTextCharacters = CreateHook(reinterpret_cast<void *>(zSwitch(0x00756B20, 0x00798FB0, 0x007A38A0, 0x00693650)), &zCViewPrint_BlitTextCharacters);
   void __fastcall zCViewPrint_BlitTextCharacters(zCViewPrint *_this, zCViewText2 *a1, zCFont *a2, struct zCOLOR &a3)
   {
-    if (!Options::AlternativeDialogueBoxes || _this != oCInformationManager::GetInformationManager().DlgChoice)
+    if (!zUtilitiesOptions->AlternativeDialogueBoxes || _this != oCInformationManager::GetInformationManager().DlgChoice)
     {
       Hook_zCViewPrint_BlitTextCharacters(_this, a1, a2, a3);
       return;
@@ -64,7 +64,7 @@ namespace GOTHIC_NAMESPACE
   auto Hook_zCView_DialogMessageCXY = CreateHook(reinterpret_cast<void *>(zSwitch(0x006FF6B0, 0x00739C70, 0x00749740, 0x007A9240)), &zCView_DialogMessageCXY);
   void __fastcall zCView_DialogMessageCXY(zCView *_this, void *vtable, zSTRING const &a1, zSTRING const &a2, float a3, struct zCOLOR &a4)
   {
-    if (!Options::AlternativeDialogueBoxes || !PlayerHelper::IsInInfo())
+    if (!zUtilitiesOptions->AlternativeDialogueBoxes || !PlayerHelper::IsInInfo())
     {
       Hook_zCView_DialogMessageCXY(_this, vtable, a1, a2, a3, a4);
       return;

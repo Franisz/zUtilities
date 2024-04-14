@@ -3,24 +3,6 @@
 
 namespace GOTHIC_NAMESPACE
 {
-  namespace Options
-  {
-    bool RecoveryVisualization, ShowEnemyBarAboveHim;
-    int StatusBarValueMode;
-    Union::Array<Union::UnionStringA> StatusBarNames, HealthBarPos, ManaBarPos, SwimBarPos;
-
-    void StatusBar()
-    {
-      RecoveryVisualization = zoptions->ReadBool(PLUGIN_NAME, "RecoveryVisualization", true);
-      StatusBarValueMode = zoptions->ReadInt(PLUGIN_NAME, "StatusBarValueMode", 1);
-      ShowEnemyBarAboveHim = zoptions->ReadBool(PLUGIN_NAME, "ShowEnemyBarAboveHim", true);
-      StatusBarNames = Union::StringANSI(zoptions->ReadString(PLUGIN_NAME, "StatusBarNames", "")).Split("|");
-      HealthBarPos = Union::StringANSI(zoptions->ReadString(PLUGIN_NAME, "HealthBarPos", "")).Split("|");
-      ManaBarPos = Union::StringANSI(zoptions->ReadString(PLUGIN_NAME, "ManaBarPos", "")).Split("|");
-      SwimBarPos = Union::StringANSI(zoptions->ReadString(PLUGIN_NAME, "SwimBarPos", "")).Split("|");
-    }
-  }
-
   class StatusBar
   {
   private:

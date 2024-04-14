@@ -23,7 +23,7 @@ namespace GOTHIC_NAMESPACE
     oCNpc *npc = vob->CastTo<oCNpc>();
     zCVisual *visual = vob->GetVisual();
 
-    if (!npc || !visual || !_this->IsSelfPlayer() || !_this->IsHuman() || vob == playerTrfCopy || npc->guild != NPC_GIL_MEATBUG || npc->HasFlag(NPC_FLAG_IMMORTAL) || !Options::TrampleMeatbugs)
+    if (!npc || !visual || !_this->IsSelfPlayer() || !_this->IsHuman() || vob == playerTrfCopy || npc->guild != NPC_GIL_MEATBUG || npc->HasFlag(NPC_FLAG_IMMORTAL) || !zUtilitiesOptions->TrampleMeatbugs)
     {
       Hook_oCNpc_OnTouch(_this, vtable, vob);
       return;

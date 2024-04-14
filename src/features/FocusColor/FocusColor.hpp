@@ -314,19 +314,19 @@ namespace GOTHIC_NAMESPACE
     if (!TYPE_FRIEND || !CRIME_MURDER)
       InitData();
 
-    if (Options::ColorLockables)
+    if (zUtilitiesOptions->ColorLockables)
       if (oCMobLockable *lockable = vob->CastTo<oCMobLockable>())
         return LockableColor(lockable);
 
-    if (Options::ColorNpcs)
+    if (zUtilitiesOptions->ColorNpcs)
       if (oCNpc *npc = vob->CastTo<oCNpc>())
         return NpcColor(npc);
 
-    if (Options::ColorItems)
+    if (zUtilitiesOptions->ColorItems)
       if (oCItem *item = vob->CastTo<oCItem>())
         return ItemColor(item);
 
-    if (Options::ColorInter)
+    if (zUtilitiesOptions->ColorInter)
       if (oCMobInter *inter = vob->CastTo<oCMobInter>())
         return InterColor(inter);
 
@@ -406,7 +406,7 @@ namespace GOTHIC_NAMESPACE
     int size = focusView->FontY() * 0.55f;
 
 #if ENGINE >= Engine_G2
-    if (Options::ShowPickpocketIcon && playerStatus->CanPickpocketNpc(npc))
+    if (zUtilitiesOptions->ShowPickpocketIcon && playerStatus->CanPickpocketNpc(npc))
     {
       zCOLOR color = zCOLOR(241, 196, 15, ogame->hpBar->alpha);
       zSTRING texture = "LABEL_MONEY"; // https://game-icons.net/1x1/delapouite/two-coins.html
@@ -417,7 +417,7 @@ namespace GOTHIC_NAMESPACE
 
   void FocusColor::TryShowProt(oCNpc *npc)
   {
-    if (!Options::ShowTargetProtection)
+    if (!zUtilitiesOptions->ShowTargetProtection)
       return;
 
     if (npc->attribute[NPC_ATR_HITPOINTS] <= 0)
@@ -447,7 +447,7 @@ namespace GOTHIC_NAMESPACE
 
     int iconNr = 1;
 
-    zCOLOR color = isImmune ? Colors::Gray : Colors::GetColorByDamageIndex((oEIndexDamage)dmgIndex);
+    zCOLOR color = isImmune ? Colors::GetGrayColor() : Colors::GetColorByDamageIndex((oEIndexDamage)dmgIndex);
     if (ogame->hpBar)
       color.alpha = ogame->hpBar->alpha;
 

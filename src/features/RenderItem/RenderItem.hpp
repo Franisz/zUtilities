@@ -8,7 +8,7 @@ namespace GOTHIC_NAMESPACE
   auto Hook_zCMovementTracker_UpdatePlayerPos = CreateHook(reinterpret_cast<void *>(zSwitch(0x004AD3E0, 0x004BB530, 0x004B3800, 0x004B5D30)), &zCMovementTracker_UpdatePlayerPos);
   void __fastcall zCMovementTracker_UpdatePlayerPos(zCMovementTracker *_this, void *vtable, zVEC3 const &position)
   {
-    if (Options::CenterInvItems && player->inventory2.IsOpen() && !player->inventory2.GetNextContainerLeft(&player->inventory2))
+    if (zUtilitiesOptions->CenterInvItems && player->inventory2.IsOpen() && !player->inventory2.GetNextContainerLeft(&player->inventory2))
     {
       zVEC3 rightVector = ogame->camera->connectedVob->GetRightVectorWorld() * 115.0f;
 
@@ -30,7 +30,7 @@ namespace GOTHIC_NAMESPACE
   {
     // Hook_oCItem_RenderItem(_this, vtable, wld, view, rotate);
 
-    if (Options::CenterInvItems)
+    if (zUtilitiesOptions->CenterInvItems)
     {
       bool IsCenterItem = false;
       auto list = oCItemContainer::contList.GetNextInList();
@@ -89,9 +89,9 @@ namespace GOTHIC_NAMESPACE
     }
 
     // Draw item label
-    if (Options::LabelItems)
+    if (zUtilitiesOptions->LabelItems)
     {
-      if (!Options::PutLabelBehind)
+      if (!zUtilitiesOptions->PutLabelBehind)
       {
         Hook_oCItem_RenderItem(_this, vtable, wld, view, rotate);
         ItemLabel label = ItemLabel(_this, view);
@@ -106,7 +106,7 @@ namespace GOTHIC_NAMESPACE
 
   void RenderSelectedItem()
   {
-    if (!Options::CenterInvItems)
+    if (!zUtilitiesOptions->CenterInvItems)
       return;
 
     if (player->inventory2.IsOpen())

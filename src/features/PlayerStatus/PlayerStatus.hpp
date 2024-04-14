@@ -233,7 +233,7 @@ namespace GOTHIC_NAMESPACE
   auto Hook_zCAICamera_CheckKeys = CreateHook(reinterpret_cast<void *>(zSwitch(0x0049CD10, 0x004AA2C0, 0x004A20E0, 0x004A45C0)), &zCAICamera_CheckKeys);
   void __fastcall zCAICamera_CheckKeys(zCAICamera *_this)
   {
-    if (!Options::UseTimeMultiplier || ztimer->factorMotion == 1.0f || !playerStatus->CanChangeZtimer())
+    if (!zUtilitiesOptions->UseTimeMultiplier || ztimer->factorMotion == 1.0f || !playerStatus->CanChangeZtimer())
     {
       Hook_zCAICamera_CheckKeys(_this);
       return;
@@ -252,7 +252,7 @@ namespace GOTHIC_NAMESPACE
   auto Hook_oCAIHuman_PC_Turnings = CreateHook(reinterpret_cast<void *>(zSwitch(0x00614800, 0x00637660, 0x0063E0F0, 0x0069A940)), &oCAIHuman_PC_Turnings);
   void __fastcall oCAIHuman_PC_Turnings(oCAIHuman *_this, void *vtable, int forceRotation)
   {
-    if (!Options::UseTimeMultiplier || ztimer->factorMotion == 1.0f || _this->Pressed(GAME_LEFT) || _this->Pressed(GAME_RIGHT) || !playerStatus->CanChangeZtimer())
+    if (!zUtilitiesOptions->UseTimeMultiplier || ztimer->factorMotion == 1.0f || _this->Pressed(GAME_LEFT) || _this->Pressed(GAME_RIGHT) || !playerStatus->CanChangeZtimer())
     {
       Hook_oCAIHuman_PC_Turnings(_this, vtable, forceRotation);
       return;
@@ -288,10 +288,10 @@ namespace GOTHIC_NAMESPACE
 
   void PlayerStatus::FactorMotion()
   {
-    if (!Options::UseTimeMultiplier)
+    if (!zUtilitiesOptions->UseTimeMultiplier)
       return;
 
-    if (!Options::TimeMultipliers.GetCount() || PlayerHelper::IsConUp())
+    if (!zUtilitiesOptions->TimeMultipliers.GetCount() || PlayerHelper::IsConUp())
       return;
 
     if (!CanChangeZtimer())
@@ -304,23 +304,23 @@ namespace GOTHIC_NAMESPACE
       return;
     }
 
-    if (!zinput->KeyToggled(Options::KeyTimeMultiplier))
+    if (!zinput->KeyToggled(zUtilitiesOptions->KeyTimeMultiplier))
     {
-      if (ztimer->factorMotion != Options::TimeMultipliers[multiplierIndex])
-        ztimer->factorMotion = Options::TimeMultipliers[multiplierIndex];
+      if (ztimer->factorMotion != zUtilitiesOptions->TimeMultipliers[multiplierIndex])
+        ztimer->factorMotion = zUtilitiesOptions->TimeMultipliers[multiplierIndex];
       return;
     }
 
     multiplierIndex++;
-    if (multiplierIndex < 0 || multiplierIndex >= Options::TimeMultipliers.GetCount())
+    if (multiplierIndex < 0 || multiplierIndex >= zUtilitiesOptions->TimeMultipliers.GetCount())
       multiplierIndex = 0;
 
-    ztimer->factorMotion = Options::TimeMultipliers[multiplierIndex];
+    ztimer->factorMotion = zUtilitiesOptions->TimeMultipliers[multiplierIndex];
   }
 
   void PlayerStatus::ShowGameTime()
   {
-    if (!Options::ShowGameTime && !Options::UseTimeMultiplier)
+    if (!zUtilitiesOptions->ShowGameTime && !zUtilitiesOptions->UseTimeMultiplier)
       return;
 
     if (PlayerHelper::LeftInvOpen() || PlayerHelper::IsConUp() || !ogame->GetShowPlayerStatus() || !ogame->hpBar)
@@ -329,14 +329,14 @@ namespace GOTHIC_NAMESPACE
     zSTRING str = "";
     zCOLOR color = zCOLOR(255, 255, 255);
 
-    if (Options::ShowGameTime)
+    if (zUtilitiesOptions->ShowGameTime)
     {
       int day, hour, min;
       ogame->GetTime(day, hour, min);
       str = (min > 9) ? Union::StringANSI::Format("{0}:{1}", hour, min) : Union::StringANSI::Format("{0}:0{1}", hour, min);
     }
 
-    if (Options::UseTimeMultiplier && ztimer->factorMotion != 1.0f)
+    if (zUtilitiesOptions->UseTimeMultiplier && ztimer->factorMotion != 1.0f)
     {
       color = zCOLOR(255, 0, 0);
       if (str.Length())
@@ -357,7 +357,7 @@ namespace GOTHIC_NAMESPACE
 
   void PlayerStatus::ShowMunitionAmount()
   {
-    if (!Options::ShowMunitionAmount)
+    if (!zUtilitiesOptions->ShowMunitionAmount)
       return;
 
     if (PlayerHelper::LeftInvOpen() || PlayerHelper::IsConUp() || !ogame->GetShowPlayerStatus() || !ogame->hpBar)
@@ -400,7 +400,7 @@ namespace GOTHIC_NAMESPACE
   void PlayerStatus::ShowSaveReminder()
   {
     if (
-        Options::SaveReminder == Invalid || !ogame || !player || PlayerHelper::IsBusy() || quickSave->IsBusy() || PlayerHelper::IsDead() || PlayerHelper::IsConUp() || !ogame->GetShowPlayerStatus() || !ogame->game_drawall)
+        zUtilitiesOptions->SaveReminder == Invalid || !ogame || !player || PlayerHelper::IsBusy() || quickSave->IsBusy() || PlayerHelper::IsDead() || PlayerHelper::IsConUp() || !ogame->GetShowPlayerStatus() || !ogame->game_drawall)
     {
       return;
     }
@@ -408,7 +408,7 @@ namespace GOTHIC_NAMESPACE
     auto ElapsedTime = std::chrono::high_resolution_clock::now() - lastSaveTime;
     auto ElapsedMins = std::chrono::duration_cast<std::chrono::minutes>(ElapsedTime);
     auto ElapsedSeconds = std::chrono::duration_cast<std::chrono::seconds>(ElapsedTime - ElapsedMins);
-    if (ElapsedTime >= static_cast<std::chrono::minutes>(Options::SaveReminder))
+    if (ElapsedTime >= static_cast<std::chrono::minutes>(zUtilitiesOptions->SaveReminder))
     {
       zSTRING str = (ElapsedMins.count() < 10 ? "0" : "") + Union::StringANSI::Format("{0}:{1}", ElapsedMins.count(), (ElapsedSeconds.count() < 10 ? "0" : "")) + zSTRING(static_cast<int>(ElapsedSeconds.count()));
 

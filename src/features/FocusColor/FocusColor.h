@@ -3,18 +3,6 @@
 
 namespace GOTHIC_NAMESPACE
 {
-  namespace Options
-  {
-    bool ColorNpcs, ColorLockables, ColorItems, ColorInter;
-
-    void FocusColor()
-    {
-      ColorNpcs = zoptions->ReadBool(PLUGIN_NAME, "ColorNpcs", true);
-      ColorLockables = zoptions->ReadBool(PLUGIN_NAME, "ColorLockables", true);
-      ColorItems = zoptions->ReadBool(PLUGIN_NAME, "ColorItems", true);
-      ColorInter = zoptions->ReadBool(PLUGIN_NAME, "ColorInter", true);
-    }
-  }
 
   class FocusColor
   {

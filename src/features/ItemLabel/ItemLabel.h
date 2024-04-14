@@ -3,19 +3,6 @@
 
 namespace GOTHIC_NAMESPACE
 {
-  namespace Options
-  {
-    bool LabelItems, PutLabelBehind, LabelMissionItems;
-    float LabelScale;
-
-    void ItemLabel()
-    {
-      LabelItems = zoptions->ReadBool(PLUGIN_NAME, "LabelItems", true);
-      LabelScale = zoptions->ReadReal(PLUGIN_NAME, "LabelScale", 1.25f);
-      LabelMissionItems = zoptions->ReadBool(PLUGIN_NAME, "LabelMissionItems", false);
-      PutLabelBehind = zoptions->ReadBool(PLUGIN_NAME, "PutLabelBehind", false);
-    }
-  }
 
   class ItemLabel
   {

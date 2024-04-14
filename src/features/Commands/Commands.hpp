@@ -74,8 +74,8 @@ namespace GOTHIC_NAMESPACE
 
     if (w2 == "Debug")
     {
-      Options::UsingDebugHelper = (Options::UsingDebugHelper) ? false : true;
-      zSTRING state = (Options::UsingDebugHelper) ? "ON" : "OFF";
+      zUtilitiesOptions->UsingDebugHelper = (zUtilitiesOptions->UsingDebugHelper) ? false : true;
+      zSTRING state = (zUtilitiesOptions->UsingDebugHelper) ? "ON" : "OFF";
       msg = "zUtilites debug helper " + state;
       return true;
     }
@@ -90,8 +90,8 @@ namespace GOTHIC_NAMESPACE
 
     if (w2 == "ShowTriggers")
     {
-      Options::ShowTriggers = !Options::ShowTriggers;
-      zSTRING state = (Options::ShowTriggers) ? "ON" : "OFF";
+      zUtilitiesOptions->ShowTriggers = !zUtilitiesOptions->ShowTriggers;
+      zSTRING state = (zUtilitiesOptions->ShowTriggers) ? "ON" : "OFF";
       msg = "zUtilities showing triggers " + state;
       return true;
     }

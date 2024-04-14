@@ -44,7 +44,7 @@ namespace GOTHIC_NAMESPACE
     zCOLOR statePink = zCOLOR(255, 171, 243);
 
     // ITEM_MISSION
-    if (Options::LabelMissionItems && item->HasFlag(ITM_FLAG_MI))
+    if (zUtilitiesOptions->LabelMissionItems && item->HasFlag(ITM_FLAG_MI))
     {
       color = zCOLOR(243, 104, 224);
       texture = "MISSION"; // https://game-icons.net/1x1/delapouite/pin.html
@@ -327,7 +327,7 @@ namespace GOTHIC_NAMESPACE
 
     int startPos = (item == player->inventory2.GetSelectedItem()) ? 500 : 250;
 
-    int endPos = startPos + 2000 * Options::LabelScale;
+    int endPos = startPos + 2000 * zUtilitiesOptions->LabelScale;
 
     zCView *labelView = new zCView(startPos, startPos, endPos, endPos);
     labelView->InsertBack("LABEL_" + texture);

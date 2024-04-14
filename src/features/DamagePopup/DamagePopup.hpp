@@ -52,7 +52,7 @@ namespace GOTHIC_NAMESPACE
   {
     // Hook_oCNpc_OnDamage_Hit(_this, vtable, desc);
 
-    if (!Options::DamagePopupMode)
+    if (!zUtilitiesOptions->DamagePopupMode)
     {
       Hook_oCNpc_OnDamage_Hit(_this, vtable, desc);
       return;
@@ -111,7 +111,7 @@ namespace GOTHIC_NAMESPACE
 
   void DamagePopup::SetColor()
   {
-    if (Options::DamagePopupColorDmgTypes)
+    if (zUtilitiesOptions->DamagePopupColorDmgTypes)
       switch (dmgIndex)
       {
       case oEIndexDamage::oEDamageIndex_Edge:
@@ -191,7 +191,7 @@ namespace GOTHIC_NAMESPACE
   void DamagePopup::SetScale()
   {
     scale = (PlayerHelper::GetSysScale()) ? 1.15f : 1.0f;
-    scale *= Options::DamagePopupScale;
+    scale *= zUtilitiesOptions->DamagePopupScale;
 
     float baseScale = scale;
 
@@ -246,7 +246,7 @@ namespace GOTHIC_NAMESPACE
     float width = view->FontSize(text) * scaling[VX];
     float height = view->FontY() * scaling[VY];
 
-    if (Options::DamagePopupShowIcons)
+    if (zUtilitiesOptions->DamagePopupShowIcons)
       width += height;
 
     viewPos[VX] = CoerceInRange(viewPos[VX] - width / 2, width, 0, 8191);
@@ -321,7 +321,7 @@ namespace GOTHIC_NAMESPACE
       return;
 
     color.alpha = alpha;
-    zCOLOR textColor = (Options::DamagePopupColorOnlyIcon) ? zCOLOR(240, 220, 194, alpha) : color;
+    zCOLOR textColor = (zUtilitiesOptions->DamagePopupColorOnlyIcon) ? zCOLOR(240, 220, 194, alpha) : color;
     zCOLOR iconColor = color;
 
     zSTRING text = dmgAmount;
@@ -346,7 +346,7 @@ namespace GOTHIC_NAMESPACE
       x += fCharWidth + space;
     }
 
-    if (!Options::DamagePopupShowIcons)
+    if (!zUtilitiesOptions->DamagePopupShowIcons)
       return;
 
     x += space;
@@ -367,7 +367,7 @@ namespace GOTHIC_NAMESPACE
 
     popups.Insert(this);
 
-    mode = Options::DamagePopupMode;
+    mode = zUtilitiesOptions->DamagePopupMode;
     this->target = targetNpc;
     this->dmgAmount = dmgAmount;
     this->desc = &desc;

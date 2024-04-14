@@ -3,16 +3,6 @@
 
 namespace GOTHIC_NAMESPACE
 {
-  namespace Options
-  {
-    bool LogBookColoring;
-
-    void LogBook()
-    {
-      LogBookColoring = zoptions->ReadBool(PLUGIN_NAME, "LogBookColoring", true);
-    }
-  }
-
   class LogBook
   {
   private:

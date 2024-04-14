@@ -319,7 +319,7 @@ namespace GOTHIC_NAMESPACE
 
   void DebugHelper::ShowTriggerBoxes()
   {
-    if (!Options::ShowTriggers)
+    if (!zUtilitiesOptions->ShowTriggers)
     {
       return;
     }
@@ -343,7 +343,7 @@ namespace GOTHIC_NAMESPACE
 
   void DebugHelper::Loop()
   {
-    if (!Options::UsingDebugHelper || ogame->pause_screen || PlayerHelper::IsConUp() || quickSave->IsBusy() || !ogame->game_drawall || PlayerHelper::LeftInvOpen())
+    if (!zUtilitiesOptions->UsingDebugHelper || ogame->pause_screen || PlayerHelper::IsConUp() || quickSave->IsBusy() || !ogame->game_drawall || PlayerHelper::LeftInvOpen())
     {
       Clear();
       return;

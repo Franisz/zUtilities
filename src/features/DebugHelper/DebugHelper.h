@@ -3,11 +3,6 @@
 
 namespace GOTHIC_NAMESPACE
 {
-  namespace Options
-  {
-    bool UsingDebugHelper = false;
-    bool ShowTriggers = false;
-  }
 
   class DebugHelper
   {

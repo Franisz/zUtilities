@@ -37,7 +37,7 @@ namespace GOTHIC_NAMESPACE
 
   void HandleMunitionLoop()
   {
-    if (!Options::ActivateUsedMunition)
+    if (!zUtilitiesOptions->ActivateUsedMunition)
       return;
 
     if (!player->inventory2.IsOpen())

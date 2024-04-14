@@ -3,21 +3,6 @@
 
 namespace GOTHIC_NAMESPACE
 {
-  namespace Options
-  {
-    bool DamagePopupShowIcons, DamagePopupColorDmgTypes, DamagePopupColorOnlyIcon;
-    int DamagePopupMode;
-    float DamagePopupScale;
-
-    void DamagePopup()
-    {
-      DamagePopupMode = zoptions->ReadInt(PLUGIN_NAME, "DamagePopupMode", 1);
-      DamagePopupScale = zoptions->ReadReal(PLUGIN_NAME, "DamagePopupScale", 1.1f);
-      DamagePopupShowIcons = zoptions->ReadBool(PLUGIN_NAME, "DamagePopupShowIcons", true);
-      DamagePopupColorDmgTypes = zoptions->ReadBool(PLUGIN_NAME, "DamagePopupColorDmgTypes", true);
-      DamagePopupColorOnlyIcon = zoptions->ReadBool(PLUGIN_NAME, "DamagePopupColorOnlyIcon", false);
-    }
-  }
 
   class DamagePopup
   {

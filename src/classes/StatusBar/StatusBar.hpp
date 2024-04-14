@@ -54,11 +54,11 @@ namespace GOTHIC_NAMESPACE
       symbols.Insert("NAME_BONUS_HP_FULL"); // Full Heal
       symbols.Insert("NAME_BONUS_HP_PERC"); // Percentage Heal
       symbols.Insert("NAME_BONUS_HP");      // Flat Heal
-      if (Options::StatusBarNames.GetCount() >= 1)
-        name = zSTRING(Options::StatusBarNames[0]);
+      if (zUtilitiesOptions->StatusBarNames.GetCount() >= 1)
+        name = zSTRING(zUtilitiesOptions->StatusBarNames[0]);
 
-      if (Options::HealthBarPos.GetCount() == 4)
-        userPos = Options::HealthBarPos;
+      if (zUtilitiesOptions->HealthBarPos.GetCount() == 4)
+        userPos = zUtilitiesOptions->HealthBarPos;
 
       return true;
     }
@@ -68,22 +68,22 @@ namespace GOTHIC_NAMESPACE
       symbols.Insert("NAME_BONUS_MANA_FULL"); // Full Heal
       symbols.Insert("NAME_BONUS_MANA_PERC"); // Percentage Heal
       symbols.Insert("NAME_BONUS_MANA");      // Flat Heal
-      if (Options::StatusBarNames.GetCount() >= 2)
-        name = zSTRING(Options::StatusBarNames[1]);
+      if (zUtilitiesOptions->StatusBarNames.GetCount() >= 2)
+        name = zSTRING(zUtilitiesOptions->StatusBarNames[1]);
 
-      if (Options::ManaBarPos.GetCount() == 4)
-        userPos = Options::ManaBarPos;
+      if (zUtilitiesOptions->ManaBarPos.GetCount() == 4)
+        userPos = zUtilitiesOptions->ManaBarPos;
 
       return true;
     }
 
     if (bar == ogame->swimBar)
     {
-      if (Options::StatusBarNames.GetCount() >= 3)
-        name = zSTRING(Options::StatusBarNames[2]);
+      if (zUtilitiesOptions->StatusBarNames.GetCount() >= 3)
+        name = zSTRING(zUtilitiesOptions->StatusBarNames[2]);
 
-      if (Options::SwimBarPos.GetCount() == 4)
-        userPos = Options::SwimBarPos;
+      if (zUtilitiesOptions->SwimBarPos.GetCount() == 4)
+        userPos = zUtilitiesOptions->SwimBarPos;
 
       return true;
     }
@@ -142,7 +142,7 @@ namespace GOTHIC_NAMESPACE
 
   void StatusBar::PredictHeal()
   {
-    if (!Options::RecoveryVisualization)
+    if (!zUtilitiesOptions->RecoveryVisualization)
       return;
 
     del(predictView);
@@ -159,7 +159,7 @@ namespace GOTHIC_NAMESPACE
 
   void StatusBar::PrintValue(oCNpc *npc)
   {
-    if (!Options::StatusBarValueMode)
+    if (!zUtilitiesOptions->StatusBarValueMode)
       return;
 
     del(valueView);
@@ -178,19 +178,19 @@ namespace GOTHIC_NAMESPACE
     if (name && name.Length())
       str = name + ": " + str;
 
-    zCView *ownerView = (Options::StatusBarValueMode == Inside) ? bar->range_bar : screen;
+    zCView *ownerView = (zUtilitiesOptions->StatusBarValueMode == Inside) ? bar->range_bar : screen;
     ownerView->InsertItem(valueView);
 
-    if (Options::StatusBarValueMode != Inside)
+    if (zUtilitiesOptions->StatusBarValueMode != Inside)
     {
       int offsetY = bar->vsizey / 2 + valueView->FontY();
       int x = bar->vposx + bar->vsizex / 2 - valueView->FontSize(str) / 2;
       int y = bar->vposy;
       bool center = false;
 
-      if (bar == ogame->focusBar && Options::ShowEnemyBarAboveHim)
+      if (bar == ogame->focusBar && zUtilitiesOptions->ShowEnemyBarAboveHim)
         y -= offsetY;
-      else if (Options::StatusBarValueMode == Above)
+      else if (zUtilitiesOptions->StatusBarValueMode == Above)
         center = true;
       else if (bar->vposx + bar->vsizex < 3072)
         x = bar->vposx + bar->vsizex + valueView->FontY() / 2;
@@ -215,7 +215,7 @@ namespace GOTHIC_NAMESPACE
 
   void StatusBar::MoveFocusBar(int x, int y, oCNpc *npc)
   {
-    if (!Options::ShowEnemyBarAboveHim)
+    if (!zUtilitiesOptions->ShowEnemyBarAboveHim)
       return;
 
     if (bar != ogame->focusBar)
@@ -272,7 +272,7 @@ namespace GOTHIC_NAMESPACE
 
     playerStatus->focusBar->MoveFocusBar(x, y, npc);
     playerStatus->focusBar->PrintValue(npc);
-    return Options::ShowEnemyBarAboveHim;
+    return zUtilitiesOptions->ShowEnemyBarAboveHim;
   }
 
   void StatusBar::Clear()
@@ -312,7 +312,7 @@ namespace GOTHIC_NAMESPACE
     if (!Init())
       return;
 
-    if (Options::StatusBarValueMode == Inside && !PlayerHelper::GetSysScale())
+    if (zUtilitiesOptions->StatusBarValueMode == Inside && !PlayerHelper::GetSysScale())
       this->bar->vsizey *= 1.15;
   }
 }

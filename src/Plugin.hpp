@@ -43,8 +43,8 @@ namespace GOTHIC_NAMESPACE
 
     void ApplySettings()
     {
-        Options::ReadOptions();
-        Options::AddTrivias();
+        zUtilitiesOptions->ReadOptions();
+        zUtilitiesOptions->AddTrivias();
     }
 
     void __fastcall Game_SaveBegin();
@@ -79,7 +79,7 @@ namespace GOTHIC_NAMESPACE
     auto PartialHook_Game_Unpause = ::Union::CreatePartialHook((void *)(zSwitch(0x0063E2EE, 0x006650A9, 0x0066C0EE, 0x006C8E6E)), &Game_Unpause);
     void __fastcall Game_Unpause()
     {
-        Options::ReadOptions();
+        zUtilitiesOptions->ReadOptions();
     }
 
     void LoadEnd()
@@ -151,6 +151,7 @@ namespace GOTHIC_NAMESPACE
 
     void __fastcall Game_Init()
     {
+        zUtilitiesOptions = std::make_unique<ZUtilitiesOptions>();
         ApplySettings();
         debugHelper = std::make_unique<DebugHelper>();
         quickSave = std::make_unique<QuickSave>();
@@ -166,6 +167,7 @@ namespace GOTHIC_NAMESPACE
     auto PartialHook_Game_Exit = ::Union::CreatePartialHook((void *)(zSwitch(0x00424850 + 7, 0x00427310 + 7, 0x004251A0 + 7, 0x004254E0 + 7)), &Game_Exit);
     void __fastcall Game_Exit()
     {
+        zUtilitiesOptions.release();
         debugHelper.release();
         quickSave.release();
         playerStatus.release();

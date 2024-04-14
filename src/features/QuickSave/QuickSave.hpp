@@ -12,13 +12,13 @@ namespace GOTHIC_NAMESPACE
 
     for (int i = 0; i < saveList.GetNum(); i++)
     {
-      if (saveList[i]->m_SlotNr < Options::MinSaveSlot || saveList[i]->m_SlotNr > Options::MaxSaveSlot)
+      if (saveList[i]->m_SlotNr < zUtilitiesOptions->MinSaveSlot || saveList[i]->m_SlotNr > zUtilitiesOptions->MaxSaveSlot)
         continue;
 
-      if (!Union::StringANSI(saveList[i]->GetName()).Contains(Options::SaveName))
+      if (!Union::StringANSI(saveList[i]->GetName()).Contains(zUtilitiesOptions->SaveName))
         continue;
 
-      int nr = Union::StringANSI(saveList[i]->GetName()).SubString(Options::SaveName.Length(), saveList[i]->GetName().Length() - Options::SaveName.Length()).ConvertToInt();
+      int nr = Union::StringANSI(saveList[i]->GetName()).SubString(zUtilitiesOptions->SaveName.Length(), saveList[i]->GetName().Length() - zUtilitiesOptions->SaveName.Length()).ConvertToInt();
       if (nr > latestNr)
       {
         latestNr = nr;
@@ -81,16 +81,16 @@ namespace GOTHIC_NAMESPACE
 
   void QuickSave::CheckSave()
   {
-    if (!zinput->KeyToggled(Options::KeyQuickSave))
+    if (!zinput->KeyToggled(zUtilitiesOptions->KeyQuickSave))
       return;
 
     if (!CanSave())
     {
-      ogame->GetTextView()->Printwin(Options::CantSave);
+      ogame->GetTextView()->Printwin(zUtilitiesOptions->CantSave);
       return;
     }
 
-    if (Options::QuickSaveMode == QuickSaveMode::Alternative)
+    if (zUtilitiesOptions->QuickSaveMode == QuickSaveMode::Alternative)
     {
       // The algorithm looks very like adding numbers in binary.
       // The idea behind using a binary addition is too use some SaveSlots
@@ -132,7 +132,7 @@ namespace GOTHIC_NAMESPACE
       // We are saving for the first time probably
       if (iLastSaveNumber == Invalid)
       {
-        iLastSaveSlot = Options::MinSaveSlot;
+        iLastSaveSlot = zUtilitiesOptions->MinSaveSlot;
         iLastSaveNumber = 1; // I could use ZERO as a first SaveName, it doesn't matter. number ONE is just more pleasant to the eye
       }
       // we need to figure out, on which slot to put next save.
@@ -157,15 +157,15 @@ namespace GOTHIC_NAMESPACE
         if (changeIndex != -1)
         {
           // We found an index where change happens, but this index is between 0 and 31.
-          // We need to cap it between Options::MinSaveSlot and Options::MaxSaveSlot
+          // We need to cap it between zUtilitiesOptions->MinSaveSlot and zUtilitiesOptions->MaxSaveSlot
           // To do it, I will wrap the number system around
-          int const slots = Options::MaxSaveSlot - Options::MinSaveSlot;
+          int const slots = zUtilitiesOptions->MaxSaveSlot - zUtilitiesOptions->MinSaveSlot;
           while (changeIndex > slots)
           {
             // this operation moves the index one to the left, in order to fit in number of available slots
             changeIndex -= slots;
           }
-          iLastSaveSlot = Options::MinSaveSlot + changeIndex;
+          iLastSaveSlot = zUtilitiesOptions->MinSaveSlot + changeIndex;
           iLastSaveNumber++;
         }
       }
@@ -174,8 +174,8 @@ namespace GOTHIC_NAMESPACE
     {
       iLastSaveSlot++;
       iLastSaveNumber++;
-      if (iLastSaveSlot > Options::MaxSaveSlot || iLastSaveSlot < Options::MinSaveSlot)
-        iLastSaveSlot = Options::MinSaveSlot;
+      if (iLastSaveSlot > zUtilitiesOptions->MaxSaveSlot || iLastSaveSlot < zUtilitiesOptions->MinSaveSlot)
+        iLastSaveSlot = zUtilitiesOptions->MinSaveSlot;
     }
 
     // Thumbnail
@@ -194,7 +194,7 @@ namespace GOTHIC_NAMESPACE
     // SaveInfo
     oCSavegameInfo *info = gameMan->savegameManager->GetSavegame(iLastSaveSlot);
 
-    info->m_Name = Union::StringANSI(Options::SaveName) + Union::StringANSI(iLastSaveNumber);
+    info->m_Name = Union::StringANSI(zUtilitiesOptions->SaveName) + Union::StringANSI(iLastSaveNumber);
     info->m_WorldName = ogame->GetGameWorld()->GetWorldName();
     int day, hour, min;
     ogame->GetTime(day, hour, min);
@@ -210,12 +210,12 @@ namespace GOTHIC_NAMESPACE
 
   void QuickSave::CheckLoad()
   {
-    if (!zinput->KeyToggled(Options::KeyQuickLoad))
+    if (!zinput->KeyToggled(zUtilitiesOptions->KeyQuickLoad))
       return;
 
     if (InInteraction())
     {
-      ogame->GetTextView()->Printwin(Options::CantLoad);
+      ogame->GetTextView()->Printwin(zUtilitiesOptions->CantLoad);
       return;
     }
 
@@ -223,7 +223,7 @@ namespace GOTHIC_NAMESPACE
 
     if (!info || !info->DoesSavegameExist())
     {
-      ogame->GetTextView()->Printwin(zSTRING(Union::StringANSI::Format("{0} ({1})", Options::NoSave, iLastSaveSlot)));
+      ogame->GetTextView()->Printwin(zSTRING(Union::StringANSI::Format("{0} ({1})", zUtilitiesOptions->NoSave, iLastSaveSlot)));
       return;
     }
 
@@ -263,7 +263,7 @@ namespace GOTHIC_NAMESPACE
     if ((isLoading && !ogame->IsOnPause()) || (isSaving && saveEnd))
       EndSaveLoad();
 
-    if (!Options::QuickSaveMode)
+    if (!zUtilitiesOptions->QuickSaveMode)
       return;
 
     if (ogame->IsOnPause())

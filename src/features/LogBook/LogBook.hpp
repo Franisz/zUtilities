@@ -18,7 +18,7 @@ namespace GOTHIC_NAMESPACE
   {
     Hook_zCMenuItemList_ShowContent(_this);
 
-    if (!Options::LogBookColoring || !logBook->CanColorList(_this))
+    if (!zUtilitiesOptions->LogBookColoring || !logBook->CanColorList(_this))
       return;
 
     logBook->MarkRead(_this->m_list[_this->m_cur_element].title);
@@ -33,7 +33,7 @@ namespace GOTHIC_NAMESPACE
   {
     Hook_zCMenuItemList_DrawFront(_this);
 
-    if (!Options::LogBookColoring || !logBook->CanColorList(_this))
+    if (!zUtilitiesOptions->LogBookColoring || !logBook->CanColorList(_this))
       return;
 
     logBook->UpdateView(_this->m_pInnerWindow);
