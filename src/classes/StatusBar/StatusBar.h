@@ -25,12 +25,12 @@ namespace GOTHIC_NAMESPACE
   {
   private:
     oCViewStatusBar *bar;
-    zCView *valueView;
-    zCView *predictView;
-    zCView *focusView;
-    zCArray<zSTRING> symbols;
-    zSTRING name;
-    Union::Array<Union::UnionStringA> userPos;
+    zCView *valueView = {};
+    zCView *predictView = {};
+    zCView *focusView = {};
+    zCArray<zSTRING> symbols = {};
+    zSTRING name = {};
+    Union::Array<Union::UnionStringA> userPos = {};
 
     bool Init();
     bool IsBarActive();

@@ -25,8 +25,6 @@ namespace GOTHIC_NAMESPACE
   auto Hook_oCVisualFX_EndEffect = CreateHook(reinterpret_cast<void *>(zSwitch(0x0048C6A0, 0x00498050, 0x004930A0, 0x00494C80)), &oCVisualFX_EndEffect);
   void __fastcall oCVisualFX_EndEffect(oCVisualFX *_this, void *vtable, int kill)
   {
-    // Hook_oCVisualFX_EndEffect(_this, vtable, kill);
-
     if (_this->visName_S.Search(".SLW", 1) == -1)
     {
       Hook_oCVisualFX_EndEffect(_this, vtable, kill);
@@ -439,7 +437,7 @@ namespace GOTHIC_NAMESPACE
 
     hpBar->Loop();
     manaBar->Loop();
-    // focusBar->Loop();
+    focusBar->Loop();
     swimBar->Loop();
   }
 

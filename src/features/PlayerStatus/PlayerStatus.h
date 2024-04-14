@@ -38,12 +38,12 @@ namespace GOTHIC_NAMESPACE
   class PlayerStatus
   {
   private:
-    StatusBar *hpBar;
-    StatusBar *manaBar;
-    StatusBar *swimBar;
+    StatusBar *hpBar = {};
+    StatusBar *manaBar = {};
+    StatusBar *swimBar = {};
     int multiplierIndex = 0;
     int infoIcons = 0;
-    std::chrono::high_resolution_clock::time_point lastSaveTime;
+    std::chrono::high_resolution_clock::time_point lastSaveTime = {};
 
     void ShowGameTime();
     void ShowMunitionAmount();

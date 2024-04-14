@@ -5,7 +5,7 @@ namespace GOTHIC_NAMESPACE
 {
 
   void __fastcall zCView_Print(zCView *_this, void *vtable, int x, int y, zSTRING const &text);
-  auto Hook_zCView_Print = CreateHook(reinterpret_cast<void *>(zSwitch(0x006FFEB0, 0x0073A4B0, 0x00749F40, 0x007A9A40)), &zCView_Print);
+  auto Hook_zCView_Print = CreateHook(reinterpret_cast<void *>(zSwitch(0x006FFEB0, 0x0073A4B0, 0x00749F40, 0x007A9A40)), &zCView_Print, HookType::Hook_Detours);
   void __fastcall zCView_Print(zCView *_this, void *vtable, int x, int y, zSTRING const &text)
   {
     if (focusColor->CanPrintFocus(_this, x, y, text))
