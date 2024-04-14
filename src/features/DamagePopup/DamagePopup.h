@@ -34,9 +34,9 @@ namespace GOTHIC_NAMESPACE
     zVEC3 offset;
     tagRECT vpPos;
     zVEC2 vpOffset;
-    float creationTimeInSecs;
-    float lastAnchorUpdate;
-    float currentLifetimeLimit;
+    float creationTimeInSecs = {};
+    float lastAnchorUpdate = {};
+    float currentLifetimeLimit = {};
 
     oCNpc::oSDamageDescriptor *desc;
     oCNpc *target;

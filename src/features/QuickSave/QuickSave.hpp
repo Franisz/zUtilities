@@ -18,7 +18,7 @@ namespace GOTHIC_NAMESPACE
       if (!Union::StringANSI(saveList[i]->GetName()).Contains(Options::SaveName))
         continue;
 
-      int nr = Union::StringANSI(saveList[i]->GetName()).SubString(0, Options::SaveName.Length()).ConvertToInt();
+      int nr = Union::StringANSI(saveList[i]->GetName()).SubString(Options::SaveName.Length(), saveList[i]->GetName().Length() - Options::SaveName.Length()).ConvertToInt();
       if (nr > latestNr)
       {
         latestNr = nr;

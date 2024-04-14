@@ -121,13 +121,13 @@ namespace GOTHIC_NAMESPACE
 
     void __fastcall Game_Init()
     {
+        ApplySettings();
         debugHelper = std::make_unique<DebugHelper>();
         quickSave = std::make_unique<QuickSave>();
         playerStatus = std::make_unique<PlayerStatus>();
         focusColor = std::make_unique<FocusColor>();
         logBook = std::make_unique<LogBook>();
         ogame->GetWorld()->RegisterPerFrameCallback(&pluginPerFrameCallback);
-        ApplySettings();
         RegisterCommands();
     }
 
