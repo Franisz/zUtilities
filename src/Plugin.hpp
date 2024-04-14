@@ -10,8 +10,9 @@ namespace GOTHIC_NAMESPACE
     void __fastcall oCGame_WriteSavegame(oCGame *_this, void *vtable, int slotID, int saveGlobals)
     {
         saveLoadGameInfo->slotID = slotID;
-        saveLoadGameInfo->changeLevel = false;
+        saveLoadGameInfo->changeLevel = slotID == -1;
         Hook_oCGame_WriteSavegame(_this, vtable, slotID, saveGlobals);
+        Union::StringANSI::Format("oCGame_WriteSavegame::SlotID: {0}, changeLevel: {1}", saveLoadGameInfo->slotID, saveLoadGameInfo->changeLevel).StdPrintLine();
     }
 
     void __fastcall oCGame_LoadGame(oCGame *_this, void *vtable, int slotID, zSTRING const &levelpath);
@@ -19,6 +20,7 @@ namespace GOTHIC_NAMESPACE
     void __fastcall oCGame_LoadGame(oCGame *_this, void *vtable, int slotID, zSTRING const &levelpath)
     {
         Hook_oCGame_LoadGame(_this, vtable, slotID, levelpath);
+        Union::StringANSI::Format("oCGame_LoadGame::SlotID: {0}, changeLevel: {1}", saveLoadGameInfo->slotID, saveLoadGameInfo->changeLevel).StdPrintLine();
     }
 
     void __fastcall oCGame_LoadSavegame(oCGame *_this, void *vtable, int slotID, bool loadGlobals);
@@ -28,6 +30,7 @@ namespace GOTHIC_NAMESPACE
         saveLoadGameInfo->slotID = slotID;
         saveLoadGameInfo->changeLevel = false;
         Hook_oCGame_LoadSavegame(_this, vtable, slotID, loadGlobals);
+        Union::StringANSI::Format("oCGame_LoadSavegame::SlotID: {0}, changeLevel: {1}", saveLoadGameInfo->slotID, saveLoadGameInfo->changeLevel).StdPrintLine();
     }
 
     void Game_Loop()
