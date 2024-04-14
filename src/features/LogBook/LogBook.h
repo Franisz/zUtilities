@@ -16,9 +16,9 @@ namespace GOTHIC_NAMESPACE
   class LogBook
   {
   private:
-    zCOLOR *colorOld;
-    zCArray<zSTRING> unreadTopics;
-    zCArray<zSTRING> newTopics;
+    zCOLOR *colorOld = {};
+    zCArray<zSTRING> unreadTopics = {};
+    zCArray<zSTRING> newTopics = {};
 
     void UpdateColor(zCViewText *view);
 

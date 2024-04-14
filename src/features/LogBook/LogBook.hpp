@@ -4,11 +4,11 @@
 namespace GOTHIC_NAMESPACE
 {
 
-  void __fastcall oCLogTopic_AddEntry(oCLogTopic *_this, void *vtable, zSTRING const &entry);
+  void __fastcall oCLogTopic_AddEntry(oCLogTopic *_this, zSTRING const &entry);
   auto Hook_oCLogTopic_AddEntry = CreateHook(reinterpret_cast<void *>(zSwitch(0x0072EA60, 0x0076D0B0, 0x0077A630, 0x00663870)), &oCLogTopic_AddEntry);
-  void __fastcall oCLogTopic_AddEntry(oCLogTopic *_this, void *vtable, zSTRING const &entry)
+  void __fastcall oCLogTopic_AddEntry(oCLogTopic *_this, zSTRING const &entry)
   {
-    Hook_oCLogTopic_AddEntry(_this, vtable, entry);
+    Hook_oCLogTopic_AddEntry(_this, entry);
     logBook->AddTopic(_this);
   }
 
