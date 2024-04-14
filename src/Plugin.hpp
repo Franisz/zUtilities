@@ -18,6 +18,8 @@ namespace GOTHIC_NAMESPACE
     auto Hook_oCGame_LoadGame = CreateHook(reinterpret_cast<void *>(zSwitch(0x0063C070, 0x00662B20, 0x00669970, 0x006C65A0)), &oCGame_LoadGame);
     void __fastcall oCGame_LoadGame(oCGame *_this, void *vtable, int slotID, zSTRING const &levelpath)
     {
+        saveLoadGameInfo->slotID = slotID;
+        saveLoadGameInfo->changeLevel = slotID == -1;
         Hook_oCGame_LoadGame(_this, vtable, slotID, levelpath);
     }
 
