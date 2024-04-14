@@ -30,3 +30,4 @@
 #include "features/FocusColor/FocusColor.hpp"
 #include "utils/Archive.hpp"
 #include "features/Commands/Commands.hpp"
+#include "features/Dialogue/Dialogue.hpp"
