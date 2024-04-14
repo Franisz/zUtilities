@@ -21,6 +21,9 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE ${SRC})
 
 target_compile_definitions(${CMAKE_PROJECT_NAME}
     PRIVATE
+		__G1
+		__G1A
+        __G2
         __G2A
 )
 

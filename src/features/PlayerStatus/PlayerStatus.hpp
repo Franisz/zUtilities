@@ -228,13 +228,14 @@ namespace GOTHIC_NAMESPACE
   }
 
 #if ENGINE < Engine_G2
-  HOOK Hook_zCAICamera_CheckKeys PATCH(&zCAICamera::CheckKeys, &zCAICamera::CheckKeys_Union);
-  void zCAICamera::CheckKeys_Union()
+
+  void __fastcall zCAICamera_CheckKeys(zCAICamera *_this);
+  auto Hook_zCAICamera_CheckKeys = CreateHook(reinterpret_cast<void *>(zSwitch(0x0049CD10, 0x004AA2C0, 0x004A20E0, 0x004A45C0)), &zCAICamera_CheckKeys);
+  void __fastcall zCAICamera_CheckKeys(zCAICamera *_this)
   {
-    if (!Options::UseTimeMultiplier || ztimer->factorMotion == 1.0f || !playerStatus.CanChangeZtimer())
+    if (!Options::UseTimeMultiplier || ztimer->factorMotion == 1.0f || !playerStatus->CanChangeZtimer())
     {
-      THISCALL(Hook_zCAICamera_CheckKeys)
-      ();
+      Hook_zCAICamera_CheckKeys(_this);
       return;
     }
 
@@ -242,19 +243,18 @@ namespace GOTHIC_NAMESPACE
     float motionFactorOld = ztimer->factorMotion;
     ztimer->frameTimeFloat = frameTimeOld / motionFactorOld;
     ztimer->factorMotion = 1.0f;
-    THISCALL(Hook_zCAICamera_CheckKeys)
-    ();
+    Hook_zCAICamera_CheckKeys(_this);
     ztimer->frameTimeFloat = frameTimeOld;
     ztimer->factorMotion = motionFactorOld;
   }
 
-  HOOK Hook_oCAIHuman_PC_Turnings PATCH(&oCAIHuman::PC_Turnings, &oCAIHuman::PC_Turnings_Union);
-  void oCAIHuman::PC_Turnings_Union(int forceRotation)
+  void __fastcall oCAIHuman_PC_Turnings(oCAIHuman *_this, void *vtable, int forceRotation);
+  auto Hook_oCAIHuman_PC_Turnings = CreateHook(reinterpret_cast<void *>(zSwitch(0x00614800, 0x00637660, 0x0063E0F0, 0x0069A940)), &oCAIHuman_PC_Turnings);
+  void __fastcall oCAIHuman_PC_Turnings(oCAIHuman *_this, void *vtable, int forceRotation)
   {
-    if (!Options::UseTimeMultiplier || ztimer->factorMotion == 1.0f || Pressed(GAME_LEFT) || Pressed(GAME_RIGHT) || !playerStatus.CanChangeZtimer())
+    if (!Options::UseTimeMultiplier || ztimer->factorMotion == 1.0f || _this->Pressed(GAME_LEFT) || _this->Pressed(GAME_RIGHT) || !playerStatus->CanChangeZtimer())
     {
-      THISCALL(Hook_oCAIHuman_PC_Turnings)
-      (forceRotation);
+      Hook_oCAIHuman_PC_Turnings(_this, vtable, forceRotation);
       return;
     }
 
@@ -262,8 +262,7 @@ namespace GOTHIC_NAMESPACE
     float motionFactorOld = ztimer->factorMotion;
     ztimer->frameTimeFloat = frameTimeOld / motionFactorOld;
     ztimer->factorMotion = 1.0f;
-    THISCALL(Hook_oCAIHuman_PC_Turnings)
-    (forceRotation);
+    Hook_oCAIHuman_PC_Turnings(_this, vtable, forceRotation);
     ztimer->frameTimeFloat = frameTimeOld;
     ztimer->factorMotion = motionFactorOld;
   };
