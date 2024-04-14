@@ -278,11 +278,10 @@ namespace GOTHIC_NAMESPACE
 
   void PlayerStatus::ResetSaveReminder()
   {
-    // TODO: Handle last SaveLoadGameInfo
-    // if (SaveLoadGameInfo.changeLevel)
-    // {
-    //   return;
-    // }
+    if (saveLoadGameInfo->changeLevel)
+    {
+      return;
+    }
 
     lastSaveTime = std::chrono::high_resolution_clock::now();
   }

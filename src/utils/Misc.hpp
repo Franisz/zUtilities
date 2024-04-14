@@ -22,12 +22,11 @@ namespace GOTHIC_NAMESPACE
 
   zSTRING GetArchivePath(zSTRING sav)
   {
-    // TODO: Handle last SaveLoadGameInfo
-    int slotID = 1;
+    int slotID = saveLoadGameInfo->slotID;
     auto savesDir = zoptions->GetDirString(zTOptionPaths::DIR_SAVEGAMES);
-    auto slotDir = ogame->savegameManager->GetSlotDirName(slotID);
+    auto slotDir = saveLoadGameInfo->GetSaveSlotName(slotID);
 
-    return (zSTRING)Union::StringANSI::Format("{0}\\{1}\\{2}.sav", savesDir, slotDir, sav);
+    return (zSTRING)Union::StringANSI::Format("{0}{1}\\{2}.sav", savesDir, slotDir, sav);
   }
 
   zSTRING GetAttributeName(int att)

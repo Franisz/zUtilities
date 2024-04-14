@@ -1,3 +1,4 @@
+#include "classes/SaveLoadGameInfo/SaveLoadGameInfo.h"
 #include "utils/Randomizer.h"
 #include "utils/Colors.h"
 #include "utils/Const.h"

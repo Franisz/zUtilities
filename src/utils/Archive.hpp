@@ -22,13 +22,13 @@ namespace GOTHIC_NAMESPACE
 
   void Archive()
   {
+    auto path = GetArchivePath(PLUGIN_NAME);
     zCArchiver *ar = zarcFactory->CreateArchiverWrite(GetArchivePath(PLUGIN_NAME), zARC_MODE_ASCII, 0, 0);
     if (!ar)
       return;
 
     playerStatus->Archive(ar);
-    // TODO: Uncomment this
-    // logBook.Archive(ar);
+    logBook->Archive(ar);
 
     ar->Close();
     ar->Release();
@@ -36,10 +36,12 @@ namespace GOTHIC_NAMESPACE
 
   void Unarchive()
   {
-    zCArchiver *ar = zarcFactory->CreateArchiverRead(GetArchivePath(PLUGIN_NAME), 0);
+    auto path = GetArchivePath(PLUGIN_NAME);
+
+    zCArchiver *ar = zarcFactory->CreateArchiverRead(path, 0);
 
     playerStatus->Unarchive(ar);
-    // logBook.Unarchive(ar);
+    logBook->Unarchive(ar);
 
     if (!ar)
       return;
