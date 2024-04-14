@@ -1,5 +1,7 @@
 // This file is included separately for each engine version
 
+#include "Sources.h"
+
 namespace GOTHIC_NAMESPACE
 {
     // TSaveLoadGameInfo &SaveLoadGameInfo = Union::SaveLoadGameInfo;
