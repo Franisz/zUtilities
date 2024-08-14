@@ -78,6 +78,7 @@ namespace GOTHIC_ENGINE {
     void EndSaveLoad();
     bool IsBusy();
     void Loop();
+    void MenuLoop();
     QuickSave();
   };
 

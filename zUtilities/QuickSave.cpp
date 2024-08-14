@@ -235,6 +235,29 @@ namespace GOTHIC_ENGINE {
     CheckSave();
   }
 
+  void QuickSave::MenuLoop() {
+    if ( !Options::QuickSaveMode ) return;
+
+    if ( !zinput->KeyToggled(Options::KeyQuickLoad) ) return;
+
+    auto menu = zCMenu::GetActive();
+    if ( !menu || menu->inGameMenu ) return;
+
+    oCSavegameInfo* info = gameMan->savegameManager->GetSavegame(iLastSaveSlot);
+    if ( !info || !info->DoesSavegameExist() ) return;
+
+    menu->m_exitState = zCMenu::BACK;
+    gameMan->menu_load_savegame->m_selSlot = iLastSaveSlot;
+
+    isLoading = true;
+    StartSaveLoad();
+#if ENGINE == Engine_G1A
+    ogame->LoadSavegame( info->m_SlotNr, true );
+#else
+    gameMan->Read_Savegame( info->m_SlotNr );
+#endif
+  }
+
   QuickSave::QuickSave() {
     SetSaveSlotAndNr();
   }

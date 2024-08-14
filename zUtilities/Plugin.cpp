@@ -31,6 +31,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_MenuLoop() {
+    quickSave->MenuLoop();
   }
 
   // Information about current saving or loading world
