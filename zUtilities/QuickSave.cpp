@@ -236,14 +236,25 @@ namespace GOTHIC_ENGINE {
   }
 
   void QuickSave::MenuLoop() {
-    if ( !Options::QuickSaveMode ) return;
+    if ( !Options::QuickSaveMode || zCMenu::inGameMenu ) return;
 
-    if ( !zinput->KeyToggled(Options::KeyQuickLoad) ) return;
+    if ( keepClosingMenus ) {
+      CloseMenuIfNotMain();
+      return;
+    }
+
+    if ( zinput->KeyToggled( Options::KeyQuickLoad ) ) {
+      keepClosingMenus = true;
+      keyQuickLoadPressed = true;
+    }
+
+    if ( !( keyQuickLoadPressed && !keepClosingMenus ) ) return;
+    keyQuickLoadPressed = false;
 
     auto menu = zCMenu::GetActive();
-    if ( !menu || menu->inGameMenu ) return;
+    if ( !menu ) return;
 
-    oCSavegameInfo* info = gameMan->savegameManager->GetSavegame(iLastSaveSlot);
+    oCSavegameInfo* info = gameMan->savegameManager->GetSavegame( iLastSaveSlot );
     if ( !info || !info->DoesSavegameExist() ) return;
 
     menu->m_exitState = zCMenu::BACK;
@@ -256,6 +267,17 @@ namespace GOTHIC_ENGINE {
 #else
     gameMan->Read_Savegame( info->m_SlotNr );
 #endif
+  }
+
+  void QuickSave::CloseMenuIfNotMain() {
+    auto menu = zCMenu::GetActive();
+
+    if ( menu && menu->name != "MENU_MAIN" ) {
+      menu->m_exitState = zCMenu::BACK;
+    }
+    else {
+      keepClosingMenus = false;
+    }
   }
 
   QuickSave::QuickSave() {

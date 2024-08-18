@@ -54,6 +54,8 @@ namespace GOTHIC_ENGINE {
   class QuickSave {
   private:
     bool disabledStatus = false;
+    bool keepClosingMenus = false;
+    bool keyQuickLoadPressed = false;
 
     int iLastSaveSlot;
     int iLastSaveNumber;
@@ -64,6 +66,7 @@ namespace GOTHIC_ENGINE {
     void CheckSave();
     void CheckLoad();
     void StartSaveLoad();
+    void CloseMenuIfNotMain();
 
   public:
     enum QuickSaveMode {
