@@ -3,3 +3,5 @@
 // User API for zCMenu
 // Add your methods here
 
+void HandleFrame_Union(int);
+int Run_Union();

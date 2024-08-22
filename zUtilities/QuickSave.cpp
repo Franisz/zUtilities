@@ -2,6 +2,32 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
+  bool QuickSave::KeepClosingMenus = false;
+
+  HOOK Hook_zCMenu_HandleFrame PATCH( &zCMenu::HandleFrame, &zCMenu::HandleFrame_Union );
+  void zCMenu::HandleFrame_Union( int frame ) {
+    if ( QuickSave::KeepClosingMenus ) {
+      for ( int i = 0; i < this->m_listItems.GetNum(); i++ )
+        this->m_listItems[i]->m_bLeaveItem = true;
+
+      this->m_exitState = zCMenu::BACK;
+      return;
+    }
+
+    THISCALL( Hook_zCMenu_HandleFrame )( frame );
+  }
+
+  HOOK Hook_zCMenu_HandleRun PATCH( &zCMenu::Run, &zCMenu::Run_Union );
+  int zCMenu::Run_Union()
+  {
+    int result = THISCALL( Hook_zCMenu_HandleRun )();
+
+    if ( zCMenu::activeList.GetNum() == 0 )
+      QuickSave::KeepClosingMenus = false;
+
+    return result;
+  }
+
   void QuickSave::SetSaveSlotAndNr() {
     zCArray<oCSavegameInfo*> saveList = gameMan->savegameManager->infoList;
 
@@ -205,6 +231,23 @@ namespace GOTHIC_ENGINE {
 #endif
   }
 
+  void QuickSave::LoadFromMainMenu() const {
+    if ( gameMan->menu_load_savegame )
+      gameMan->menu_load_savegame->m_selSlot = iLastSaveSlot;
+
+    if ( zCMenu::activeList.GetNum() == 0 ) {
+#if ENGINE == Engine_G1A
+      ogame->LoadSavegame( iLastSaveSlot, true );
+#else
+      gameMan->Read_Savegame( iLastSaveSlot );
+#endif
+      return;
+    }
+
+    QuickSave::KeepClosingMenus = true;
+    zoptions->WriteString( "internal", "menuAction", "SAVEGAME_LOAD", false );
+  }
+
   void QuickSave::StartSaveLoad() {
     if ( ogame->GetShowPlayerStatus() ) {
       disabledStatus = true;
@@ -236,48 +279,12 @@ namespace GOTHIC_ENGINE {
   }
 
   void QuickSave::MenuLoop() {
-    if ( !Options::QuickSaveMode || zCMenu::inGameMenu ) return;
-
-    if ( keepClosingMenus ) {
-      CloseMenuIfNotMain();
-      return;
-    }
-
-    if ( zinput->KeyToggled( Options::KeyQuickLoad ) ) {
-      keepClosingMenus = true;
-      keyQuickLoadPressed = true;
-    }
-
-    if ( !( keyQuickLoadPressed && !keepClosingMenus ) ) return;
-    keyQuickLoadPressed = false;
-
-    auto menu = zCMenu::GetActive();
-    if ( !menu ) return;
+    if ( !Options::QuickSaveMode || zCMenu::inGameMenu || isLoading || !zinput->KeyToggled( Options::KeyQuickLoad ) ) return;
 
     oCSavegameInfo* info = gameMan->savegameManager->GetSavegame( iLastSaveSlot );
     if ( !info || !info->DoesSavegameExist() ) return;
 
-    menu->m_exitState = zCMenu::BACK;
-    gameMan->menu_load_savegame->m_selSlot = iLastSaveSlot;
-
-    isLoading = true;
-    StartSaveLoad();
-#if ENGINE == Engine_G1A
-    ogame->LoadSavegame( info->m_SlotNr, true );
-#else
-    gameMan->Read_Savegame( info->m_SlotNr );
-#endif
-  }
-
-  void QuickSave::CloseMenuIfNotMain() {
-    auto menu = zCMenu::GetActive();
-
-    if ( menu && menu->name != "MENU_MAIN" ) {
-      menu->m_exitState = zCMenu::BACK;
-    }
-    else {
-      keepClosingMenus = false;
-    }
+    LoadFromMainMenu();
   }
 
   QuickSave::QuickSave() {
