@@ -109,7 +109,7 @@ instance MenuItem_Opt_Headline(C_MENU_ITEM_DEF)
   flags   = flags & ~IT_SELECTABLE;
   flags   = flags | IT_TXT_CENTER;
   text[0] = Str_GetLocalizedString(
-    "ZUTILITIES НАСТРОЙКИ",
+    "ZUTILITIES ННСТРОЙКИ",
     "ZUTILITIES SETTINGS",
     "ZUTILITIES EINSTELLUNGEN",
     "USTAWIENIA ZUTILITIES"
@@ -132,7 +132,7 @@ instance MenuItem_Opt_Open_Link(C_MENU_ITEM_DEF)
   oneventaction[1] = Act_OpenWebLink;
   flags            = flags | IT_TXT_CENTER;
   text[0]          = Str_GetLocalizedString(
-    "Открыть страницу проекта",
+    "Открыть ѝтраницу проекта",
     "Open project page",
     "Projektseite öffnen",
     "Otwórz stronę projektu"
@@ -833,33 +833,12 @@ instance MenuItem_Opt_Page5_ShowTargetProtection_Choice(C_MENU_ITEM_DEF)
   
   onchgsetoption        = "ShowTargetProtection";
   onchgsetoptionsection = "zUtilities";
-  text[0]               = "Off|On";
-};
-
-instance MenuItem_Opt_Page5_ShowCurrWeapProtOnly(C_MENU_ITEM)
-{
-  CurrentMenuItem_PY = 2;
-  C_MENU_ITEM_TEXT_BASE();
-  fontname = FontSmall;
-  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
-  
-  text[0] = "ShowCurrWeapProtOnly";
-  text[1] = "protection icon only for current weapon in fight mode";
-};
-
-instance MenuItem_Opt_Page5_ShowCurrWeapProtOnly_Choice(C_MENU_ITEM_DEF)
-{
-  C_MENUITEM_CHOICE_BASE();
-  posy += Menu_DY * CurrentMenuItem_PY;
-  
-  onchgsetoption        = "ShowCurrWeapProtOnly";
-  onchgsetoptionsection = "zUtilities";
-  text[0]               = "Off|On";
+  text[0]               = "Off|Weapon|All";
 };
 
 instance MenuItem_Opt_Page5_ShowProtOnlyInFight(C_MENU_ITEM)
 {
-  CurrentMenuItem_PY = 3;
+  CurrentMenuItem_PY = 2;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
@@ -880,7 +859,7 @@ instance MenuItem_Opt_Page5_ShowProtOnlyInFight_Choice(C_MENU_ITEM_DEF)
 
 instance MenuItem_Opt_Page5_ShowProtAllDamageTypes(C_MENU_ITEM)
 {
-  CurrentMenuItem_PY = 4;
+  CurrentMenuItem_PY = 3;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;

@@ -78,10 +78,12 @@ namespace GOTHIC_ENGINE {
 		int width = 0;
 		int size = GetProtSize();
 		int margin = GetProtMargin();
-		for (int i = 0; i < statuses.size(); i++)
+		auto statusCount = statuses.size();
+
+		for (int i = 0; i < statusCount; i++)
 		{
 			auto status = statuses[i];
-			if (status.immune)
+			if (status.immune && statusCount == 1)
 			{
 				width += size;
 				continue;
@@ -111,7 +113,8 @@ namespace GOTHIC_ENGINE {
 
 
 		auto statuses = npcHelper.GetProtectionVisibleStatuses(npc);
-		if (statuses.size() == 0) {
+		auto statusCount = statuses.size();
+		if (statusCount == 0) {
 			return false;
 		}
 
@@ -129,9 +132,10 @@ namespace GOTHIC_ENGINE {
 
 		for (int i = 0; i < statuses.size(); i++) {
 			auto status = statuses[i];
+			auto canRenderImmune = status.immune && statusCount == 1;
 
-			auto protectionText = !status.immune ? zSTRING(status.value) : "";
-			auto color = status.immune ? Colors::Gray : Colors::GetColorByDamageIndex(status.damageIndex);
+			auto protectionText = !canRenderImmune ? zSTRING(status.value) : "";
+			auto color = canRenderImmune ? Colors::Gray : Colors::GetColorByDamageIndex(status.damageIndex);
 			if (ogame->hpBar)
 			{
 				color.alpha = ogame->hpBar->alpha;
