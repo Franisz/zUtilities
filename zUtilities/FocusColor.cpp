@@ -306,21 +306,17 @@ namespace GOTHIC_ENGINE {
   }
 
   zSTRING FocusColor::GetName( zCVob* vob ) {
-    if ( Options::ColorLockables )
-      if ( oCMobLockable* lockable = vob->CastTo<oCMobLockable>() )
-        return lockable->GetName();
+    if ( oCMobLockable* lockable = vob->CastTo<oCMobLockable>() )
+      return lockable->GetName();
 
-    if ( Options::ColorNpcs )
-      if ( oCNpc* npc = vob->CastTo<oCNpc>() )
-        return npc->name[0];
+    if ( oCNpc* npc = vob->CastTo<oCNpc>() )
+      return npc->name[0];
 
-    if ( Options::ColorItems )
-      if ( oCItem* item = vob->CastTo<oCItem>() )
-        return item->name;
+    if ( oCItem* item = vob->CastTo<oCItem>() )
+      return item->name;
 
-    if ( Options::ColorInter )
-      if ( oCMobInter* inter = vob->CastTo<oCMobInter>() )
-        return inter->GetName();
+    if ( oCMobInter* inter = vob->CastTo<oCMobInter>() )
+      return inter->GetName();
 
     return "";
   }

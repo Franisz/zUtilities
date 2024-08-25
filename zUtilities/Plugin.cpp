@@ -31,6 +31,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_MenuLoop() {
+    quickSave->MenuLoop();
   }
 
   // Information about current saving or loading world
@@ -44,6 +45,7 @@ namespace GOTHIC_ENGINE {
   void Game_SaveEnd() {
     quickSave->saveEnd = true;
     Archive();
+    playerStatus.ResetSaveReminder();
   }
 
   void LoadBegin() {
@@ -61,6 +63,7 @@ namespace GOTHIC_ENGINE {
 #if ENGINE >= Engine_G2
     playerStatus.GetPickpocketInfos();
 #endif
+    playerStatus.ResetSaveReminder();
   }
 
   void Game_LoadBegin_NewGame() {

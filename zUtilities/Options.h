@@ -92,6 +92,8 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "ActivateUsedMunition", "... enables (1) or disables (0) highlighting currently used ranged weapon munition in the inventory" );
       zoptions->AddTrivia( PLUGIN_NAME, "AlternativeDialogueBoxes", "... enables (1) or disables (0) alternative dialogue boxes style" );
       zoptions->AddTrivia( PLUGIN_NAME, "SelectedDialogueColor", "... defines color of selected line in dialogues" + nline + "... use 'R|G|B' or 'R|G|B|A' format" + nline + "... leave empty to use default color" );
+
+      zoptions->AddTrivia( PLUGIN_NAME, "SaveReminder", "... Time in minutes after which the reminder to save the game appears on the screen" + nline + "... set to -1 to disable");
     }
   }
 }

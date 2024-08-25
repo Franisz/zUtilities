@@ -2,6 +2,32 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
+  bool QuickSave::KeepClosingMenus = false;
+
+  HOOK Hook_zCMenu_HandleFrame PATCH( &zCMenu::HandleFrame, &zCMenu::HandleFrame_Union );
+  void zCMenu::HandleFrame_Union( int frame ) {
+    if ( QuickSave::KeepClosingMenus ) {
+      for ( int i = 0; i < this->m_listItems.GetNum(); i++ )
+        this->m_listItems[i]->m_bLeaveItem = true;
+
+      this->m_exitState = zCMenu::BACK;
+      return;
+    }
+
+    THISCALL( Hook_zCMenu_HandleFrame )( frame );
+  }
+
+  HOOK Hook_zCMenu_HandleRun PATCH( &zCMenu::Run, &zCMenu::Run_Union );
+  int zCMenu::Run_Union()
+  {
+    int result = THISCALL( Hook_zCMenu_HandleRun )();
+
+    if ( zCMenu::activeList.GetNum() == 0 )
+      QuickSave::KeepClosingMenus = false;
+
+    return result;
+  }
+
   void QuickSave::SetSaveSlotAndNr() {
     zCArray<oCSavegameInfo*> saveList = gameMan->savegameManager->infoList;
 
@@ -205,6 +231,23 @@ namespace GOTHIC_ENGINE {
 #endif
   }
 
+  void QuickSave::LoadFromMainMenu() const {
+    if ( gameMan->menu_load_savegame )
+      gameMan->menu_load_savegame->m_selSlot = iLastSaveSlot;
+
+    if ( zCMenu::activeList.GetNum() == 0 ) {
+#if ENGINE == Engine_G1A
+      ogame->LoadSavegame( iLastSaveSlot, true );
+#else
+      gameMan->Read_Savegame( iLastSaveSlot );
+#endif
+      return;
+    }
+
+    QuickSave::KeepClosingMenus = true;
+    zoptions->WriteString( "internal", "menuAction", "SAVEGAME_LOAD", false );
+  }
+
   void QuickSave::StartSaveLoad() {
     if ( ogame->GetShowPlayerStatus() ) {
       disabledStatus = true;
@@ -233,6 +276,15 @@ namespace GOTHIC_ENGINE {
 
     CheckLoad();
     CheckSave();
+  }
+
+  void QuickSave::MenuLoop() {
+    if ( !Options::QuickSaveMode || zCMenu::inGameMenu || isLoading || !zinput->KeyToggled( Options::KeyQuickLoad ) ) return;
+
+    oCSavegameInfo* info = gameMan->savegameManager->GetSavegame( iLastSaveSlot );
+    if ( !info || !info->DoesSavegameExist() ) return;
+
+    LoadFromMainMenu();
   }
 
   QuickSave::QuickSave() {

@@ -64,6 +64,7 @@ namespace GOTHIC_ENGINE {
     void CheckSave();
     void CheckLoad();
     void StartSaveLoad();
+    void LoadFromMainMenu() const;
 
   public:
     enum QuickSaveMode {
@@ -72,12 +73,14 @@ namespace GOTHIC_ENGINE {
       Alternative
     };
 
+    static bool KeepClosingMenus;
     bool saveEnd = false;
     bool isSaving = false;
     bool isLoading = false;
     void EndSaveLoad();
     bool IsBusy();
     void Loop();
+    void MenuLoop();
     QuickSave();
   };
 
