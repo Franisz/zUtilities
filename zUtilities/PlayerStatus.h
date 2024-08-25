@@ -3,14 +3,17 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    bool ShowGameTime, ShowMunitionAmount, ShowTargetProtection, ShowPickpocketIcon, UseTimeMultiplier;
+    bool ShowGameTime, ShowMunitionAmount, ShowTargetProtection, ShowPickpocketIcon, UseTimeMultiplier, ShowCurrWeapProtOnly, ShowProtOnlyInFight,ShowProtAllDamageTypes;
     int KeyTimeMultiplier;
     Array<float> TimeMultipliers;
 
     void PlayerStatus() {
       ShowGameTime = zoptions->ReadBool( PLUGIN_NAME, "ShowGameTime", false );
       ShowMunitionAmount = zoptions->ReadBool( PLUGIN_NAME, "ShowMunitionAmount", false );
-      ShowTargetProtection = zoptions->ReadBool( PLUGIN_NAME, "ShowTargetProtection", true );
+      ShowTargetProtection = zoptions->ReadBool(PLUGIN_NAME, "ShowTargetProtection", true);
+      ShowCurrWeapProtOnly = zoptions->ReadBool(PLUGIN_NAME, "ShowCurrWeapProtOnly", true);
+      ShowProtOnlyInFight = zoptions->ReadBool(PLUGIN_NAME, "ShowProtOnlyInFight", true);
+      ShowProtAllDamageTypes = zoptions->ReadBool(PLUGIN_NAME, "ShowProtAllDamageTypes", false);
 #if ENGINE >= Engine_G2
       ShowPickpocketIcon = zoptions->ReadBool( PLUGIN_NAME, "ShowPickpocketIcon", true );
 #endif
@@ -27,9 +30,9 @@ namespace GOTHIC_ENGINE {
 
   class PlayerStatus {
   private:
-    StatusBar* hpBar;
-    StatusBar* manaBar;
-    StatusBar* swimBar;
+    HealthStatusBar* hpBar;
+    ManaStatusBar* manaBar;
+    SwimStatusBar* swimBar;
     int multiplierIndex = 0;
     int infoIcons = 0;
 
@@ -44,7 +47,7 @@ namespace GOTHIC_ENGINE {
     zCArray<zSTRING> stateFuncItems;
     oCItem* stateFuncItem;
     oCNpc* traderNpc;
-    StatusBar* focusBar;
+    FocusStatusBar* focusBar;
     bool CanPickpocketNpc( oCNpc* npc );
     void GetPickpocketInfos();
     bool KnowStateFunc( zCVob* vob );

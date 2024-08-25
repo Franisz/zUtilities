@@ -175,6 +175,11 @@ instance Menu_Opt_Page4(C_EMPTY_MENU_DEF)
   Menu_SearchItems("ZUTILITIES:MENUITEM_OPT_PAGE4_*");
 };
 
+instance Menu_Opt_Page5(C_EMPTY_MENU_DEF)
+{
+  Menu_SearchItems("ZUTILITIES:MENUITEM_OPT_PAGE5_*");
+};
+
 // Page 0
 instance MenuItem_Opt_Page0_Headline(C_MENU_ITEM)
 {
@@ -251,6 +256,24 @@ instance MenuItem_Opt_Page0_GoTo_Page4(C_MENU_ITEM_UNION_DEF)
   text[0] = "DamagePopup";
   onselaction[0]   = SEL_ACTION_STARTMENU;
   onselaction_s[0] = "zUtilities:Menu_Opt_Page4";
+};
+
+instance MenuItem_Opt_Page0_GoTo_Page5(C_MENU_ITEM_UNION_DEF)
+{
+  CurrentMenuItem_PY = 5;
+  C_MENU_ITEM_TEXT_BASE();
+  // fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY;
+  posx    = 0;
+
+  flags = flags | IT_TXT_CENTER;
+
+  type    = MENU_ITEM_TEXT;
+  dimx    = 8100;
+
+  text[0] = "ProtectionIcon";
+  onselaction[0]   = SEL_ACTION_STARTMENU;
+  onselaction_s[0] = "zUtilities:Menu_Opt_Page5";
 };
 
 instance MenuItem_Opt_Page0_Open_Link(C_MENU_ITEM)
@@ -522,27 +545,6 @@ instance MenuItem_Opt_Page2_LabelMissionItems_Choice(C_MENU_ITEM_DEF)
   text[0]               = "Off|On";
 };
 
-instance MenuItem_Opt_Page2_ShowTargetProtection(C_MENU_ITEM)
-{
-  CurrentMenuItem_PY = 5;
-  C_MENU_ITEM_TEXT_BASE();
-  fontname = FontSmall;
-  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
-  
-  text[0] = "ShowTargetProtection";
-  text[1] = "protection icon and value next to the focused npc hp bar";
-};
-
-instance MenuItem_Opt_Page2_ShowTargetProtection_Choice(C_MENU_ITEM_DEF)
-{
-  C_MENUITEM_CHOICE_BASE();
-  posy += Menu_DY * CurrentMenuItem_PY;
-  
-  onchgsetoption        = "ShowTargetProtection";
-  onchgsetoptionsection = "zUtilities";
-  text[0]               = "Off|On";
-};
-
 // Page 3
 instance MenuItem_Opt_Page3_Headline(C_MENU_ITEM)
 {
@@ -803,6 +805,96 @@ instance MenuItem_Opt_Page4_DamagePopupColorOnlyIcon_Choice(C_MENU_ITEM_DEF)
   posy += Menu_DY * CurrentMenuItem_PY;
   
   onchgsetoption        = "DamagePopupColorOnlyIcon";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Off|On";
+};
+
+// Page 5
+instance MenuItem_Opt_Page5_Headline(C_MENU_ITEM)
+{
+  MenuItem_Opt_Headline();
+};
+
+instance MenuItem_Opt_Page5_ShowTargetProtection(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 1;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "ShowTargetProtection";
+  text[1] = "protection icon and value next to the focused npc hp bar";
+};
+
+instance MenuItem_Opt_Page5_ShowTargetProtection_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_BASE();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "ShowTargetProtection";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Off|On";
+};
+
+instance MenuItem_Opt_Page5_ShowCurrWeapProtOnly(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 2;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "ShowCurrWeapProtOnly";
+  text[1] = "protection icon only for current weapon in fight mode";
+};
+
+instance MenuItem_Opt_Page5_ShowCurrWeapProtOnly_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_BASE();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "ShowCurrWeapProtOnly";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Off|On";
+};
+
+instance MenuItem_Opt_Page5_ShowProtOnlyInFight(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 3;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "ShowProtOnlyInFight";
+  text[1] = "shows icons only if hero is in fight mode";
+};
+
+instance MenuItem_Opt_Page5_ShowProtOnlyInFight_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_BASE();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "ShowProtOnlyInFight";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Off|On";
+};
+
+instance MenuItem_Opt_Page5_ShowProtAllDamageTypes(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 4;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "ShowProtAllDamageTypes";
+  text[1] = "shows icons for all damage types, even if 0 protection";
+};
+
+instance MenuItem_Opt_Page5_ShowProtAllDamageTypes_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_BASE();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "ShowProtAllDamageTypes";
   onchgsetoptionsection = "zUtilities";
   text[0]               = "Off|On";
 };

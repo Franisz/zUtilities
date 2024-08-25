@@ -7,7 +7,7 @@ namespace GOTHIC_ENGINE {
     int StatusBarValueMode;
     Array<string> StatusBarNames, HealthBarPos, ManaBarPos, SwimBarPos;
 
-    void StatusBar() {
+    void LoadStatusBarSettings() {
       RecoveryVisualization = zoptions->ReadBool( PLUGIN_NAME, "RecoveryVisualization", true );
       StatusBarValueMode = zoptions->ReadInt( PLUGIN_NAME, "StatusBarValueMode", 1 );
       ShowEnemyBarAboveHim = zoptions->ReadBool( PLUGIN_NAME, "ShowEnemyBarAboveHim", true );
@@ -20,23 +20,31 @@ namespace GOTHIC_ENGINE {
 
   class StatusBar {
   private:
-    oCViewStatusBar* bar;
-    zCView* valueView;
+
     zCView* predictView;
     zCView* focusView;
-    zCArray<zSTRING> symbols;
-    zSTRING name;
-    Array<string> userPos;
 
-    bool Init();
-    bool IsBarActive();
     int GetValueFromItem( oCItem* item, int atr );
-    int GetHealValue();
+    int GetRestoreValue();
     void DrawPrediction( int value );
-    void PredictHeal();
-    void PrintValue( oCNpc* npc );
-    void MoveFocusBar( int x, int y, oCNpc* npc );
+    void PredictRestore();
+    
     void ChangeBarPos();
+
+
+  protected:
+      zCView* valueView;
+      oCViewStatusBar* bar;
+      int restoreAttribute = -1;
+      zCArray<zSTRING> symbols;
+      zSTRING name;
+      Array<string> userPos;
+      void PrintValue(oCNpc* npc);
+      virtual void PrintValueOutside(zSTRING str, oCNpc* npc);
+      bool IsBarActive();
+      StatusBar(oCViewStatusBar* bar);
+      virtual zSTRING GetBarValue();
+      bool CanLoop();
 
   public:
     enum ValueMode {
@@ -46,9 +54,8 @@ namespace GOTHIC_ENGINE {
       Inside
     };
 
-    bool NeedAdjustPosition( int x, int y, oCNpc* npc );
-    void Loop();
-    void Clear();
-    StatusBar( oCViewStatusBar* bar );
+    virtual void Loop();
+    virtual bool Init();
+    virtual void Clear();
   };
 }
