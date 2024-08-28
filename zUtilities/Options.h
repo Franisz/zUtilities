@@ -59,6 +59,8 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "UseTimeMultiplier", "... enables (1) or disables (0) time speed multiplier" );
       zoptions->AddTrivia( PLUGIN_NAME, "KeyTimeMultiplier", "... key for cycling time speed" );
       zoptions->AddTrivia( PLUGIN_NAME, "TimeMultipliers", "... defines time multipliers" );
+      zoptions->AddTrivia( PLUGIN_NAME, "BoostTimeMultiplierKeyDetectMilliseconds", "... time (in milliseconds) that need to pass to detect if 'KeyTimeMultiplier' is toggled to set 'BoostTimeMultiplierFactor' as actual time factor" );
+      zoptions->AddTrivia( PLUGIN_NAME, "BoostTimeMultiplierFactor", "... defines time multiplayer when 'KeyTimeMultiplier' is toggled (could be lower or higher than 'TimeMultipliers')" );
 
       zoptions->AddTrivia( PLUGIN_NAME, "QuickSaveMode", "... specifies QuickSave mode, (0) - 'Disabled', (1) - 'Standard', (2) - 'Alternative'" + nline + "... QuickSave with [F10] and QuickLoad with [F12]" );
       zoptions->AddTrivia( PLUGIN_NAME, "KeyQuickSave", "... key for QuickSave" );

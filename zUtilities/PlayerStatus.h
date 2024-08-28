@@ -7,6 +7,8 @@ namespace GOTHIC_ENGINE {
     int KeyTimeMultiplier;
     Array<float> TimeMultipliers;
     int SaveReminder;
+    int BoostTimeMultiplierKeyDetectMilliseconds;
+    float BoostTimeMultiplierFactor;
 
     void PlayerStatus() {
       ShowGameTime = zoptions->ReadBool( PLUGIN_NAME, "ShowGameTime", false );
@@ -24,6 +26,9 @@ namespace GOTHIC_ENGINE {
       for ( int i = 0; i < MulStrings.GetNum(); i++ )
         TimeMultipliers.Insert( MulStrings[i].Shrink().ToReal32() );
 
+      BoostTimeMultiplierKeyDetectMilliseconds = zoptions->ReadInt(PLUGIN_NAME, "BoostTimeMultiplierKeyDetectMilliseconds", 250);
+      BoostTimeMultiplierFactor = zoptions->ReadReal(PLUGIN_NAME, "BoostTimeMultiplierFactor", 10.0f);
+
       SaveReminder = zoptions->ReadInt(PLUGIN_NAME, "SaveReminder", 5);
     }
   }
@@ -35,7 +40,10 @@ namespace GOTHIC_ENGINE {
     StatusBar* swimBar;
     int multiplierIndex = 0;
     int infoIcons = 0;
+    bool keyTimeMultiplierPreviouslyPressed = false;
+    bool keyTimeMultiplierToggled = false;
     std::chrono::high_resolution_clock::time_point lastSaveTime;
+    std::chrono::high_resolution_clock::time_point keyTimeMultiplierPressedStartTime;
 
     void ShowGameTime();
     void ShowMunitionAmount();

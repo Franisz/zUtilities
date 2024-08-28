@@ -268,17 +268,54 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    if ( !zinput->KeyToggled( Options::KeyTimeMultiplier ) ) {
+    if ( zinput->KeyPressed( Options::KeyTimeMultiplier ) ) {
+      if ( !keyTimeMultiplierPreviouslyPressed ) {
+            // key was just pressed for the first time
+            keyTimeMultiplierPressedStartTime = std::chrono::high_resolution_clock::now();
+            keyTimeMultiplierPreviouslyPressed = true;
+            keyTimeMultiplierToggled = false;
+      }
+      else {
+        // key is still pressed
+        auto currentTime = std::chrono::high_resolution_clock::now();
+        auto pressDuration = std::chrono::duration_cast<std::chrono::milliseconds>( currentTime - keyTimeMultiplierPressedStartTime ).count();
+
+        if ( pressDuration >= Options::BoostTimeMultiplierKeyDetectMilliseconds )
+          keyTimeMultiplierToggled = true;
+
+        if ( keyTimeMultiplierToggled ) {
+          // this means that key is toggled
+          if ( ztimer->factorMotion != Options::BoostTimeMultiplierFactor )
+            ztimer->factorMotion = Options::BoostTimeMultiplierFactor;
+        }
+      }
+    }
+    else {
+      if ( keyTimeMultiplierPreviouslyPressed ) {
+        // key was just released
+        if ( keyTimeMultiplierToggled ) {
+          // this means that key was toggled, but released now
+          if ( ztimer->factorMotion != 1.0f ) ztimer->factorMotion = 1.0f;
+        }
+        else {
+          auto endTime = std::chrono::high_resolution_clock::now();
+          auto pressDuration = std::chrono::duration_cast<std::chrono::milliseconds>( endTime - keyTimeMultiplierPressedStartTime ).count();
+
+          if ( pressDuration < Options::BoostTimeMultiplierKeyDetectMilliseconds ) {
+            // key was pressed once;
+            multiplierIndex++;
+            if ( multiplierIndex < 0 || multiplierIndex >= Options::TimeMultipliers.GetNum() )
+              multiplierIndex = 0;
+
+            ztimer->factorMotion = Options::TimeMultipliers[multiplierIndex];
+          }
+        }
+        keyTimeMultiplierPreviouslyPressed = false; // reset state
+      }
+
       if ( ztimer->factorMotion != Options::TimeMultipliers[multiplierIndex] )
         ztimer->factorMotion = Options::TimeMultipliers[multiplierIndex];
-      return;
     }
-
-    multiplierIndex++;
-    if ( multiplierIndex < 0 || multiplierIndex >= Options::TimeMultipliers.GetNum() )
-      multiplierIndex = 0;
-
-    ztimer->factorMotion = Options::TimeMultipliers[multiplierIndex];
   }
 
   void PlayerStatus::ShowGameTime() {
