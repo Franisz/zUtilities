@@ -41,7 +41,7 @@ namespace GOTHIC_ENGINE {
     int multiplierIndex = 0;
     int infoIcons = 0;
     bool keyTimeMultiplierPreviouslyPressed = false;
-    bool keyTimeMultiplierToggled = false;
+    bool keyTimeMultiplierIsPressed = false;
     std::chrono::high_resolution_clock::time_point lastSaveTime;
     std::chrono::high_resolution_clock::time_point keyTimeMultiplierPressedStartTime;
 

@@ -273,7 +273,7 @@ namespace GOTHIC_ENGINE {
             // key was just pressed for the first time
             keyTimeMultiplierPressedStartTime = std::chrono::high_resolution_clock::now();
             keyTimeMultiplierPreviouslyPressed = true;
-            keyTimeMultiplierToggled = false;
+            keyTimeMultiplierIsPressed = false;
       }
       else {
         // key is still pressed
@@ -281,10 +281,10 @@ namespace GOTHIC_ENGINE {
         auto pressDuration = std::chrono::duration_cast<std::chrono::milliseconds>( currentTime - keyTimeMultiplierPressedStartTime ).count();
 
         if ( pressDuration >= Options::BoostTimeMultiplierKeyDetectMilliseconds )
-          keyTimeMultiplierToggled = true;
+          keyTimeMultiplierIsPressed = true;
 
-        if ( keyTimeMultiplierToggled ) {
-          // this means that key is toggled
+        if ( keyTimeMultiplierIsPressed ) {
+          // this means that key is still pressed and time for release has passed so time to change `factorMotion`
           if ( ztimer->factorMotion != Options::BoostTimeMultiplierFactor )
             ztimer->factorMotion = Options::BoostTimeMultiplierFactor;
         }
@@ -293,8 +293,8 @@ namespace GOTHIC_ENGINE {
     else {
       if ( keyTimeMultiplierPreviouslyPressed ) {
         // key was just released
-        if ( keyTimeMultiplierToggled ) {
-          // this means that key was toggled, but released now
+        if ( keyTimeMultiplierIsPressed ) {
+          // this means that key was pressed, but released now
           if ( ztimer->factorMotion != 1.0f ) ztimer->factorMotion = 1.0f;
         }
         else {
@@ -302,7 +302,7 @@ namespace GOTHIC_ENGINE {
           auto pressDuration = std::chrono::duration_cast<std::chrono::milliseconds>( endTime - keyTimeMultiplierPressedStartTime ).count();
 
           if ( pressDuration < Options::BoostTimeMultiplierKeyDetectMilliseconds ) {
-            // key was pressed once;
+            // key was pressed and released within time window
             multiplierIndex++;
             if ( multiplierIndex < 0 || multiplierIndex >= Options::TimeMultipliers.GetNum() )
               multiplierIndex = 0;
