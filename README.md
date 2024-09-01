@@ -15,6 +15,7 @@ This is a plugin with a set of many quality-of-life and utility features made fo
   - Notice strings are set automatically depending on system language but still can be changed manually in `gothic.ini` with `CantSave`, `CantLoad` and `NoSave` options.
   - This feature can be disabled in `gothic.ini` with `QuickSaveMode` option.
   - Change `QuickSaveMode` option for different style or disable: `0` - _Disabled_, `1` - _Standard_, `2` - _Alternative_.
+  - Game can also be quick loaded from main menu.
 
 - Changes name color of focused npcs, containers, doors and items.
 
@@ -102,8 +103,7 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
 - Reminds the player to save the game by displaying an icon with a timer after playing without saving the game for too long.
 
-  - By default, it reminds the player after 5 minutes since the last save game. It can be changed in `gothic.ini` with `SaveReminder` option.
-  - It can be turned off by setting `SaveReminder` to `-1`
+  - By default, it reminds the player after 5 minutes since the last save game. Timer can be changed in `gothic.ini` with `SaveReminder` option. Feature can be turned off completely by setting `SaveReminder` to `-1`.
 
 - Allows killing meatbugs by stepping on them.
 
@@ -125,6 +125,7 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 - Display debug info data about focused vob or selected in the inventory item.
 
   - Use `zutilities debug` command to toggle on/off.
+  - While debug command is active, `zutilities showtriggers` command can be toggled to display invisible triggers.
 
 - Insert all items into inventory with `zutilities giveallitems` command.
 
@@ -183,7 +184,7 @@ SaveReminder=5
 ; ... set to -1 to disable
 
 ShowTargetProtection=1
-; ... enables for current equipped weapon (1) or shows all protection stats (2) or disables (0) protection icon and value next to the focused npc hp bar
+; ... enables for currently equipped weapon (1) or shows all protection stats (2) or disables (0) protection icon and value next to the focused npc hp bar
 
 ShowProtOnlyInFight=1
 ; ... enables (1) or disables (0) showing protection stats only during combat
