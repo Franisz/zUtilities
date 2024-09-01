@@ -329,14 +329,8 @@ namespace GOTHIC_ENGINE {
     if ( focusView == nullptr ) {
       focusView = new zCView( 0, 0, 8192, 8192 );
       screen->InsertItem( focusView );
-
-      if ( protView == nullptr ) {
-        protView = new zCView( 0, 0, 8192, 8192 );
-        focusView->InsertItem( protView );
-      }
     }
     else {
-      protView->ClrPrintwin();
       focusView->ClrPrintwin();
     }
 
@@ -354,7 +348,6 @@ namespace GOTHIC_ENGINE {
 
     if ( oCNpc* npc = vob->CastTo<oCNpc>() ) {
       TryAddIcons( x, y, name, npc );
-      TryShowProt( npc );
     }
 
     return true;
@@ -378,50 +371,6 @@ namespace GOTHIC_ENGINE {
 #endif
   }
 
-  void FocusColor::TryShowProt( oCNpc* npc ) {
-    if ( !Options::ShowTargetProtection )
-      return;
-
-    if ( npc->attribute[NPC_ATR_HITPOINTS] <= 0 )
-      return;
-
-    if ( player->IsInFightMode_S( 0 ) )
-      return;
-
-    oCViewStatusBar* bar = ogame->focusBar;
-
-    if ( !bar )
-      return;
-
-    int dmgIndex = player->GetActiveDamageIndex();
-    if ( !dmgIndex )
-      return;
-
-    int protection = npc->GetProtectionByIndex( (oEIndexDamage)dmgIndex );
-    bool isImmune = protection < 0 || npc->HasFlag( NPC_FLAG_IMMORTAL );
-
-    int margin = protView->FontY() * 0.1f;
-    int size = protView->FontY() * 0.75f;
-
-    int startX = bar->vposx + bar->vsizex;
-    int iconY = bar->vposy + bar->vsizey / 2 - size;
-    int fontY = bar->vposy + bar->vsizey / 2 - protView->FontY() / 2;
-
-    int iconNr = 1;
-
-    zCOLOR color = isImmune ? Colors::Gray : Colors::GetColorByDamageIndex( (oEIndexDamage)dmgIndex );
-    if ( ogame->hpBar )
-      color.alpha = ogame->hpBar->alpha;
-
-    zSTRING texture = "ICON_PROTECTIONS"; // https://game-icons.net/1x1/lorc/cracked-shield.html
-    IconInfo icon = IconInfo( startX + margin * iconNr + size * (iconNr++ - 1), iconY, size, color, texture );
-
-    if ( !isImmune ) {
-      protView->SetFontColor( color );
-      protView->Print( startX + margin * iconNr + size * (iconNr++ - 1), fontY, A protection );
-    }
-  }
-
   bool FocusColor::CanPrintFocus( zCView* view, int x, int y, const zSTRING& text ) {
     if ( !player || playerHelper.IsInInfo() || view == focusColor.focusView || focusColor.vobOnScreen )
       return false;
@@ -440,13 +389,11 @@ namespace GOTHIC_ENGINE {
     if ( focusView )
       vobOnScreen = false;
 
-    del( protView );
     del( focusView );
   }
 
   void FocusColor::Loop() {
     if ( focusView ) {
-      protView->ClrPrintwin();
       focusView->ClrPrintwin();
     }
 

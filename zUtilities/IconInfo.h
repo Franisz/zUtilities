@@ -25,5 +25,6 @@ namespace GOTHIC_ENGINE {
 
   public:
     IconInfo( int x, int y, int size, zCOLOR color, zSTRING texName, zSTRING text );
+    int GetSize();
   };
 }
