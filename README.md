@@ -69,7 +69,8 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
 - Displays protection icon and value next to the focused npc hp bar.
 
-  - This feature can be disabled in `gothic.ini` with `ShowTargetProtection` option.
+  - Setting `ShowTargetProtection` option to `0` disables this feature, `1` displays the protection that matches currently used weapon and `2` shows all protection stats.
+  - `ShowProtOnlyInFight` and `ShowProtAllDamageTypes` are extra options that can be used, to alter what is displayed.
 
 - Displays coin icon next to the focused npc name if player can pickpocket him.
 
@@ -99,6 +100,11 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
   - This is disabled by default and can be enabled with `ShowMunitionAmount` option.
 
+- Reminds the player to save the game by displaying an icon with a timer after playing without saving the game for too long.
+
+  - By default, it reminds the player after 5 minutes since the last save game. It can be changed in `gothic.ini` with `SaveReminder` option.
+  - It can be turned off by setting `SaveReminder` to `-1`
+
 - Allows killing meatbugs by stepping on them.
 
   - This feature can be disabled in `gothic.ini` with `TrampleMeatbugs` option.
@@ -122,11 +128,7 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
 - Insert all items into inventory with `zutilities giveallitems` command.
 
-- Check currently used plugin version through in game console with `zutilities version` command.  
-  
-- Reminds the player to save the game by displaying an icon with a timer after playing without saving the game for too long.
-  - By default, it reminds the player after 5 minutes since the last save game. It can be changed in `gothic.ini` with `SaveReminder` option.
-  - It can be turned off by setting `SaveReminder` to `-1`
+- Check currently used plugin version through in game console with `zutilities version` command.
 
 ### Options
 
@@ -164,9 +166,6 @@ ShowGameTime=0
 ShowMunitionAmount=0
 ; ... enables (1) or disables (0) on screen display of currently used munition amount
 
-ShowTargetProtection=1
-; ... enables (1) or disables (0) protection icon and value next to the focused npc hp bar
-
 ShowPickpocketIcon=1
 ; ... enables (1) or disables (0) coin icon next to the focused npc name when it can be pickpocketed
 
@@ -182,6 +181,15 @@ TimeMultipliers=1.0|2.5
 SaveReminder=5
 ; ... Time in minutes after which the reminder to save the game appears on the screen
 ; ... set to -1 to disable
+
+ShowTargetProtection=1
+; ... enables for current equipped weapon (1) or shows all protection stats (2) or disables (0) protection icon and value next to the focused npc hp bar
+
+ShowProtOnlyInFight=1
+; ... enables (1) or disables (0) showing protection stats only during combat
+
+ShowProtAllDamageTypes=0
+; ... enables (1) or disables (0) showing all protection stats, even if they are 0
 
 RecoveryVisualization=1
 ; ... enables (1) or disables (0) visualization of healing that hovered in the inventory item gives
