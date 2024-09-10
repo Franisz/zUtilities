@@ -1,6 +1,8 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 
+#include <thread>
+
 namespace GOTHIC_ENGINE {
   bool QuickSave::KeepClosingMenus = false;
 
@@ -246,6 +248,14 @@ namespace GOTHIC_ENGINE {
 
     QuickSave::KeepClosingMenus = true;
     zoptions->WriteString( "internal", "menuAction", "SAVEGAME_LOAD", false );
+  }
+
+  void QuickSave::LoadFromMainMenuOnGameInit() {
+   if (!Options::EnableAutoLoad) return;
+
+   std::this_thread::sleep_for(std::chrono::milliseconds(200));
+
+   LoadFromMainMenu();
   }
 
   void QuickSave::StartSaveLoad() {

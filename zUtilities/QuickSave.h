@@ -3,11 +3,12 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    int QuickSaveMode, UseBinarySave, KeyQuickSave, KeyQuickLoad, MinSaveSlot, MaxSaveSlot;
+    int QuickSaveMode, EnableAutoLoad, UseBinarySave, KeyQuickSave, KeyQuickLoad, MinSaveSlot, MaxSaveSlot;
     string CantSave, CantLoad, NoSave, SaveName;
 
     void QuickSave() {
       QuickSaveMode = zoptions->ReadInt( PLUGIN_NAME, "QuickSaveMode", 1 );
+      EnableAutoLoad = zoptions->ReadInt( PLUGIN_NAME, "EnableAutoLoad", 0 );
 
       KeyQuickSave = GetEmulationKeyCode( zoptions->ReadString( PLUGIN_NAME, "KeyQuickSave", "KEY_F10" ) );
       KeyQuickLoad = GetEmulationKeyCode( zoptions->ReadString( PLUGIN_NAME, "KeyQuickLoad", "KEY_F12" ) );
@@ -81,6 +82,7 @@ namespace GOTHIC_ENGINE {
     bool IsBusy();
     void Loop();
     void MenuLoop();
+    void LoadFromMainMenuOnGameInit();
     QuickSave();
   };
 

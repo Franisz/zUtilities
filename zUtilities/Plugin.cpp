@@ -1,6 +1,5 @@
 // This file added in headers queue
 // File: "Sources.h"
-#include "resource.h"
 
 namespace GOTHIC_ENGINE {
   void Game_Entry() {
@@ -11,6 +10,7 @@ namespace GOTHIC_ENGINE {
     Options::AddTrivias();
     RegisterCommands();
     quickSave = new QuickSave();
+    std::thread([=]() { quickSave->LoadFromMainMenuOnGameInit(); }).detach();
   }
 
   void Game_Exit() {

@@ -16,6 +16,7 @@ This is a plugin with a set of many quality-of-life and utility features made fo
   - This feature can be disabled in `gothic.ini` with `QuickSaveMode` option.
   - Change `QuickSaveMode` option for different style or disable: `0` - _Disabled_, `1` - _Standard_, `2` - _Alternative_.
   - Game can also be quick loaded from main menu.
+  - Last save can be also automatically loaded on game launch with `EnableAutoLoad` option (default: `0` - Disabled, `1` - Enabled).
 
 - Changes name color of focused npcs, containers, doors and items.
 

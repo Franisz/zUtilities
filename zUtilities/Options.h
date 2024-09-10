@@ -63,6 +63,7 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "TimeMultipliers", "... defines time multipliers" );
 
       zoptions->AddTrivia( PLUGIN_NAME, "QuickSaveMode", "... specifies QuickSave mode, (0) - 'Disabled', (1) - 'Standard', (2) - 'Alternative'" + nline + "... QuickSave with [F10] and QuickLoad with [F12]" );
+      zoptions->AddTrivia( PLUGIN_NAME, "EnableAutoLoad", "... enables (1) or disables (0) loading last save after game launch" );
       zoptions->AddTrivia( PLUGIN_NAME, "KeyQuickSave", "... key for QuickSave" );
       zoptions->AddTrivia( PLUGIN_NAME, "KeyQuickLoad", "... key for QuickLoad" );
       zoptions->AddTrivia( PLUGIN_NAME, "MinSaveSlot", "... defines min range of used save slots" );
