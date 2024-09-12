@@ -284,7 +284,7 @@ namespace GOTHIC_ENGINE {
     oCSavegameInfo* info = gameMan->savegameManager->GetSavegame( iLastSaveSlot );
     if ( !info || !info->DoesSavegameExist() ) return;
 
-    if ( Options::LoadLastQuickSaveAfterGameStart || zinput->KeyToggled( Options::KeyQuickLoad ) ) LoadFromMainMenu();
+    if ( Options::QuickLoadAfterGameStart || zinput->KeyToggled( Options::KeyQuickLoad ) ) LoadFromMainMenu();
   }
 
   QuickSave::QuickSave() {

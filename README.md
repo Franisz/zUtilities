@@ -15,7 +15,8 @@ This is a plugin with a set of many quality-of-life and utility features made fo
   - Notice strings are set automatically depending on system language but still can be changed manually in `gothic.ini` with `CantSave`, `CantLoad` and `NoSave` options.
   - This feature can be disabled in `gothic.ini` with `QuickSaveMode` option.
   - Change `QuickSaveMode` option for different style or disable: `0` - _Disabled_, `1` - _Standard_, `2` - _Alternative_.
-  - Game can also be quick loaded from main menu.
+  - Game can also be quick loaded from main menu by pressing `KeyQuickLoad`.
+  - Save can bey automatically loaded after start when `QuickLoadAfterGameStart` is set to `1`.
 
 - Changes name color of focused npcs, containers, doors and items.
 
