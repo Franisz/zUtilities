@@ -384,17 +384,29 @@ namespace GOTHIC_ENGINE {
   }
 
   void PlayerStatus::StatusBars() {
-    if ( !hpBar )
-      hpBar = new StatusBar( ogame->hpBar );
+   if ( !hpBar )
+   {
+       hpBar = new HealthStatusBar();
+       hpBar->Init();
+   }
 
     if ( !manaBar )
-      manaBar = new StatusBar( ogame->manaBar );
+    {
+        manaBar = new ManaStatusBar();
+        manaBar->Init();
+    }
 
     if ( !focusBar )
-      focusBar = new StatusBar( ogame->focusBar );
+    {
+        focusBar = new FocusStatusBar();
+        focusBar->Init();
+    }
 
     if ( !swimBar )
-      swimBar = new StatusBar( ogame->swimBar );
+    {
+        swimBar = new SwimStatusBar();
+        swimBar->Init();
+    }
 
     hpBar->Loop();
     manaBar->Loop();

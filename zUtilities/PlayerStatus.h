@@ -3,7 +3,7 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    bool ShowGameTime, ShowMunitionAmount, ShowTargetProtection, ShowPickpocketIcon, UseTimeMultiplier;
+    bool ShowGameTime, ShowMunitionAmount, ShowTargetProtection, ShowPickpocketIcon, UseTimeMultiplier, ShowCurrWeapProtOnly, ShowProtOnlyInFight,ShowProtAllDamageTypes;
     int KeyTimeMultiplier;
     Array<float> TimeMultipliers;
     int SaveReminder;
@@ -11,7 +11,6 @@ namespace GOTHIC_ENGINE {
     void PlayerStatus() {
       ShowGameTime = zoptions->ReadBool( PLUGIN_NAME, "ShowGameTime", false );
       ShowMunitionAmount = zoptions->ReadBool( PLUGIN_NAME, "ShowMunitionAmount", false );
-      ShowTargetProtection = zoptions->ReadBool( PLUGIN_NAME, "ShowTargetProtection", true );
 #if ENGINE >= Engine_G2
       ShowPickpocketIcon = zoptions->ReadBool( PLUGIN_NAME, "ShowPickpocketIcon", true );
 #endif
@@ -25,14 +24,24 @@ namespace GOTHIC_ENGINE {
         TimeMultipliers.Insert( MulStrings[i].Shrink().ToReal32() );
 
       SaveReminder = zoptions->ReadInt(PLUGIN_NAME, "SaveReminder", 5);
+
+      auto showTargetProtectionValue = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtection", true);
+      if (showTargetProtectionValue < 0 || showTargetProtectionValue > 2) {
+          return;
+      }
+
+      ShowTargetProtection = showTargetProtectionValue >= 1;
+      ShowCurrWeapProtOnly = showTargetProtectionValue == 1;
+      ShowProtOnlyInFight = zoptions->ReadBool(PLUGIN_NAME, "ShowProtOnlyInFight", true);
+      ShowProtAllDamageTypes = zoptions->ReadBool(PLUGIN_NAME, "ShowProtAllDamageTypes", false);
     }
   }
 
   class PlayerStatus {
   private:
-    StatusBar* hpBar;
-    StatusBar* manaBar;
-    StatusBar* swimBar;
+    HealthStatusBar* hpBar;
+    ManaStatusBar* manaBar;
+    SwimStatusBar* swimBar;
     int multiplierIndex = 0;
     int infoIcons = 0;
     std::chrono::high_resolution_clock::time_point lastSaveTime;
@@ -49,7 +58,7 @@ namespace GOTHIC_ENGINE {
     zCArray<zSTRING> stateFuncItems;
     oCItem* stateFuncItem;
     oCNpc* traderNpc;
-    StatusBar* focusBar;
+    FocusStatusBar* focusBar;
     bool CanPickpocketNpc( oCNpc* npc );
     void GetPickpocketInfos();
     bool CanChangeZtimer();

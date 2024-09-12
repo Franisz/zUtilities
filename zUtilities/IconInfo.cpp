@@ -42,6 +42,14 @@ namespace GOTHIC_ENGINE {
     delete view;
   }
 
+  int IconInfo::GetSize() {
+      if (!text.Length()) {
+          return vsize;
+      }
+
+      return vsize + screen->FontY() / 10 + screen->FontSize(text);
+  }
+
   void IconInfo::RestoreViewport() {
       int ScreenX, ScreenY, ScreenSX, ScreenSY;
       screen->GetViewport(ScreenX, ScreenY, ScreenSX, ScreenSY);

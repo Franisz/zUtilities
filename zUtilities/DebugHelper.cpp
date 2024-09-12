@@ -186,10 +186,10 @@ namespace GOTHIC_ENGINE {
     }
 
     if ( oCMobLockable* lockable = mob->CastTo<oCMobLockable>() ) {
-      AddSeparator( rightView, "Lockable" );
-      Print( rightView, "KeyInstance", lockable->keyInstance );
-      Print( rightView, "LockString", lockable->pickLockStr );
-      Print( rightView, "Locked", Z lockable->locked );
+      AddSeparator( leftView, "Lockable" );
+      Print( leftView, "KeyInstance", lockable->keyInstance );
+      Print( leftView, "LockString", lockable->pickLockStr );
+      Print( leftView, "Locked", Z lockable->locked );
     }
 
     if ( zCVisual* visual = mob->GetVisual() ) {
@@ -329,10 +329,14 @@ namespace GOTHIC_ENGINE {
       return;
     }
 
-    if ( mainView == nullptr ) {
-      int offset = 512 * playerHelper.GetSysScale();
+    const static int offset = 512 * playerHelper.GetSysScale();
+    const static int xpos = 0;
+    const static int ypos = 1024 - offset;
+    const static int xsize = 3456 + offset;
+    const static int ysize = 7168 + offset - ypos;
 
-      mainView = new zCView( 0, 1024 - offset, 3456 + offset, 7168 + offset );
+    if ( mainView == nullptr ) {
+      mainView = new zCView( xpos, ypos, xsize, ysize );
       mainView->InsertBack( "BLACKBACK" );
       mainView->SetAlphaBlendFunc( zRND_ALPHA_FUNC_BLEND );
       mainView->SetTransparency( 150 );
@@ -351,11 +355,13 @@ namespace GOTHIC_ENGINE {
     rightView->ClrPrintwin();
     textLinesLeft = 0;
     textLinesRight = 0;
-
+    
     ShowTriggerBoxes();
 
-    if ( TryPrintInfo() )
+    if ( TryPrintInfo() ) {
+      mainView->SetSize( textLinesRight == 0 ? xsize / 1.7 : xsize, ysize );
       return;
+    }
 
     Clear();
   }
