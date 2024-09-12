@@ -224,7 +224,7 @@ QuickSaveMode=1
 ; ... specifies QuickSave mode, (0) - 'Disabled', (1) - 'Standard', (2) - 'Alternative'
 ; ... QuickSave with [F10] and QuickLoad with [F12]
 
-QuickLoadAfterGameStart=1
+QuickLoadAfterGameStart=0
 ; ... enables (1) or disables (0) load last quicksave immediately after game starts
 
 KeyQuickSave=KEY_F10
