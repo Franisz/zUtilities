@@ -313,6 +313,30 @@ namespace GOTHIC_ENGINE {
     IconInfo icon = IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, screen->FontY() * 0.9f, color, texture, str );
   }
 
+  void PlayerStatus::ShowSystemTime() {
+      if ( !Options::ShowSystemTime )
+          return;
+
+      if ( playerHelper.LeftInvOpen() || playerHelper.IsConUp() || !ogame->GetShowPlayerStatus() || !ogame->hpBar )
+          return;
+
+      zSTRING str = "";
+      zCOLOR color = GFX_WHITE;
+      tm timeStructure;
+
+      time_t currentTime = time( NULL );
+      localtime_s( &timeStructure, &currentTime );
+      str = timeStructure.tm_hour < 10 ? "0" : "" + Z timeStructure.tm_hour + ":"
+          + ( timeStructure.tm_min < 10 ? "0" : "" ) + Z timeStructure.tm_min + ":"
+          + ( timeStructure.tm_sec < 10 ? "0" : "" ) + Z timeStructure.tm_sec;
+
+      zSTRING texture = "ICON_WATCH"; // https://game-icons.net/1x1/delapouite/watch.html
+
+      infoIcons++;
+      color.alpha = ogame->hpBar->alpha;
+      IconInfo icon = IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, screen->FontY() * 0.9f, color, texture, str );
+  }
+
   void PlayerStatus::ShowMunitionAmount() {
     if ( !Options::ShowMunitionAmount )
       return;
@@ -447,6 +471,7 @@ namespace GOTHIC_ENGINE {
     StatusBars();
     FactorMotion();
     ShowGameTime();
+    ShowSystemTime();
     ShowMunitionAmount();
     ShowSaveReminder();
     HandleMunitionLoop();

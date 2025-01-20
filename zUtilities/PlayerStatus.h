@@ -3,13 +3,14 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    bool ShowGameTime, ShowMunitionAmount, ShowTargetProtection, ShowPickpocketIcon, UseTimeMultiplier, ShowCurrWeapProtOnly, ShowProtOnlyInFight,ShowProtAllDamageTypes;
+    bool ShowGameTime, ShowSystemTime, ShowMunitionAmount, ShowTargetProtection, ShowPickpocketIcon, UseTimeMultiplier, ShowCurrWeapProtOnly, ShowProtOnlyInFight,ShowProtAllDamageTypes;
     int KeyTimeMultiplier;
     Array<float> TimeMultipliers;
     int SaveReminder;
 
     void PlayerStatus() {
       ShowGameTime = zoptions->ReadBool( PLUGIN_NAME, "ShowGameTime", false );
+      ShowSystemTime = zoptions->ReadBool( PLUGIN_NAME, "ShowSystemTime", false );
       ShowMunitionAmount = zoptions->ReadBool( PLUGIN_NAME, "ShowMunitionAmount", false );
 #if ENGINE >= Engine_G2
       ShowPickpocketIcon = zoptions->ReadBool( PLUGIN_NAME, "ShowPickpocketIcon", true );
@@ -47,6 +48,7 @@ namespace GOTHIC_ENGINE {
     std::chrono::high_resolution_clock::time_point lastSaveTime;
 
     void ShowGameTime();
+    void ShowSystemTime();
     void ShowMunitionAmount();
     void ShowSaveReminder();
     void StatusBars();

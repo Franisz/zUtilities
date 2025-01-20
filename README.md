@@ -98,6 +98,10 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
   - This is disabled by default and can be enabled with `ShowGameTime` option.
 
+- Allows to display current system time.
+
+  - This is disabled by default and can be enabled with `ShowSystemTime` option.
+
 - Allows to display currently used munition amount.
 
   - This is disabled by default and can be enabled with `ShowMunitionAmount` option.
@@ -164,6 +168,9 @@ LogBookColoring=1
 
 ShowGameTime=0
 ; ... enables (1) or disables (0) on screen display of in game time
+
+ShowSystemTime=0
+; ... enables (1) or disables (0) on screen display of system time
 
 ShowMunitionAmount=0
 ; ... enables (1) or disables (0) on screen display of currently used munition amount
