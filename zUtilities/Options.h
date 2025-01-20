@@ -71,6 +71,8 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "CantSave", "... text appearing when game cannot be saved" );
       zoptions->AddTrivia( PLUGIN_NAME, "CantLoad", "... text appearing when game cannot be loaded" );
       zoptions->AddTrivia( PLUGIN_NAME, "NoSave", "... text appearing when something went wrong and incorrect save slot tried to be loaded" );
+      zoptions->AddTrivia( PLUGIN_NAME, "SaveCompleted", "... text appearing when game was quick saved" );
+      zoptions->AddTrivia( PLUGIN_NAME, "LoadCompleted", "... text appearing when game was quick loaded" );
       zoptions->AddTrivia( PLUGIN_NAME, "SaveName", "... name used for quicksaves" );
 
       zoptions->AddTrivia( PLUGIN_NAME, "ColorNpcs", "... enables (1) or disables (0) coloring of focused npcs" );

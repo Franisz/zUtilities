@@ -248,6 +248,12 @@ CantLoad=The game cannot be loaded now!
 NoSave=Such a save does not exist!
 ; ... text appearing when something went wrong and incorrect save slot tried to be loaded
 
+SaveCompleted=Game saved.
+;... text appearing when game was quick saved
+
+LoadCompleted=Game loaded.
+;... text appearing when game was quick loaded
+
 SaveName=QuickSave
 ; ... name used for quicksaves
 
