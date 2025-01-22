@@ -94,13 +94,13 @@ This is a plugin with a set of many quality-of-life and utility features made fo
   - Essentially, the combination doesn't reset after fail. The player can keep going forward without the need to reenter the already discovered combination over again after every fail.
   - This is disabled by default and can be enabled with `RememberLockCombination` option.
 
-- Allows to display current in game time.
-
-  - This is disabled by default and can be enabled with `ShowGameTime` option.
-
 - Allows to display current system time in 24H format.
 
   - This is disabled by default and can be enabled in two ways. Set `ShowSystemTime` option to `1` for `Hour:Minute` format, `2` for `Hour:Minute:Second` format.
+
+- Allows to display current in game time.
+
+  - This is disabled by default and can be enabled with `ShowGameTime` option.
 
 - Allows to display currently used munition amount.
 
@@ -166,11 +166,11 @@ SelectedDialogueColor=
 LogBookColoring=1
 ; ... enables (1) or disables (0) coloring of new and unread topics in logbook
 
-ShowGameTime=0
-; ... enables (1) or disables (0) on screen display of in game time
-
 ShowSystemTime=0
 ; ... on screen display of system time (24H format), (0) - 'Disabled', (1) - 'Hour:Minute format', (2) - 'Hour:Minute:Second format
+
+ShowGameTime=0
+; ... enables (1) or disables (0) on screen display of in game time
 
 ShowMunitionAmount=0
 ; ... enables (1) or disables (0) on screen display of currently used munition amount

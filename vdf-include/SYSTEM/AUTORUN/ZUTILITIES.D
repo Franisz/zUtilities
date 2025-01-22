@@ -371,30 +371,9 @@ instance MenuItem_Opt_Page1_QuickSaveMode_Choice(C_MENU_ITEM_DEF)
   text[0]               = "Off|Standard|Alternative";
 };
 
-instance MenuItem_Opt_Page1_ShowGameTime(C_MENU_ITEM)
-{
-  CurrentMenuItem_PY = 5;
-  C_MENU_ITEM_TEXT_BASE();
-  fontname = FontSmall;
-  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
-  
-  text[0] = "ShowGameTime";
-  text[1] = "display game time on the screen";
-};
-
-instance MenuItem_Opt_Page1_ShowGameTime_Choice(C_MENU_ITEM_DEF)
-{
-  C_MENUITEM_CHOICE_BASE();
-  posy += Menu_DY * CurrentMenuItem_PY;
-  
-  onchgsetoption        = "ShowGameTime";
-  onchgsetoptionsection = "zUtilities";
-  text[0]               = "Off|On";
-};
-
 instance MenuItem_Opt_Page1_ShowSystemTime(C_MENU_ITEM)
 {
-  CurrentMenuItem_PY = 6;
+  CurrentMenuItem_PY = 5;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
@@ -411,6 +390,27 @@ instance MenuItem_Opt_Page1_ShowSystemTime_Choice(C_MENU_ITEM_DEF)
   onchgsetoption        = "ShowSystemTime";
   onchgsetoptionsection = "zUtilities";
   text[0]               = "Off|HH:MM|HH:MM:SS";
+};
+
+instance MenuItem_Opt_Page1_ShowGameTime(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 6;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "ShowGameTime";
+  text[1] = "display game time on the screen";
+};
+
+instance MenuItem_Opt_Page1_ShowGameTime_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_BASE();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "ShowGameTime";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Off|On";
 };
 
 instance MenuItem_Opt_Page1_ShowMunitionAmount(C_MENU_ITEM)

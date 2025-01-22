@@ -50,8 +50,8 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "ManaBarPos", "... defines position of mana bar like so: 'x1|y1|x2|y2'" + nline + "... default position for scale 1 is: '7053|7873|8132|8085' and for scale 0: '7381|7964|8149|8116'" + nline + "... leave empty to use default position" );
       zoptions->AddTrivia( PLUGIN_NAME, "SwimBarPos", "... defines position of swim bar like so: 'x1|y1|x2|y2'" + nline + "... default position for scale 1 is: '3556|7873|4635|8085' and for scale 0: '3712|7964|4480|8116'" + nline + "... leave empty to use default position" );
 
-      zoptions->AddTrivia( PLUGIN_NAME, "ShowGameTime", "... enables (1) or disables (0) on screen display of in game time" );
       zoptions->AddTrivia( PLUGIN_NAME, "ShowSystemTime", "... on screen display of system time (24H format), (0) - 'Disabled', (1) - 'Hour:Minute format', (2) - 'Hour:Minute:Second format'" );
+      zoptions->AddTrivia( PLUGIN_NAME, "ShowGameTime", "... enables (1) or disables (0) on screen display of in game time" );
       zoptions->AddTrivia( PLUGIN_NAME, "ShowMunitionAmount", "... enables (1) or disables (0) on screen display of currently used munition amount" );
       zoptions->AddTrivia( PLUGIN_NAME, "ShowTargetProtection", "... enables for currently equipped weapon (1) or shows all protection stats (2) or disables (0) protection icon and value next to the focused npc hp bar");
       zoptions->AddTrivia( PLUGIN_NAME, "ShowProtOnlyInFight", "... enables (1) or disables (0) showing protection stats only during combat");
