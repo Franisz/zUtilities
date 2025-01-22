@@ -3,14 +3,14 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    bool ShowGameTime, ShowSystemTime, ShowMunitionAmount, ShowTargetProtection, ShowPickpocketIcon, UseTimeMultiplier, ShowCurrWeapProtOnly, ShowProtOnlyInFight,ShowProtAllDamageTypes;
-    int KeyTimeMultiplier;
+    bool ShowGameTime, ShowMunitionAmount, ShowTargetProtection, ShowPickpocketIcon, UseTimeMultiplier, ShowCurrWeapProtOnly, ShowProtOnlyInFight,ShowProtAllDamageTypes;
+    int ShowSystemTime, KeyTimeMultiplier;
     Array<float> TimeMultipliers;
     int SaveReminder;
 
     void PlayerStatus() {
       ShowGameTime = zoptions->ReadBool( PLUGIN_NAME, "ShowGameTime", false );
-      ShowSystemTime = zoptions->ReadBool( PLUGIN_NAME, "ShowSystemTime", false );
+      ShowSystemTime = zoptions->ReadInt( PLUGIN_NAME, "ShowSystemTime", 0 );
       ShowMunitionAmount = zoptions->ReadBool( PLUGIN_NAME, "ShowMunitionAmount", false );
 #if ENGINE >= Engine_G2
       ShowPickpocketIcon = zoptions->ReadBool( PLUGIN_NAME, "ShowPickpocketIcon", true );

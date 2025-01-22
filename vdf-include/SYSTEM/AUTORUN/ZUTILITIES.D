@@ -410,7 +410,7 @@ instance MenuItem_Opt_Page1_ShowSystemTime_Choice(C_MENU_ITEM_DEF)
   
   onchgsetoption        = "ShowSystemTime";
   onchgsetoptionsection = "zUtilities";
-  text[0]               = "Off|On";
+  text[0]               = "Off|HH:MM|HH:MM:SS";
 };
 
 instance MenuItem_Opt_Page1_ShowMunitionAmount(C_MENU_ITEM)

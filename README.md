@@ -98,9 +98,9 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
   - This is disabled by default and can be enabled with `ShowGameTime` option.
 
-- Allows to display current system time.
+- Allows to display current system time in 24H format.
 
-  - This is disabled by default and can be enabled with `ShowSystemTime` option.
+  - This is disabled by default and can be enabled in two ways. Set `ShowSystemTime` option to `1` for `Hour:Minute` format, `2` for `Hour:Minute:Second` format.
 
 - Allows to display currently used munition amount.
 
@@ -170,7 +170,7 @@ ShowGameTime=0
 ; ... enables (1) or disables (0) on screen display of in game time
 
 ShowSystemTime=0
-; ... enables (1) or disables (0) on screen display of system time
+; ... on screen display of system time (24H format), (0) - 'Disabled', (1) - 'Hour:Minute format', (2) - 'Hour:Minute:Second format
 
 ShowMunitionAmount=0
 ; ... enables (1) or disables (0) on screen display of currently used munition amount
