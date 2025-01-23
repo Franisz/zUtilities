@@ -3,11 +3,13 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
+    bool PrintQuickSaveLoadInfo;
     int QuickSaveMode, QuickLoadAfterGameStart, UseBinarySave, KeyQuickSave, KeyQuickLoad, MinSaveSlot, MaxSaveSlot;
     string CantSave, CantLoad, NoSave, SaveCompleted, LoadCompleted, SaveName;
 
     void QuickSave() {
       QuickSaveMode = zoptions->ReadInt( PLUGIN_NAME, "QuickSaveMode", 1 );
+      PrintQuickSaveLoadInfo = zoptions->ReadBool( PLUGIN_NAME, "PrintQuickSaveLoadInfo", 0 );
       QuickLoadAfterGameStart = zoptions->ReadInt( PLUGIN_NAME, "QuickLoadAfterGameStart", 0 );
 
       KeyQuickSave = GetEmulationKeyCode( zoptions->ReadString( PLUGIN_NAME, "KeyQuickSave", "KEY_F10" ) );

@@ -12,7 +12,8 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
   - Shortcuts can be changed with `KeyQuickSave` and `KeyQuickLoad` options. A full list of available keys to choose from is [there](https://github.com/Franisz/zUtilities/blob/master/zUtilities/KeyCode.h).
   - Range of save slots used for quick save can be adjusted in `gothic.ini` with `MinSaveSlot`, `MaxSaveSlot` options. Default, it's 6 bottom slots.
-  - Notice strings are set automatically depending on system language but still can be changed manually in `gothic.ini` with `CantSave`, `CantLoad` and `NoSave` options.
+  - Print information about the save name and slot number after a quick save/load action is performed by setting the `PrintQuickSaveLoadInfo` option to `1`.
+  - Notice strings are set automatically depending on system language but still can be changed manually in `gothic.ini` with `CantSave`, `CantLoad`, `NoSave`, `SaveCompleted` and `LoadCompleted` options.
   - This feature can be disabled in `gothic.ini` with `QuickSaveMode` option.
   - Change `QuickSaveMode` option for different style or disable: `0` - _Disabled_, `1` - _Standard_, `2` - _Alternative_.
   - Game can also be quick loaded from main menu by pressing `KeyQuickLoad`.
@@ -233,6 +234,9 @@ QuickSaveMode=1
 
 QuickLoadAfterGameStart=0
 ; ... enables (1) or disables (0) load last quicksave immediately after game starts
+
+PrintQuickSaveLoadInfo=0
+; ... enables (1) or disables (0) printing information which save and slot number has been quick saved/loaded
 
 KeyQuickSave=KEY_F10
 ; ... key for QuickSave
