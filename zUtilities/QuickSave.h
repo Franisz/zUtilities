@@ -27,8 +27,8 @@ namespace GOTHIC_ENGINE {
         CantSave = "Игра не может быть сохранена сейчас!";
         CantLoad = "Игра не может быть загружена!";
         NoSave = "Такого сохранения не существует!";
-        SaveCompleted = "???? ?????????.";
-        LoadCompleted = "???? ?????????.";
+        SaveCompleted = "Игра сохранена.";
+        LoadCompleted = "Игра загружена.";
         break;
       case Lang_Ger:
         CantSave = "Das Spiel kann jetzt nicht gespeichert werden!";
