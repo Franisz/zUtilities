@@ -64,6 +64,7 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "TimeMultipliers", "... defines time multipliers" );
 
       zoptions->AddTrivia( PLUGIN_NAME, "QuickSaveMode", "... specifies QuickSave mode, (0) - 'Disabled', (1) - 'Standard', (2) - 'Alternative'" + nline + "... QuickSave with [F10] and QuickLoad with [F12]" );
+      zoptions->AddTrivia( PLUGIN_NAME, "PrintQuickSaveLoadInfo", "... enables (1) or disables (0) printing information which save and slot number has been quick saved/loaded" );
       zoptions->AddTrivia( PLUGIN_NAME, "QuickLoadAfterGameStart", "... enables (1) or disables (0) load last quicksave immediately after game starts" );
       zoptions->AddTrivia( PLUGIN_NAME, "KeyQuickSave", "... key for QuickSave" );
       zoptions->AddTrivia( PLUGIN_NAME, "KeyQuickLoad", "... key for QuickLoad" );
@@ -72,6 +73,8 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "CantSave", "... text appearing when game cannot be saved" );
       zoptions->AddTrivia( PLUGIN_NAME, "CantLoad", "... text appearing when game cannot be loaded" );
       zoptions->AddTrivia( PLUGIN_NAME, "NoSave", "... text appearing when something went wrong and incorrect save slot tried to be loaded" );
+      zoptions->AddTrivia( PLUGIN_NAME, "SaveCompleted", "... text appearing when game was quick saved" );
+      zoptions->AddTrivia( PLUGIN_NAME, "LoadCompleted", "... text appearing when game was quick loaded" );
       zoptions->AddTrivia( PLUGIN_NAME, "SaveName", "... name used for quicksaves" );
 
       zoptions->AddTrivia( PLUGIN_NAME, "ColorNpcs", "... enables (1) or disables (0) coloring of focused npcs" );

@@ -371,9 +371,30 @@ instance MenuItem_Opt_Page1_QuickSaveMode_Choice(C_MENU_ITEM_DEF)
   text[0]               = "Off|Standard|Alternative";
 };
 
-instance MenuItem_Opt_Page1_ShowSystemTime(C_MENU_ITEM)
+instance MenuItem_Opt_Page1_PrintQuickSaveLoadInfo(C_MENU_ITEM)
 {
   CurrentMenuItem_PY = 5;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "PrintQuickSaveLoadInfo";
+  text[1] = "info which save was quick saved/loaded";
+};
+
+instance MenuItem_Opt_Page1_PrintQuickSaveLoadInfo_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_BASE();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "PrintQuickSaveLoadInfo";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Off|On";
+};
+
+instance MenuItem_Opt_Page1_ShowSystemTime(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 6;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
@@ -394,7 +415,7 @@ instance MenuItem_Opt_Page1_ShowSystemTime_Choice(C_MENU_ITEM_DEF)
 
 instance MenuItem_Opt_Page1_ShowGameTime(C_MENU_ITEM)
 {
-  CurrentMenuItem_PY = 6;
+  CurrentMenuItem_PY = 7;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
@@ -415,7 +436,7 @@ instance MenuItem_Opt_Page1_ShowGameTime_Choice(C_MENU_ITEM_DEF)
 
 instance MenuItem_Opt_Page1_ShowMunitionAmount(C_MENU_ITEM)
 {
-  CurrentMenuItem_PY = 7;
+  CurrentMenuItem_PY = 8;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
@@ -434,9 +455,15 @@ instance MenuItem_Opt_Page1_ShowMunitionAmount_Choice(C_MENU_ITEM_DEF)
   text[0]               = "Off|On";
 };
 
-instance MenuItem_Opt_Page1_RememberLockCombination(C_MENU_ITEM)
+// Page 2
+instance MenuItem_Opt_Page2_Headline(C_MENU_ITEM)
 {
-  CurrentMenuItem_PY = 8;
+  MenuItem_Opt_Headline();
+};
+
+instance MenuItem_Opt_Page2_RememberLockCombination(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 1;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
@@ -445,7 +472,7 @@ instance MenuItem_Opt_Page1_RememberLockCombination(C_MENU_ITEM)
   text[1] = "lock combination doesn't reset after fail";
 };
 
-instance MenuItem_Opt_Page1_RememberLockCombination_Choice(C_MENU_ITEM_DEF)
+instance MenuItem_Opt_Page2_RememberLockCombination_Choice(C_MENU_ITEM_DEF)
 {
   C_MENUITEM_CHOICE_BASE();
   posy += Menu_DY * CurrentMenuItem_PY;
@@ -455,15 +482,9 @@ instance MenuItem_Opt_Page1_RememberLockCombination_Choice(C_MENU_ITEM_DEF)
   text[0]               = "Off|On";
 };
 
-// Page 2
-instance MenuItem_Opt_Page2_Headline(C_MENU_ITEM)
-{
-  MenuItem_Opt_Headline();
-};
-
 instance MenuItem_Opt_Page2_AlternativeDialogueBoxes(C_MENU_ITEM)
 {
-  CurrentMenuItem_PY = 1;
+  CurrentMenuItem_PY = 2;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
@@ -484,7 +505,7 @@ instance MenuItem_Opt_Page2_AlternativeDialogueBoxes_Choice(C_MENU_ITEM_DEF)
 
 instance MenuItem_Opt_Page2_CenterInvItems(C_MENU_ITEM)
 {
-  CurrentMenuItem_PY = 2;
+  CurrentMenuItem_PY = 3;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
@@ -505,7 +526,7 @@ instance MenuItem_Opt_Page2_CenterInvItems_Choice(C_MENU_ITEM_DEF)
 
 instance MenuItem_Opt_Page2_ActivateUsedMunition(C_MENU_ITEM)
 {
-  CurrentMenuItem_PY = 3;
+  CurrentMenuItem_PY = 4;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
@@ -526,7 +547,7 @@ instance MenuItem_Opt_Page2_ActivateUsedMunition_Choice(C_MENU_ITEM_DEF)
 
 instance MenuItem_Opt_Page2_LabelItems(C_MENU_ITEM)
 {
-  CurrentMenuItem_PY = 4;
+  CurrentMenuItem_PY = 5;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
@@ -547,7 +568,7 @@ instance MenuItem_Opt_Page2_LabelItems_Choice(C_MENU_ITEM_DEF)
 
 instance MenuItem_Opt_Page2_LabelMissionItems(C_MENU_ITEM)
 {
-  CurrentMenuItem_PY = 5;
+  CurrentMenuItem_PY = 6;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
