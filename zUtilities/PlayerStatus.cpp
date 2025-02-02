@@ -295,11 +295,11 @@ namespace GOTHIC_ENGINE {
       time_t currentTime = time( NULL );
       localtime_s( &timeStructure, &currentTime );
 
-      str = timeStructure.tm_hour < 10 ? "0" : "" + Z timeStructure.tm_hour + ":"
-          + (timeStructure.tm_min < 10 ? "0" : "") + Z timeStructure.tm_min;
+      str = ( timeStructure.tm_hour < 10 ? "0" : "" ) + Z timeStructure.tm_hour + ":"
+          + ( timeStructure.tm_min < 10 ? "0" : "" ) + Z timeStructure.tm_min;
 
       if ( Options::ShowSystemTime > 1 )
-          str = str + ":" + (timeStructure.tm_sec < 10 ? "0" : "") + Z timeStructure.tm_sec;
+          str = str + ":" + ( timeStructure.tm_sec < 10 ? "0" : "" ) + Z timeStructure.tm_sec;
 
       zSTRING texture = "ICON_WATCH"; // https://game-icons.net/1x1/delapouite/watch.html
 
