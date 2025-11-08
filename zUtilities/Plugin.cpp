@@ -54,8 +54,8 @@ namespace GOTHIC_ENGINE {
     playerStatus.pickpocketInfos.EmptyList();
 #endif
     playerStatus.Clear();
-    for ( uint i = 0; i < popups.GetNum(); i++ )
-      delete popups[i];
+    for (; popups.GetNum() > 0; )
+      delete popups[0];
   }
 
   void LoadEnd() {
