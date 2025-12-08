@@ -102,15 +102,14 @@ namespace GOTHIC_ENGINE {
 	bool FocusStatusBar::TryShowProt(oCNpc* npc) {
 		const zSTRING texture = "ICON_PROTECTIONS"; // https://game-icons.net/1x1/lorc/cracked-shield.html
 
-		if (!Options::ShowTargetProtection)
-			return false;
-
 		if (npc->attribute[NPC_ATR_HITPOINTS] <= 0)
 			return false;
 
 		if (!bar)
 			return false;
 
+		if (IsShowTargetProtectionDisabled())
+			return false;
 
 		auto statuses = npcHelper.GetProtectionVisibleStatuses(npc);
 		auto statusCount = statuses.size();
@@ -194,5 +193,10 @@ namespace GOTHIC_ENGINE {
 		if (valueView) {
 			valueView->ClrPrintwin();
 		}
+	}
+
+	bool FocusStatusBar::IsShowTargetProtectionDisabled() {
+		auto currentMode = player->IsInFightMode_S(NPC_WEAPON_NONE) ? Options::ShowTargetProtectionNoFight : Options::ShowTargetProtectionInFight;
+		return currentMode == TargetProtectionMode::Disabled;
 	}
 }

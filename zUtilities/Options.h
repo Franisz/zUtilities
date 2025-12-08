@@ -53,9 +53,8 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "ShowSystemTime", "... on screen display of system time (24H format), (0) - 'Disabled', (1) - 'Hour:Minute format', (2) - 'Hour:Minute:Second format'" );
       zoptions->AddTrivia( PLUGIN_NAME, "ShowGameTime", "... enables (1) or disables (0) on screen display of in game time" );
       zoptions->AddTrivia( PLUGIN_NAME, "ShowMunitionAmount", "... enables (1) or disables (0) on screen display of currently used munition amount" );
-      zoptions->AddTrivia( PLUGIN_NAME, "ShowTargetProtection", "... enables for currently equipped weapon (1) or shows all protection stats (2) or disables (0) protection icon and value next to the focused npc hp bar");
-      zoptions->AddTrivia( PLUGIN_NAME, "ShowProtOnlyInFight", "... enables (1) or disables (0) showing protection stats only during combat");
-      zoptions->AddTrivia( PLUGIN_NAME, "ShowProtAllDamageTypes", "... enables (1) or disables (0) showing all protection stats, even if they are 0" );
+      zoptions->AddTrivia( PLUGIN_NAME, "ShowTargetProtectionNoFight", "... specifies mode for showing target protection in no fight mode by" + nline + "... (0) - 'Disabled', (1) - 'CurrentWeapon', (2) - 'AllButZeros', (3) - 'All'");
+      zoptions->AddTrivia( PLUGIN_NAME, "ShowTargetProtectionInFight", "... specifies mode for showing target protection in fight mode by" + nline + "... (0) - 'Disabled', (1) - 'CurrentWeapon', (2) - 'AllButZeros', (3) - 'All'");
 #if ENGINE >= Engine_G2
       zoptions->AddTrivia( PLUGIN_NAME, "ShowPickpocketIcon", "... enables (1) or disables (0) coin icon next to the focused npc name when it can be pickpocketed" );
 #endif

@@ -72,8 +72,14 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
 - Displays protection icon and value next to the focused npc hp bar.
 
-  - Setting `ShowTargetProtection` option to `0` disables this feature, `1` displays the protection that matches currently used weapon and `2` shows all protection stats.
-  - `ShowProtOnlyInFight` and `ShowProtAllDamageTypes` are extra options that can be used, to alter what is displayed.
+  - Setting are split in two modes and works separately, *fight* and *no fight*. *Fight* means when melee/distance weapon or spell is drawn, *No fight* means otherwise. Transformation into a monster is considered as *Fight* mode.
+  - `ShowTargetProtectionNoFight` option for *no fight* mode.
+  - `ShowTargetProtectionInFight` option for *fight* mode.
+  - There are 4 options for above settings:
+    - `0` - Disabled. No icons and values will be shown.
+    - `1` - CurrentWeapon. Only icons and values for current drawn or equipped weapon will be shown. In *no fight* mode, there is the possibility of more than one icon and value being shown, depending on the equipped distance/melee weapon or spell.
+    - `2` - AllButZeros. Displays all icons and values for all protections types except those that are 0.
+    - `3` - All. Displays all icons and values for all protections.
 
 - Displays coin icon next to the focused npc name if player can pickpocket him.
 
@@ -192,14 +198,13 @@ SaveReminder=5
 ; ... Time in minutes after which the reminder to save the game appears on the screen
 ; ... set to -1 to disable
 
-ShowTargetProtection=1
-; ... enables for currently equipped weapon (1) or shows all protection stats (2) or disables (0) protection icon and value next to the focused npc hp bar
+ShowTargetProtectionNoFight=2
+;... specifies mode for showing target protection in no fight mode by
+;... (0) - 'Disabled', (1) - 'CurrentWeapon', (2) - 'AllButZeros', (3) - 'All'
 
-ShowProtOnlyInFight=1
-; ... enables (1) or disables (0) showing protection stats only during combat
-
-ShowProtAllDamageTypes=0
-; ... enables (1) or disables (0) showing all protection stats, even if they are 0
+ShowTargetProtectionInFight=1
+;... specifies mode for showing target protection in fight mode by
+;... (0) - 'Disabled', (1) - 'CurrentWeapon', (2) - 'AllButZeros', (3) - 'All'
 
 RecoveryVisualization=1
 ; ... enables (1) or disables (0) visualization of healing that hovered in the inventory item gives

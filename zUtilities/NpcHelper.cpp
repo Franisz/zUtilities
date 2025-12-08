@@ -12,40 +12,64 @@ namespace GOTHIC_ENGINE {
 		oEIndexDamage::oEDamageIndex_Fall
 		});
 
-
 	bool NpcHelper::CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex)
 	{
-		if (Options::ShowProtAllDamageTypes || Options::ShowCurrWeapProtOnly) {
-			return true;
+		auto protectionValue = npc->GetProtectionByIndex(damageIndex);
+		auto protectionMode = player->IsInFightMode_S(NPC_WEAPON_NONE) ? Options::ShowTargetProtectionNoFight : Options::ShowTargetProtectionInFight;
+
+		if (protectionMode == TargetProtectionMode::AllButZeros && protectionValue == 0) {
+			return false;
 		}
 
-		return npc->GetProtectionByIndex(damageIndex) != 0;
+		return true;
 	}
 
 	std::vector<oEIndexDamage> NpcHelper::GetDamageIndexes() {
-		if (player->IsInFightMode_S(0) && (Options::ShowProtOnlyInFight || Options::ShowCurrWeapProtOnly)) {
-			return std::vector<oEIndexDamage>();
-		}
+		int playerDmgIndex = player->GetActiveDamageIndex();
+		std::vector<oEIndexDamage> vec;
 
-		if (!Options::ShowCurrWeapProtOnly) {
+		bool isInFightMode = !player->IsInFightMode_S(NPC_WEAPON_NONE);
+		auto protectionMode = isInFightMode ? Options::ShowTargetProtectionInFight : Options::ShowTargetProtectionNoFight;
+
+		if (protectionMode >= TargetProtectionMode::AllButZeros) {
 			return PROTECTION_DAMAGE_INDEXES;
 		}
 
-		int playerDmgIndex = player->GetActiveDamageIndex();
-		if (!playerDmgIndex)
-		{
-			return std::vector<oEIndexDamage>();
+		if (protectionMode == TargetProtectionMode::CurrentWeapon && playerDmgIndex == Invalid) {
+			auto equippedWeapon = player->GetEquippedMeleeWeapon();
+
+			if (!equippedWeapon) {
+				playerDmgIndex = player->GetFistDamageIndex();
+			}
+			else {
+				playerDmgIndex = GetTopDmgIndex(equippedWeapon->damage, equippedWeapon->damageTypes);
+			}
+
+			vec.push_back((oEIndexDamage)playerDmgIndex);
+
+			if (!isInFightMode) { // check for equipped distance weapon and spell when no fight mode
+				equippedWeapon = player->GetEquippedRangedWeapon();
+				if (equippedWeapon) {
+					playerDmgIndex = GetTopDmgIndex(equippedWeapon->damage, equippedWeapon->damageTypes);
+					vec.push_back((oEIndexDamage)playerDmgIndex);
+				}
+
+				if (player->HasMagic()) {
+					vec.push_back(oEDamageIndex_Magic);
+				}
+			}
+		}
+		else {
+			vec.push_back((oEIndexDamage)playerDmgIndex);
 		}
 
-		auto vec = std::vector<oEIndexDamage>();
-		vec.push_back((oEIndexDamage)playerDmgIndex);
 		return vec;
 	}
 
 	std::vector<NpcProtectionStatus> NpcHelper::GetProtectionVisibleStatuses(oCNpc* npc) {
 		auto vec = std::vector<NpcProtectionStatus>();
 
-		if (!Options::ShowTargetProtection) {
+		if (playerStatus.focusBar->IsShowTargetProtectionDisabled()) {
 			return vec;
 		}
 
@@ -75,7 +99,7 @@ namespace GOTHIC_ENGINE {
 	}
 
 	int NpcHelper::GetProtectionStatusesVisibleCount(oCNpc* npc) {
-		if (!Options::ShowTargetProtection) {
+		if (playerStatus.focusBar->IsShowTargetProtectionDisabled()) {
 			return 0;
 		}
 
