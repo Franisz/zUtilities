@@ -1,4 +1,4 @@
-// Supported with union (c) 2020 Union team
+﻿// Supported with union (c) 2020 Union team
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
@@ -59,7 +59,7 @@ namespace GOTHIC_ENGINE {
 		return bar->vposy + bar->vsizey / 2 - GetProtSize();
 	}
 
-	void FocusStatusBar::PrintValueOutside(zSTRING str, oCNpc * npc)
+	void FocusStatusBar::PrintValueOutside(zSTRING str, oCNpc* npc)
 	{
 		auto protPlacement = GetProtPlacement(npc);
 		int offsetY = bar->vsizey / 2 + valueView->FontY();
@@ -80,18 +80,21 @@ namespace GOTHIC_ENGINE {
 		int margin = GetProtMargin();
 		auto statusCount = statuses.size();
 
-		for (int i = 0; i < statusCount; i++)
+		if (statusCount == 1) {
+			return size;
+		}
+
+		for (int i = 0; i < statusCount; ++i)
 		{
-			auto status = statuses[i];
-			if (status.immune && statusCount == 1)
-			{
-				width += size;
-				continue;
-			}
+			const auto& status = statuses[i];
 
-			width += size + screen->FontY() / 10 + screen->FontSize(zSTRING(status.value));
+			int fontValue = (status.value < 0)
+				? screen->FontSize(zSTRING("MAX"))
+				: screen->FontSize(zSTRING(status.value));
 
-			if (i + 1 != statuses.size()) {
+			width += size + screen->FontY() / 10 + fontValue;
+
+			if (i + 1 < statusCount) {
 				width += margin;
 			}
 		}
@@ -100,8 +103,6 @@ namespace GOTHIC_ENGINE {
 	}
 
 	bool FocusStatusBar::TryShowProt(oCNpc* npc) {
-		const zSTRING texture = "ICON_PROTECTIONS"; // https://game-icons.net/1x1/lorc/cracked-shield.html
-
 		if (npc->attribute[NPC_ATR_HITPOINTS] <= 0)
 			return false;
 
@@ -126,21 +127,32 @@ namespace GOTHIC_ENGINE {
 
 		if (placement == FocusStatusProtectionPlacement::TOP)
 		{
-			startX = startX + bar->vsizex / 2 - CalcProtRenderWidth(statuses) / 2 ;
+			startX = startX + bar->vsizex / 2 - CalcProtRenderWidth(statuses) / 2;
 		}
 
-		for (int i = 0; i < statuses.size(); i++) {
-			auto status = statuses[i];
-			auto canRenderImmune = status.immune && statusCount == 1;
+		if (npc->HasFlag(NPC_FLAG_IMMORTAL)) {
+			auto color = Colors::White;
+			if (ogame->hpBar)
+			{
+				color.alpha = ogame->hpBar->alpha;
+			}
+			auto icon = IconInfo(startX + offset + margin, startY, size, color, zSTRING("ICON_PROTECTIONS"));
+			// https://game-icons.net/1x1/lorc/cracked-shield.html
 
-			auto protectionText = !canRenderImmune ? zSTRING(status.value) : "";
-			auto color = canRenderImmune ? Colors::Gray : Colors::GetColorByDamageIndex(status.damageIndex);
+			return true;
+		}
+
+		for (int i = 0; i < statusCount; i++) {
+			auto& status = statuses[i];
+
+			auto& protectionText = status.immune ? zSTRING("MAX") : zSTRING(status.value);
+			auto color = status.immune ? Colors::Gray : Colors::GetColorByDamageIndex(status.damageIndex);
 			if (ogame->hpBar)
 			{
 				color.alpha = ogame->hpBar->alpha;
 			}
 
-			auto icon = IconInfo(startX + offset + margin, startY, size, color, texture, protectionText);
+			auto icon = IconInfo(startX + offset + margin, startY, size, color, GetIconNameByDamageIndex(status.damageIndex), protectionText);
 			offset += icon.GetSize();
 		}
 
@@ -198,5 +210,27 @@ namespace GOTHIC_ENGINE {
 	bool FocusStatusBar::IsShowTargetProtectionDisabled() {
 		auto currentMode = player->IsInFightMode_S(NPC_WEAPON_NONE) ? Options::ShowTargetProtectionNoFight : Options::ShowTargetProtectionInFight;
 		return currentMode == TargetProtectionMode::Disabled;
+	}
+
+	zSTRING FocusStatusBar::GetIconNameByDamageIndex(const oEIndexDamage& index) {
+		switch (index)
+		{
+		case oEIndexDamage::oEDamageIndex_Edge:
+			return zSTRING("DMGICON_EDGE"); // https://game-icons.net/1x1/lorc/ragged-wound.html
+		case oEIndexDamage::oEDamageIndex_Blunt:
+			return zSTRING("DMGICON_BLUNT"); // https://game-icons.net/1x1/lorc/cross-mark.html
+		case oEIndexDamage::oEDamageIndex_Point:
+			return zSTRING("DMGICON_POINT"); // https://game-icons.net/1x1/skoll/bullseye.html
+		case oEIndexDamage::oEDamageIndex_Fire:
+			return zSTRING("DMGICON_FIRE"); // https://game-icons.net/1x1/lorc/burning-embers.html
+		case oEIndexDamage::oEDamageIndex_Magic:
+			return zSTRING("DMGICON_MAGIC"); // https://game-icons.net/1x1/delapouite/polar-star.html
+		case oEIndexDamage::oEDamageIndex_Fly:
+			return zSTRING("DMGICON_FLY"); // https://game-icons.net/1x1/lorc/fluffy-trefoil.html
+		case oEIndexDamage::oEDamageIndex_Fall:
+			return zSTRING("DMGICON_FALL"); // https://game-icons.net/1x1/sbed/falling.html
+		default:
+			return zSTRING("DMGICON_UNKNOWN"); // https://game-icons.net/1x1/lorc/scar-wound.html
+		}
 	}
 }

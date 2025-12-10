@@ -27,6 +27,7 @@ namespace GOTHIC_ENGINE {
 		int GetProtStartY(FocusStatusProtectionPlacement placement);
 		int CalcProtRenderWidth(std::vector<NpcProtectionStatus> statuses);
 		FocusStatusProtectionPlacement GetProtPlacement(oCNpc* npc);
+		zSTRING GetIconNameByDamageIndex(const oEIndexDamage& index);
 		virtual void PrintValueOutside(zSTRING str, oCNpc* npc) override;
 
 	public:

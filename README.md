@@ -72,7 +72,7 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
 - Displays protection icon and value next to the focused npc hp bar.
 
-  - Setting are split in two modes and works separately, *fight* and *no fight*. *Fight* means when melee/distance weapon or spell is drawn, *No fight* means otherwise. Transformation into a monster is considered as *Fight* mode.
+  - Setting are split in two modes and works separately, *fight* and *no fight*. *Fight* means when melee/distance weapon or spell is drawn, *No fight* means otherwise.
   - `ShowTargetProtectionNoFight` option for *no fight* mode.
   - `ShowTargetProtectionInFight` option for *fight* mode.
   - There are 4 options for above settings:
@@ -80,6 +80,9 @@ This is a plugin with a set of many quality-of-life and utility features made fo
     - `1` - CurrentWeapon. Only icons and values for current drawn or equipped weapon will be shown. In *no fight* mode, there is the possibility of more than one icon and value being shown, depending on the equipped distance/melee weapon or spell.
     - `2` - AllButZeros. Displays all icons and values for all protections types except those that are 0.
     - `3` - All. Displays all icons and values for all protections.
+  - Note that:
+    - Transformation into a monster is considered as *Fight* mode.
+    - When option is set higher than `0` and target has flag `NPC_FLAG_IMMORTAL` then only one icon (cracked shield) will be shown. There is no point in showing all the icons if target is immortal.
 
 - Displays coin icon next to the focused npc name if player can pickpocket him.
 

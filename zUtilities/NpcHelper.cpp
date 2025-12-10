@@ -76,7 +76,6 @@ namespace GOTHIC_ENGINE {
 		if (npc->HasFlag(NPC_FLAG_IMMORTAL))
 		{
 			NpcProtectionStatus status;
-			status.immune = true;
 			vec.push_back(status);
 			return vec;
 		}
