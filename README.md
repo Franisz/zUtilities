@@ -83,6 +83,7 @@ This is a plugin with a set of many quality-of-life and utility features made fo
   - Note that:
     - Transformation into a monster is considered as *Fight* mode.
     - When option is set higher than `0` and target has flag `NPC_FLAG_IMMORTAL` then only one icon (cracked shield) will be shown. There is no point in showing all the icons if target is immortal.
+    - Immunity to specific protection type is considered as non-zero value. When option is set to `2` - `AllButZeros` then all immunities will be shown.
 
 - Displays coin icon next to the focused npc name if player can pickpocket him.
 
