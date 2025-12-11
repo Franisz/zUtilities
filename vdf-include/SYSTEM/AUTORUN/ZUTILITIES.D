@@ -916,3 +916,24 @@ instance MenuItem_Opt_Page5_ShowTargetProtectionInFight_Choice(C_MENU_ITEM_DEF)
   onchgsetoptionsection = "zUtilities";
   text[0]               = "Disabled|CurrentWeapon|AllButZeros|All";
 };
+
+instance MenuItem_Opt_Page5_TargetProtectionIconStyle(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 3;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "TargetProtectionIconStyle";
+  text[1] = "protection icon style";
+};
+
+instance MenuItem_Opt_Page5_TargetProtectionIconStyle_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_PROTECTION();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "TargetProtectionIconStyle";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "DamagePopup|Shields";
+};

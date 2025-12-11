@@ -112,6 +112,7 @@ namespace GOTHIC_ENGINE {
 		if (IsShowTargetProtectionDisabled())
 			return false;
 
+		const zSTRING crackedShieldTexture = zSTRING("ICON_PROTECTIONS"); // https://game-icons.net/1x1/lorc/cracked-shield.html
 		auto statuses = npcHelper.GetProtectionVisibleStatuses(npc);
 		auto statusCount = statuses.size();
 		if (statusCount == 0) {
@@ -136,8 +137,7 @@ namespace GOTHIC_ENGINE {
 			{
 				color.alpha = ogame->hpBar->alpha;
 			}
-			auto icon = IconInfo(startX + offset + margin, startY, size, color, zSTRING("ICON_PROTECTIONS"));
-			// https://game-icons.net/1x1/lorc/cracked-shield.html
+			IconInfo(startX + offset + margin, startY, size, color, crackedShieldTexture);
 
 			return true;
 		}
@@ -152,7 +152,11 @@ namespace GOTHIC_ENGINE {
 				color.alpha = ogame->hpBar->alpha;
 			}
 
-			auto icon = IconInfo(startX + offset + margin, startY, size, color, GetIconNameByDamageIndex(status.damageIndex), protectionText);
+			const zSTRING texture = Options::TargetProtectionIconStyle
+				? zSTRING("ICON_PROTECTIONS")
+				: GetIconNameByDamageIndex(status.damageIndex);
+
+			auto icon = IconInfo(startX + offset + margin, startY, size, color, texture, protectionText);
 			offset += icon.GetSize();
 		}
 

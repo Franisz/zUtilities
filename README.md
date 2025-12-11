@@ -70,7 +70,7 @@ This is a plugin with a set of many quality-of-life and utility features made fo
   - World speed will cycle in the order of set multipliers after pressing `Z`. Shortcut can also be changed with `KeyTimeMultiplier` option.
   - Currently used multiplier will be shown next to the time icon.
 
-- Displays protection icon and value next to the focused npc hp bar.
+- Displays protection icons and values next to the focused npc hp bar.
 
   - Setting are split in two modes and works separately, *fight* and *no fight*. *Fight* means when melee/distance weapon or spell is drawn, *No fight* means otherwise.
   - `ShowTargetProtectionNoFight` option for *no fight* mode.
@@ -84,6 +84,7 @@ This is a plugin with a set of many quality-of-life and utility features made fo
     - Transformation into a monster is considered as *Fight* mode.
     - When option is set higher than `0` and target has flag `NPC_FLAG_IMMORTAL` then only one icon (cracked shield) will be shown. There is no point in showing all the icons if target is immortal.
     - Immunity to specific protection type is considered as non-zero value. When option is set to `2` - `AllButZeros` then all immunities will be shown.
+  - Icon style is determined by `TargetProtectionIconStyle` option. Set it to `0` - _DamagePopup_ then corresponding protection icons and colors will be same as damage popup. Set it to `1` - _Shields_ for simple shield icons distinguished only by colors.
 
 - Displays coin icon next to the focused npc name if player can pickpocket him.
 
@@ -209,6 +210,10 @@ ShowTargetProtectionNoFight=2
 ShowTargetProtectionInFight=1
 ;... specifies mode for showing target protection in fight mode by
 ;... (0) - 'Disabled', (1) - 'CurrentWeapon', (2) - 'AllButZeros', (3) - 'All'
+
+TargetProtectionIconStyle=0
+;... specifies style for protection icons
+;... (0) - 'DamagePopup', (1) - 'Shields'
 
 RecoveryVisualization=1
 ; ... enables (1) or disables (0) visualization of healing that hovered in the inventory item gives

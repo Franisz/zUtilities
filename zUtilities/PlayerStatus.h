@@ -4,7 +4,7 @@
 namespace GOTHIC_ENGINE {
   namespace Options {
     bool ShowGameTime, ShowMunitionAmount, ShowPickpocketIcon, UseTimeMultiplier;
-    int ShowSystemTime, KeyTimeMultiplier, ShowTargetProtectionNoFight, ShowTargetProtectionInFight;
+    int ShowSystemTime, KeyTimeMultiplier, ShowTargetProtectionNoFight, ShowTargetProtectionInFight, TargetProtectionIconStyle;
     Array<float> TimeMultipliers;
     int SaveReminder;
 
@@ -28,6 +28,7 @@ namespace GOTHIC_ENGINE {
 
       ShowTargetProtectionNoFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionNoFight", TargetProtectionMode::AllButZeros);
       ShowTargetProtectionInFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionInFight", TargetProtectionMode::CurrentWeapon);
+      TargetProtectionIconStyle = zoptions->ReadInt(PLUGIN_NAME, "TargetProtectionIconStyle", 0);
     }
   }
 
