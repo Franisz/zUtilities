@@ -132,7 +132,7 @@ namespace GOTHIC_ENGINE {
 		}
 
 		if (npc->HasFlag(NPC_FLAG_IMMORTAL)) {
-			auto color = Colors::White;
+			auto color = Colors::Gray;
 			if (ogame->hpBar)
 			{
 				color.alpha = ogame->hpBar->alpha;
@@ -146,7 +146,7 @@ namespace GOTHIC_ENGINE {
 			auto& status = statuses[i];
 
 			auto& protectionText = status.immune ? zSTRING("MAX") : zSTRING(status.value);
-			auto color = status.immune ? Colors::Gray : Colors::GetColorByDamageIndex(status.damageIndex);
+			auto color = Colors::GetColorByDamageIndex(status.damageIndex);
 			if (ogame->hpBar)
 			{
 				color.alpha = ogame->hpBar->alpha;
