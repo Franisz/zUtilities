@@ -12,6 +12,60 @@ namespace GOTHIC_ENGINE {
 		oEIndexDamage::oEDamageIndex_Fall
 		});
 
+	using DamageMask = std::bitset<oEDamageIndex::oEDamageIndex_MAX>;
+
+	static constexpr DamageMap DAMAGE_MAP[] = {
+	{ oEDamageType_Barrier, oEDamageIndex_Barrier },
+	{ oEDamageType_Blunt,   oEDamageIndex_Blunt   },
+	{ oEDamageType_Edge,    oEDamageIndex_Edge    },
+	{ oEDamageType_Fire,    oEDamageIndex_Fire    },
+	{ oEDamageType_Fly,     oEDamageIndex_Fly     },
+	{ oEDamageType_Magic,   oEDamageIndex_Magic   },
+	{ oEDamageType_Point,   oEDamageIndex_Point   },
+	{ oEDamageType_Fall,    oEDamageIndex_Fall    }
+	};
+
+	inline static void MarkWeaponDamage(const oCItem* weapon, DamageMask& mask)
+	{
+		for (int i = 0; i < oEDamageIndex::oEDamageIndex_MAX; ++i) {
+			if (weapon->damage[i] > 0) {
+				mask.set(i);
+			}
+		}
+	}
+
+	inline static void MarkSpellDamage(int damageTypeMask, DamageMask& mask)
+	{
+		for (const auto& mapItem : DAMAGE_MAP) {
+			if (damageTypeMask & mapItem.type) {
+				mask.set(mapItem.index);
+			}
+		}
+	}
+
+	/* In G1 default damageType for spell is `oEDamageType_Blunt` so for summon/transformation etc. spells
+	it's best to reset this flag in mask to hide incorrect protection icon.
+	In G2 default damageType for spell is `oEDamageType_Magic` so it's left untouched.*/
+	inline static void FixupSpellDamageMask(DamageMask& mask)
+	{
+#if ENGINE <= Engine_G1A
+		mask.reset(oEDamageIndex_Blunt);
+#endif
+	}
+
+	inline static std::vector<oEIndexDamage> BuildOrderedDamageIndexes(const DamageMask& mask)
+	{
+		std::vector<oEIndexDamage> result;
+		result.reserve(PROTECTION_DAMAGE_INDEXES.size());
+
+		for (auto index : PROTECTION_DAMAGE_INDEXES) {
+			if (mask.test(index)) {
+				result.push_back(index);
+			}
+		}
+		return result;
+	}
+
 	bool NpcHelper::CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex)
 	{
 		auto protectionValue = npc->GetProtectionByIndex(damageIndex);
@@ -24,46 +78,69 @@ namespace GOTHIC_ENGINE {
 		return true;
 	}
 
-	std::vector<oEIndexDamage> NpcHelper::GetDamageIndexes() {
-		int playerDmgIndex = player->GetActiveDamageIndex();
-		std::vector<oEIndexDamage> vec;
-
+	std::vector<oEIndexDamage> NpcHelper::GetDamageIndexes()
+	{
 		bool isInFightMode = !player->IsInFightMode_S(NPC_WEAPON_NONE);
-		auto protectionMode = isInFightMode ? Options::ShowTargetProtectionInFight : Options::ShowTargetProtectionNoFight;
+		auto protectionMode = isInFightMode
+			? Options::ShowTargetProtectionInFight
+			: Options::ShowTargetProtectionNoFight;
 
 		if (protectionMode >= TargetProtectionMode::AllButZeros) {
 			return PROTECTION_DAMAGE_INDEXES;
 		}
 
-		if (protectionMode == TargetProtectionMode::CurrentWeapon && playerDmgIndex == Invalid) {
-			auto equippedWeapon = player->GetEquippedMeleeWeapon();
+		DamageMask mask;
+		mask.reset();
 
-			if (!equippedWeapon) {
-				playerDmgIndex = player->GetFistDamageIndex();
+		// ---------------- Fight mode ----------------
+		if (isInFightMode) {
+
+			// Check for active spell
+			if (player->IsInFightMode_S(NPC_WEAPON_MAG)) {
+				auto spell = player->mag_book->GetSelectedSpell();
+				MarkSpellDamage(spell->damageType, mask);
+				FixupSpellDamageMask(mask);
+
+				return BuildOrderedDamageIndexes(mask);
+			}
+
+			// Check for active melee/distance weapon
+			if (auto weapon = player->GetWeapon()) {
+				MarkWeaponDamage(weapon, mask);
 			}
 			else {
-				playerDmgIndex = GetTopDmgIndex(equippedWeapon->damage, equippedWeapon->damageTypes);
-			}
-
-			vec.push_back((oEIndexDamage)playerDmgIndex);
-
-			if (!isInFightMode) { // check for equipped distance weapon and spell when no fight mode
-				equippedWeapon = player->GetEquippedRangedWeapon();
-				if (equippedWeapon) {
-					playerDmgIndex = GetTopDmgIndex(equippedWeapon->damage, equippedWeapon->damageTypes);
-					vec.push_back((oEIndexDamage)playerDmgIndex);
-				}
-
-				if (player->HasMagic()) {
-					vec.push_back(oEDamageIndex_Magic);
-				}
+				mask.set(oEDamageIndex_Blunt); // Fist damage
 			}
 		}
+
+		// ---------------- No fight mode ----------------
 		else {
-			vec.push_back((oEIndexDamage)playerDmgIndex);
+			// Check for all selected spells
+			if (player->mag_book) {
+				auto& spells = player->mag_book->spells;
+				for (int i = 0; i < spells.GetNum(); ++i) {
+					MarkSpellDamage(spells[i]->damageType, mask);
+				}
+				FixupSpellDamageMask(mask);
+			}
+
+			// Check for melee weapon
+			auto weapon = player->GetEquippedMeleeWeapon();
+			if (weapon) {
+				MarkWeaponDamage(weapon, mask);
+			}
+			else {
+				mask.set(oEDamageIndex_Blunt); // Fist damage
+			}
+
+			// Check for distance weapon
+			weapon = player->GetEquippedRangedWeapon();
+			if (weapon) {
+				MarkWeaponDamage(weapon, mask);
+			}
 		}
 
-		return vec;
+		return BuildOrderedDamageIndexes(mask);
 	}
 
 	std::vector<NpcProtectionStatus> NpcHelper::GetProtectionVisibleStatuses(oCNpc* npc) {

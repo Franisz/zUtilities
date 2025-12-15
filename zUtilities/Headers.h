@@ -3,6 +3,7 @@
 
 // Automatically generated block
 #include <chrono>
+#include <bitset>
 #pragma region Includes
 #include "Const.h"
 #include "Colors.h"

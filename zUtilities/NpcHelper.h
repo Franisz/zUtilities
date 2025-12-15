@@ -8,6 +8,15 @@ namespace GOTHIC_ENGINE {
 		oEIndexDamage damageIndex;
 	};
 
+	// Mapping between oEDamageType bit flags and oEIndexDamage enum values.
+	// This is needed because:
+	//	- oEDamageType uses bit flags (1, 2, 4, 8, ...)
+	//	- oEIndexDamage uses sequential indices (0..7)
+	struct DamageMap {
+		oEDamageType type;
+		oEIndexDamage index;
+	};
+
 	class NpcHelper {
 
 	private:
