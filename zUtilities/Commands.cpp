@@ -22,6 +22,10 @@ namespace GOTHIC_ENGINE {
               continue;
           }
 
+          if ((symbol->flags & zPAR_FLAG_CONST) == 0) {
+              continue;
+          }
+
           //  Instance isn't global scope
           if (symbol->name.HasWord(".")) {
               continue;
