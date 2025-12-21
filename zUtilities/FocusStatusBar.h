@@ -18,6 +18,7 @@ namespace GOTHIC_ENGINE {
 
 	class FocusStatusBar : public StatusBar {
 	private:
+		const zSTRING IMMUNE_ABBREVIATION = "IMM";
 		zCView* protView;
 		void MoveFocusBar(int x, int y, oCNpc* npc);
 		bool TryShowProt(oCNpc* npc);

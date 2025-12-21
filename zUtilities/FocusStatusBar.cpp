@@ -89,7 +89,7 @@ namespace GOTHIC_ENGINE {
 			const auto& status = statuses[i];
 
 			int fontValue = (status.value < 0)
-				? screen->FontSize(zSTRING("MAX"))
+				? screen->FontSize(zSTRING(IMMUNE_ABBREVIATION))
 				: screen->FontSize(zSTRING(status.value));
 
 			width += size + screen->FontY() / 10 + fontValue;
@@ -145,7 +145,7 @@ namespace GOTHIC_ENGINE {
 		for (int i = 0; i < statusCount; i++) {
 			auto& status = statuses[i];
 
-			auto& protectionText = status.immune ? zSTRING("MAX") : zSTRING(status.value);
+			auto& protectionText = status.immune ? IMMUNE_ABBREVIATION : zSTRING(status.value);
 			auto color = Colors::GetColorByDamageIndex(status.damageIndex);
 			if (ogame->hpBar)
 			{
