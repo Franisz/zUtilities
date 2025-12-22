@@ -158,9 +158,10 @@ namespace GOTHIC_ENGINE {
 	{
 		// Check for active spell
 		if (player->IsInFightMode_S(NPC_WEAPON_MAG)) {
-			auto spell = player->mag_book->GetSelectedSpell();
+			if (auto spell = player->mag_book->GetSelectedSpell()) {
 			MarkSpellDamage(spell->damageType, mask);
 			FixupSpellDamageMask(mask);
+			}
 			return;
 		}
 
