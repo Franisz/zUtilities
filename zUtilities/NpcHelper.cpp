@@ -12,8 +12,6 @@ namespace GOTHIC_ENGINE {
 		oEIndexDamage::oEDamageIndex_Fall
 		});
 
-	using DamageMask = std::bitset<oEDamageIndex::oEDamageIndex_MAX>;
-
 	static constexpr DamageMap DAMAGE_MAP[] = {
 	{ oEDamageType_Barrier, oEDamageIndex_Barrier },
 	{ oEDamageType_Blunt,   oEDamageIndex_Blunt   },
@@ -92,52 +90,11 @@ namespace GOTHIC_ENGINE {
 		DamageMask mask;
 		mask.reset();
 
-		// ---------------- Fight mode ----------------
 		if (isInFightMode) {
-
-			// Check for active spell
-			if (player->IsInFightMode_S(NPC_WEAPON_MAG)) {
-				auto spell = player->mag_book->GetSelectedSpell();
-				MarkSpellDamage(spell->damageType, mask);
-				FixupSpellDamageMask(mask);
-
-				return BuildOrderedDamageIndexes(mask);
-			}
-
-			// Check for active melee/distance weapon
-			if (auto weapon = player->GetWeapon()) {
-				MarkWeaponDamage(weapon, mask);
-			}
-			else {
-				mask.set(oEDamageIndex_Blunt); // Fist damage
-			}
+			BuildFightModeDamage(mask);
 		}
-
-		// ---------------- No fight mode ----------------
 		else {
-			// Check for all selected spells
-			if (player->mag_book) {
-				auto& spells = player->mag_book->spells;
-				for (int i = 0; i < spells.GetNum(); ++i) {
-					MarkSpellDamage(spells[i]->damageType, mask);
-				}
-				FixupSpellDamageMask(mask);
-			}
-
-			// Check for melee weapon
-			auto weapon = player->GetEquippedMeleeWeapon();
-			if (weapon) {
-				MarkWeaponDamage(weapon, mask);
-			}
-			else {
-				mask.set(oEDamageIndex_Blunt); // Fist damage
-			}
-
-			// Check for distance weapon
-			weapon = player->GetEquippedRangedWeapon();
-			if (weapon) {
-				MarkWeaponDamage(weapon, mask);
-			}
+			BuildNoFightModeDamage(mask);
 		}
 
 		return BuildOrderedDamageIndexes(mask);
@@ -195,5 +152,51 @@ namespace GOTHIC_ENGINE {
 		}
 
 		return count;
+	}
+
+	void NpcHelper::BuildFightModeDamage(DamageMask& mask)
+	{
+		// Check for active spell
+		if (player->IsInFightMode_S(NPC_WEAPON_MAG)) {
+			auto spell = player->mag_book->GetSelectedSpell();
+			MarkSpellDamage(spell->damageType, mask);
+			FixupSpellDamageMask(mask);
+			return;
+		}
+
+		// Check for active melee/distance weapon
+		if (auto weapon = player->GetWeapon()) {
+			MarkWeaponDamage(weapon, mask);
+		}
+		else {
+			mask.set(oEDamageIndex_Blunt); // Fist damage
+		}
+	}
+
+	void NpcHelper::BuildNoFightModeDamage(DamageMask& mask)
+	{
+		// Check for all selected spells
+		if (player->mag_book) {
+			auto& spells = player->mag_book->spells;
+			for (int i = 0; i < spells.GetNum(); ++i) {
+				MarkSpellDamage(spells[i]->damageType, mask);
+			}
+			FixupSpellDamageMask(mask);
+		}
+
+		// Check for melee weapon
+		auto weapon = player->GetEquippedMeleeWeapon();
+		if (weapon) {
+			MarkWeaponDamage(weapon, mask);
+		}
+		else {
+			mask.set(oEDamageIndex_Blunt); // Fist damage
+		}
+
+		// Check for distance weapon
+		weapon = player->GetEquippedRangedWeapon();
+		if (weapon) {
+			MarkWeaponDamage(weapon, mask);
+		}
 	}
 }

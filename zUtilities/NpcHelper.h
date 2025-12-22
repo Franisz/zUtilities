@@ -2,6 +2,8 @@
 // Union HEADER file
 
 namespace GOTHIC_ENGINE {
+	using DamageMask = std::bitset<oEDamageIndex::oEDamageIndex_MAX>;
+
 	struct NpcProtectionStatus {
 		bool immune;
 		int value;
@@ -22,6 +24,8 @@ namespace GOTHIC_ENGINE {
 	private:
 		std::vector<oEIndexDamage> GetDamageIndexes();
 		bool CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex);
+		void BuildFightModeDamage(DamageMask& mask);
+		void BuildNoFightModeDamage(DamageMask& mask);
 
 	public:
 		std::vector<NpcProtectionStatus> GetProtectionVisibleStatuses(oCNpc* npc);
