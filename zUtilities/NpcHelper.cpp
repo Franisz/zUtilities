@@ -77,6 +77,10 @@ namespace GOTHIC_ENGINE {
 #endif
 	}
 
+	inline static bool ItemHasDistanceOrMunitionCategoryFlag(const oCItem* item) {
+		return item->mainflag & (ITM_CAT_FF | ITM_CAT_MUN);
+	}
+
 	inline static std::vector<oEIndexDamage> BuildOrderedDamageIndexes(const DamageMask& mask)
 	{
 		std::vector<oEIndexDamage> result;
@@ -193,8 +197,8 @@ namespace GOTHIC_ENGINE {
 
 		// Check for active melee/distance(munition) weapon
 		if (auto weapon = player->GetWeapon()) {
-			if (weapon->HasFlag(ITM_CAT_FF)) {
-				MarkMunitionDamage(weapon, mask);
+			if (ItemHasDistanceOrMunitionCategoryFlag(weapon)) {
+				mask = FocusStatusBar::DistanceWeaponDamageType;
 			}
 			else {
 				MarkWeaponDamage(weapon, mask);
@@ -228,7 +232,44 @@ namespace GOTHIC_ENGINE {
 		// Check for distance weapon - munition
 		weapon = player->GetEquippedRangedWeapon();
 		if (weapon) {
-			MarkMunitionDamage(weapon, mask);
+			mask |= FocusStatusBar::DistanceWeaponDamageType;
 		}
+	}
+
+	HOOK Ivk_OnDamage_Hit_DistanceWeapon PATCH(&oCNpc::OnDamage_Hit, &oCNpc::OnDamage_Hit_DistanceWeapon);
+	void oCNpc::OnDamage_Hit_DistanceWeapon(oSDamageDescriptor& desc) {
+		THISCALL(Ivk_OnDamage_Hit_DistanceWeapon)(desc);
+
+		if (FocusStatusBar::IsDistanceWeaponDamageTypeOverwritten)
+			return;
+
+		if (desc.pNpcAttacker != player)
+			return;
+
+		if (!desc.pItemWeapon)
+			return;
+
+		if (!ItemHasDistanceOrMunitionCategoryFlag(desc.pItemWeapon))
+			return;
+
+		if (FocusStatusBar::DistanceWeaponDamageType.to_ulong() != desc.enuModeDamage) {
+			DamageMask tmp{};
+			MarkSpellDamage(desc.enuModeDamage, tmp);
+			FocusStatusBar::DistanceWeaponDamageType = tmp;
+		}
+		FocusStatusBar::IsDistanceWeaponDamageTypeOverwritten = true;
+	}
+
+	HOOK Ivk_EquipItem_Union PATCH(&oCNpc::EquipItem, &oCNpc::EquipItem_Union);
+	void oCNpc::EquipItem_Union(oCItem* item) {
+		THISCALL(Ivk_EquipItem_Union)(item);
+
+		if (this != player)
+			return;
+
+		if (!ItemHasDistanceOrMunitionCategoryFlag(item))
+			return;
+
+		FocusStatusBar::IsDistanceWeaponDamageTypeOverwritten = false;
 	}
 }

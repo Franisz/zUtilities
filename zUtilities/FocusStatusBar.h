@@ -32,6 +32,8 @@ namespace GOTHIC_ENGINE {
 		virtual void PrintValueOutside(zSTRING str, oCNpc* npc) override;
 
 	public:
+		static DamageMask DistanceWeaponDamageType;
+		static bool IsDistanceWeaponDamageTypeOverwritten;
 		FocusStatusBar();
 		bool IsShowTargetProtectionDisabled();
 		bool NeedAdjustPosition(int x, int y, oCNpc* npc);
