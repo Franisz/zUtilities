@@ -41,6 +41,32 @@ namespace GOTHIC_ENGINE {
 		}
 	}
 
+	inline static void MarkMunitionDamage(const oCItem* weapon, DamageMask& mask)
+	{
+		const bool hasMunition = weapon->munition != 0;
+		const bool isCrossbow = (weapon->flags & ITM_FLAG_CROSSBOW) != 0;
+
+		const oCItem* leftHand = player->GetLeftHand()->CastTo<oCItem>();
+		const oCItem* rightHand = player->GetRightHand()->CastTo<oCItem>();
+		const oCItem* handItem = isCrossbow ? leftHand : rightHand;
+
+		const int handInstanz =
+			reinterpret_cast<int>(handItem)
+			? handItem->instanz
+			: 0;
+
+		const bool useMunition =
+			static_cast<bool>(
+				hasMunition &
+				(handItem != nullptr) &
+				(handInstanz == weapon->munition)
+				);
+
+		const oCItem* damageSource = useMunition ? handItem : weapon;
+
+		MarkWeaponDamage(damageSource, mask);
+	}
+
 	/* In G1 default damageType for spell is `oEDamageType_Blunt` so for summon/transformation etc. spells
 	it's best to reset this flag in mask to hide incorrect protection icon.
 	In G2 default damageType for spell is `oEDamageType_Magic` so it's left untouched.*/
@@ -159,15 +185,20 @@ namespace GOTHIC_ENGINE {
 		// Check for active spell
 		if (player->IsInFightMode_S(NPC_WEAPON_MAG)) {
 			if (auto spell = player->mag_book->GetSelectedSpell()) {
-			MarkSpellDamage(spell->damageType, mask);
-			FixupSpellDamageMask(mask);
+				MarkSpellDamage(spell->damageType, mask);
+				FixupSpellDamageMask(mask);
 			}
 			return;
 		}
 
-		// Check for active melee/distance weapon
+		// Check for active melee/distance(munition) weapon
 		if (auto weapon = player->GetWeapon()) {
-			MarkWeaponDamage(weapon, mask);
+			if (weapon->HasFlag(ITM_CAT_FF)) {
+				MarkMunitionDamage(weapon, mask);
+			}
+			else {
+				MarkWeaponDamage(weapon, mask);
+			}
 		}
 		else {
 			mask.set(oEDamageIndex_Blunt); // Fist damage
@@ -194,10 +225,10 @@ namespace GOTHIC_ENGINE {
 			mask.set(oEDamageIndex_Blunt); // Fist damage
 		}
 
-		// Check for distance weapon
+		// Check for distance weapon - munition
 		weapon = player->GetEquippedRangedWeapon();
 		if (weapon) {
-			MarkWeaponDamage(weapon, mask);
+			MarkMunitionDamage(weapon, mask);
 		}
 	}
 }
