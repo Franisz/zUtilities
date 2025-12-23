@@ -2,7 +2,6 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-	DamageMask FocusStatusBar::DistanceWeaponDamageType = DamageMask{ oEDamageType::oEDamageType_Point };
 	bool FocusStatusBar::IsDistanceWeaponDamageTypeOverwritten = false;
 
 	FocusStatusBar::FocusStatusBar() : StatusBar(ogame->focusBar)

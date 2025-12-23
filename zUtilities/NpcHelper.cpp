@@ -12,17 +12,6 @@ namespace GOTHIC_ENGINE {
 		oEIndexDamage::oEDamageIndex_Fall
 		});
 
-	static constexpr DamageMap DAMAGE_MAP[] = {
-	{ oEDamageType_Barrier, oEDamageIndex_Barrier },
-	{ oEDamageType_Blunt,   oEDamageIndex_Blunt   },
-	{ oEDamageType_Edge,    oEDamageIndex_Edge    },
-	{ oEDamageType_Fire,    oEDamageIndex_Fire    },
-	{ oEDamageType_Fly,     oEDamageIndex_Fly     },
-	{ oEDamageType_Magic,   oEDamageIndex_Magic   },
-	{ oEDamageType_Point,   oEDamageIndex_Point   },
-	{ oEDamageType_Fall,    oEDamageIndex_Fall    }
-	};
-
 	inline static void MarkWeaponDamage(const oCItem* weapon, DamageMask& mask)
 	{
 		for (int i = 0; i < oEDamageIndex::oEDamageIndex_MAX; ++i) {
@@ -198,7 +187,7 @@ namespace GOTHIC_ENGINE {
 		// Check for active melee/distance(munition) weapon
 		if (auto weapon = player->GetWeapon()) {
 			if (ItemHasDistanceOrMunitionCategoryFlag(weapon)) {
-				mask = FocusStatusBar::DistanceWeaponDamageType;
+				mask = Options::DistanceWeaponDamageType;
 			}
 			else {
 				MarkWeaponDamage(weapon, mask);
@@ -232,7 +221,7 @@ namespace GOTHIC_ENGINE {
 		// Check for distance weapon - munition
 		weapon = player->GetEquippedRangedWeapon();
 		if (weapon) {
-			mask |= FocusStatusBar::DistanceWeaponDamageType;
+			mask |= Options::DistanceWeaponDamageType;
 		}
 	}
 
@@ -252,10 +241,11 @@ namespace GOTHIC_ENGINE {
 		if (!ItemHasDistanceOrMunitionCategoryFlag(desc.pItemWeapon))
 			return;
 
-		if (FocusStatusBar::DistanceWeaponDamageType.to_ulong() != desc.enuModeDamage) {
+		if (Options::DistanceWeaponDamageType.to_ulong() != desc.enuModeDamage) {
 			DamageMask tmp{};
 			MarkSpellDamage(desc.enuModeDamage, tmp);
-			FocusStatusBar::DistanceWeaponDamageType = tmp;
+			Options::DistanceWeaponDamageType = tmp;
+			zoptions->WriteInt(PLUGIN_SECTION_TEMP, "DistanceWeaponDamageType", desc.enuModeDamage, 0);
 		}
 		FocusStatusBar::IsDistanceWeaponDamageTypeOverwritten = true;
 	}

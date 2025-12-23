@@ -19,6 +19,17 @@ namespace GOTHIC_ENGINE {
 		oEIndexDamage index;
 	};
 
+	static constexpr DamageMap DAMAGE_MAP[] = {
+	{ oEDamageType_Barrier, oEDamageIndex_Barrier },
+	{ oEDamageType_Blunt,   oEDamageIndex_Blunt   },
+	{ oEDamageType_Edge,    oEDamageIndex_Edge    },
+	{ oEDamageType_Fire,    oEDamageIndex_Fire    },
+	{ oEDamageType_Fly,     oEDamageIndex_Fly     },
+	{ oEDamageType_Magic,   oEDamageIndex_Magic   },
+	{ oEDamageType_Point,   oEDamageIndex_Point   },
+	{ oEDamageType_Fall,    oEDamageIndex_Fall    }
+	};
+
 	class NpcHelper {
 
 	private:

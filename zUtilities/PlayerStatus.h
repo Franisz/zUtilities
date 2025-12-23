@@ -7,6 +7,7 @@ namespace GOTHIC_ENGINE {
     int ShowSystemTime, KeyTimeMultiplier, ShowTargetProtectionNoFight, ShowTargetProtectionInFight, TargetProtectionIconStyle;
     Array<float> TimeMultipliers;
     int SaveReminder;
+    DamageMask DistanceWeaponDamageType = DamageMask{ oEDamageType::oEDamageType_Point }; // Default type fallback
 
     void PlayerStatus() {
       ShowSystemTime = zoptions->ReadInt( PLUGIN_NAME, "ShowSystemTime", 0 );
@@ -29,6 +30,11 @@ namespace GOTHIC_ENGINE {
       ShowTargetProtectionNoFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionNoFight", TargetProtectionMode::AllButZeros);
       ShowTargetProtectionInFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionInFight", TargetProtectionMode::CurrentWeapon);
       TargetProtectionIconStyle = zoptions->ReadInt(PLUGIN_NAME, "TargetProtectionIconStyle", 0);
+      if (const auto dmgMask = zoptions->ReadInt(PLUGIN_SECTION_TEMP, "DistanceWeaponDamageType", 0)) {
+          for (const auto& entry : DAMAGE_MAP) {
+              DistanceWeaponDamageType[entry.index] = (dmgMask & entry.type) != 0;
+    }
+  }
     }
   }
 
