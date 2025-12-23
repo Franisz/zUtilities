@@ -21,7 +21,7 @@ namespace GOTHIC_ENGINE {
 		}
 	}
 
-	inline static void MarkSpellDamage(int damageTypeMask, DamageMask& mask)
+	inline static void MarkIntDamageType(const int& damageTypeMask, DamageMask& mask)
 	{
 		for (const auto& mapItem : DAMAGE_MAP) {
 			if (damageTypeMask & mapItem.type) {
@@ -178,7 +178,7 @@ namespace GOTHIC_ENGINE {
 		// Check for active spell
 		if (player->IsInFightMode_S(NPC_WEAPON_MAG)) {
 			if (auto spell = player->mag_book->GetSelectedSpell()) {
-				MarkSpellDamage(spell->damageType, mask);
+				MarkIntDamageType(spell->damageType, mask);
 				FixupSpellDamageMask(mask);
 			}
 			return;
@@ -204,7 +204,7 @@ namespace GOTHIC_ENGINE {
 		if (player->mag_book) {
 			auto& spells = player->mag_book->spells;
 			for (int i = 0; i < spells.GetNum(); ++i) {
-				MarkSpellDamage(spells[i]->damageType, mask);
+				MarkIntDamageType(spells[i]->damageType, mask);
 			}
 			FixupSpellDamageMask(mask);
 		}
@@ -243,7 +243,7 @@ namespace GOTHIC_ENGINE {
 
 		if (Options::DistanceWeaponDamageType.to_ulong() != desc.enuModeDamage) {
 			DamageMask tmp{};
-			MarkSpellDamage(desc.enuModeDamage, tmp);
+			MarkIntDamageType(desc.enuModeDamage, tmp);
 			Options::DistanceWeaponDamageType = tmp;
 			zoptions->WriteInt(PLUGIN_SECTION_TEMP, "DistanceWeaponDamageType", desc.enuModeDamage, 0);
 		}
