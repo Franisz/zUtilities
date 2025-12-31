@@ -686,7 +686,7 @@ instance MenuItem_Opt_Page3_ShowDefeatableIcon(C_MENU_ITEM)
   posy += Menu_DY11 * CurrentMenuItem_PY + Text_DY;
   
   text[0] = "ShowDefeatableIcon";
-  text[1] = "punch icon next to the focused npc name when it can be defeated to gain experience";
+  text[1] = "punch icon next to npc name when defeatable for exp";
 };
 
 instance MenuItem_Opt_Page3_ShowDefeatableIcon_Choice(C_MENU_ITEM_DEF)
