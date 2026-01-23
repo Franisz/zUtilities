@@ -46,6 +46,13 @@ namespace GOTHIC_ENGINE {
         SaveCompleted = "Gra zapisana.";
         LoadCompleted = "Gra wczytana.";
         break;
+      case Lang_Ita:
+        CantSave = "Impossibile salvare il gioco ora!";
+        CantLoad = "Impossibile caricare il gioco ora!";
+        NoSave = "Questo salvataggio non esiste!";
+        SaveCompleted = "Partita salvata.";
+        LoadCompleted = "Partita caricata.";
+        break;
       default:
         CantSave = "The game cannot be saved now!";
         CantLoad = "The game cannot be loaded now!";
