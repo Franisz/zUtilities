@@ -12,47 +12,123 @@ namespace GOTHIC_ENGINE {
 		oEIndexDamage::oEDamageIndex_Fall
 		});
 
+	inline static void MarkWeaponDamage(const oCItem* weapon, DamageMask& mask)
+	{
+		for (int i = 0; i < oEDamageIndex::oEDamageIndex_MAX; ++i) {
+			if (weapon->damage[i] > 0) {
+				mask.set(i);
+			}
+		}
+	}
+
+	inline static void MarkIntDamageType(const int& damageTypeMask, DamageMask& mask)
+	{
+		for (const auto& mapItem : DAMAGE_MAP) {
+			if (damageTypeMask & mapItem.type) {
+				mask.set(mapItem.index);
+			}
+		}
+	}
+
+	inline static void MarkMunitionDamage(const oCItem* weapon, DamageMask& mask)
+	{
+		const bool hasMunition = weapon->munition != 0;
+		const bool isCrossbow = (weapon->flags & ITM_FLAG_CROSSBOW) != 0;
+
+		const oCItem* leftHand = player->GetLeftHand()->CastTo<oCItem>();
+		const oCItem* rightHand = player->GetRightHand()->CastTo<oCItem>();
+		const oCItem* handItem = isCrossbow ? leftHand : rightHand;
+
+		const int handInstanz =
+			reinterpret_cast<int>(handItem)
+			? handItem->instanz
+			: 0;
+
+		const bool useMunition =
+			static_cast<bool>(
+				hasMunition &
+				(handItem != nullptr) &
+				(handInstanz == weapon->munition)
+				);
+
+		const oCItem* damageSource = useMunition ? handItem : weapon;
+
+		MarkWeaponDamage(damageSource, mask);
+	}
+
+	/* In G1 default damageType for spell is `oEDamageType_Blunt` so for summon/transformation etc. spells
+	it's best to reset this flag in mask to hide incorrect protection icon.
+	In G2 default damageType for spell is `oEDamageType_Magic` so it's left untouched.*/
+	inline static void FixupSpellDamageMask(DamageMask& mask)
+	{
+#if ENGINE <= Engine_G1A
+		mask.reset(oEDamageIndex_Blunt);
+#endif
+	}
+
+	inline static bool ItemHasDistanceOrMunitionCategoryFlag(const oCItem* item) {
+		return item->mainflag & (ITM_CAT_FF | ITM_CAT_MUN);
+	}
+
+	inline static std::vector<oEIndexDamage> BuildOrderedDamageIndexes(const DamageMask& mask)
+	{
+		std::vector<oEIndexDamage> result;
+		result.reserve(PROTECTION_DAMAGE_INDEXES.size());
+
+		for (auto index : PROTECTION_DAMAGE_INDEXES) {
+			if (mask.test(index)) {
+				result.push_back(index);
+			}
+		}
+		return result;
+	}
 
 	bool NpcHelper::CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex)
 	{
-		if (Options::ShowProtAllDamageTypes || Options::ShowCurrWeapProtOnly) {
-			return true;
+		auto protectionValue = npc->GetProtectionByIndex(damageIndex);
+		auto protectionMode = player->IsInFightMode_S(NPC_WEAPON_NONE) ? Options::ShowTargetProtectionNoFight : Options::ShowTargetProtectionInFight;
+
+		if (protectionMode == TargetProtectionMode::AllButZeros && protectionValue == 0) {
+			return false;
 		}
 
-		return npc->GetProtectionByIndex(damageIndex) != 0;
+		return true;
 	}
 
-	std::vector<oEIndexDamage> NpcHelper::GetDamageIndexes() {
-		if (player->IsInFightMode_S(0) && (Options::ShowProtOnlyInFight || Options::ShowCurrWeapProtOnly)) {
-			return std::vector<oEIndexDamage>();
-		}
+	std::vector<oEIndexDamage> NpcHelper::GetDamageIndexes()
+	{
+		bool isInFightMode = !player->IsInFightMode_S(NPC_WEAPON_NONE);
+		auto protectionMode = isInFightMode
+			? Options::ShowTargetProtectionInFight
+			: Options::ShowTargetProtectionNoFight;
 
-		if (!Options::ShowCurrWeapProtOnly) {
+		if (protectionMode >= TargetProtectionMode::AllButZeros) {
 			return PROTECTION_DAMAGE_INDEXES;
 		}
 
-		int playerDmgIndex = player->GetActiveDamageIndex();
-		if (!playerDmgIndex)
-		{
-			return std::vector<oEIndexDamage>();
+		DamageMask mask;
+		mask.reset();
+
+		if (isInFightMode) {
+			BuildFightModeDamage(mask);
+		}
+		else {
+			BuildNoFightModeDamage(mask);
 		}
 
-		auto vec = std::vector<oEIndexDamage>();
-		vec.push_back((oEIndexDamage)playerDmgIndex);
-		return vec;
+		return BuildOrderedDamageIndexes(mask);
 	}
 
 	std::vector<NpcProtectionStatus> NpcHelper::GetProtectionVisibleStatuses(oCNpc* npc) {
 		auto vec = std::vector<NpcProtectionStatus>();
 
-		if (!Options::ShowTargetProtection) {
+		if (playerStatus.focusBar->IsShowTargetProtectionDisabled()) {
 			return vec;
 		}
 
 		if (npc->HasFlag(NPC_FLAG_IMMORTAL))
 		{
 			NpcProtectionStatus status;
-			status.immune = true;
 			vec.push_back(status);
 			return vec;
 		}
@@ -75,7 +151,7 @@ namespace GOTHIC_ENGINE {
 	}
 
 	int NpcHelper::GetProtectionStatusesVisibleCount(oCNpc* npc) {
-		if (!Options::ShowTargetProtection) {
+		if (playerStatus.focusBar->IsShowTargetProtectionDisabled()) {
 			return 0;
 		}
 
@@ -95,5 +171,95 @@ namespace GOTHIC_ENGINE {
 		}
 
 		return count;
+	}
+
+	void NpcHelper::BuildFightModeDamage(DamageMask& mask)
+	{
+		// Check for active spell
+		if (player->IsInFightMode_S(NPC_WEAPON_MAG)) {
+			if (auto spell = player->mag_book->GetSelectedSpell()) {
+				MarkIntDamageType(spell->damageType, mask);
+				FixupSpellDamageMask(mask);
+			}
+			return;
+		}
+
+		// Check for active melee/distance(munition) weapon
+		if (auto weapon = player->GetWeapon()) {
+			if (ItemHasDistanceOrMunitionCategoryFlag(weapon)) {
+				mask = Options::DistanceWeaponDamageType;
+			}
+			else {
+				MarkWeaponDamage(weapon, mask);
+			}
+		}
+		else {
+			mask.set(oEDamageIndex_Blunt); // Fist damage
+		}
+	}
+
+	void NpcHelper::BuildNoFightModeDamage(DamageMask& mask)
+	{
+		// Check for all selected spells
+		if (player->mag_book) {
+			auto& spells = player->mag_book->spells;
+			for (int i = 0; i < spells.GetNum(); ++i) {
+				MarkIntDamageType(spells[i]->damageType, mask);
+			}
+			FixupSpellDamageMask(mask);
+		}
+
+		// Check for melee weapon
+		auto weapon = player->GetEquippedMeleeWeapon();
+		if (weapon) {
+			MarkWeaponDamage(weapon, mask);
+		}
+		else {
+			mask.set(oEDamageIndex_Blunt); // Fist damage
+		}
+
+		// Check for distance weapon - munition
+		weapon = player->GetEquippedRangedWeapon();
+		if (weapon) {
+			mask |= Options::DistanceWeaponDamageType;
+		}
+	}
+
+	HOOK Ivk_OnDamage_Hit_DistanceWeapon PATCH(&oCNpc::OnDamage_Hit, &oCNpc::OnDamage_Hit_DistanceWeapon);
+	void oCNpc::OnDamage_Hit_DistanceWeapon(oSDamageDescriptor& desc) {
+		THISCALL(Ivk_OnDamage_Hit_DistanceWeapon)(desc);
+
+		if (FocusStatusBar::IsDistanceWeaponDamageTypeOverwritten)
+			return;
+
+		if (desc.pNpcAttacker != player)
+			return;
+
+		if (!desc.pItemWeapon)
+			return;
+
+		if (!ItemHasDistanceOrMunitionCategoryFlag(desc.pItemWeapon))
+			return;
+
+		if (Options::DistanceWeaponDamageType.to_ulong() != desc.enuModeDamage) {
+			DamageMask tmp{};
+			MarkIntDamageType(desc.enuModeDamage, tmp);
+			Options::DistanceWeaponDamageType = tmp;
+			zoptions->WriteInt(PLUGIN_SECTION_TEMP, "DistanceWeaponDamageType", desc.enuModeDamage, 0);
+		}
+		FocusStatusBar::IsDistanceWeaponDamageTypeOverwritten = true;
+	}
+
+	HOOK Ivk_EquipItem_Union PATCH(&oCNpc::EquipItem, &oCNpc::EquipItem_Union);
+	void oCNpc::EquipItem_Union(oCItem* item) {
+		THISCALL(Ivk_EquipItem_Union)(item);
+
+		if (this != player)
+			return;
+
+		if (!ItemHasDistanceOrMunitionCategoryFlag(item))
+			return;
+
+		FocusStatusBar::IsDistanceWeaponDamageTypeOverwritten = false;
 	}
 }

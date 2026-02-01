@@ -2,10 +2,32 @@
 // Union HEADER file
 
 namespace GOTHIC_ENGINE {
+	using DamageMask = std::bitset<oEDamageIndex::oEDamageIndex_MAX>;
+
 	struct NpcProtectionStatus {
 		bool immune;
 		int value;
 		oEIndexDamage damageIndex;
+	};
+
+	// Mapping between oEDamageType bit flags and oEIndexDamage enum values.
+	// This is needed because:
+	//	- oEDamageType uses bit flags (1, 2, 4, 8, ...)
+	//	- oEIndexDamage uses sequential indices (0..7)
+	struct DamageMap {
+		oEDamageType type;
+		oEIndexDamage index;
+	};
+
+	static constexpr DamageMap DAMAGE_MAP[] = {
+	{ oEDamageType_Barrier, oEDamageIndex_Barrier },
+	{ oEDamageType_Blunt,   oEDamageIndex_Blunt   },
+	{ oEDamageType_Edge,    oEDamageIndex_Edge    },
+	{ oEDamageType_Fire,    oEDamageIndex_Fire    },
+	{ oEDamageType_Fly,     oEDamageIndex_Fly     },
+	{ oEDamageType_Magic,   oEDamageIndex_Magic   },
+	{ oEDamageType_Point,   oEDamageIndex_Point   },
+	{ oEDamageType_Fall,    oEDamageIndex_Fall    }
 	};
 
 	class NpcHelper {
@@ -13,6 +35,8 @@ namespace GOTHIC_ENGINE {
 	private:
 		std::vector<oEIndexDamage> GetDamageIndexes();
 		bool CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex);
+		void BuildFightModeDamage(DamageMask& mask);
+		void BuildNoFightModeDamage(DamageMask& mask);
 
 	public:
 		std::vector<NpcProtectionStatus> GetProtectionVisibleStatuses(oCNpc* npc);

@@ -29,6 +29,11 @@ const int Choice_PX = 6400; // Position at left side
 const int Choice_SX = 1500; // Size X
 const int Choice_SY = 350;  // Size Y
 const int Choice_DY = 120;  // Delta alignment
+// Choice for Protection Option
+const int ChoiceProtection_PX = 6000; // Position at left side
+const int ChoiceProtection_SX = 1900; // Size X
+const int ChoiceProtection_SY = 350;  // Size Y
+const int ChoiceProtection_DY = 120;  // Delta alignment
 
 const string MenuBackPic   = "UnionMenu_BackPic.tga";
 const string ItemBackPic   = "";
@@ -82,6 +87,19 @@ instance C_MENUITEM_CHOICE_BASE(C_MENU_ITEM_DEF)
   posy     = Start_PY + Choice_DY;
   dimx     = Choice_SX;
   dimy     = Choice_SY;
+  flags    = flags & ~IT_SELECTABLE;
+  flags    = flags | IT_TXT_CENTER;
+};
+
+instance C_MENUITEM_CHOICE_PROTECTION(C_MENU_ITEM_DEF)
+{
+  backpic  = ChoiceBackPic;
+  type     = MENU_ITEM_CHOICEBOX;
+  fontname = FontSmall;
+  posx     = ChoiceProtection_PX;
+  posy     = Start_PY + ChoiceProtection_DY;
+  dimx     = ChoiceProtection_SX;
+  dimy     = ChoiceProtection_SY;
   flags    = flags & ~IT_SELECTABLE;
   flags    = flags | IT_TXT_CENTER;
 };
@@ -864,58 +882,58 @@ instance MenuItem_Opt_Page5_ShowTargetProtection(C_MENU_ITEM)
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
   
-  text[0] = "ShowTargetProtection";
+  text[0] = "ShowTargetProtectionNoFight";
   text[1] = "protection icon and value next to the focused npc hp bar";
 };
 
-instance MenuItem_Opt_Page5_ShowTargetProtection_Choice(C_MENU_ITEM_DEF)
+instance MenuItem_Opt_Page5_ShowTargetProtectionNoFight_Choice(C_MENU_ITEM_DEF)
 {
-  C_MENUITEM_CHOICE_BASE();
+  C_MENUITEM_CHOICE_PROTECTION();
   posy += Menu_DY * CurrentMenuItem_PY;
   
-  onchgsetoption        = "ShowTargetProtection";
+  onchgsetoption        = "ShowTargetProtectionNoFight";
   onchgsetoptionsection = "zUtilities";
-  text[0]               = "Off|Weapon|All";
+  text[0]               = "Disabled|CurrentWeapon|AllButZeros|All";
 };
 
-instance MenuItem_Opt_Page5_ShowProtOnlyInFight(C_MENU_ITEM)
+instance MenuItem_Opt_Page5_ShowTargetProtectionInFight(C_MENU_ITEM)
 {
   CurrentMenuItem_PY = 2;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
   
-  text[0] = "ShowProtOnlyInFight";
-  text[1] = "shows icons only if hero is in fight mode";
+  text[0] = "ShowTargetProtectionInFight";
+  text[1] = "protection icon and value next to the focused npc hp bar";
 };
 
-instance MenuItem_Opt_Page5_ShowProtOnlyInFight_Choice(C_MENU_ITEM_DEF)
+instance MenuItem_Opt_Page5_ShowTargetProtectionInFight_Choice(C_MENU_ITEM_DEF)
 {
-  C_MENUITEM_CHOICE_BASE();
+  C_MENUITEM_CHOICE_PROTECTION();
   posy += Menu_DY * CurrentMenuItem_PY;
   
-  onchgsetoption        = "ShowProtOnlyInFight";
+  onchgsetoption        = "ShowTargetProtectionInFight";
   onchgsetoptionsection = "zUtilities";
-  text[0]               = "Off|On";
+  text[0]               = "Disabled|CurrentWeapon|AllButZeros|All";
 };
 
-instance MenuItem_Opt_Page5_ShowProtAllDamageTypes(C_MENU_ITEM)
+instance MenuItem_Opt_Page5_TargetProtectionIconStyle(C_MENU_ITEM)
 {
   CurrentMenuItem_PY = 3;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
   
-  text[0] = "ShowProtAllDamageTypes";
-  text[1] = "shows icons for all damage types, even if 0 protection";
+  text[0] = "TargetProtectionIconStyle";
+  text[1] = "protection icon style";
 };
 
-instance MenuItem_Opt_Page5_ShowProtAllDamageTypes_Choice(C_MENU_ITEM_DEF)
+instance MenuItem_Opt_Page5_TargetProtectionIconStyle_Choice(C_MENU_ITEM_DEF)
 {
-  C_MENUITEM_CHOICE_BASE();
+  C_MENUITEM_CHOICE_PROTECTION();
   posy += Menu_DY * CurrentMenuItem_PY;
   
-  onchgsetoption        = "ShowProtAllDamageTypes";
+  onchgsetoption        = "TargetProtectionIconStyle";
   onchgsetoptionsection = "zUtilities";
-  text[0]               = "Off|On";
+  text[0]               = "DamagePopup|Shields";
 };

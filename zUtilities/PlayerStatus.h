@@ -3,10 +3,11 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    bool ShowGameTime, ShowMunitionAmount, ShowTargetProtection, ShowPickpocketIcon, UseTimeMultiplier, ShowCurrWeapProtOnly, ShowProtOnlyInFight,ShowProtAllDamageTypes;
-    int ShowSystemTime, KeyTimeMultiplier;
+    bool ShowGameTime, ShowMunitionAmount, ShowPickpocketIcon, UseTimeMultiplier;
+    int ShowSystemTime, KeyTimeMultiplier, ShowTargetProtectionNoFight, ShowTargetProtectionInFight, TargetProtectionIconStyle;
     Array<float> TimeMultipliers;
     int SaveReminder;
+    DamageMask DistanceWeaponDamageType = DamageMask{ oEDamageType::oEDamageType_Point }; // Default type fallback
 
     void PlayerStatus() {
       ShowSystemTime = zoptions->ReadInt( PLUGIN_NAME, "ShowSystemTime", 0 );
@@ -26,15 +27,14 @@ namespace GOTHIC_ENGINE {
 
       SaveReminder = zoptions->ReadInt(PLUGIN_NAME, "SaveReminder", 5);
 
-      auto showTargetProtectionValue = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtection", true);
-      if (showTargetProtectionValue < 0 || showTargetProtectionValue > 2) {
-          return;
-      }
-
-      ShowTargetProtection = showTargetProtectionValue >= 1;
-      ShowCurrWeapProtOnly = showTargetProtectionValue == 1;
-      ShowProtOnlyInFight = zoptions->ReadBool(PLUGIN_NAME, "ShowProtOnlyInFight", true);
-      ShowProtAllDamageTypes = zoptions->ReadBool(PLUGIN_NAME, "ShowProtAllDamageTypes", false);
+      ShowTargetProtectionNoFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionNoFight", TargetProtectionMode::AllButZeros);
+      ShowTargetProtectionInFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionInFight", TargetProtectionMode::CurrentWeapon);
+      TargetProtectionIconStyle = zoptions->ReadInt(PLUGIN_NAME, "TargetProtectionIconStyle", 0);
+      if (const auto dmgMask = zoptions->ReadInt(PLUGIN_SECTION_TEMP, "DistanceWeaponDamageType", 0)) {
+          for (const auto& entry : DAMAGE_MAP) {
+              DistanceWeaponDamageType[entry.index] = (dmgMask & entry.type) != 0;
+    }
+  }
     }
   }
 
