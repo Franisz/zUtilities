@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZRND_D3D__INIT_H__VER0__
 #define __ZRND_D3D__INIT_H__VER0__

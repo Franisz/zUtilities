@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIEW_DIALOG_STEAL_CONTAINER_H__VER2__
 #define __OVIEW_DIALOG_STEAL_CONTAINER_H__VER2__
@@ -23,7 +23,7 @@ namespace Gothic_II_Classic {
     float ValueMultiplier;                               // sizeof 04h    offset 10Ch
 
     void oCViewDialogStealContainer_OnInit()                  zCall( 0x007745B0 );
-    oCViewDialogStealContainer()                              zInit( oCViewDialogStealContainer_OnInit() );
+    oCViewDialogStealContainer() : zCtor( zCViewDialog )      zInit( oCViewDialogStealContainer_OnInit() );
     void __fastcall SetStealContainer( oCStealContainer* )    zCall( 0x00774670 );
     void __fastcall SetAlignment( oEStealContainerAlignment ) zCall( 0x007746A0 );
     oCItem* __fastcall GetSelectedItem()                      zCall( 0x007746B0 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZRESOURCE_H__VER0__
 #define __ZRESOURCE_H__VER0__
@@ -52,7 +52,7 @@ namespace Gothic_I_Classic {
     int goToSuspend;                      // sizeof 04h    offset 60h
 
     void zCResourceManager_OnInit()                    zCall( 0x005B55B0 );
-    zCResourceManager()                                zInit( zCResourceManager_OnInit() );
+    zCResourceManager() : zCtor( zCThread )            zInit( zCResourceManager_OnInit() );
     void PurgeCaches( zCClassDef* )                    zCall( 0x005B5720 );
     void SetThreadingEnabled( int )                    zCall( 0x005B58A0 );
     int GetThreadingEnabled() const                    zCall( 0x005B58B0 );
@@ -99,8 +99,9 @@ namespace Gothic_I_Classic {
       unsigned short cacheInPriority : 16; // sizeof 10h    offset bit
     };
 
+    zDefineInheritableCtor( zCResource ) : zCtor( zCObject )  {}
     void zCResource_OnInit()                                      zCall( 0x005B5160 );
-    zCResource()                                                  zInit( zCResource_OnInit() );
+    zCResource() : zCtor( zCObject )                              zInit( zCResource_OnInit() );
     void SetCacheInPriority( float )                              zCall( 0x005B53A0 );
     void CacheOut()                                               zCall( 0x005B54E0 );
     void TouchTimeStamp()                                         zCall( 0x005B5500 );

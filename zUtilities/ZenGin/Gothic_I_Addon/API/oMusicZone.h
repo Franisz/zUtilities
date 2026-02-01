@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OMUSIC_ZONE_H__VER1__
 #define __OMUSIC_ZONE_H__VER1__
@@ -40,8 +40,9 @@ namespace Gothic_I_Addon {
     int dayEntranceDone;   // sizeof 04h    offset 120h
     int nightEntranceDone; // sizeof 04h    offset 124h
 
+    zDefineInheritableCtor( oCZoneMusic ) : zCtor( zCZoneMusic ) {}
     void oCZoneMusic_OnInit()                                                                          zCall( 0x00745CA0 );
-    oCZoneMusic()                                                                                      zInit( oCZoneMusic_OnInit() );
+    oCZoneMusic() : zCtor( zCZoneMusic )                                                               zInit( oCZoneMusic_OnInit() );
     void SetEnabled( int )                                                                             zCall( 0x00746800 );
     int IsEnabled() const                                                                              zCall( 0x00746810 );
     void SetPriority( int )                                                                            zCall( 0x00746820 );
@@ -99,7 +100,7 @@ namespace Gothic_I_Addon {
     zCLASS_DECLARATION( oCZoneMusicDefault )
 
     void oCZoneMusicDefault_OnInit()                                    zCall( 0x00747CB0 );
-    oCZoneMusicDefault()                                                zInit( oCZoneMusicDefault_OnInit() );
+    oCZoneMusicDefault() : zCtor( oCZoneMusic )                         zInit( oCZoneMusicDefault_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x00745BA0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00745C90 );
     virtual ~oCZoneMusicDefault()                                       zCall( 0x00747D40 );

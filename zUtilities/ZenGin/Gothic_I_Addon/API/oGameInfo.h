@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OGAME_INFO_H__VER1__
 #define __OGAME_INFO_H__VER1__
@@ -12,7 +12,7 @@ namespace Gothic_I_Addon {
   public:
 
     void oCGameInfo_OnInit()                      zCall( 0x00425B90 );
-    oCGameInfo()                                  zInit( oCGameInfo_OnInit() );
+    oCGameInfo() : zCtor( zCGameInfo )            zInit( oCGameInfo_OnInit() );
     virtual ~oCGameInfo()                         zCall( 0x00425D60 );
     virtual void Init()                           zCall( 0x00425D70 );
     virtual void Pack( zCBuffer&, unsigned char ) zCall( 0x00425E30 );

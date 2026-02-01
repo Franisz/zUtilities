@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OCS_MANAGER_H__VER1__
 #define __OCS_MANAGER_H__VER1__
@@ -13,7 +13,7 @@ namespace Gothic_I_Addon {
     zCLASS_DECLARATION( oCCSManager )
 
     void oCCSManager_OnInit()                                           zCall( 0x004016F0 );
-    oCCSManager()                                                       zInit( oCCSManager_OnInit() );
+    oCCSManager() : zCtor( zCCSManager )                                zInit( oCCSManager_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x00401630 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x004025B0 );
     virtual ~oCCSManager()                                              zCall( 0x00402650 );

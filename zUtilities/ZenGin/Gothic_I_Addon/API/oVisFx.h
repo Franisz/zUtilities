@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIS_FX_H__VER1__
 #define __OVIS_FX_H__VER1__
@@ -300,8 +300,9 @@ namespace Gothic_I_Addon {
     int emTrjFollowHitLastCheck;             // sizeof 04h    offset 5C0h
     int bIsProjectile;                       // sizeof 04h    offset 5C4h
 
+    zDefineInheritableCtor( oCVisualFX ) : zCtor( zCEffect ) {}
     void oCVisualFX_OnInit()                                                                             zCall( 0x0048D120 );
-    oCVisualFX()                                                                                         zInit( oCVisualFX_OnInit() );
+    oCVisualFX() : zCtor( zCEffect )                                                                     zInit( oCVisualFX_OnInit() );
     void CreateHierachy()                                                                                zCall( 0x0048E490 );
     void DisposeHierachy()                                                                               zCall( 0x0048E760 );
     void InitValues()                                                                                    zCall( 0x0048ECB0 );
@@ -408,7 +409,7 @@ namespace Gothic_I_Addon {
     zCVob* vob;    // sizeof 04h    offset 24h
     int delete_it; // sizeof 04h    offset 28h
 
-    oCVisualFXAI() {}
+    oCVisualFXAI() : zCtor( zCAIBase ) {}
     virtual ~oCVisualFXAI()                                      zCall( 0x0048F2B0 );
     virtual void DoAI( zCVob*, int& )                            zCall( 0x0049BAC0 );
     virtual void ReportCollisionToAI( zCCollisionReport const& ) zCall( 0x0048F250 );

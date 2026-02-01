@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OBARRIER_H__VER1__
 #define __OBARRIER_H__VER1__
@@ -121,10 +121,10 @@ namespace Gothic_I_Addon {
     oCBarrier* barrier; // sizeof 04h    offset 680h
     int bFadeInOut;     // sizeof 04h    offset 684h
 
-    void oCSkyControler_Barrier_OnInit() zCall( 0x00657B30 );
-    oCSkyControler_Barrier()             zInit( oCSkyControler_Barrier_OnInit() );
-    virtual ~oCSkyControler_Barrier()    zCall( 0x00657BF0 );
-    virtual void RenderSkyPre()          zCall( 0x00657C60 );
+    void oCSkyControler_Barrier_OnInit()                       zCall( 0x00657B30 );
+    oCSkyControler_Barrier() : zCtor( zCSkyControler_Outdoor ) zInit( oCSkyControler_Barrier_OnInit() );
+    virtual ~oCSkyControler_Barrier()                          zCall( 0x00657BF0 );
+    virtual void RenderSkyPre()                                zCall( 0x00657C60 );
 
     // user API
     #include "oCSkyControler_Barrier.inl"

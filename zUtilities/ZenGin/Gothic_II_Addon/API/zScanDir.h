@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSCAN_DIR_H__VER3__
 #define __ZSCAN_DIR_H__VER3__
@@ -14,6 +14,7 @@ namespace Gothic_II_Addon {
     zCArray<zSTRING> extList; // sizeof 0Ch    offset 10h
     zSTRING name;             // sizeof 14h    offset 1Ch
 
+    zDefineInheritableCtor( zCScanDirFileHandler ) {}
     void zCScanDirFileHandler_OnInit()                                 zCall( 0x00468BE0 );
     zCScanDirFileHandler()                                             zInit( zCScanDirFileHandler_OnInit() );
     int CanHandleFile( zSTRING& )                                      zCall( 0x00468DE0 );

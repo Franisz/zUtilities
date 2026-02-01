@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIEW_DIALOG_ITEM_CONTAINER_H__VER1__
 #define __OVIEW_DIALOG_ITEM_CONTAINER_H__VER1__
@@ -23,7 +23,7 @@ namespace Gothic_I_Addon {
     float ValueMultiplier;                             // sizeof 04h    offset 10Ch
 
     void oCViewDialogItemContainer_OnInit()                             zCall( 0x00764D30 );
-    oCViewDialogItemContainer()                                         zInit( oCViewDialogItemContainer_OnInit() );
+    oCViewDialogItemContainer() : zCtor( zCViewDialog )                 zInit( oCViewDialogItemContainer_OnInit() );
     void __fastcall SetItemContainer( oCItemContainer* )                zCall( 0x00764DF0 );
     void __fastcall SetAlignment( oEItemContainerAlignment )            zCall( 0x00764E20 );
     oCItem* __fastcall GetSelectedItem()                                zCall( 0x00764E30 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCOLLISION_OBJECT_H__VER0__
 #define __ZCOLLISION_OBJECT_H__VER0__
@@ -37,7 +37,8 @@ namespace Gothic_I_Classic {
       unsigned char m_bHintRotation    : 1; // sizeof 01h    offset bit
     };
 
-    zCCollisionObject() {}
+    zDefineInheritableCtor( zCCollisionObject ) {}
+zCCollisionObject() {}
     void __fastcall CalcIntermediateTrafo( float, zMAT4& )                                                           zCall( 0x00538F40 );
     static zCCollisionObject* _CreateNewInstance()                                                                   zCall( 0x00538CB0 );
     virtual zCCollisionObjectDef* GetCollObjClass() const                                                            zCall( 0x00538CF0 );

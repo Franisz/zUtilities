@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ODOC_H__VER1__
 #define __ODOC_H__VER1__
@@ -20,17 +20,17 @@ namespace Gothic_I_Addon {
     float pixelStartx;         // sizeof 04h    offset 128h
     float pixelStarty;         // sizeof 04h    offset 12Ch
 
-    oCDoc() {}
-    void oCDoc_OnInit( zSTRING const& )                                               zCall( 0x0065A510 );
-    oCDoc( zSTRING const& a0 )                                                        zInit( oCDoc_OnInit( a0 ));
-    void Show()                                                                       zCall( 0x0065A8C0 );
-    void MapInitCoordinates( float, float, float, float, float, float, float, float ) zCall( 0x0065A900 );
-    void MapDrawCoordinates( float, float )                                           zCall( 0x0065A960 );
-    void SetLevelName( zSTRING const& )                                               zCall( 0x0065AC70 );
+    oCDoc() : zCtor( zCView ) {}
+    void oCDoc_OnInit( zSTRING const& )                                                                 zCall( 0x0065A510 );
+    oCDoc( zSTRING const& a0 ) : zCtor( zCView )                                                        zInit( oCDoc_OnInit( a0 ));
+    void Show()                                                                                         zCall( 0x0065A8C0 );
+    void MapInitCoordinates( float, float, float, float, float, float, float, float )                   zCall( 0x0065A900 );
+    void MapDrawCoordinates( float, float )                                                             zCall( 0x0065A960 );
+    void SetLevelName( zSTRING const& )                                                                 zCall( 0x0065AC70 );
     /* for zCViewBase num : 11*/
-    virtual ~oCDoc()                                                                  zCall( 0x0065A7D0 );
+    virtual ~oCDoc()                                                                                    zCall( 0x0065A7D0 );
     /* for zCInputCallback num : 1*/
-    virtual int HandleEvent( int )                                                    zCall( 0x0065A8D0 );
+    virtual int HandleEvent( int )                                                                      zCall( 0x0065A8D0 );
 
     // static properties
     static zCView*& posView;

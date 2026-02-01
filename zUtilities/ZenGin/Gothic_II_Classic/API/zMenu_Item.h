@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMENU__ITEM_H__VER2__
 #define __ZMENU__ITEM_H__VER2__
@@ -125,12 +125,13 @@ namespace Gothic_II_Classic {
     int registeredCPP;                           // sizeof 04h    offset 400h
     int firstTimeInserted;                       // sizeof 04h    offset 404h
 
+    zDefineInheritableCtor( zCMenuItem ) : zCtor( zCView ) {}
     void zCMenuItem_OnInit( zSTRING const& )            zCall( 0x004DC470 );
     void zCMenuItem_OnInit()                            zCall( 0x004DC680 );
     void Release()                                      zCall( 0x0047C150 );
     zCMenuItem* GetSelItem()                            zCall( 0x004DBDD0 );
-    zCMenuItem( zSTRING const& a0 )                     zInit( zCMenuItem_OnInit( a0 ));
-    zCMenuItem()                                        zInit( zCMenuItem_OnInit() );
+    zCMenuItem( zSTRING const& a0 ) : zCtor( zCView )   zInit( zCMenuItem_OnInit( a0 ));
+    zCMenuItem() : zCtor( zCView )                      zInit( zCMenuItem_OnInit() );
     void Init()                                         zCall( 0x004DCA60 );
     void SetByScript( zSTRING& )                        zCall( 0x004DCDE0 );
     int GetDimX( int )                                  zCall( 0x004DD6E0 );
@@ -203,21 +204,21 @@ namespace Gothic_II_Classic {
     unsigned short curPos; // sizeof 02h    offset 41Ch
     int canceled;          // sizeof 04h    offset 420h
 
-    zCMenuItemInput() {}
-    void zCMenuItemInput_OnInit( zSTRING const& ) zCall( 0x004DF4D0 );
-    zCMenuItemInput( zSTRING const& a0 )          zInit( zCMenuItemInput_OnInit( a0 ));
-    void SetValue( zSTRING )                      zCall( 0x004DF730 );
-    zSTRING GetValue()                            zCall( 0x004DF7B0 );
+    zCMenuItemInput() : zCtor( zCMenuItem ) {}
+    void zCMenuItemInput_OnInit( zSTRING const& )                       zCall( 0x004DF4D0 );
+    zCMenuItemInput( zSTRING const& a0 ) : zCtor( zCMenuItem )          zInit( zCMenuItemInput_OnInit( a0 ));
+    void SetValue( zSTRING )                                            zCall( 0x004DF730 );
+    zSTRING GetValue()                                                  zCall( 0x004DF7B0 );
     /* for zCViewBase num : 33*/
-    virtual ~zCMenuItemInput()                    zCall( 0x004DF680 );
-    virtual void InitMenuItem()                   zCall( 0x004DF7D0 );
-    virtual int Run()                             zCall( 0x004DF9B0 );
-    virtual void Enter()                          zCall( 0x004DC400 );
-    virtual void Leave()                          zCall( 0x004DC410 );
-    virtual int HasBeenCanceled()                 zCall( 0x004DC430 );
-    virtual void InsertInWin( zCView* )           zCall( 0x004DF980 );
+    virtual ~zCMenuItemInput()                                          zCall( 0x004DF680 );
+    virtual void InitMenuItem()                                         zCall( 0x004DF7D0 );
+    virtual int Run()                                                   zCall( 0x004DF9B0 );
+    virtual void Enter()                                                zCall( 0x004DC400 );
+    virtual void Leave()                                                zCall( 0x004DC410 );
+    virtual int HasBeenCanceled()                                       zCall( 0x004DC430 );
+    virtual void InsertInWin( zCView* )                                 zCall( 0x004DF980 );
     /* for zCInputCallback num : 1*/
-    virtual int HandleEvent( int )                zCall( 0x004DC420 );
+    virtual int HandleEvent( int )                                      zCall( 0x004DC420 );
 
     // user API
     #include "zCMenuItemInput.inl"
@@ -240,20 +241,20 @@ namespace Gothic_II_Classic {
     int m_numLines;             // sizeof 04h    offset 42Ch
     int m_unformated;           // sizeof 04h    offset 430h
 
-    zCMenuItemText() {}
-    void zCMenuItemText_OnInit( zSTRING const& )     zCall( 0x004DFD20 );
-    zCMenuItemText( zSTRING const& a0 )              zInit( zCMenuItemText_OnInit( a0 ));
-    void FormatMultiline()                           zCall( 0x004DFEB0 );
-    void DrawMultiline()                             zCall( 0x004E0230 );
+    zCMenuItemText() : zCtor( zCMenuItem ) {}
+    void zCMenuItemText_OnInit( zSTRING const& )                           zCall( 0x004DFD20 );
+    zCMenuItemText( zSTRING const& a0 ) : zCtor( zCMenuItem )              zInit( zCMenuItemText_OnInit( a0 ));
+    void FormatMultiline()                                                 zCall( 0x004DFEB0 );
+    void DrawMultiline()                                                   zCall( 0x004E0230 );
     /* for zCViewBase num : 34*/
-    virtual ~zCMenuItemText()                        zCall( 0x004DFDF0 );
-    virtual void InitMenuItem()                      zCall( 0x004E0650 );
-    virtual void SetText( zSTRING const&, int, int ) zCall( 0x004E0B40 );
-    virtual void SetText( zCArray<zSTRING>, int )    zCall( 0x004E0E00 );
-    virtual void DrawFront()                         zCall( 0x004DFE60 );
-    virtual void SetEnum( zSTRING const& )           zCall( 0x004E0810 );
+    virtual ~zCMenuItemText()                                              zCall( 0x004DFDF0 );
+    virtual void InitMenuItem()                                            zCall( 0x004E0650 );
+    virtual void SetText( zSTRING const&, int, int )                       zCall( 0x004E0B40 );
+    virtual void SetText( zCArray<zSTRING>, int )                          zCall( 0x004E0E00 );
+    virtual void DrawFront()                                               zCall( 0x004DFE60 );
+    virtual void SetEnum( zSTRING const& )                                 zCall( 0x004E0810 );
     /* for zCInputCallback num : 1*/
-    virtual int HandleEvent( int )                   zCall( 0x004E0990 );
+    virtual int HandleEvent( int )                                         zCall( 0x004E0990 );
 
     // user API
     #include "zCMenuItemText.inl"
@@ -268,20 +269,20 @@ namespace Gothic_II_Classic {
     int sliderDimX;       // sizeof 04h    offset 414h
     int sliderPos;        // sizeof 04h    offset 418h
 
-    zCMenuItemSlider() {}
-    void zCMenuItemSlider_OnInit( zSTRING const& ) zCall( 0x004E0E60 );
-    zCMenuItemSlider( zSTRING const& a0 )          zInit( zCMenuItemSlider_OnInit( a0 ));
-    void SetValue( float )                         zCall( 0x004E15C0 );
-    float GetValue()                               zCall( 0x004E1640 );
+    zCMenuItemSlider() : zCtor( zCMenuItem ) {}
+    void zCMenuItemSlider_OnInit( zSTRING const& )                       zCall( 0x004E0E60 );
+    zCMenuItemSlider( zSTRING const& a0 ) : zCtor( zCMenuItem )          zInit( zCMenuItemSlider_OnInit( a0 ));
+    void SetValue( float )                                               zCall( 0x004E15C0 );
+    float GetValue()                                                     zCall( 0x004E1640 );
     /* for zCViewBase num : 34*/
-    virtual ~zCMenuItemSlider()                    zCall( 0x004E0F00 );
-    virtual void InitMenuItem()                    zCall( 0x004E12A0 );
-    virtual int ToggleValue( int, int )            zCall( 0x004E0F20 );
-    virtual void InsertInWin( zCView* )            zCall( 0x004E1360 );
-    virtual void RemoveFromWin()                   zCall( 0x004E1530 );
-    virtual void SetIsActive( int )                zCall( 0x004DC440 );
+    virtual ~zCMenuItemSlider()                                          zCall( 0x004E0F00 );
+    virtual void InitMenuItem()                                          zCall( 0x004E12A0 );
+    virtual int ToggleValue( int, int )                                  zCall( 0x004E0F20 );
+    virtual void InsertInWin( zCView* )                                  zCall( 0x004E1360 );
+    virtual void RemoveFromWin()                                         zCall( 0x004E1530 );
+    virtual void SetIsActive( int )                                      zCall( 0x004DC440 );
     /* for zCInputCallback num : 1*/
-    virtual int HandleEvent( int )                 zCall( 0x004DC460 );
+    virtual int HandleEvent( int )                                       zCall( 0x004DC460 );
 
     // user API
     #include "zCMenuItemSlider.inl"
@@ -293,16 +294,16 @@ namespace Gothic_II_Classic {
     zSTRING pic; // sizeof 14h    offset 408h
     int active;  // sizeof 04h    offset 41Ch
 
-    zCMenuItemButton() {}
-    void zCMenuItemButton_OnInit( zSTRING const& ) zCall( 0x004E2920 );
-    zCMenuItemButton( zSTRING const& a0 )          zInit( zCMenuItemButton_OnInit( a0 ));
-    void Toggle()                                  zCall( 0x004E2D50 );
+    zCMenuItemButton() : zCtor( zCMenuItem ) {}
+    void zCMenuItemButton_OnInit( zSTRING const& )                       zCall( 0x004E2920 );
+    zCMenuItemButton( zSTRING const& a0 ) : zCtor( zCMenuItem )          zInit( zCMenuItemButton_OnInit( a0 ));
+    void Toggle()                                                        zCall( 0x004E2D50 );
     /* for zCViewBase num : 33*/
-    virtual ~zCMenuItemButton()                    zCall( 0x004E2AD0 );
-    virtual void InitMenuItem()                    zCall( 0x004E2B80 );
-    virtual int Run()                              zCall( 0x004E2F50 );
-    virtual void InsertInWin( zCView* )            zCall( 0x004E31C0 );
-    virtual void RemoveFromWin()                   zCall( 0x004E3200 );
+    virtual ~zCMenuItemButton()                                          zCall( 0x004E2AD0 );
+    virtual void InitMenuItem()                                          zCall( 0x004E2B80 );
+    virtual int Run()                                                    zCall( 0x004E2F50 );
+    virtual void InsertInWin( zCView* )                                  zCall( 0x004E31C0 );
+    virtual void RemoveFromWin()                                         zCall( 0x004E3200 );
     /* for zCInputCallback num : 1*/
 
     // user API
@@ -317,22 +318,22 @@ namespace Gothic_II_Classic {
     int optionStart;   // sizeof 04h    offset 410h
     int curStep;       // sizeof 04h    offset 414h
 
-    zCMenuItemChoice() {}
-    void zCMenuItemChoice_OnInit( zSTRING const& ) zCall( 0x004E1650 );
-    zCMenuItemChoice( zSTRING const& a0 )          zInit( zCMenuItemChoice_OnInit( a0 ));
-    int SetOptionByString( zSTRING )               zCall( 0x004E1960 );
-    zSTRING GetStringByOption()                    zCall( 0x004E1DA0 );
-    void Resize()                                  zCall( 0x004E2180 );
-    int GetNumOptions()                            zCall( 0x004E24A0 );
+    zCMenuItemChoice() : zCtor( zCMenuItem ) {}
+    void zCMenuItemChoice_OnInit( zSTRING const& )                       zCall( 0x004E1650 );
+    zCMenuItemChoice( zSTRING const& a0 ) : zCtor( zCMenuItem )          zInit( zCMenuItemChoice_OnInit( a0 ));
+    int SetOptionByString( zSTRING )                                     zCall( 0x004E1960 );
+    zSTRING GetStringByOption()                                          zCall( 0x004E1DA0 );
+    void Resize()                                                        zCall( 0x004E2180 );
+    int GetNumOptions()                                                  zCall( 0x004E24A0 );
     /* for zCViewBase num : 33*/
-    virtual ~zCMenuItemChoice()                    zCall( 0x004E16B0 );
-    virtual void InitMenuItem()                    zCall( 0x004E2800 );
-    virtual int ToggleValue( int, int )            zCall( 0x004E16D0 );
-    virtual zSTRING GetText( int )                 zCall( 0x004E2680 );
-    virtual void Draw()                            zCall( 0x004E2250 );
-    virtual void DrawFront()                       zCall( 0x004E2270 );
-    virtual void InsertInWin( zCView* )            zCall( 0x004E1F30 );
-    virtual void RemoveFromWin()                   zCall( 0x004E20F0 );
+    virtual ~zCMenuItemChoice()                                          zCall( 0x004E16B0 );
+    virtual void InitMenuItem()                                          zCall( 0x004E2800 );
+    virtual int ToggleValue( int, int )                                  zCall( 0x004E16D0 );
+    virtual zSTRING GetText( int )                                       zCall( 0x004E2680 );
+    virtual void Draw()                                                  zCall( 0x004E2250 );
+    virtual void DrawFront()                                             zCall( 0x004E2270 );
+    virtual void InsertInWin( zCView* )                                  zCall( 0x004E1F30 );
+    virtual void RemoveFromWin()                                         zCall( 0x004E20F0 );
     /* for zCInputCallback num : 1*/
 
     // user API
@@ -363,31 +364,31 @@ namespace Gothic_II_Classic {
     zCView* m_pViewArrowUp;                // sizeof 04h    offset 420h
     zCView* m_pViewArrowDn;                // sizeof 04h    offset 424h
 
-    zCMenuItemList() {}
-    void zCMenuItemList_OnInit( zSTRING const& ) zCall( 0x004E32C0 );
-    zCMenuItemList( zSTRING const& a0 )          zInit( zCMenuItemList_OnInit( a0 ));
-    void DeleteContent()                         zCall( 0x004E3510 );
-    void InsertEnd( zTMenuItemListElement& )     zCall( 0x004E3560 );
-    void InsertFront( zTMenuItemListElement& )   zCall( 0x004E3770 );
-    void ShowContent()                           zCall( 0x004E4100 );
-    void JumpToNextEntry()                       zCall( 0x004E42B0 );
-    void JumpToPrevEntry()                       zCall( 0x004E42D0 );
-    void JumpToTopEntry()                        zCall( 0x004E42F0 );
-    void JumpToLastEntry()                       zCall( 0x004E4310 );
+    zCMenuItemList() : zCtor( zCMenuItem ) {}
+    void zCMenuItemList_OnInit( zSTRING const& )                       zCall( 0x004E32C0 );
+    zCMenuItemList( zSTRING const& a0 ) : zCtor( zCMenuItem )          zInit( zCMenuItemList_OnInit( a0 ));
+    void DeleteContent()                                               zCall( 0x004E3510 );
+    void InsertEnd( zTMenuItemListElement& )                           zCall( 0x004E3560 );
+    void InsertFront( zTMenuItemListElement& )                         zCall( 0x004E3770 );
+    void ShowContent()                                                 zCall( 0x004E4100 );
+    void JumpToNextEntry()                                             zCall( 0x004E42B0 );
+    void JumpToPrevEntry()                                             zCall( 0x004E42D0 );
+    void JumpToTopEntry()                                              zCall( 0x004E42F0 );
+    void JumpToLastEntry()                                             zCall( 0x004E4310 );
     /* for zCViewBase num : 33*/
-    virtual ~zCMenuItemList()                    zCall( 0x004E3340 );
-    virtual void InitMenuItem()                  zCall( 0x004E3470 );
-    virtual int Run()                            zCall( 0x004E33E0 );
-    virtual void Enter()                         zCall( 0x004E3B70 );
-    virtual void Leave()                         zCall( 0x004E3B80 );
-    virtual void DrawFront()                     zCall( 0x004E3BA0 );
-    virtual int Show()                           zCall( 0x004E3480 );
-    virtual int Hide()                           zCall( 0x004E34D0 );
-    virtual void InsertInWin( zCView* )          zCall( 0x004E3960 );
-    virtual void RemoveFromWin()                 zCall( 0x004E3AC0 );
-    virtual void UpdateContent()                 zCall( 0x004E3B90 );
+    virtual ~zCMenuItemList()                                          zCall( 0x004E3340 );
+    virtual void InitMenuItem()                                        zCall( 0x004E3470 );
+    virtual int Run()                                                  zCall( 0x004E33E0 );
+    virtual void Enter()                                               zCall( 0x004E3B70 );
+    virtual void Leave()                                               zCall( 0x004E3B80 );
+    virtual void DrawFront()                                           zCall( 0x004E3BA0 );
+    virtual int Show()                                                 zCall( 0x004E3480 );
+    virtual int Hide()                                                 zCall( 0x004E34D0 );
+    virtual void InsertInWin( zCView* )                                zCall( 0x004E3960 );
+    virtual void RemoveFromWin()                                       zCall( 0x004E3AC0 );
+    virtual void UpdateContent()                                       zCall( 0x004E3B90 );
     /* for zCInputCallback num : 1*/
-    virtual int HandleEvent( int )               zCall( 0x004E3EB0 );
+    virtual int HandleEvent( int )                                     zCall( 0x004E3EB0 );
 
     // user API
     #include "zCMenuItemList.inl"

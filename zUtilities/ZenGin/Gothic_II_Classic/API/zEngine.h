@@ -1,4 +1,4 @@
-#include <io.h>
+﻿#include <io.h>
 #include <d3d.h>
 #include <fstream>
 using std::ostream;

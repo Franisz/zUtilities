@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCCS_POOL_H__VER0__
 #define __ZCCS_POOL_H__VER0__
@@ -21,27 +21,27 @@ namespace Gothic_I_Classic {
     int playCounter;                          // sizeof 04h    offset 48h
     int flags;                                // sizeof 04h    offset 4Ch
 
-    void zCCSPoolItem_OnInit()                                          zCall( 0x00420AF0 );
-    void zCCSPoolItem_OnInit( zCCSCutsceneContext* )                    zCall( 0x00420C50 );
-    zCCSPoolItem()                                                      zInit( zCCSPoolItem_OnInit() );
-    zCCSPoolItem( zCCSCutsceneContext* a0 )                             zInit( zCCSPoolItem_OnInit( a0 ));
-    void Init()                                                         zCall( 0x00420DB0 );
-    zCCSProps::zTCSRunBehaviour GetRunBehaviour( int& )                 zCall( 0x00420E40 );
-    zCCSProps::zTCSRunBehaviour GetRunBehaviour()                       zCall( 0x00420E50 );
-    void SetRunBehaviour( zCCSProps::zTCSRunBehaviour, int& )           zCall( 0x00420E60 );
-    void TestedDeactivation()                                           zCall( 0x004210E0 );
-    int IsAllowedToPlay()                                               zCall( 0x00421100 );
-    void ClrFlags( long )                                               zCall( 0x00421430 );
-    void SetFlags( long )                                               zCall( 0x00421450 );
-    int HasFlags( long )                                                zCall( 0x00421460 );
-    static zCObject* _CreateNewInstance()                               zCall( 0x004209A0 );
+    void zCCSPoolItem_OnInit()                                                    zCall( 0x00420AF0 );
+    void zCCSPoolItem_OnInit( zCCSCutsceneContext* )                              zCall( 0x00420C50 );
+    zCCSPoolItem() : zCtor( zSTRING ), zCtor( zCObject )                          zInit( zCCSPoolItem_OnInit() );
+    zCCSPoolItem( zCCSCutsceneContext* a0 ) : zCtor( zSTRING ), zCtor( zCObject ) zInit( zCCSPoolItem_OnInit( a0 ));
+    void Init()                                                                   zCall( 0x00420DB0 );
+    zCCSProps::zTCSRunBehaviour GetRunBehaviour( int& )                           zCall( 0x00420E40 );
+    zCCSProps::zTCSRunBehaviour GetRunBehaviour()                                 zCall( 0x00420E50 );
+    void SetRunBehaviour( zCCSProps::zTCSRunBehaviour, int& )                     zCall( 0x00420E60 );
+    void TestedDeactivation()                                                     zCall( 0x004210E0 );
+    int IsAllowedToPlay()                                                         zCall( 0x00421100 );
+    void ClrFlags( long )                                                         zCall( 0x00421430 );
+    void SetFlags( long )                                                         zCall( 0x00421450 );
+    int HasFlags( long )                                                          zCall( 0x00421460 );
+    static zCObject* _CreateNewInstance()                                         zCall( 0x004209A0 );
     /* for zSTRING num : 2*/
-    virtual ~zCCSPoolItem()                                             zCall( 0x00420DC0 );
-    virtual void PrintDebugInfo()                                       zCall( 0x00421120 );
+    virtual ~zCCSPoolItem()                                                       zCall( 0x00420DC0 );
+    virtual void PrintDebugInfo()                                                 zCall( 0x00421120 );
     /* for zCObject num : 3*/
-    virtual zCClassDef* _GetClassDef() const                            zCall( 0x00420AE0 );
-    virtual void Archive( zCArchiver& )                                 zCall( 0x00420E80 );
-    virtual void Unarchive( zCArchiver& )                               zCall( 0x00420F00 );
+    virtual zCClassDef* _GetClassDef() const                                      zCall( 0x00420AE0 );
+    virtual void Archive( zCArchiver& )                                           zCall( 0x00420E80 );
+    virtual void Unarchive( zCArchiver& )                                         zCall( 0x00420F00 );
   };
 
 } // namespace Gothic_I_Classic

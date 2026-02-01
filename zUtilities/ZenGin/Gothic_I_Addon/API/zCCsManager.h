@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCCS_MANAGER_H__VER1__
 #define __ZCCS_MANAGER_H__VER1__
@@ -28,8 +28,9 @@ namespace Gothic_I_Addon {
     zCCSLib* library;                  // sizeof 04h    offset 68h
     int iterator;                      // sizeof 04h    offset 6Ch
 
+    zDefineInheritableCtor( zCCSManager ) : zCtor( zCObject ) {}
     void zCCSManager_OnInit()                                           zCall( 0x0041BE50 );
-    zCCSManager()                                                       zInit( zCCSManager_OnInit() );
+    zCCSManager() : zCtor( zCObject )                                   zInit( zCCSManager_OnInit() );
     zCCSCutsceneContext* InitiateCSwithContext( zCCSCutsceneContext* )  zCall( 0x0041C340 );
     zCCSCutsceneContext* InitiateOUwithContext( zCCSCutsceneContext* )  zCall( 0x0041C4C0 );
     zCCSCutsceneContext* CreateNewCutscene( zSTRING& )                  zCall( 0x0041C4F0 );

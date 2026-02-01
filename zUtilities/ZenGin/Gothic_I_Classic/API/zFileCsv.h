@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZFILE_CSV_H__VER0__
 #define __ZFILE_CSV_H__VER0__
@@ -21,8 +21,8 @@ namespace Gothic_I_Classic {
 
     void zCFileCSV_OnInit( zSTRING const& )                zCall( 0x0044A1B0 );
     void zCFileCSV_OnInit()                                zCall( 0x0044A370 );
-    zCFileCSV( zSTRING const& a0 )                         zInit( zCFileCSV_OnInit( a0 ));
-    zCFileCSV()                                            zInit( zCFileCSV_OnInit() );
+    zCFileCSV( zSTRING const& a0 ) : zCtor( zFILE_FILE )   zInit( zCFileCSV_OnInit( a0 ));
+    zCFileCSV() : zCtor( zFILE_FILE )                      zInit( zCFileCSV_OnInit() );
     void InitCSV()                                         zCall( 0x0044A670 );
     void SetFormat( bool, zSTRING const&, zSTRING const& ) zCall( 0x0044A790 );
     void AddNextField( zSTRING const& )                    zCall( 0x0044A8D0 );

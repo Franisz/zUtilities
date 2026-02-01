@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_PRINT_H__VER0__
 #define __ZVIEW_PRINT_H__VER0__
@@ -23,8 +23,9 @@ namespace Gothic_I_Classic {
     zPOS OffsetTextPixel;                // sizeof 08h    offset D4h
     zPOS SizeMargin[2];                  // sizeof 10h    offset DCh
 
+    zDefineInheritableCtor( zCViewPrint ) : zCtor( zCViewFX )  {}
     void zCViewPrint_OnInit()                                                    zCall( 0x007566D0 );
-    zCViewPrint()                                                                zInit( zCViewPrint_OnInit() );
+    zCViewPrint() : zCtor( zCViewFX )                                            zInit( zCViewPrint_OnInit() );
     void __fastcall SizeHeightToContent( int )                                   zCall( 0x007568D0 );
     void __fastcall GetPixelBorder( zCPosition&, zCPosition& )                   zCall( 0x00756D10 );
     void __fastcall ClearText()                                                  zCall( 0x00756D70 );

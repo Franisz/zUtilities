@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIEW_DIALOG_ITEM_H__VER3__
 #define __OVIEW_DIALOG_ITEM_H__VER3__
@@ -12,14 +12,14 @@ namespace Gothic_II_Addon {
 
     oCItem* Item; // sizeof 04h    offset F8h
 
-    void oCViewDialogItem_OnInit()           zCall( 0x00689610 );
-    oCViewDialogItem()                       zInit( oCViewDialogItem_OnInit() );
-    void __fastcall SetItem( oCItem* )       zCall( 0x00689700 );
-    static zCObject* _CreateNewInstance()    zCall( 0x00689520 );
+    void oCViewDialogItem_OnInit()             zCall( 0x00689610 );
+    oCViewDialogItem() : zCtor( zCViewDialog ) zInit( oCViewDialogItem_OnInit() );
+    void __fastcall SetItem( oCItem* )         zCall( 0x00689700 );
+    static zCObject* _CreateNewInstance()      zCall( 0x00689520 );
     /* for zCObject num : 15*/
-    virtual zCClassDef* _GetClassDef() const zCall( 0x00689600 );
-    virtual ~oCViewDialogItem()              zCall( 0x00689670 );
-    virtual void __fastcall Blit()           zCall( 0x00689740 );
+    virtual zCClassDef* _GetClassDef() const   zCall( 0x00689600 );
+    virtual ~oCViewDialogItem()                zCall( 0x00689670 );
+    virtual void __fastcall Blit()             zCall( 0x00689740 );
     /* for zCViewBase num : 9*/
     /* for oCViewDialogItem num : 1*/
 

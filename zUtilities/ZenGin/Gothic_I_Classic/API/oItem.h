@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OITEM_H__VER0__
 #define __OITEM_H__VER0__
@@ -110,9 +110,9 @@ namespace Gothic_I_Classic {
     void oCItem_OnInit( zSTRING&, int )                                                      zCall( 0x00670FA0 );
     void oCItem_OnInit( int, int )                                                           zCall( 0x006710E0 );
     zSTRING GetSchemeName()                                                                  zCall( 0x006127F0 );
-    oCItem()                                                                                 zInit( oCItem_OnInit() );
-    oCItem( zSTRING& a0, int a1 )                                                            zInit( oCItem_OnInit( a0, a1 ));
-    oCItem( int a0, int a1 )                                                                 zInit( oCItem_OnInit( a0, a1 ));
+    oCItem() : zCtor( oCVob )                                                                zInit( oCItem_OnInit() );
+    oCItem( zSTRING& a0, int a1 ) : zCtor( oCVob )                                           zInit( oCItem_OnInit( a0, a1 ));
+    oCItem( int a0, int a1 ) : zCtor( oCVob )                                                zInit( oCItem_OnInit( a0, a1 ));
     void CreateVisual()                                                                      zCall( 0x006713F0 );
     void InitByScript( int, int )                                                            zCall( 0x00671660 );
     zSTRING& GetDescription()                                                                zCall( 0x00671A70 );

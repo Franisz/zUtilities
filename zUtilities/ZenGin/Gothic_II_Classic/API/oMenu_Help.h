@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OMENU__HELP_H__VER2__
 #define __OMENU__HELP_H__VER2__
@@ -25,7 +25,7 @@ namespace Gothic_II_Classic {
   public:
     zCArray<oSMenuKey> keys; // sizeof 0Ch    offset CC4h
 
-    oCMenu_Help() {}
+    oCMenu_Help() : zCtor( zCMenu ) {}
 
     // user API
     #include "oCMenu_Help.inl"

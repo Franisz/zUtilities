@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OCS_PLAYER_H__VER3__
 #define __OCS_PLAYER_H__VER3__
@@ -13,7 +13,7 @@ namespace Gothic_II_Addon {
     zCLASS_DECLARATION( oCCSPlayer )
 
     void oCCSPlayer_OnInit()                                           zCall( 0x004038D0 );
-    oCCSPlayer()                                                       zInit( oCCSPlayer_OnInit() );
+    oCCSPlayer() : zCtor( zCCSPlayer )                                 zInit( oCCSPlayer_OnInit() );
     static zCObject* _CreateNewInstance()                              zCall( 0x00403850 );
     /* for zCObject num : 21*/
     virtual zCClassDef* _GetClassDef() const                           zCall( 0x004038C0 );

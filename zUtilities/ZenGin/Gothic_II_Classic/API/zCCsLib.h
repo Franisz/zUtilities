@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCCS_LIB_H__VER2__
 #define __ZCCS_LIB_H__VER2__
@@ -18,7 +18,7 @@ namespace Gothic_II_Classic {
     zCCSBlock* searchBlock;         // sizeof 04h    offset 3Ch
 
     void zCCSLib_OnInit()                    zCall( 0x00419320 );
-    zCCSLib()                                zInit( zCCSLib_OnInit() );
+    zCCSLib() : zCtor( zCObject )            zInit( zCCSLib_OnInit() );
     void DeleteLib()                         zCall( 0x00419510 );
     void RemoveFromLib( int, int )           zCall( 0x00419580 );
     int ValidateToken( zSTRING& )            zCall( 0x004195F0 );

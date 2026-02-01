@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZWORLD_H__VER0__
 #define __ZWORLD_H__VER0__
@@ -32,7 +32,8 @@ namespace Gothic_I_Classic {
   class zCCallback {
   public:
 
-    zCCallback() {}
+    zDefineInheritableCtor( zCCallback ) {}
+zCCallback() {}
 
     // user API
     #include "zCCallback.inl"
@@ -42,8 +43,8 @@ namespace Gothic_I_Classic {
   class zCVobCallback : public zCCallback {
   public:
 
-    zCVobCallback() {}
-    virtual void HandleVob( zCVob*, void* ) zPureCall;
+    zCVobCallback() : zCtor( zCCallback ) {}
+    virtual void HandleVob( zCVob*, void* )                       zPureCall;
 
     // user API
     #include "zCVobCallback.inl"
@@ -53,8 +54,8 @@ namespace Gothic_I_Classic {
   class zCWorldPerFrameCallback : public zCCallback {
   public:
     
-    virtual void DoWorldPerFrameCallback( zCWorld*, zCCamera* ) zPureCall;
-    zCWorldPerFrameCallback() {}
+    virtual void DoWorldPerFrameCallback( zCWorld*, zCCamera* )                       zPureCall;
+    zCWorldPerFrameCallback() : zCtor( zCCallback ) {}
 
     // user API
     #include "zCWorldPerFrameCallback.inl"
@@ -224,8 +225,9 @@ namespace Gothic_I_Classic {
     zCArray<zCVob*> walkList;                                    // sizeof 0Ch    offset 234h
     zCArray<zCVob*> vobHashTable[zNUM_VOB_HASH];                 // sizeof 6000h  offset 240h
 
+    zDefineInheritableCtor( zCWorld ) : zCtor( zCObject )  {}
     void zCWorld_OnInit()                                                                                          zCall( 0x005F2410 );
-    zCWorld()                                                                                                      zInit( zCWorld_OnInit() );
+    zCWorld() : zCtor( zCObject )                                                                                  zInit( zCWorld_OnInit() );
     zCSkyControler* GetActiveSkyControler()                                                                        zCall( 0x005F2C80 );
     void SetSkyControlerIndoor( zCSkyControler* )                                                                  zCall( 0x005F2CB0 );
     void SetSkyControlerOutdoor( zCSkyControler* )                                                                 zCall( 0x005F2CF0 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSTRING_H__VER1__
 #define __ZSTRING_H__VER1__
@@ -38,6 +38,7 @@ namespace Gothic_I_Addon {
     zMEMPOOL_DECLARATION( zSTRING, 0x008AE6D8 )
 
     // Constructors
+    zDefineInheritableCtor( zSTRING ) {}
     void zSTRING_OnInit( char const* )    zCall( 0x004010C0 );
     void zSTRING_OnInit()                 zCall( 0x00402F90 );
     void zSTRING_OnInit( zSTRING const& ) zCall( 0x00417CA0 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMUSIC_H__VER2__
 #define __ZMUSIC_H__VER2__
@@ -45,6 +45,7 @@ namespace Gothic_II_Classic {
     unsigned char dScriptEnd;     // sizeof 01h    offset 30h
     zSTRING name;                 // sizeof 14h    offset 34h
 
+    zDefineInheritableCtor( zCMusicTheme ) {}
     void zCMusicTheme_OnInit()   zCall( 0x004E5330 );
     zCMusicTheme()               zInit( zCMusicTheme_OnInit() );
     virtual ~zCMusicTheme()      zCall( 0x004E49F0 );
@@ -65,6 +66,7 @@ namespace Gothic_II_Classic {
     int refCtr;                   // sizeof 04h    offset 28h
     zSTRING name;                 // sizeof 14h    offset 2Ch
 
+    zDefineInheritableCtor( zCMusicJingle ) {}
     void zCMusicJingle_OnInit()     zCall( 0x004E5370 );
     zCMusicJingle()                 zInit( zCMusicJingle_OnInit() );
     virtual ~zCMusicJingle()        zCall( 0x004E53C0 );
@@ -85,6 +87,7 @@ namespace Gothic_II_Classic {
     float volume; // sizeof 04h    offset 04h
     float reverb; // sizeof 04h    offset 08h
 
+    zDefineInheritableCtor( zCMusicSystem ) {}
     zCMusicSystem() {}
     static void DisableMusicSystem( int )                                                                    zCall( 0x004E4880 );
     virtual ~zCMusicSystem()                                                                                 zCall( 0x004E54C0 );
@@ -120,7 +123,7 @@ namespace Gothic_II_Classic {
   class zCMusicSys_Dummy : public zCMusicSystem {
   public:
 
-    zCMusicSys_Dummy() {}
+    zCMusicSys_Dummy() : zCtor( zCMusicSystem ) {}
     virtual ~zCMusicSys_Dummy()                                 zCall( 0x00631850 );
     virtual zCMusicTheme* LoadThemeByScript( zSTRING const& )   zCall( 0x0062B4C0 );
     virtual zCMusicTheme* LoadTheme( zSTRING const& )           zCall( 0x0062B510 );

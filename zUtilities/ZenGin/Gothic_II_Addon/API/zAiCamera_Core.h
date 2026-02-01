@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZAI_CAMERA__CORE_H__VER3__
 #define __ZAI_CAMERA__CORE_H__VER3__

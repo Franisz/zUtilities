@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZINPUT_H__VER2__
 #define __ZINPUT_H__VER2__
@@ -48,6 +48,7 @@ namespace Gothic_II_Classic {
   public:
     zCArraySort<zSKeyMapping*> mapList; // sizeof 10h    offset 04h
 
+    zDefineInheritableCtor( zCInput ) {}
     void zCInput_OnInit()                                               zCall( 0x004C95F0 );
     zCInput()                                                           zInit( zCInput_OnInit() );
     void Bind( unsigned short, zCArray<unsigned short> const& )         zCall( 0x004C98F0 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OSPELL_H__VER3__
 #define __OSPELL_H__VER3__
@@ -190,8 +190,8 @@ namespace Gothic_II_Addon {
 
     void oCSpell_OnInit()                       zCall( 0x00483C20 );
     void oCSpell_OnInit( int )                  zCall( 0x00483DD0 );
-    oCSpell()                                   zInit( oCSpell_OnInit() );
-    oCSpell( int a0 )                           zInit( oCSpell_OnInit( a0 ));
+    oCSpell() : zCtor( zCObject )               zInit( oCSpell_OnInit() );
+    oCSpell( int a0 ) : zCtor( zCObject )       zInit( oCSpell_OnInit( a0 ));
     void InitValues( int )                      zCall( 0x00484020 );
     zSTRING GetSpellInstanceName( int ) const   zCall( 0x00484150 );
     oCVisualFX* CreateEffect()                  zCall( 0x004842E0 );

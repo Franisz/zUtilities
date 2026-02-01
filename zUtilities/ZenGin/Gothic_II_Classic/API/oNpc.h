@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ONPC_H__VER2__
 #define __ONPC_H__VER2__
@@ -289,7 +289,7 @@ namespace Gothic_II_Classic {
     int m_value;              // sizeof 04h    offset 2Ch
 
     void oCNpcTalent_OnInit()                              zCall( 0x006CE430 );
-    oCNpcTalent()                                          zInit( oCNpcTalent_OnInit() );
+    oCNpcTalent() : zCtor( zCObject )                      zInit( oCNpcTalent_OnInit() );
     static zCObject* _CreateNewInstance()                  zCall( 0x006CE2A0 );
     static void CreateTalentList( zCArray<oCNpcTalent*>* ) zCall( 0x006CE5E0 );
     virtual zCClassDef* _GetClassDef() const               zCall( 0x006CE420 );
@@ -713,7 +713,7 @@ namespace Gothic_II_Classic {
     zVEC3 soundPosition;                          // sizeof 0Ch    offset 960h
     zCPlayerGroup* playerGroup;                   // sizeof 04h    offset 96Ch
 
-    void oCNpc_OnInit()                                                                          zCall( 0x0081FFC1 );
+    void oCNpc_OnInit()                                                                          zCall( 0x006CF750 );
     int IsWaitingForAnswer()                                                                     zCall( 0x0065FDA0 );
     int SetCurrentAnswer( int, int, oCNpc* )                                                     zCall( 0x0065FDF0 );
     int EV_Ask( oCMsgConversation* )                                                             zCall( 0x00660310 );
@@ -746,7 +746,7 @@ namespace Gothic_II_Classic {
     void RemoveOverlay( zSTRING const& )                                                         zCall( 0x006CF3C0 );
     void SetModelScale( zVEC3 const& )                                                           zCall( 0x006CF5B0 );
     void SetFatness( float )                                                                     zCall( 0x006CF6A0 );
-    oCNpc()                                                                                      zInit( oCNpc_OnInit() );
+    oCNpc() : zCtor( oCVob )                                                                     zInit( oCNpc_OnInit() );
     void CleanUp()                                                                               zCall( 0x006D01E0 );
     void DeleteHumanAI()                                                                         zCall( 0x006D1280 );
     zSTRING GetGuildName()                                                                       zCall( 0x006D12C0 );

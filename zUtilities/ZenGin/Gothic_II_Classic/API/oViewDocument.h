@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIEW_DOCUMENT_H__VER2__
 #define __OVIEW_DOCUMENT_H__VER2__
@@ -10,10 +10,11 @@ namespace Gothic_II_Classic {
   public:
     int Pages; // sizeof 04h    offset F8h
 
+    zDefineInheritableCtor( oCViewDocument ) : zCtor( zCViewDialog ) {}
     void oCViewDocument_OnInit( zSTRING& )                           zCall( 0x00771240 );
     void oCViewDocument_OnInit()                                     zCall( 0x007715F0 );
-    oCViewDocument( zSTRING& a0 )                                    zInit( oCViewDocument_OnInit( a0 ));
-    oCViewDocument()                                                 zInit( oCViewDocument_OnInit() );
+    oCViewDocument( zSTRING& a0 ) : zCtor( zCViewDialog )            zInit( oCViewDocument_OnInit( a0 ));
+    oCViewDocument() : zCtor( zCViewDialog )                         zInit( oCViewDocument_OnInit() );
     oCViewDocument* __fastcall GetPage( int )                        zCall( 0x00771640 );
     void __fastcall SetPages( int )                                  zCall( 0x00771670 );
     void __fastcall SetMargins( int, zCPosition&, zCPosition&, int ) zCall( 0x007717C0 );

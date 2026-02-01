@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZOBJECT_H__VER0__
 #define __ZOBJECT_H__VER0__
@@ -100,6 +100,7 @@ namespace Gothic_I_Classic {
     zCObject* hashNext;       // sizeof 04h    offset 0Ch
     zSTRING objectName;       // sizeof 14h    offset 10h
 
+    zDefineInheritableCtor( zCObject ) {}
     void zCObject_OnInit()                                              zCall( 0x00401C20 );
     zCObject()                                                          zInit( zCObject_OnInit() );
     int Release()                                                       zCall( 0x0042AC30 );
@@ -137,20 +138,21 @@ namespace Gothic_I_Classic {
   public:
     zCLASS_DECLARATION( zCObjectFactory )
 
-    zCObjectFactory() {}
-    static zCObject* _CreateNewInstance()                               zCall( 0x005890A0 );
-    virtual zCClassDef* _GetClassDef( void ) const                      zCall( 0x00425DA0 );
-    virtual ~zCObjectFactory( void )                                    zCall( 0x00425E00 );
-    virtual zCEventManager* CreateEventManager( zCVob* )                zCall( 0x0058BDE0 );
-    virtual zFILE* CreateZFile( zSTRING const& )                        zCall( 0x0058BD60 );
-    virtual zCSession* CreateSession( void )                            zCall( 0x0058C130 );
-    virtual zCCSManager* CreateCSManager( void )                        zCall( 0x0058C1A0 );
-    virtual zCNetVobControl* CreateNetVobControl( zCVob* )              zCall( 0x0058BF10 );
-    virtual zCGameInfo* CreateGameInfo( void )                          zCall( 0x00425DB0 );
-    virtual zCPlayerInfo* CreatePlayerInfo( void )                      zCall( 0x00425DC0 );
-    virtual zCWorld* CreateWorld( void )                                zCall( 0x0058C210 );
-    virtual zCWaypoint* CreateWaypoint( void )                          zCall( 0x0058BFA0 );
-    virtual zCWay* CreateWay( void )                                    zCall( 0x0058C0C0 );
+    zDefineInheritableCtor( zCObjectFactory ) : zCtor( zCObject )  {}
+zCObjectFactory() : zCtor( zCObject ) {}
+    static zCObject* _CreateNewInstance()                                                   zCall( 0x005890A0 );
+    virtual zCClassDef* _GetClassDef( void ) const                                          zCall( 0x00425DA0 );
+    virtual ~zCObjectFactory( void )                                                        zCall( 0x00425E00 );
+    virtual zCEventManager* CreateEventManager( zCVob* )                                    zCall( 0x0058BDE0 );
+    virtual zFILE* CreateZFile( zSTRING const& )                                            zCall( 0x0058BD60 );
+    virtual zCSession* CreateSession( void )                                                zCall( 0x0058C130 );
+    virtual zCCSManager* CreateCSManager( void )                                            zCall( 0x0058C1A0 );
+    virtual zCNetVobControl* CreateNetVobControl( zCVob* )                                  zCall( 0x0058BF10 );
+    virtual zCGameInfo* CreateGameInfo( void )                                              zCall( 0x00425DB0 );
+    virtual zCPlayerInfo* CreatePlayerInfo( void )                                          zCall( 0x00425DC0 );
+    virtual zCWorld* CreateWorld( void )                                                    zCall( 0x0058C210 );
+    virtual zCWaypoint* CreateWaypoint( void )                                              zCall( 0x0058BFA0 );
+    virtual zCWay* CreateWay( void )                                                        zCall( 0x0058C0C0 );
 
     // user API
     #include "zCObjectFactory.inl"

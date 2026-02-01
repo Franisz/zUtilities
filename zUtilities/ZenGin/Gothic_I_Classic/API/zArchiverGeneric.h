@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZARCHIVER_GENERIC_H__VER0__
 #define __ZARCHIVER_GENERIC_H__VER0__
@@ -44,7 +44,7 @@ namespace Gothic_I_Classic {
     int warnWrongEntryOrder;                                      // sizeof 04h    offset B8h
 
     void zCArchiverGeneric_OnInit()                                                                    zCall( 0x00511AB0 );
-    zCArchiverGeneric()                                                                                zInit( zCArchiverGeneric_OnInit() );
+    zCArchiverGeneric() : zCtor( zCArchiver )                                                          zInit( zCArchiverGeneric_OnInit() );
     void DebugMessage( zSTRING const& )                                                                zCall( 0x00511F70 );
     void CheckObjectListSize( int )                                                                    zCall( 0x00514EA0 );
     static zCObject* _CreateNewInstance()                                                              zCall( 0x00511930 );

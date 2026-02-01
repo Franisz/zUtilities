@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSYS_INFO_H__VER2__
 #define __ZSYS_INFO_H__VER2__
@@ -41,6 +41,7 @@ namespace Gothic_II_Classic {
     zSTRING graName;            // sizeof 14h    offset 54h
     unsigned long graMemSize;   // sizeof 04h    offset 68h
 
+    zDefineInheritableCtor( zCSystemInfo ) {}
     void zCSystemInfo_OnInit() zCall( 0x0046C580 );
     zCSystemInfo()             zInit( zCSystemInfo_OnInit() );
     void AnalyseMemory()       zCall( 0x0046C820 );

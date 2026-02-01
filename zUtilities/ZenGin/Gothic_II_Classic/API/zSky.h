@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSKY_H__VER2__
 #define __ZSKY_H__VER2__
@@ -15,7 +15,7 @@ namespace Gothic_II_Classic {
   public:
     zVEC3 camPosLastFrame; // sizeof 0Ch    offset B8h
 
-    zCUnderwaterPFX() {}
+    zCUnderwaterPFX() : zCtor( zCParticleFX ) {}
     void ProcessParticles()                zCall( 0x005D9B40 );
     void CreateParticles()                 zCall( 0x005D9F40 );
     virtual ~zCUnderwaterPFX()             zCall( 0x005D9160 );
@@ -47,8 +47,9 @@ namespace Gothic_II_Classic {
     float lastRelightTime;        // sizeof 04h    offset 44h
     float m_fRelightTime;         // sizeof 04h    offset 48h
 
+    zDefineInheritableCtor( zCSkyControler ) : zCtor( zCObject ) {}
     void zCSkyControler_OnInit()                            zCall( 0x005D88F0 );
-    zCSkyControler()                                        zInit( zCSkyControler_OnInit() );
+    zCSkyControler() : zCtor( zCObject )                    zInit( zCSkyControler_OnInit() );
     void ClearBackground( zCOLOR )                          zCall( 0x005D8B80 );
     virtual zCClassDef* _GetClassDef() const                zCall( 0x005D88E0 );
     virtual ~zCSkyControler()                               zCall( 0x005D8B10 );
@@ -111,8 +112,9 @@ namespace Gothic_II_Classic {
     zCOLOR scrPolyColor;                   // sizeof 04h    offset 74h
     zTRnd_AlphaBlendFunc scrPolyAlphaFunc; // sizeof 04h    offset 78h
 
+    zDefineInheritableCtor( zCSkyControler_Mid ) : zCtor( zCSkyControler ) {}
     void zCSkyControler_Mid_OnInit()                     zCall( 0x005D8E40 );
-    zCSkyControler_Mid()                                 zInit( zCSkyControler_Mid_OnInit() );
+    zCSkyControler_Mid() : zCtor( zCSkyControler )       zInit( zCSkyControler_Mid_OnInit() );
     void InitUnderwaterPFX()                             zCall( 0x005D8EE0 );
     void InitScreenBlend()                               zCall( 0x005D9560 );
     void RenderScreenBlend()                             zCall( 0x005D9680 );
@@ -152,26 +154,26 @@ namespace Gothic_II_Classic {
     float userFarZScalability; // sizeof 04h    offset 80h
     float time;                // sizeof 04h    offset 84h
 
-    void zCSkyControler_Indoor_OnInit()          zCall( 0x005D9880 );
-    zCSkyControler_Indoor()                      zInit( zCSkyControler_Indoor_OnInit() );
-    static zCObject* _CreateNewInstance()        zCall( 0x005D8580 );
-    virtual zCClassDef* _GetClassDef() const     zCall( 0x005D8790 );
-    virtual ~zCSkyControler_Indoor()             zCall( 0x005D8820 );
-    virtual void SetTime( float )                zCall( 0x005D9920 );
-    virtual float GetTime() const                zCall( 0x005D87A0 );
-    virtual void ResetTime()                     zCall( 0x005D87B0 );
-    virtual void SetFarZ( float )                zCall( 0x005D99C0 );
-    virtual float GetFarZ() const                zCall( 0x005D99D0 );
-    virtual void SetFarZScalability( float )     zCall( 0x005D99E0 );
-    virtual float GetFarZScalability() const     zCall( 0x005D9A30 );
-    virtual void SetBackgroundColor( zCOLOR )    zCall( 0x005D9A40 );
-    virtual zCOLOR GetBackgroundColor() const    zCall( 0x005D9A50 );
-    virtual zCOLOR GetBackgroundColorDef() const zCall( 0x005D9A60 );
-    virtual void SetOverrideColor( zVEC3 )       zCall( 0x005D87C0 );
-    virtual void SetOverrideColorFlag( int )     zCall( 0x005D87D0 );
-    virtual void UpdateWorldDependencies()       zCall( 0x005D87E0 );
-    virtual void RenderSkyPre()                  zCall( 0x005D9A70 );
-    virtual void RenderSkyPost( int )            zCall( 0x005D9B10 );
+    void zCSkyControler_Indoor_OnInit()                   zCall( 0x005D9880 );
+    zCSkyControler_Indoor() : zCtor( zCSkyControler_Mid ) zInit( zCSkyControler_Indoor_OnInit() );
+    static zCObject* _CreateNewInstance()                 zCall( 0x005D8580 );
+    virtual zCClassDef* _GetClassDef() const              zCall( 0x005D8790 );
+    virtual ~zCSkyControler_Indoor()                      zCall( 0x005D8820 );
+    virtual void SetTime( float )                         zCall( 0x005D9920 );
+    virtual float GetTime() const                         zCall( 0x005D87A0 );
+    virtual void ResetTime()                              zCall( 0x005D87B0 );
+    virtual void SetFarZ( float )                         zCall( 0x005D99C0 );
+    virtual float GetFarZ() const                         zCall( 0x005D99D0 );
+    virtual void SetFarZScalability( float )              zCall( 0x005D99E0 );
+    virtual float GetFarZScalability() const              zCall( 0x005D9A30 );
+    virtual void SetBackgroundColor( zCOLOR )             zCall( 0x005D9A40 );
+    virtual zCOLOR GetBackgroundColor() const             zCall( 0x005D9A50 );
+    virtual zCOLOR GetBackgroundColorDef() const          zCall( 0x005D9A60 );
+    virtual void SetOverrideColor( zVEC3 )                zCall( 0x005D87C0 );
+    virtual void SetOverrideColorFlag( int )              zCall( 0x005D87D0 );
+    virtual void UpdateWorldDependencies()                zCall( 0x005D87E0 );
+    virtual void RenderSkyPre()                           zCall( 0x005D9A70 );
+    virtual void RenderSkyPost( int )                     zCall( 0x005D9B10 );
 
     // user API
     #include "zCSkyControler_Indoor.inl"

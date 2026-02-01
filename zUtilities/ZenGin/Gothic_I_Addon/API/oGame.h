@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OGAME_H__VER1__
 #define __OGAME_H__VER1__
@@ -102,7 +102,7 @@ namespace Gothic_I_Addon {
     zCArray<zCVisual*> visualList;                    // sizeof 0Ch    offset 174h
 
     void oCGame_OnInit()                                                         zCall( 0x0065BAE0 );
-    oCGame()                                                                     zInit( oCGame_OnInit() );
+    oCGame() : zCtor( zCSession )                                                zInit( oCGame_OnInit() );
     void SetCameraPosition()                                                     zCall( 0x0065C980 );
     void UpdateViewSettings()                                                    zCall( 0x0065D090 );
     void CallScriptStartup()                                                     zCall( 0x0065E050 );

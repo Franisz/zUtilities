@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZPROG_MESH_H__VER3__
 #define __ZPROG_MESH_H__VER3__
@@ -197,8 +197,9 @@ namespace Gothic_II_Addon {
     unsigned long pmeshID;              // sizeof 04h    offset D0h
     unsigned long renderSortKey;        // sizeof 04h    offset D4h
 
+    zDefineInheritableCtor( zCProgMeshProto ) : zCtor( zCVisual ) {}
     void zCProgMeshProto_OnInit()                                                                                                              zCall( 0x005C6AF0 );
-    zCProgMeshProto()                                                                                                                          zInit( zCProgMeshProto_OnInit() );
+    zCProgMeshProto() : zCtor( zCVisual )                                                                                                      zInit( zCProgMeshProto_OnInit() );
     void CalcRenderSortKey()                                                                                                                   zCall( 0x005C6D70 );
     void PackStaticVertexBuffers()                                                                                                             zCall( 0x005C6E30 );
     int __fastcall CheckRayPolyIntersection( zCSubMesh*, int, zVEC3 const&, zVEC3 const&, zVEC3&, float& ) const                               zCall( 0x005C7BF0 );
@@ -333,7 +334,7 @@ namespace Gothic_II_Addon {
     unsigned char* iterator;                        // sizeof 04h    offset 100h
 
     void zCMeshSoftSkin_OnInit()                                                                              zCall( 0x005CDBD0 );
-    zCMeshSoftSkin()                                                                                          zInit( zCMeshSoftSkin_OnInit() );
+    zCMeshSoftSkin() : zCtor( zCProgMeshProto )                                                               zInit( zCMeshSoftSkin_OnInit() );
     void AllocVertWeightStream( int, int )                                                                    zCall( 0x005CDD70 );
     void DeleteVertWeightStream()                                                                             zCall( 0x005CDDC0 );
     void AddNumWeightEntry( int const& )                                                                      zCall( 0x005CDDF0 );
@@ -363,7 +364,7 @@ namespace Gothic_II_Addon {
   public:
 
     void zCProgMeshConvertFileHandler_OnInit()                         zCall( 0x005D0100 );
-    zCProgMeshConvertFileHandler()                                     zInit( zCProgMeshConvertFileHandler_OnInit() );
+    zCProgMeshConvertFileHandler() : zCtor( zCScanDirFileHandler )     zInit( zCProgMeshConvertFileHandler_OnInit() );
     virtual ~zCProgMeshConvertFileHandler()                            zCall( 0x00424C60 );
     virtual int HandleFile( zSTRING const&, char const*, _finddata_t ) zCall( 0x005D01E0 );
 

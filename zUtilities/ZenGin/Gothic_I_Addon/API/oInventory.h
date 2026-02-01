@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OINVENTORY_H__VER1__
 #define __OINVENTORY_H__VER1__
@@ -66,10 +66,11 @@ namespace Gothic_I_Addon {
     zCOLOR image_chroma;                    // sizeof 04h    offset 94h
     zCOLOR blit_chroma;                     // sizeof 04h    offset 98h
 
+    zDefineInheritableCtor( oCItemContainer ) : zCtor( zCInputCallback ) {}
     void oCItemContainer_OnInit()                              zCall( 0x00693B90 );
     oCItemContainer* GetNextContainerLeft( oCItemContainer* )  zCall( 0x00693A70 );
     oCItemContainer* GetNextContainerRight( oCItemContainer* ) zCall( 0x00693B00 );
-    oCItemContainer()                                          zInit( oCItemContainer_OnInit() );
+    oCItemContainer() : zCtor( zCInputCallback )               zInit( oCItemContainer_OnInit() );
     zCListSort<oCItem>* JumpOffset( int&, int& )               zCall( 0x00694710 );
     zSTRING GetCategoryText( int )                             zCall( 0x006947C0 );
     int ActivateNextContainer( int )                           zCall( 0x006974E0 );
@@ -125,7 +126,7 @@ namespace Gothic_I_Addon {
     static zCGfx*& gfx_equip;
     static zCGfx*& gfx_cursor;
     static zCGfx*& gfx_cursor_equip;
-    static zCGfx**& gfx_arrow;
+    static zCGfx** gfx_arrow;
 
     // user API
     #include "oCItemContainer.inl"
@@ -136,13 +137,14 @@ namespace Gothic_I_Addon {
   public:
     oCNpc* owner; // sizeof 04h    offset 9Ch
 
-    void oCStealContainer_OnInit()  zCall( 0x00697DA0 );
-    oCStealContainer()              zInit( oCStealContainer_OnInit() );
-    virtual int HandleEvent( int )  zCall( 0x00698100 );
-    virtual ~oCStealContainer()     zCall( 0x00697DE0 );
-    virtual void SetOwner( oCNpc* ) zCall( 0x00697F70 );
-    virtual oCNpc* GetOwner()       zCall( 0x00697F90 );
-    virtual void CreateList()       zCall( 0x00697FA0 );
+    zDefineInheritableCtor( oCStealContainer ) : zCtor( oCItemContainer ) {}
+    void oCStealContainer_OnInit()                zCall( 0x00697DA0 );
+    oCStealContainer() : zCtor( oCItemContainer ) zInit( oCStealContainer_OnInit() );
+    virtual int HandleEvent( int )                zCall( 0x00698100 );
+    virtual ~oCStealContainer()                   zCall( 0x00697DE0 );
+    virtual void SetOwner( oCNpc* )               zCall( 0x00697F70 );
+    virtual oCNpc* GetOwner()                     zCall( 0x00697F90 );
+    virtual void CreateList()                     zCall( 0x00697FA0 );
 
     // user API
     #include "oCStealContainer.inl"
@@ -152,13 +154,13 @@ namespace Gothic_I_Addon {
   class oCNpcContainer : public oCStealContainer {
   public:
 
-    void oCNpcContainer_OnInit()      zCall( 0x006983B0 );
-    oCNpcContainer()                  zInit( oCNpcContainer_OnInit() );
-    virtual int HandleEvent( int )    zCall( 0x00698730 );
-    virtual ~oCNpcContainer()         zCall( 0x006983F0 );
-    virtual oCItem* Insert( oCItem* ) zCall( 0x006989A0 );
-    virtual void Remove( oCItem* )    zCall( 0x006989E0 );
-    virtual void CreateList()         zCall( 0x00698570 );
+    void oCNpcContainer_OnInit()                 zCall( 0x006983B0 );
+    oCNpcContainer() : zCtor( oCStealContainer ) zInit( oCNpcContainer_OnInit() );
+    virtual int HandleEvent( int )               zCall( 0x00698730 );
+    virtual ~oCNpcContainer()                    zCall( 0x006983F0 );
+    virtual oCItem* Insert( oCItem* )            zCall( 0x006989A0 );
+    virtual void Remove( oCItem* )               zCall( 0x006989E0 );
+    virtual void CreateList()                    zCall( 0x00698570 );
 
     // user API
     #include "oCNpcContainer.inl"
@@ -177,7 +179,7 @@ namespace Gothic_I_Addon {
     int invnr;                             // sizeof 04h    offset 230h
 
     void oCNpcInventory_OnInit()                             zCall( 0x00812FBB );
-    oCNpcInventory()                                         zInit( oCNpcInventory_OnInit() );
+    oCNpcInventory() : zCtor( oCItemContainer )              zInit( oCNpcInventory_OnInit() );
     void ClearInventory()                                    zCall( 0x00699370 );
     void Open( int, int )                                    zCall( 0x00699500 );
     void SetOwner( oCNpc* )                                  zCall( 0x00699A20 );
@@ -228,7 +230,7 @@ namespace Gothic_I_Addon {
     virtual int IsEmpty( int )                               zCall( 0x0069ACE0 );
 
     // static properties
-    static zCGfx**& gfx_cats;
+    static zCGfx** gfx_cats;
 
     // user API
     #include "oCNpcInventory.inl"

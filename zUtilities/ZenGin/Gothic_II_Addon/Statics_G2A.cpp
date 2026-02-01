@@ -18,7 +18,7 @@ namespace Gothic_II_Addon {
 
 #ifdef __OFOCUS_H__VER3__
   oCNpcFocus*& oCNpcFocus::focus             = *(oCNpcFocus**)0x00AB0738;
-  oCNpcFocus**& oCNpcFocus::focuslist        = *(oCNpcFocus***)0x00AB06F8;
+  oCNpcFocus** oCNpcFocus::focuslist         = (oCNpcFocus**)0x00AB06F8;
   int& oCNpcFocus::s_iHightlightMeleeFocus   = *(int*)0x00AB073C;
   int& oCNpcFocus::s_bHighlightInteractFocus = *(int*)0x008B20F4;
   oCVisualFX*& oCNpcFocus::highLightFX       = *(oCVisualFX**)0x00AB0740;
@@ -44,7 +44,7 @@ namespace Gothic_II_Addon {
   zCGfx*& oCItemContainer::gfx_equip                 = *(zCGfx**)0x00AB10F8;
   zCGfx*& oCItemContainer::gfx_cursor                = *(zCGfx**)0x00AB10FC;
   zCGfx*& oCItemContainer::gfx_cursor_equip          = *(zCGfx**)0x00AB1100;
-  zCGfx**& oCItemContainer::gfx_arrow                = *(zCGfx***)0x00AB1104;
+  zCGfx** oCItemContainer::gfx_arrow                 = (zCGfx**)0x00AB1104;
   zCGfx*& oCNpcInventory::gfx_title                  = *(zCGfx**)0x00AB1124;
 #endif // __OINVENTORY_H__VER3__
 
@@ -148,7 +148,7 @@ namespace Gothic_II_Addon {
   int& zCPolygon::s_numClipFeatScene                                                 = *(int*)0x00921334;
   int& zCPolygon::s_numVertListScene                                                 = *(int*)0x009593F8;
   int& zCPolygon::s_numFeatListScene                                                 = *(int*)0x0094934C;
-  zCVertex**& zCPolygon::s_actClipVert                                               = *(zCVertex***)0x009594D0;
+  zCVertex** zCPolygon::s_actClipVert                                                = (zCVertex**)0x009594D0;
   int& zCPolygon::s_actNumClipVert                                                   = *(int*)0x009594D4;
   zCArraySort<zCPolygon::zSVertexSavedValues>& zCPolygon::morphedVerticesList_Height = *(zCArraySort<zSVertexSavedValues>*)0x00959418;
   zCArraySort<zCPolygon::zSVertexSavedValues>& zCPolygon::morphedVerticesList_Wall   = *(zCArraySort<zSVertexSavedValues>*)0x009593FC;
@@ -232,7 +232,7 @@ namespace Gothic_II_Addon {
   zSTRING& zFILE::s_physPathString                   = *(zSTRING*)0x008C347C;
   zSTRING& zFILE::s_rootDirString                    = *(zSTRING*)0x008C3468;
   bool& zFILE::s_initialized                         = *(bool*)0x008C34B8;
-  zCBuffer**& zFILE::bufferList                      = *(zCBuffer***)0x008C3434;
+  zCBuffer** zFILE::bufferList                       = (zCBuffer**)0x008C3434;
   int*& zFILE::bufferFlag                            = *(int**)0x008C344C;
 #endif // __ZDISK_H__VER3__
 
@@ -248,7 +248,7 @@ namespace Gothic_II_Addon {
   const unsigned int& zCMgcEigenD::invalid_size      = *(const unsigned int*)0x008320DC;
   const unsigned int& zCMgcEigenD::allocation_failed = *(const unsigned int*)0x008320E0;
   const unsigned int& zCMgcEigenD::ql_exceeded       = *(const unsigned int*)0x008320E4;
-  const char**& zCMgcEigenD::message                 = *(const char***)0x008A13D8;
+  const char** zCMgcEigenD::message                  = (const char**)0x008A13D8;
 #endif // __ZEIGEN_H__VER3__
 
 #ifdef __ZEVENT_MAN_H__VER3__
@@ -434,7 +434,7 @@ namespace Gothic_II_Addon {
   unsigned long& zCRnd_D3D::xd3d_actFrameNumber                                 = *(unsigned long*)0x009FCA00;
   int& zCRnd_D3D::xd3d_dd7inuse                                                 = *(int*)0x009FC9F8;
   int& zCRnd_D3D::xd3d_palsupp                                                  = *(int*)0x009FC9FC;
-  zCSurfaceCache_D3D::zD3D_SlotHeader**& zCSurfaceCache_D3D::xsc_listofsurfaces = *(zCSurfaceCache_D3D::zD3D_SlotHeader***)0x009D2FE8;
+  zCSurfaceCache_D3D::zD3D_SlotHeader** zCSurfaceCache_D3D::xsc_listofsurfaces  = (zCSurfaceCache_D3D::zD3D_SlotHeader**)0x009D2FE8;
   int& zCSurfaceCache_D3D::xsc_listposition                                     = *(int*)0x009FCA20;
   zCArray<zCVertexBuffer_D3D*>& zCVertexBuffer_D3D::xvb_vertexbufferList        = *(zCArray<zCVertexBuffer_D3D*>*)0x009FCA3C;
 #endif // __ZRND_D3D_H__VER3__
@@ -566,8 +566,8 @@ namespace Gothic_II_Addon {
 #endif
 
 #ifdef __OLOG_MANAGER_H__VER3__
-  char**& oCLogTopic::ms_strSections = *(char***)0x008AF6BC;
-  char**& oCLogTopic::ms_strStati    = *(char***)0x008AF6C8;
+  char** oCLogTopic::ms_strSections = (char**)0x008AF6BC;
+  char** oCLogTopic::ms_strStati    = (char**)0x008AF6C8;
 #endif // __OLOG_MANAGER_H__VER3__
 
 #ifdef __ZCOLLISION_OBJECT_MISC_H__VER3__

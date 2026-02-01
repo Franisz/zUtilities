@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZFLASH_H__VER3__
 #define __ZFLASH_H__VER3__
@@ -26,7 +26,7 @@ namespace Gothic_II_Addon {
       float aniPhase;               // sizeof 04h    offset E8h
 
       void zCBolt_OnInit()                                      zCall( 0x004CA4A0 );
-      zCBolt()                                                  zInit( zCBolt_OnInit() );
+      zCBolt() : zCtor( zCPolyStrip )                           zInit( zCBolt_OnInit() );
       void SetProjectionSphere( zTBSphere3D const& )            zCall( 0x004CA720 );
       void Generate_R( zVEC3 const&, zVEC3 const&, float, int ) zCall( 0x004CABA0 );
       void SetTexture( zSTRING const& )                         zCall( 0x004CB4D0 );
@@ -51,7 +51,7 @@ namespace Gothic_II_Addon {
     float LastUpdateTime; // sizeof 04h    offset 80h
 
     void zCFlash_OnInit()                                              zCall( 0x004C9EB0 );
-    zCFlash()                                                          zInit( zCFlash_OnInit() );
+    zCFlash() : zCtor( zCVisual )                                      zInit( zCFlash_OnInit() );
     void SetProjectionSphere( zTBSphere3D const& )                     zCall( 0x004CA6C0 );
     void Generate( zCBolt*, zVEC3 const&, zVEC3 const&, float )        zCall( 0x004CA780 );
     void SetTexture( zSTRING const& )                                  zCall( 0x004CB370 );

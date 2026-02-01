@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMEMORY__GENERIC_H__VER1__
 #define __ZMEMORY__GENERIC_H__VER1__
@@ -10,7 +10,7 @@ namespace Gothic_I_Addon {
   public:
 
     void zCMallocGeneric_OnInit()                                       zCall( 0x00567070 );
-    zCMallocGeneric()                                                   zInit( zCMallocGeneric_OnInit() );
+    zCMallocGeneric() : zCtor( zCMalloc )                               zInit( zCMallocGeneric_OnInit() );
     virtual ~zCMallocGeneric()                                          zCall( 0x00566FF0 );
     virtual void* Malloc( unsigned int )                                zCall( 0x00567120 );
     virtual void* Malloc( unsigned int, char const*, char const*, int ) zCall( 0x00567130 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVOB_H__VER2__
 #define __OVOB_H__VER2__
@@ -24,8 +24,9 @@ namespace Gothic_II_Classic {
   public:
     zCLASS_DECLARATION( oCVob )
 
+    zDefineInheritableCtor( oCVob ) : zCtor( zCVob ) {}
     void oCVob_OnInit()                                                                      zCall( 0x0071BC60 );
-    oCVob()                                                                                  zInit( oCVob_OnInit() );
+    oCVob() : zCtor( zCVob )                                                                 zInit( oCVob_OnInit() );
     int GetShowDebug()                                                                       zCall( 0x0071BD60 );
     void ToggleShowDebug()                                                                   zCall( 0x0071BD90 );
     void SetShowDebug( int )                                                                 zCall( 0x0071BE10 );
@@ -66,7 +67,7 @@ namespace Gothic_II_Classic {
   public:
     zCLASS_DECLARATION( oCTouchDamage )
 
-    oCTouchDamage() {}
+    oCTouchDamage() : zCtor( zCTouchDamage ) {}
     static zCObject* _CreateNewInstance()                     zCall( 0x0071E0B0 );
     virtual zCClassDef* _GetClassDef() const                  zCall( 0x0071E130 );
     virtual ~oCTouchDamage()                                  zCall( 0x0071E170 );

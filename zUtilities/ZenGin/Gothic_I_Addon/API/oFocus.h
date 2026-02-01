@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OFOCUS_H__VER1__
 #define __OFOCUS_H__VER1__
@@ -69,7 +69,7 @@ namespace Gothic_I_Addon {
 
     // static properties
     static oCNpcFocus*& focus;
-    static oCNpcFocus**& focuslist;
+    static oCNpcFocus** focuslist;
 
     // user API
     #include "oCNpcFocus.inl"

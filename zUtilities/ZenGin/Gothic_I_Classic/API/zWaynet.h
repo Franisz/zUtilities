@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZWAYNET_H__VER0__
 #define __ZWAYNET_H__VER0__
@@ -22,7 +22,7 @@ namespace Gothic_I_Classic {
     zCLASS_DECLARATION( zCVobWaypoint )
 
     void zCVobWaypoint_OnInit()                                         zCall( 0x00702FB0 );
-    zCVobWaypoint()                                                     zInit( zCVobWaypoint_OnInit() );
+    zCVobWaypoint() : zCtor( zCVob )                                    zInit( zCVobWaypoint_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x007096B0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00702FD0 );
     virtual ~zCVobWaypoint()                                            zCall( 0x00703010 );
@@ -50,8 +50,9 @@ namespace Gothic_I_Classic {
     zCVobWaypoint* wpvob;  // sizeof 04h    offset 70h
     zCList<zCWay> wayList; // sizeof 08h    offset 74h
 
+    zDefineInheritableCtor( zCWaypoint ) : zCtor( zCObject )  {}
     void zCWaypoint_OnInit()                                            zCall( 0x00705B70 );
-    zCWaypoint()                                                        zInit( zCWaypoint_OnInit() );
+    zCWaypoint() : zCtor( zCObject )                                    zInit( zCWaypoint_OnInit() );
     void Init( zVEC3& )                                                 zCall( 0x00705CA0 );
     void Init( float, float, float )                                    zCall( 0x00705D00 );
     void Init( zCVobWaypoint* )                                         zCall( 0x00705D70 );
@@ -92,6 +93,7 @@ namespace Gothic_I_Classic {
     zCWaypoint* left;  // sizeof 04h    offset 18h
     zCWaypoint* right; // sizeof 04h    offset 1Ch
 
+    zDefineInheritableCtor( zCWay ) {}
     void zCWay_OnInit()                           zCall( 0x00704C40 );
     void zCWay_OnInit( zCWaypoint*, zCWaypoint* ) zCall( 0x00704CA0 );
     zCWay()                                       zInit( zCWay_OnInit() );
@@ -135,8 +137,8 @@ namespace Gothic_I_Classic {
 
     void zCWayNet_OnInit()                                              zCall( 0x00703020 );
     void zCWayNet_OnInit( zCWorld* )                                    zCall( 0x00703100 );
-    zCWayNet()                                                          zInit( zCWayNet_OnInit() );
-    zCWayNet( zCWorld* a0 )                                             zInit( zCWayNet_OnInit( a0 ));
+    zCWayNet() : zCtor( zCObject )                                      zInit( zCWayNet_OnInit() );
+    zCWayNet( zCWorld* a0 ) : zCtor( zCObject )                         zInit( zCWayNet_OnInit( a0 ));
     zCWaypoint* HasWaypoint( float, float, float )                      zCall( 0x007032F0 );
     int HasWaypoint( zCWaypoint* )                                      zCall( 0x00703360 );
     zCWaypoint* HasWaypoint( zVEC3& )                                   zCall( 0x00703390 );
@@ -226,7 +228,7 @@ namespace Gothic_I_Classic {
     zCVob* inUseVob; // sizeof 04h    offset 104h
 
     void zCVobSpot_OnInit()                                             zCall( 0x007092A0 );
-    zCVobSpot()                                                         zInit( zCVobSpot_OnInit() );
+    zCVobSpot() : zCtor( zCVob )                                        zInit( zCVobSpot_OnInit() );
     int IsAvailable( zCVob* )                                           zCall( 0x00709320 );
     void MarkAsUsed( float, zCVob* )                                    zCall( 0x007094A0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00709930 );
@@ -242,10 +244,10 @@ namespace Gothic_I_Classic {
   public:
     zCLASS_DECLARATION( zCVobStartpoint )
 
-    zCVobStartpoint() {}
-    static zCObject* _CreateNewInstance()                               zCall( 0x00709BE0 );
-    virtual zCClassDef* _GetClassDef() const                            zCall( 0x00709C90 );
-    virtual ~zCVobStartpoint()                                          zCall( 0x00709CD0 );
+    zCVobStartpoint() : zCtor( zCVob ) {}
+    static zCObject* _CreateNewInstance()                                                zCall( 0x00709BE0 );
+    virtual zCClassDef* _GetClassDef() const                                             zCall( 0x00709C90 );
+    virtual ~zCVobStartpoint()                                                           zCall( 0x00709CD0 );
 
     // user API
     #include "zCVobStartpoint.inl"

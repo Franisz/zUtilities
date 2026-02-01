@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZRND_D3D_H__VER0__
 #define __ZRND_D3D_H__VER0__
@@ -47,11 +47,11 @@ namespace Gothic_I_Classic {
     int numVert;                             // sizeof 04h    offset 1Ch
     zD3D_vertexFormat vertexList[zMAX_VERT]; // sizeof E0h    offset 20h
 
-    void zD3D_alphaPoly_OnInit() zCall( 0x00713CE0 );
-    zD3D_alphaPoly()             zInit( zD3D_alphaPoly_OnInit() );
-    virtual ~zD3D_alphaPoly()    zCall( 0x00713D00 );
-    virtual void Draw( int )     zCall( 0x00718A20 );
-    virtual int IsAlphaPoly()    zCall( 0x00713CF0 );
+    void zD3D_alphaPoly_OnInit()                     zCall( 0x00713CE0 );
+    zD3D_alphaPoly() : zCtor( zCRndAlphaSortObject ) zInit( zD3D_alphaPoly_OnInit() );
+    virtual ~zD3D_alphaPoly()                        zCall( 0x00713D00 );
+    virtual void Draw( int )                         zCall( 0x00718A20 );
+    virtual int IsAlphaPoly()                        zCall( 0x00713CF0 );
 
     // static properties
     static zCVertexBufferDyn*& vertexbufferdyn;
@@ -195,7 +195,7 @@ namespace Gothic_I_Classic {
     int XD3D_TextureRebuild()                                                                  zCall( 0x00712A60 );
     int XD3D_CreateWin( int, int, int )                                                        zCall( 0x00712C80 );
     void XD3D_CloseWin()                                                                       zCall( 0x00713120 );
-    zCRnd_D3D()                                                                                zInit( zCRnd_D3D_OnInit() );
+    zCRnd_D3D() : zCtor( zCRenderer )                                                          zInit( zCRnd_D3D_OnInit() );
     void EmergencyExit()                                                                       zCall( 0x00713FC0 );
     void XD3D_PolyDrawOnePassVertLight( zCPolygon* )                                           zCall( 0x00714DD0 );
     void XD3D_PolyDrawOnePassMultiTex( zCPolygon* )                                            zCall( 0x007154F0 );
@@ -364,7 +364,7 @@ namespace Gothic_I_Classic {
     void XSC_KillLastSurfaceInSlot( zD3D_SlotHeader* )       zCall( 0x0071ADB0 );
 
     // static properties
-    static zD3D_SlotHeader**& xsc_listofsurfaces;
+    static zD3D_SlotHeader** xsc_listofsurfaces;
     static int& xsc_listposition;
 
     // user API
@@ -447,7 +447,7 @@ namespace Gothic_I_Classic {
     void* xtex_buffer;                              // sizeof 04h    offset 138h
 
     void zCTex_D3D_OnInit()                            zCall( 0x0071B0E0 );
-    zCTex_D3D()                                        zInit( zCTex_D3D_OnInit() );
+    zCTex_D3D() : zCtor( zCTexture )                   zInit( zCTex_D3D_OnInit() );
     void GetPixelSize( int&, int& )                    zCall( 0x0071B840 );
     int XTEX_BuildSurfaces( int )                      zCall( 0x0071CB60 );
     void InsertTexture( int, int )                     zCall( 0x0071D7D0 );
@@ -488,7 +488,7 @@ namespace Gothic_I_Classic {
     zCArray<unsigned short> xvb_indexList;           // sizeof 0Ch    offset 7Ch
 
     void zCVertexBuffer_D3D_OnInit()                                  zCall( 0x0071E310 );
-    zCVertexBuffer_D3D()                                              zInit( zCVertexBuffer_D3D_OnInit() );
+    zCVertexBuffer_D3D() : zCtor( zCVertexBuffer )                    zInit( zCVertexBuffer_D3D_OnInit() );
     virtual ~zCVertexBuffer_D3D()                                     zCall( 0x0071E4E0 );
     virtual int Create( unsigned long, unsigned long, unsigned long ) zCall( 0x0071E590 );
     virtual int Destroy()                                             zCall( 0x0071E730 );

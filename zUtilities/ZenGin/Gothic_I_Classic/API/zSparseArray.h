@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSPARSE_ARRAY_H__VER0__
 #define __ZSPARSE_ARRAY_H__VER0__
@@ -27,7 +27,8 @@ namespace Gothic_I_Classic {
     int requestResize;
 
     
-    zCSparseArrayBase() {}
+    zDefineInheritableCtor( zCSparseArrayBase ) {}
+zCSparseArrayBase() {}
     void zCSparseArrayBase_OnInit( unsigned long )                         zCall( 0x005C4A50 );
     zCSparseArrayBase( unsigned long a0 )                                  zInit( zCSparseArrayBase_OnInit( a0 ));
     void Destroy()                                                         zCall( 0x005C4B80 );

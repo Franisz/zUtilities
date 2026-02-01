@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIEW_DOCUMENT_MAP_H__VER0__
 #define __OVIEW_DOCUMENT_MAP_H__VER0__
@@ -24,7 +24,7 @@ namespace Gothic_I_Classic {
     zSTRING Level;               // sizeof 14h    offset 1FCh
 
     void oCViewDocumentMap_OnInit()                                  zCall( 0x00725D20 );
-    oCViewDocumentMap()                                              zInit( oCViewDocumentMap_OnInit() );
+    oCViewDocumentMap() : zCtor( oCViewDocument )                    zInit( oCViewDocumentMap_OnInit() );
     void __fastcall UpdatePosition()                                 zCall( 0x00726030 );
     /* for zCObject num : 16*/
     virtual ~oCViewDocumentMap()                                     zCall( 0x00725E90 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OSAVEGAME_H__VER3__
 #define __OSAVEGAME_H__VER3__
@@ -29,26 +29,26 @@ namespace Gothic_II_Addon {
     zSTRING m_verName;     // sizeof 14h    offset 9Ch
     int m_notCompatible;   // sizeof 04h    offset B0h
 
-    void oCSavegameInfo_OnInit()             zCall( 0x00436BA0 );
-    void oCSavegameInfo_OnInit( int )        zCall( 0x00436D70 );
-    zSTRING GetName()                        zCall( 0x0042A610 );
-    zSTRING GetWorldName()                   zCall( 0x0042A660 );
-    zSTRING GetSaveTime()                    zCall( 0x0042F130 );
-    oCSavegameInfo()                         zInit( oCSavegameInfo_OnInit() );
-    oCSavegameInfo( int a0 )                 zInit( oCSavegameInfo_OnInit( a0 ));
-    void Init()                              zCall( 0x00436F10 );
-    int DoesSavegameExist()                  zCall( 0x004370E0 );
-    void UpdateThumbPic( zCTextureConvert* ) zCall( 0x004370F0 );
-    zSTRING GetDir()                         zCall( 0x00437310 );
-    void ReloadResources()                   zCall( 0x00437360 );
-    void CleanResources()                    zCall( 0x00437550 );
-    void SetSlot( int )                      zCall( 0x00437580 );
-    zSTRING GetGameTime()                    zCall( 0x00438440 );
-    static zCObject* _CreateNewInstance()    zCall( 0x00436B20 );
-    virtual zCClassDef* _GetClassDef() const zCall( 0x00436D30 );
-    virtual void Archive( zCArchiver& )      zCall( 0x00437970 );
-    virtual void Unarchive( zCArchiver& )    zCall( 0x00437EC0 );
-    virtual ~oCSavegameInfo()                zCall( 0x00437810 );
+    void oCSavegameInfo_OnInit()                 zCall( 0x00436BA0 );
+    void oCSavegameInfo_OnInit( int )            zCall( 0x00436D70 );
+    zSTRING GetName()                            zCall( 0x0042A610 );
+    zSTRING GetWorldName()                       zCall( 0x0042A660 );
+    zSTRING GetSaveTime()                        zCall( 0x0042F130 );
+    oCSavegameInfo() : zCtor( zCObject )         zInit( oCSavegameInfo_OnInit() );
+    oCSavegameInfo( int a0 ) : zCtor( zCObject ) zInit( oCSavegameInfo_OnInit( a0 ));
+    void Init()                                  zCall( 0x00436F10 );
+    int DoesSavegameExist()                      zCall( 0x004370E0 );
+    void UpdateThumbPic( zCTextureConvert* )     zCall( 0x004370F0 );
+    zSTRING GetDir()                             zCall( 0x00437310 );
+    void ReloadResources()                       zCall( 0x00437360 );
+    void CleanResources()                        zCall( 0x00437550 );
+    void SetSlot( int )                          zCall( 0x00437580 );
+    zSTRING GetGameTime()                        zCall( 0x00438440 );
+    static zCObject* _CreateNewInstance()        zCall( 0x00436B20 );
+    virtual zCClassDef* _GetClassDef() const     zCall( 0x00436D30 );
+    virtual void Archive( zCArchiver& )          zCall( 0x00437970 );
+    virtual void Unarchive( zCArchiver& )        zCall( 0x00437EC0 );
+    virtual ~oCSavegameInfo()                    zCall( 0x00437810 );
 
     // user API
     #include "oCSavegameInfo.inl"

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZRENDERER_H__VER0__
 #define __ZRENDERER_H__VER0__
@@ -221,7 +221,8 @@ namespace Gothic_I_Classic {
     zCRndAlphaSortObject* nextSortObject; // sizeof 04h    offset 04h
     float zvalue;                         // sizeof 04h    offset 08h
 
-    zCRndAlphaSortObject() {}
+    zDefineInheritableCtor( zCRndAlphaSortObject ) {}
+zCRndAlphaSortObject() {}
     virtual ~zCRndAlphaSortObject() zCall( 0x00517E00 );
     virtual void Draw( int )        zPureCall;
     virtual int IsAlphaPoly()       zCall( 0x00517D80 );
@@ -348,7 +349,8 @@ namespace Gothic_I_Classic {
     int vid_gsize;                   // sizeof 04h    offset 2Ch
     int vid_bsize;                   // sizeof 04h    offset 30h
 
-    zCRenderer() {}
+    zDefineInheritableCtor( zCRenderer ) {}
+zCRenderer() {}
     zTRnd_AlphaBlendFunc AlphaBlendFuncStringToType( zSTRING const& ) const                            zCall( 0x005AE600 );
     zSTRING AlphaBlendFuncTypeToString( zTRnd_AlphaBlendFunc ) const                                   zCall( 0x005AE6F0 );
     int Vid_SetMode_novt( int, int, int, HWND__** )                                                    zCall( 0x005AE970 );

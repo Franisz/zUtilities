@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OGAME_MANAGER_H__VER0__
 #define __OGAME_MANAGER_H__VER0__
@@ -34,7 +34,7 @@ namespace Gothic_I_Classic {
     int playTime;                           // sizeof 04h    offset 88h
 
     void CGameManager_OnInit()                                      zCall( 0x004238F0 );
-    CGameManager()                                                  zInit( CGameManager_OnInit() );
+    CGameManager() : zCtor( zCInputCallback )                       zInit( CGameManager_OnInit() );
     void Tool_ConvertData()                                         zCall( 0x00423D00 );
     void Init( HWND__*& )                                           zCall( 0x004240C0 );
     void Done()                                                     zCall( 0x00424850 );
