@@ -158,7 +158,7 @@ namespace GOTHIC_ENGINE {
 				: GetIconNameByDamageIndex(status.damageIndex);
 
 			auto icon = IconInfo(startX + offset + margin, startY, size, color, texture, protectionText);
-			offset += icon.GetSize();
+			offset += icon.GetSize() + 30; // +30 is an additional spacing to separate icons from each other and from the text
 		}
 
 		return true;
