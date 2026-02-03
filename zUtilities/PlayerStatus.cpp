@@ -124,7 +124,7 @@ namespace GOTHIC_ENGINE {
     return false;
   }
 
-  bool PlayerStatus::CanDefeatNpc( oCNpc* npc ) {
+  bool PlayerStatus::IsHumanNpcEligibleForXpReward( oCNpc* npc ) {
       if ( !npc->IsHuman() || npc->HasFlag( NPC_FLAG_IMMORTAL ) )
           return false;
 

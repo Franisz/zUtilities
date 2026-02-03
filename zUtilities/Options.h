@@ -59,7 +59,7 @@ namespace GOTHIC_ENGINE {
 #if ENGINE >= Engine_G2
       zoptions->AddTrivia( PLUGIN_NAME, "ShowPickpocketIcon", "... enables (1) or disables (0) coin icon next to the focused npc name when it can be pickpocketed" );
 #endif
-      zoptions->AddTrivia( PLUGIN_NAME, "ShowDefeatableIcon", "... enables (1) or disables (0) punch icon next to the focused npc name when it can be defeated to gain experience" );
+      zoptions->AddTrivia( PLUGIN_NAME, "ShowHumanNpcXpRewardIcon", "... enables (1) or disables (0) punch icon next to the focused npc name when it can be defeated to gain experience" );
       zoptions->AddTrivia( PLUGIN_NAME, "UseTimeMultiplier", "... enables (1) or disables (0) time speed multiplier" );
       zoptions->AddTrivia( PLUGIN_NAME, "KeyTimeMultiplier", "... key for cycling time speed" );
       zoptions->AddTrivia( PLUGIN_NAME, "TimeMultipliers", "... defines time multipliers" );

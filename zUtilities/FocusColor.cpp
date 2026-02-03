@@ -369,8 +369,8 @@ namespace GOTHIC_ENGINE {
       IconInfo icon = IconInfo( startX + margin * iconNr + size * (iconNr++ - 1), y, size, color, texture );
     }
 #endif
-    if ( Options::ShowDefeatableIcon && playerStatus.CanDefeatNpc( npc ) ) {
-      zCOLOR color = zCOLOR( 199, 2, 26, ogame->hpBar->alpha );
+    if ( Options::ShowHumanNpcXpRewardIcon && playerStatus.IsHumanNpcEligibleForXpReward( npc ) ) {
+      zCOLOR color = zCOLOR( 108, 69, 186, ogame->hpBar->alpha );
       zSTRING texture = "ICON_PUNCH"; // https://game-icons.net/1x1/lorc/punch.html
       IconInfo icon = IconInfo( startX + margin * iconNr + size * (iconNr++ - 1), y, size, color, texture );
     }

@@ -678,23 +678,23 @@ instance MenuItem_Opt_Page3_ShowPickpocketIcon_Choice(C_MENU_ITEM_DEF)
   text[0]               = "Off|On";
 };
 
-instance MenuItem_Opt_Page3_ShowDefeatableIcon(C_MENU_ITEM)
+instance MenuItem_Opt_Page3_ShowHumanNpcXpRewardIcon(C_MENU_ITEM)
 {
   CurrentMenuItem_PY = 5;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
   posy += Menu_DY11 * CurrentMenuItem_PY + Text_DY;
   
-  text[0] = "ShowDefeatableIcon";
+  text[0] = "ShowHumanNpcXpRewardIcon";
   text[1] = "punch icon next to npc name when defeatable for exp";
 };
 
-instance MenuItem_Opt_Page3_ShowDefeatableIcon_Choice(C_MENU_ITEM_DEF)
+instance MenuItem_Opt_Page3_ShowHumanNpcXpRewardIcon_Choice(C_MENU_ITEM_DEF)
 {
   C_MENUITEM_CHOICE_BASE();
   posy += Menu_DY11 * CurrentMenuItem_PY;
   
-  onchgsetoption        = "ShowDefeatableIcon";
+  onchgsetoption        = "ShowHumanNpcXpRewardIcon";
   onchgsetoptionsection = "zUtilities";
   text[0]               = "Off|On";
 };

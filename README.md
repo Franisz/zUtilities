@@ -82,7 +82,7 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
 - Displays punch icon next to the focused npc name if player can defeat (beat) this npc to gain experience.
 
-  - This feature can be disabled in `gothic.ini` with `ShowDefeatableIcon` option.
+  - This feature can be enabled in `gothic.ini` with `ShowHumanNpcXpRewardIcon` option.
 
 - Changes color of log entry titles in player's log book.
 
@@ -183,7 +183,7 @@ ShowMunitionAmount=0
 ShowPickpocketIcon=1
 ; ... enables (1) or disables (0) coin icon next to the focused npc name when it can be pickpocketed
 
-ShowDefeatableIcon=1
+ShowHumanNpcXpRewardIcon=0
 ; ... enables (1) or disables (0) punch icon next to the focused npc name when it can be defeated to gain experience
 
 UseTimeMultiplier=0
