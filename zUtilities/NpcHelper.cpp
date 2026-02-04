@@ -241,10 +241,11 @@ namespace GOTHIC_ENGINE {
 		if (!ItemHasDistanceOrMunitionCategoryFlag(desc.pItemWeapon))
 			return;
 
-		if (Options::DistanceWeaponDamageType.to_ulong() != desc.enuModeDamage) {
+		if (Options::DistanceWeaponDamageTypeFromIni != desc.enuModeDamage) {
 			DamageMask tmp{};
 			MarkIntDamageType(desc.enuModeDamage, tmp);
 			Options::DistanceWeaponDamageType = tmp;
+			Options::DistanceWeaponDamageTypeFromIni = desc.enuModeDamage;
 			zoptions->WriteInt(PLUGIN_NAME, "DistanceWeaponDamageType", desc.enuModeDamage, 0);
 		}
 		FocusStatusBar::IsDistanceWeaponDamageTypeOverwritten = true;
