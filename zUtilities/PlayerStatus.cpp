@@ -124,6 +124,17 @@ namespace GOTHIC_ENGINE {
     return false;
   }
 
+  bool PlayerStatus::IsHumanNpcEligibleForXpReward( oCNpc* npc ) {
+      if ( !npc->IsHuman() || npc->HasFlag( NPC_FLAG_IMMORTAL ) )
+          return false;
+
+#if ENGINE < Engine_G2
+      return !npc->GetAivar( "AIV_WASDEFEATEDBYSC" );
+#else
+      return !npc->GetAivar( "AIV_VICTORYXPGIVEN" );
+#endif
+  }
+
   bool PlayerStatus::KnowStateFunc( zCVob* vob ) {
     if ( !vob )
       return false;

@@ -14,6 +14,7 @@ META
 const int Start_PY  = 1400;
 const int Title_PY  = 450;
 const int Menu_DY   = 550;
+const int Menu_DY11   = 450;  // for menu with 11 items (default is 8)
 // Text
 const int Text_PX   = 400;  // Position at left side
 const int Text_SX   = 8000; // Size X
@@ -598,7 +599,7 @@ instance MenuItem_Opt_Page3_StatusBarValueMode(C_MENU_ITEM)
   CurrentMenuItem_PY = 1;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
-  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  posy += Menu_DY11 * CurrentMenuItem_PY + Text_DY;
   
   text[0] = "StatusBarValueMode";
   text[1] = "display numerical values for status bars";
@@ -607,7 +608,7 @@ instance MenuItem_Opt_Page3_StatusBarValueMode(C_MENU_ITEM)
 instance MenuItem_Opt_Page3_StatusBarValueMode_Choice(C_MENU_ITEM_DEF)
 {
   C_MENUITEM_CHOICE_BASE();
-  posy += Menu_DY * CurrentMenuItem_PY;
+  posy += Menu_DY11 * CurrentMenuItem_PY;
   
   onchgsetoption        = "StatusBarValueMode";
   onchgsetoptionsection = "zUtilities";
@@ -619,7 +620,7 @@ instance MenuItem_Opt_Page3_ShowEnemyBarAboveHim(C_MENU_ITEM)
   CurrentMenuItem_PY = 2;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
-  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  posy += Menu_DY11 * CurrentMenuItem_PY + Text_DY;
   
   text[0] = "ShowEnemyBarAboveHim";
   text[1] = "display focused npc health bar above him";
@@ -628,7 +629,7 @@ instance MenuItem_Opt_Page3_ShowEnemyBarAboveHim(C_MENU_ITEM)
 instance MenuItem_Opt_Page3_ShowEnemyBarAboveHim_Choice(C_MENU_ITEM_DEF)
 {
   C_MENUITEM_CHOICE_BASE();
-  posy += Menu_DY * CurrentMenuItem_PY;
+  posy += Menu_DY11 * CurrentMenuItem_PY;
   
   onchgsetoption        = "ShowEnemyBarAboveHim";
   onchgsetoptionsection = "zUtilities";
@@ -640,7 +641,7 @@ instance MenuItem_Opt_Page3_RecoveryVisualization(C_MENU_ITEM)
   CurrentMenuItem_PY = 3;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
-  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  posy += Menu_DY11 * CurrentMenuItem_PY + Text_DY;
   
   text[0] = "RecoveryVisualization";
   text[1] = "visualization of healing that hovered item gives";
@@ -649,7 +650,7 @@ instance MenuItem_Opt_Page3_RecoveryVisualization(C_MENU_ITEM)
 instance MenuItem_Opt_Page3_RecoveryVisualization_Choice(C_MENU_ITEM_DEF)
 {
   C_MENUITEM_CHOICE_BASE();
-  posy += Menu_DY * CurrentMenuItem_PY;
+  posy += Menu_DY11 * CurrentMenuItem_PY;
   
   onchgsetoption        = "RecoveryVisualization";
   onchgsetoptionsection = "zUtilities";
@@ -661,7 +662,7 @@ instance MenuItem_Opt_Page3_ShowPickpocketIcon(C_MENU_ITEM)
   CurrentMenuItem_PY = 4;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
-  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  posy += Menu_DY11 * CurrentMenuItem_PY + Text_DY;
   
   text[0] = "ShowPickpocketIcon";
   text[1] = "coin icon next to npc name when it can be pickpocketed";
@@ -670,19 +671,40 @@ instance MenuItem_Opt_Page3_ShowPickpocketIcon(C_MENU_ITEM)
 instance MenuItem_Opt_Page3_ShowPickpocketIcon_Choice(C_MENU_ITEM_DEF)
 {
   C_MENUITEM_CHOICE_BASE();
-  posy += Menu_DY * CurrentMenuItem_PY;
+  posy += Menu_DY11 * CurrentMenuItem_PY;
   
   onchgsetoption        = "ShowPickpocketIcon";
   onchgsetoptionsection = "zUtilities";
   text[0]               = "Off|On";
 };
 
-instance MenuItem_Opt_Page3_ColorNpcs(C_MENU_ITEM)
+instance MenuItem_Opt_Page3_ShowHumanNpcXpRewardIcon(C_MENU_ITEM)
 {
   CurrentMenuItem_PY = 5;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
-  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  posy += Menu_DY11 * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "ShowHumanNpcXpRewardIcon";
+  text[1] = "punch icon next to npc name when defeatable for exp";
+};
+
+instance MenuItem_Opt_Page3_ShowHumanNpcXpRewardIcon_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_BASE();
+  posy += Menu_DY11 * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "ShowHumanNpcXpRewardIcon";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Off|On";
+};
+
+instance MenuItem_Opt_Page3_ColorNpcs(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 6;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY11 * CurrentMenuItem_PY + Text_DY;
   
   text[0] = "ColorNpcs";
   text[1] = "name coloring of focused npcs";
@@ -691,7 +713,7 @@ instance MenuItem_Opt_Page3_ColorNpcs(C_MENU_ITEM)
 instance MenuItem_Opt_Page3_ColorNpcs_Choice(C_MENU_ITEM_DEF)
 {
   C_MENUITEM_CHOICE_BASE();
-  posy += Menu_DY * CurrentMenuItem_PY;
+  posy += Menu_DY11 * CurrentMenuItem_PY;
   
   onchgsetoption        = "ColorNpcs";
   onchgsetoptionsection = "zUtilities";
@@ -700,10 +722,10 @@ instance MenuItem_Opt_Page3_ColorNpcs_Choice(C_MENU_ITEM_DEF)
 
 instance MenuItem_Opt_Page3_ColorLockables(C_MENU_ITEM)
 {
-  CurrentMenuItem_PY = 6;
+  CurrentMenuItem_PY = 7;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
-  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  posy += Menu_DY11 * CurrentMenuItem_PY + Text_DY;
   
   text[0] = "ColorLockables";
   text[1] = "name coloring of focused chests, doors and other lockables";
@@ -712,7 +734,7 @@ instance MenuItem_Opt_Page3_ColorLockables(C_MENU_ITEM)
 instance MenuItem_Opt_Page3_ColorLockables_Choice(C_MENU_ITEM_DEF)
 {
   C_MENUITEM_CHOICE_BASE();
-  posy += Menu_DY * CurrentMenuItem_PY;
+  posy += Menu_DY11 * CurrentMenuItem_PY;
   
   onchgsetoption        = "ColorLockables";
   onchgsetoptionsection = "zUtilities";
@@ -721,10 +743,10 @@ instance MenuItem_Opt_Page3_ColorLockables_Choice(C_MENU_ITEM_DEF)
 
 instance MenuItem_Opt_Page3_ColorItems(C_MENU_ITEM)
 {
-  CurrentMenuItem_PY = 7;
+  CurrentMenuItem_PY = 8;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
-  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  posy += Menu_DY11 * CurrentMenuItem_PY + Text_DY;
   
   text[0] = "ColorItems";
   text[1] = "name coloring of focused items";
@@ -733,7 +755,7 @@ instance MenuItem_Opt_Page3_ColorItems(C_MENU_ITEM)
 instance MenuItem_Opt_Page3_ColorItems_Choice(C_MENU_ITEM_DEF)
 {
   C_MENUITEM_CHOICE_BASE();
-  posy += Menu_DY * CurrentMenuItem_PY;
+  posy += Menu_DY11 * CurrentMenuItem_PY;
   
   onchgsetoption        = "ColorItems";
   onchgsetoptionsection = "zUtilities";
@@ -742,10 +764,10 @@ instance MenuItem_Opt_Page3_ColorItems_Choice(C_MENU_ITEM_DEF)
 
 instance MenuItem_Opt_Page3_ColorInter(C_MENU_ITEM)
 {
-  CurrentMenuItem_PY = 8;
+  CurrentMenuItem_PY = 9;
   C_MENU_ITEM_TEXT_BASE();
   fontname = FontSmall;
-  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  posy += Menu_DY11 * CurrentMenuItem_PY + Text_DY;
   
   text[0] = "ColorInter";
   text[1] = "name coloring of interactive bookstands";
@@ -754,7 +776,7 @@ instance MenuItem_Opt_Page3_ColorInter(C_MENU_ITEM)
 instance MenuItem_Opt_Page3_ColorInter_Choice(C_MENU_ITEM_DEF)
 {
   C_MENUITEM_CHOICE_BASE();
-  posy += Menu_DY * CurrentMenuItem_PY;
+  posy += Menu_DY11 * CurrentMenuItem_PY;
   
   onchgsetoption        = "ColorInter";
   onchgsetoptionsection = "zUtilities";
