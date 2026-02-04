@@ -30,7 +30,7 @@ namespace GOTHIC_ENGINE {
       ShowTargetProtectionNoFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionNoFight", TargetProtectionMode::AllButZeros);
       ShowTargetProtectionInFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionInFight", TargetProtectionMode::CurrentWeapon);
       TargetProtectionIconStyle = zoptions->ReadInt(PLUGIN_NAME, "TargetProtectionIconStyle", 0);
-      if (const auto dmgMask = zoptions->ReadInt(PLUGIN_SECTION_TEMP, "DistanceWeaponDamageType", 0)) {
+      if (const auto dmgMask = zoptions->ReadInt(PLUGIN_NAME, "DistanceWeaponDamageType", 0)) {
           for (const auto& entry : DAMAGE_MAP) {
               DistanceWeaponDamageType[entry.index] = (dmgMask & entry.type) != 0;
     }

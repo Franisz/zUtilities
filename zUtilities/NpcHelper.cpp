@@ -245,7 +245,7 @@ namespace GOTHIC_ENGINE {
 			DamageMask tmp{};
 			MarkIntDamageType(desc.enuModeDamage, tmp);
 			Options::DistanceWeaponDamageType = tmp;
-			zoptions->WriteInt(PLUGIN_SECTION_TEMP, "DistanceWeaponDamageType", desc.enuModeDamage, 0);
+			zoptions->WriteInt(PLUGIN_NAME, "DistanceWeaponDamageType", desc.enuModeDamage, 0);
 		}
 		FocusStatusBar::IsDistanceWeaponDamageTypeOverwritten = true;
 	}

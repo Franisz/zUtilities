@@ -3,7 +3,6 @@
 
 namespace GOTHIC_ENGINE {
 #define PLUGIN_NAME "ZUTILITIES"
-#define PLUGIN_SECTION_TEMP "ZUTILITIES_TEMP"
 #define VERSION_NUMBER "0.39"
 #define printWin(a) ogame->GetTextView()->Printwin(a)
 #define del(x) { delete x; x = nullptr; }

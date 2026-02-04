@@ -101,6 +101,8 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "SelectedDialogueColor", "... defines color of selected line in dialogues" + nline + "... use 'R|G|B' or 'R|G|B|A' format" + nline + "... leave empty to use default color" );
 
       zoptions->AddTrivia( PLUGIN_NAME, "SaveReminder", "... Time in minutes after which the reminder to save the game appears on the screen" + nline + "... set to -1 to disable");
+
+      zoptions->AddTrivia(PLUGIN_NAME, "DistanceWeaponDamageType", "... This value is used to override distance weapon protection icon type. It's maintained by plugin itself. Do not change it.");
     }
   }
 }
