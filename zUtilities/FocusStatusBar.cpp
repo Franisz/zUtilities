@@ -83,7 +83,7 @@ namespace GOTHIC_ENGINE {
 		valueView->Print(x, y, str);
 	}
 
-	int FocusStatusBar::CalcProtRenderWidth(std::vector<NpcProtectionStatus> statuses) {
+	int FocusStatusBar::CalcProtRenderWidth(const std::vector<NpcProtectionStatus>& statuses) {
 		int width = 0;
 		int size = GetProtSize();
 		int margin = GetProtMargin();
@@ -112,19 +112,11 @@ namespace GOTHIC_ENGINE {
 	}
 
 	bool FocusStatusBar::TryShowProt(oCNpc* npc) {
-		if (npc->attribute[NPC_ATR_HITPOINTS] <= 0)
+		if (npc->attribute[NPC_ATR_HITPOINTS] <= 0 || !bar || IsShowTargetProtectionDisabled())
 			return false;
 
-		if (!bar)
-			return false;
-
-		if (IsShowTargetProtectionDisabled())
-			return false;
-
-		const zSTRING crackedShieldTexture = zSTRING("ICON_PROTECTIONS"); // https://game-icons.net/1x1/lorc/cracked-shield.html
 		auto statuses = npcHelper.GetProtectionVisibleStatuses(npc);
-		auto statusCount = statuses.size();
-		if (statusCount == 0) {
+		if (statuses.empty()) {
 			return false;
 		}
 
@@ -133,7 +125,6 @@ namespace GOTHIC_ENGINE {
 		int size = GetProtSize();
 		int startX = GetProtStartX(placement);
 		int startY = GetProtStartY(placement);
-		int offset = 0;
 
 		if (npc->HasFlag(NPC_FLAG_IMMORTAL)) {
 			auto color = Colors::Gray;
@@ -141,42 +132,24 @@ namespace GOTHIC_ENGINE {
 			{
 				color.alpha = ogame->hpBar->alpha;
 			}
-			IconInfo(startX + offset + margin, startY, size, color, crackedShieldTexture);
+			IconInfo(startX + margin, startY, size, color, crackedShieldTexture);
 
 			return true;
 		}
 
-		if (placement == FocusStatusProtectionPlacement::TOP)
+		switch (placement)
 		{
-			startX = startX + bar->vsizex / 2 - CalcProtRenderWidth(statuses) / 2;
-		}
-
-		for (int i = 0; i < statusCount; i++) {
-			auto& status = statuses[i];
-
-			auto& protectionText = status.immune ? IMMUNE_ABBREVIATION : zSTRING(status.value);
-			auto color = Colors::GetColorByDamageIndex(status.damageIndex);
-			if (ogame->hpBar)
-			{
-				color.alpha = ogame->hpBar->alpha;
-			}
-
-			const zSTRING texture = Options::TargetProtectionIconStyle
-				? zSTRING("ICON_PROTECTIONS")
-				: GetIconNameByDamageIndex(status.damageIndex);
-
-			if (placement == FocusStatusProtectionPlacement::CLOSE) {
-				IconInfo(startX + margin, startY, size, color, texture, protectionText);
-				return true;
-			}
-			else if (placement == FocusStatusProtectionPlacement::TOP) {
-				auto icon = IconInfo(startX + offset + margin, startY, size, color, texture, protectionText);
-				offset += icon.GetSize() + 30; // +30 is an additional spacing to separate icons from each other and from the text
-			}
-			else {
-				auto icon = IconInfo(startX, startY + offset, size, color, texture, protectionText);
-				offset += screen->FontY() + 85;
-			}
+		case FocusStatusProtectionPlacement::CLOSE:
+			RenderProtectionIconsClose(startX, startY, size, margin, statuses[0]);
+			break;
+		case FocusStatusProtectionPlacement::TOP:
+			RenderProtectionIconsTop(startX, startY, size, margin, &statuses);
+			break;
+		case FocusStatusProtectionPlacement::RIGHT:
+			RenderProtectionIconsRight(startX, startY, size, margin, &statuses);
+			break;
+		default:
+			return false;
 		}
 
 		return true;
@@ -254,6 +227,64 @@ namespace GOTHIC_ENGINE {
 			return zSTRING("DMGICON_FALL"); // https://game-icons.net/1x1/sbed/falling.html
 		default:
 			return zSTRING("DMGICON_UNKNOWN"); // https://game-icons.net/1x1/lorc/scar-wound.html
+		}
+	}
+
+	void FocusStatusBar::RenderProtectionIconsClose(int startX, int startY, int size, int margin, const NpcProtectionStatus& status)
+	{
+		auto& protectionText = status.immune ? IMMUNE_ABBREVIATION : zSTRING(status.value);
+		auto color = Colors::GetColorByDamageIndex(status.damageIndex);
+
+		if (ogame->hpBar)
+		{
+			color.alpha = ogame->hpBar->alpha;
+		}
+
+		const zSTRING texture = Options::TargetProtectionIconStyle
+			? zSTRING("ICON_PROTECTIONS")
+			: GetIconNameByDamageIndex(status.damageIndex);
+
+		IconInfo(startX + margin, startY, size, color, texture, protectionText);
+	}
+
+	void FocusStatusBar::RenderProtectionIconsTop(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses)
+	{
+		startX = startX + bar->vsizex / 2 - CalcProtRenderWidth((*statuses)) / 2;
+		unsigned char alpha = 255;
+		if (ogame->hpBar) alpha = ogame->hpBar->alpha;
+
+		for (const auto& status : *statuses)
+		{
+			auto& protectionText = status.immune ? IMMUNE_ABBREVIATION : zSTRING(status.value);
+			auto color = Colors::GetColorByDamageIndex(status.damageIndex);
+			color.alpha = alpha;
+
+			const zSTRING texture = Options::TargetProtectionIconStyle
+				? zSTRING("ICON_PROTECTIONS")
+				: GetIconNameByDamageIndex(status.damageIndex);
+
+			auto icon = IconInfo(startX + margin, startY, size, color, texture, protectionText);
+			startX += icon.GetSize() + 30; // +30 is an additional spacing to separate icons from each other and from the text
+		}
+	}
+
+	void FocusStatusBar::RenderProtectionIconsRight(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses)
+	{
+		unsigned char alpha = 255;
+		if (ogame->hpBar) alpha = ogame->hpBar->alpha;
+
+		for (const auto& status : *statuses)
+		{
+			auto& protectionText = status.immune ? IMMUNE_ABBREVIATION : zSTRING(status.value);
+			auto color = Colors::GetColorByDamageIndex(status.damageIndex);
+			color.alpha = alpha;
+
+			const zSTRING texture = Options::TargetProtectionIconStyle
+				? zSTRING("ICON_PROTECTIONS")
+				: GetIconNameByDamageIndex(status.damageIndex);
+
+			IconInfo(startX, startY, size, color, texture, protectionText);
+			startY += screen->FontY() + 85; // +85 is an additional spacing between rendered icons in column
 		}
 	}
 }

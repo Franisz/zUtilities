@@ -20,6 +20,7 @@ namespace GOTHIC_ENGINE {
 	class FocusStatusBar : public StatusBar {
 	private:
 		const zSTRING IMMUNE_ABBREVIATION = "IMM";
+		const zSTRING crackedShieldTexture = zSTRING("ICON_PROTECTIONS"); // https://game-icons.net/1x1/lorc/cracked-shield.html
 		const int protectionPlacementRightMargin = 250;
 		zCView* protView;
 		void MoveFocusBar(int x, int y, oCNpc* npc);
@@ -28,10 +29,13 @@ namespace GOTHIC_ENGINE {
 		int GetProtSize();
 		int GetProtStartX(FocusStatusProtectionPlacement placement);
 		int GetProtStartY(FocusStatusProtectionPlacement placement);
-		int CalcProtRenderWidth(std::vector<NpcProtectionStatus> statuses);
+		int CalcProtRenderWidth(const std::vector<NpcProtectionStatus>& statuses);
 		FocusStatusProtectionPlacement GetProtPlacement(oCNpc* npc);
 		zSTRING GetIconNameByDamageIndex(const oEIndexDamage& index);
 		virtual void PrintValueOutside(zSTRING str, oCNpc* npc) override;
+		void RenderProtectionIconsClose(int startX, int startY, int size, int margin, const NpcProtectionStatus& status);
+		void RenderProtectionIconsTop(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses);
+		void RenderProtectionIconsRight(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses);
 
 	public:
 		static bool IsDistanceWeaponDamageTypeOverwritten;
