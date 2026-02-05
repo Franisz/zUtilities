@@ -320,6 +320,9 @@ DamagePopupColorDmgTypes=1
 
 DamagePopupColorOnlyIcon=0
 ; ... enables (1) or disables (0) coloring only the popup icon
+
+DistanceWeaponDamageType=64
+; ... This value is used to override distance weapon protection icon type. It's maintained by plugin itself. Do not change it.
 ```
 
 </details>
