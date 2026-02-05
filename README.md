@@ -85,6 +85,7 @@ This is a plugin with a set of many quality-of-life and utility features made fo
     - When option is set higher than `0` and target has flag `NPC_FLAG_IMMORTAL` then only one icon (cracked shield) will be shown. There is no point in showing all the icons if target is immortal.
     - Immunity to specific protection type is considered as non-zero value. When option is set to `2` - `AllButZeros` then all immunities will be shown.
   - Icon style is determined by `TargetProtectionIconStyle` option. Set it to `0` - _DamagePopup_ then corresponding protection icons and colors will be same as damage popup. Set it to `1` - _Shields_ for simple shield icons distinguished only by colors.
+  - Icon position is defined by `TargetProtectionIconPosition` option. Set it to `0` - _Top_ then protection icons will be positioned above focused health bar in row. Set it to `1` - _Right_ then icons will be positioned in column to the right of focused health bar. Note that if there will be only one icon to show then this setting will be omitted temporary and icon will be shown as close as possible to the right of the focused health bar.
 
 - Displays coin icon next to the focused npc name if player can pickpocket him.
 
@@ -214,6 +215,10 @@ ShowTargetProtectionInFight=1
 TargetProtectionIconStyle=0
 ;... specifies style for protection icons
 ;... (0) - 'DamagePopup', (1) - 'Shields'
+
+TargetProtectionIconPosition=0
+;... specifies position for protection icons
+;... (0) - 'Top', (1) - 'Right'
 
 RecoveryVisualization=1
 ; ... enables (1) or disables (0) visualization of healing that hovered in the inventory item gives

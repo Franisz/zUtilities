@@ -6,7 +6,8 @@ namespace GOTHIC_ENGINE {
 	{
 		NONE = 0,
 		TOP = 1,
-		RIGHT = 2
+		RIGHT = 2,
+		CLOSE = 3
 	};
 
 	enum TargetProtectionMode {
@@ -19,6 +20,7 @@ namespace GOTHIC_ENGINE {
 	class FocusStatusBar : public StatusBar {
 	private:
 		const zSTRING IMMUNE_ABBREVIATION = "IMM";
+		const int protectionPlacementRightMargin = 250;
 		zCView* protView;
 		void MoveFocusBar(int x, int y, oCNpc* npc);
 		bool TryShowProt(oCNpc* npc);

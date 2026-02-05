@@ -6,7 +6,7 @@ namespace GOTHIC_ENGINE {
     bool ShowGameTime, ShowMunitionAmount, ShowPickpocketIcon, UseTimeMultiplier;
     int ShowSystemTime, KeyTimeMultiplier, ShowTargetProtectionNoFight, ShowTargetProtectionInFight, TargetProtectionIconStyle;
     Array<float> TimeMultipliers;
-    int SaveReminder, DistanceWeaponDamageTypeFromIni;
+    int TargetProtectionIconPosition, DistanceWeaponDamageTypeFromIni, SaveReminder;
     DamageMask DistanceWeaponDamageType = DamageMask{ oEDamageType::oEDamageType_Point }; // Default type fallback
 
     void PlayerStatus() {
@@ -30,6 +30,7 @@ namespace GOTHIC_ENGINE {
       ShowTargetProtectionNoFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionNoFight", TargetProtectionMode::AllButZeros);
       ShowTargetProtectionInFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionInFight", TargetProtectionMode::CurrentWeapon);
       TargetProtectionIconStyle = zoptions->ReadInt(PLUGIN_NAME, "TargetProtectionIconStyle", 0);
+      TargetProtectionIconPosition = zoptions->ReadInt(PLUGIN_NAME, "TargetProtectionIconPosition", 0);
 
 	  // when value form ini is 0, do not override default to avoid showing nothing for distance weapons
 	  if (DistanceWeaponDamageTypeFromIni = zoptions->ReadInt(PLUGIN_NAME, "DistanceWeaponDamageType", 0)) {

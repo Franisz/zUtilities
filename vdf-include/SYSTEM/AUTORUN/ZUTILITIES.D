@@ -937,3 +937,24 @@ instance MenuItem_Opt_Page5_TargetProtectionIconStyle_Choice(C_MENU_ITEM_DEF)
   onchgsetoptionsection = "zUtilities";
   text[0]               = "DamagePopup|Shields";
 };
+
+instance MenuItem_Opt_Page5_TargetProtectionIconPosition(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 4;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "TargetProtectionIconPosition";
+  text[1] = "protection icon position";
+};
+
+instance MenuItem_Opt_Page5_TargetProtectionIconPosition_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_PROTECTION();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "TargetProtectionIconPosition";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Top|Right";
+};

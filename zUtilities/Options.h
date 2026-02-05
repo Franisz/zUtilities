@@ -56,6 +56,7 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "ShowTargetProtectionNoFight", "... specifies mode for showing target protection in no fight mode by" + nline + "... (0) - 'Disabled', (1) - 'CurrentWeapon', (2) - 'AllButZeros', (3) - 'All'");
       zoptions->AddTrivia( PLUGIN_NAME, "ShowTargetProtectionInFight", "... specifies mode for showing target protection in fight mode by" + nline + "... (0) - 'Disabled', (1) - 'CurrentWeapon', (2) - 'AllButZeros', (3) - 'All'");
       zoptions->AddTrivia( PLUGIN_NAME, "TargetProtectionIconStyle", "... specifies protection icon style, (0) - 'DamagePopup', (1) - 'Shields'" );
+      zoptions->AddTrivia( PLUGIN_NAME, "TargetProtectionIconPosition", "... specifies protection icon position, (0) - 'Top', (1) - 'Right'" );
 #if ENGINE >= Engine_G2
       zoptions->AddTrivia( PLUGIN_NAME, "ShowPickpocketIcon", "... enables (1) or disables (0) coin icon next to the focused npc name when it can be pickpocketed" );
 #endif

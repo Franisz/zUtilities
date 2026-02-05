@@ -35,6 +35,10 @@ namespace GOTHIC_ENGINE {
 			return bar->vposx;
 		}
 
+		if (placement == FocusStatusProtectionPlacement::RIGHT) {
+			return bar->vposx + bar->vsizex + protectionPlacementRightMargin;
+		}
+
 		return bar->vposx + bar->vsizex;
 	}
 
@@ -46,6 +50,10 @@ namespace GOTHIC_ENGINE {
 		}
 
 		if (count == 1) {
+			return FocusStatusProtectionPlacement::CLOSE;
+		}
+
+		if (Options::TargetProtectionIconPosition == 1) {
 			return FocusStatusProtectionPlacement::RIGHT;
 		}
 
@@ -127,11 +135,6 @@ namespace GOTHIC_ENGINE {
 		int startY = GetProtStartY(placement);
 		int offset = 0;
 
-		if (placement == FocusStatusProtectionPlacement::TOP)
-		{
-			startX = startX + bar->vsizex / 2 - CalcProtRenderWidth(statuses) / 2;
-		}
-
 		if (npc->HasFlag(NPC_FLAG_IMMORTAL)) {
 			auto color = Colors::Gray;
 			if (ogame->hpBar)
@@ -141,6 +144,11 @@ namespace GOTHIC_ENGINE {
 			IconInfo(startX + offset + margin, startY, size, color, crackedShieldTexture);
 
 			return true;
+		}
+
+		if (placement == FocusStatusProtectionPlacement::TOP)
+		{
+			startX = startX + bar->vsizex / 2 - CalcProtRenderWidth(statuses) / 2;
 		}
 
 		for (int i = 0; i < statusCount; i++) {
@@ -157,8 +165,18 @@ namespace GOTHIC_ENGINE {
 				? zSTRING("ICON_PROTECTIONS")
 				: GetIconNameByDamageIndex(status.damageIndex);
 
-			auto icon = IconInfo(startX + offset + margin, startY, size, color, texture, protectionText);
-			offset += icon.GetSize() + 30; // +30 is an additional spacing to separate icons from each other and from the text
+			if (placement == FocusStatusProtectionPlacement::CLOSE) {
+				IconInfo(startX + margin, startY, size, color, texture, protectionText);
+				return true;
+			}
+			else if (placement == FocusStatusProtectionPlacement::TOP) {
+				auto icon = IconInfo(startX + offset + margin, startY, size, color, texture, protectionText);
+				offset += icon.GetSize() + 30; // +30 is an additional spacing to separate icons from each other and from the text
+			}
+			else {
+				auto icon = IconInfo(startX, startY + offset, size, color, texture, protectionText);
+				offset += screen->FontY() + 85;
+			}
 		}
 
 		return true;
