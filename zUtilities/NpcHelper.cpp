@@ -113,7 +113,7 @@ namespace GOTHIC_ENGINE {
 			? Options::ShowTargetProtectionInFight
 			: Options::ShowTargetProtectionNoFight;
 
-		if (protectionMode >= TargetProtectionMode::AllButZeros) {
+		if (protectionMode == TargetProtectionMode::All) {
 			return PROTECTION_DAMAGE_INDEXES;
 		}
 

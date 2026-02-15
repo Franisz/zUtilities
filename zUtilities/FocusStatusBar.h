@@ -13,8 +13,7 @@ namespace GOTHIC_ENGINE {
 	enum TargetProtectionMode {
 		Disabled = 0,
 		CurrentWeapon = 1,
-		AllButZeros = 2,
-		All = 3
+		All = 2
 	};
 
 	class FocusStatusBar : public StatusBar {

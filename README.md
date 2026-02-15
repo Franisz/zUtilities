@@ -75,18 +75,17 @@ This is a plugin with a set of many quality-of-life and utility features made fo
   - Setting are split in two modes and works separately, fight and no fight. Fight means when melee/distance weapon or spell is drawn, No fight means otherwise.
   - `ShowTargetProtectionNoFight` option for no fight mode.
   - `ShowTargetProtectionInFight` option for fight mode.
-  - There are 4 options for above settings:
+  - There are 3 options for above settings:
     - `0` - _Disabled_ No icons and values will be shown.
     - `1` - _CurrentWeapon_ Only icons and values for current drawn or equipped weapon will be shown. In no fight mode, there is the possibility of more than one icon and value being shown, depending on the equipped distance/melee weapon and/or spell.
-    - `2` - _AllButZeros_ Displays all icons and values for all protections types except those that are 0.
-    - `3` - _All_ Displays all icons and values for all protections.
+    - `2` - _All_ Displays all icons and values for all protections. This option could be filtered with some of the options described in section below.
   - Note that:
-    - Transformation into a monster is considered as fight mode.
+    - Transformation into a monster is treated as fight mode.
     - When option is set higher than `0` and target has flag `NPC_FLAG_IMMORTAL` then only one icon (cracked shield) will be shown. There is no point in showing all the icons if target is immortal.
-    - Immunity to specific protection type is considered as non-zero value. When option is set to `2` - `AllButZeros` then all immunities will be shown.
+    - Immunity to a specific protection type is treated as non-zero value and is utilized in the hide options described in the section below.
   - Icon style is determined by `TargetProtectionIconStyle` option. Set it to `0` - _DamagePopup_ then corresponding protection icons and colors will be same as damage popup. Set it to `1` - _Shields_ for simple shield icons distinguished only by colors.
   - Icon position is defined by `TargetProtectionIconPosition` option. Set it to `0` - _Top_ then protection icons will be positioned above focused health bar in row. Set it to `1` - _Right_ then icons will be positioned in column to the right of focused health bar. Note that if there will be only one icon to show then this setting will be omitted temporary and icon will be shown as close as possible to the right of the focused health bar.
-  - Some protection icons can be hidden but only when `ShowTargetProtectionInFight` or `ShowTargetProtectionNoFight` option is set to `3` - _All_. Conditions are checked from top to bottom, so for example if `HideTargetProtectionZeroValues` is enabled and `HideTargetProtectionFallDamage` is disabled and target has fall damage protection equal to zero then fall damage icon will not be shown.
+  - Some protection icons can be hidden but only when `ShowTargetProtectionInFight` or `ShowTargetProtectionNoFight` option is set to `2` - _All_. Conditions are checked from top to bottom, so for example if `HideTargetProtectionZeroValues` is enabled and `HideTargetProtectionFallDamage` is disabled and target has fall damage protection equal to zero then fall damage icon will not be shown.
     - `HideTargetProtectionZeroValues` option hides protection icons with zero value, but they will still be shown if target is immune.
     - `HideTargetProtectionFallDamage` option hides fall damage protection icon even if target is immune.
     - `HideTargetProtectionFlyDamage` option hides fly damage protection icon even if target is immune.
@@ -209,13 +208,13 @@ SaveReminder=5
 ; ... Time in minutes after which the reminder to save the game appears on the screen
 ; ... set to -1 to disable
 
-ShowTargetProtectionNoFight=2
+ShowTargetProtectionNoFight=0
 ;... specifies mode for showing target protection in no fight mode by
-;... (0) - 'Disabled', (1) - 'CurrentWeapon', (2) - 'AllButZeros', (3) - 'All'
+;... (0) - 'Disabled', (1) - 'CurrentWeapon', (2) - 'All'
 
 ShowTargetProtectionInFight=1
 ;... specifies mode for showing target protection in fight mode by
-;... (0) - 'Disabled', (1) - 'CurrentWeapon', (2) - 'AllButZeros', (3) - 'All'
+;... (0) - 'Disabled', (1) - 'CurrentWeapon', (2) - 'All'
 
 TargetProtectionIconStyle=0
 ;... specifies style for protection icons

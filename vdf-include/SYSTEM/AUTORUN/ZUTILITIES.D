@@ -893,7 +893,7 @@ instance MenuItem_Opt_Page5_ShowTargetProtectionNoFight_Choice(C_MENU_ITEM_DEF)
   
   onchgsetoption        = "ShowTargetProtectionNoFight";
   onchgsetoptionsection = "zUtilities";
-  text[0]               = "Disabled|CurrentWeapon|AllButZeros|All";
+  text[0]               = "Disabled|CurrentWeapon|All";
 };
 
 instance MenuItem_Opt_Page5_ShowTargetProtectionInFight(C_MENU_ITEM)
@@ -914,7 +914,7 @@ instance MenuItem_Opt_Page5_ShowTargetProtectionInFight_Choice(C_MENU_ITEM_DEF)
   
   onchgsetoption        = "ShowTargetProtectionInFight";
   onchgsetoptionsection = "zUtilities";
-  text[0]               = "Disabled|CurrentWeapon|AllButZeros|All";
+  text[0]               = "Disabled|CurrentWeapon|All";
 };
 
 instance MenuItem_Opt_Page5_TargetProtectionIconStyle(C_MENU_ITEM)

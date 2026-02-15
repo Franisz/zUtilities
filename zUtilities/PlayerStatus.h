@@ -28,7 +28,7 @@ namespace GOTHIC_ENGINE {
 
       SaveReminder = zoptions->ReadInt(PLUGIN_NAME, "SaveReminder", 5);
 
-      ShowTargetProtectionNoFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionNoFight", TargetProtectionMode::AllButZeros);
+      ShowTargetProtectionNoFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionNoFight", TargetProtectionMode::Disabled);
       ShowTargetProtectionInFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionInFight", TargetProtectionMode::CurrentWeapon);
       TargetProtectionIconStyle = zoptions->ReadInt(PLUGIN_NAME, "TargetProtectionIconStyle", 0);
       TargetProtectionIconPosition = zoptions->ReadInt(PLUGIN_NAME, "TargetProtectionIconPosition", 0);
