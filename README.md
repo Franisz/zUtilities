@@ -86,6 +86,11 @@ This is a plugin with a set of many quality-of-life and utility features made fo
     - Immunity to specific protection type is considered as non-zero value. When option is set to `2` - `AllButZeros` then all immunities will be shown.
   - Icon style is determined by `TargetProtectionIconStyle` option. Set it to `0` - _DamagePopup_ then corresponding protection icons and colors will be same as damage popup. Set it to `1` - _Shields_ for simple shield icons distinguished only by colors.
   - Icon position is defined by `TargetProtectionIconPosition` option. Set it to `0` - _Top_ then protection icons will be positioned above focused health bar in row. Set it to `1` - _Right_ then icons will be positioned in column to the right of focused health bar. Note that if there will be only one icon to show then this setting will be omitted temporary and icon will be shown as close as possible to the right of the focused health bar.
+  - Some protection icons can be hidden but only when `ShowTargetProtectionInFight` or `ShowTargetProtectionNoFight` option is set to `3` - _All_. Conditions are checked from top to bottom, so for example if `HideTargetProtectionZeroValues` is enabled and `HideTargetProtectionFallDamage` is disabled and target has fall damage protection equal to zero then fall damage icon will not be shown.
+    - `HideTargetProtectionZeroValues` option hides protection icons with zero value, but they will still be shown if target is immune.
+    - `HideTargetProtectionFallDamage` option hides fall damage protection icon even if target is immune.
+    - `HideTargetProtectionFlyDamage` option hides fly damage protection icon even if target is immune.
+    - `HideTargetProtectionFireDamage` option hides fire damage protection icon even if target is immune.
 
 - Displays coin icon next to the focused npc name if player can pickpocket him.
 
@@ -219,6 +224,18 @@ TargetProtectionIconStyle=0
 TargetProtectionIconPosition=0
 ;... specifies position for protection icons
 ;... (0) - 'Top', (1) - 'Right'
+
+HideTargetProtectionZeroValues=0
+... hides protection icons with zero value; (0) - 'Disabled', (1) - 'Enabled'
+
+HideTargetProtectionFallDamage=0
+... hides protection icon for fall damage; (0) - 'Disabled', (1) - 'Enabled'
+
+HideTargetProtectionFlyDamage=0
+... hides protection icon for fly damage; (0) - 'Disabled', (1) - 'Enabled'
+
+HideTargetProtectionFireDamage=0
+... hides protection icon for fire damage; (0) - 'Disabled', (1) - 'Enabled'
 
 RecoveryVisualization=1
 ; ... enables (1) or disables (0) visualization of healing that hovered in the inventory item gives

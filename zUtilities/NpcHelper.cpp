@@ -85,14 +85,25 @@ namespace GOTHIC_ENGINE {
 
 	bool NpcHelper::CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex)
 	{
-		auto protectionValue = npc->GetProtectionByIndex(damageIndex);
 		auto protectionMode = player->IsInFightMode_S(NPC_WEAPON_NONE) ? Options::ShowTargetProtectionNoFight : Options::ShowTargetProtectionInFight;
+		if (protectionMode != TargetProtectionMode::All) {
+			return true;
+		}
 
-		if (protectionMode == TargetProtectionMode::AllButZeros && protectionValue == 0) {
+		if (Options::HideTargetProtectionZeroValues && npc->GetProtectionByIndex(damageIndex) == 0) {
 			return false;
 		}
 
-		return true;
+		switch (damageIndex) {
+		case oEDamageIndex_Fall:
+			return !Options::HideTargetProtectionFallDamage;
+		case oEDamageIndex_Fly:
+			return !Options::HideTargetProtectionFlyDamage;
+		case oEDamageIndex_Fire:
+			return !Options::HideTargetProtectionFireDamage;
+		default:
+			return true;
+		}
 	}
 
 	std::vector<oEIndexDamage> NpcHelper::GetDamageIndexes()

@@ -958,3 +958,100 @@ instance MenuItem_Opt_Page5_TargetProtectionIconPosition_Choice(C_MENU_ITEM_DEF)
   onchgsetoptionsection = "zUtilities";
   text[0]               = "Top|Right";
 };
+
+instance MenuItem_Opt_Page5_Disclaimer(C_MENU_ITEM_DEF)
+{
+  CurrentMenuItem_PY = 5;
+  fontname = FontSmall;
+  type    = MENU_ITEM_TEXT;
+  posx    = 0;
+  posy    = Menu_DY * CurrentMenuItem_PY + Text_DY + Start_PY;
+  dimx    = 8100;
+  flags   = flags & ~IT_SELECTABLE;
+  flags   = flags | IT_TXT_CENTER;
+  text[0] = "Below section works only when ShowTargetProtection* = `All`";
+};
+
+instance MenuItem_Opt_Page5_HideTargetProtectionZeroValues(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 6;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "HideTargetProtectionZeroValues";
+  text[1] = "hide protection icon when value equals 0";
+};
+
+instance MenuItem_Opt_Page5_HideTargetProtectionZeroValues_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_PROTECTION();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "HideTargetProtectionZeroValues";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Disabled|Enabled";
+};
+
+instance MenuItem_Opt_Page5_HideTargetProtectionFallDamage(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 7;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "HideTargetProtectionFallDamage";
+  text[1] = "hide protection icon for fall damage";
+};
+
+instance MenuItem_Opt_Page5_HideTargetProtectionFallDamage_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_PROTECTION();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "HideTargetProtectionFallDamage";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Disabled|Enabled";
+};
+
+instance MenuItem_Opt_Page5_HideTargetProtectionFlyDamage(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 8;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "HideTargetProtectionFlyDamage";
+  text[1] = "hide protection icon for fly damage";
+};
+
+instance MenuItem_Opt_Page5_HideTargetProtectionFlyDamage_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_PROTECTION();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "HideTargetProtectionFlyDamage";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Disabled|Enabled";
+};
+
+instance MenuItem_Opt_Page5_HideTargetProtectionFireDamage(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 9;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "HideTargetProtectionFireDamage";
+  text[1] = "hide protection icon for fire damage";
+};
+
+instance MenuItem_Opt_Page5_HideTargetProtectionFireDamage_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_PROTECTION();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "HideTargetProtectionFireDamage";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Disabled|Enabled";
+};
