@@ -314,63 +314,38 @@ namespace GOTHIC_ENGINE {
 
 	void FocusStatusBar::RenderProtectionIconsClose(int startX, int startY, int size, int margin, const NpcProtectionStatus& status)
 	{
-		auto& protectionText = status.immune ? IMMUNE_ABBREVIATION : zSTRING(status.value);
-		auto color = Colors::GetColorByDamageIndex(status.damageIndex);
+		unsigned char alpha = ogame->hpBar ? ogame->hpBar->alpha : 255;
+		auto data = BuildRenderData(status, alpha);
 
-		if (ogame->hpBar)
-		{
-			color.alpha = ogame->hpBar->alpha;
-		}
-
-		const zSTRING texture = Options::TargetProtectionIconStyle
-			? zSTRING("ICON_PROTECTIONS")
-			: GetIconNameByDamageIndex(status.damageIndex);
-
-		IconInfo(startX + margin, startY, size, color, texture, protectionText);
+		IconInfo(startX + margin, startY, size, data.color, data.texture, data.text);
 	}
 
 	void FocusStatusBar::RenderProtectionIconsTop(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses)
 	{
 		startX = startX + bar->vsizex / 2 - CalcProtRenderWidth((*statuses)) / 2;
-		unsigned char alpha = 255;
-		if (ogame->hpBar) alpha = ogame->hpBar->alpha;
+		unsigned char alpha = ogame->hpBar ? ogame->hpBar->alpha : 255;
 
 		for (const auto& status : *statuses)
 		{
-			auto& protectionText = status.immune ? IMMUNE_ABBREVIATION : zSTRING(status.value);
-			auto color = Colors::GetColorByDamageIndex(status.damageIndex);
-			color.alpha = alpha;
+			auto data = BuildRenderData(status, alpha);
 
-			const zSTRING texture = Options::TargetProtectionIconStyle
-				? zSTRING("ICON_PROTECTIONS")
-				: GetIconNameByDamageIndex(status.damageIndex);
-
-			auto icon = IconInfo(startX + margin, startY, size, color, texture, protectionText);
+			auto icon = IconInfo(startX + margin, startY, size, data.color, data.texture, data.text);
 			startX += icon.GetSize() + 30; // +30 is an additional spacing to separate icons from each other and from the text
 		}
 	}
 
 	void FocusStatusBar::RenderProtectionIconsRight(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses)
 	{
-		unsigned char alpha = 255;
-		if (ogame->hpBar) alpha = ogame->hpBar->alpha;
+		unsigned char alpha = ogame->hpBar ? ogame->hpBar->alpha : 255;
 
 		for (const auto& status : *statuses)
 		{
-			auto& protectionText = status.immune ? IMMUNE_ABBREVIATION : zSTRING(status.value);
-			auto color = Colors::GetColorByDamageIndex(status.damageIndex);
-			color.alpha = alpha;
+			auto data = BuildRenderData(status, alpha);
 
-			const zSTRING texture = Options::TargetProtectionIconStyle
-				? zSTRING("ICON_PROTECTIONS")
-				: GetIconNameByDamageIndex(status.damageIndex);
-
-			IconInfo(startX, startY, size, color, texture, protectionText);
+			IconInfo(startX, startY, size, data.color, data.texture, data.text);
 			startY += screen->FontY() + 85; // +85 is an additional spacing between rendered icons in column
 		}
 	}
-
-
 
 	bool FocusStatusBar::CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex)
 	{
@@ -523,6 +498,22 @@ namespace GOTHIC_ENGINE {
 		if (weapon) {
 			mask |= Options::DistanceWeaponDamageType;
 		}
+	}
+
+	ProtectionRenderData FocusStatusBar::BuildRenderData(const NpcProtectionStatus& status, unsigned char alpha)
+	{
+		ProtectionRenderData data;
+
+		data.text = status.immune ? IMMUNE_ABBREVIATION : zSTRING(status.value);
+
+		data.texture = Options::TargetProtectionIconStyle
+			? zSTRING("ICON_PROTECTIONS")
+			: GetIconNameByDamageIndex(status.damageIndex);
+
+		data.color = Colors::GetColorByDamageIndex(status.damageIndex);
+		data.color.alpha = alpha;
+
+		return data;
 	}
 
 	HOOK Ivk_OnDamage_Hit_DistanceWeapon PATCH(&oCNpc::OnDamage_Hit, &oCNpc::OnDamage_Hit_DistanceWeapon);

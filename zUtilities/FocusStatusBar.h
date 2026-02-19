@@ -44,6 +44,12 @@ namespace GOTHIC_ENGINE {
 		All = 2
 	};
 
+	struct ProtectionRenderData {
+		zSTRING text;
+		zSTRING texture;
+		zCOLOR color;
+	};
+
 	class FocusStatusBar : public StatusBar {
 	private:
 		const zSTRING IMMUNE_ABBREVIATION = "IMM";
@@ -63,6 +69,8 @@ namespace GOTHIC_ENGINE {
 		void RenderProtectionIconsClose(int startX, int startY, int size, int margin, const NpcProtectionStatus& status);
 		void RenderProtectionIconsTop(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses);
 		void RenderProtectionIconsRight(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses);
+
+		ProtectionRenderData BuildRenderData(const NpcProtectionStatus& status, unsigned char alpha);
 
 		std::vector<oEIndexDamage> GetDamageIndexes();
 		bool CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex);
