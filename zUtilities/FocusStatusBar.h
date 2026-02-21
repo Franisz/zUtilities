@@ -28,6 +28,22 @@ namespace GOTHIC_ENGINE {
 		zCOLOR color;
 	};
 
+	enum ProtectionRenderMode {
+		Disabled,
+		Immortal,
+		Normal
+	};
+
+	struct ProtectionContext {
+		ProtectionRenderMode mode = ProtectionRenderMode::Disabled;
+		std::vector<NpcProtectionStatus> statuses;
+		FocusStatusProtectionPlacement placement = FocusStatusProtectionPlacement::NONE;
+		int startX = 0;
+		int startY = 0;
+		int size = 0;
+		int margin = 0;
+	};
+
 	class FocusStatusBar : public StatusBar {
 	private:
 		const zSTRING IMMUNE_ABBREVIATION = "IMM";
@@ -35,7 +51,6 @@ namespace GOTHIC_ENGINE {
 		const int protectionPlacementRightMargin = 250;
 		zCView* protView;
 		void MoveFocusBar(int x, int y, oCNpc* npc);
-		bool TryShowProt(oCNpc* npc);
 		int GetProtMargin();
 		int GetProtSize();
 		int GetProtStartX(FocusStatusProtectionPlacement placement);
@@ -47,6 +62,9 @@ namespace GOTHIC_ENGINE {
 		void RenderProtectionIconsClose(int startX, int startY, int size, int margin, const NpcProtectionStatus& status);
 		void RenderProtectionIconsTop(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses);
 		void RenderProtectionIconsRight(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses);
+
+		bool BuildProtectionContext(oCNpc* npc, ProtectionContext& ctx);
+		void RenderProtection(const ProtectionContext& ctx);
 
 		ProtectionRenderData BuildRenderData(const NpcProtectionStatus& status, unsigned char alpha);
 
