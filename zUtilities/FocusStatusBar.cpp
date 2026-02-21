@@ -42,22 +42,22 @@ namespace GOTHIC_ENGINE {
 		return bar->vposx + bar->vsizex;
 	}
 
-	FocusStatusProtectionPlacement FocusStatusBar::GetProtPlacement(oCNpc* npc)
+	FocusStatusProtectionPlacement FocusStatusBar::GetProtPlacement(const std::vector<NpcProtectionStatus>& statuses)
 	{
-		auto count = GetProtectionStatusesVisibleCount(npc);
-		if (count <= 0) {
-			return FocusStatusProtectionPlacement::NONE;
-		}
-
+		auto count = statuses.size();
 		if (count == 1) {
 			return FocusStatusProtectionPlacement::CLOSE;
 		}
 
-		if (Options::TargetProtectionIconPosition == 1) {
-			return FocusStatusProtectionPlacement::RIGHT;
+		if (Options::TargetProtectionIconPosition == 0) {
+			return FocusStatusProtectionPlacement::TOP;
 		}
 
-		return FocusStatusProtectionPlacement::TOP;
+		if (count <= 0) {
+			return FocusStatusProtectionPlacement::NONE;
+		}
+
+		return FocusStatusProtectionPlacement::RIGHT;
 	}
 
 	int FocusStatusBar::GetProtStartY(FocusStatusProtectionPlacement placement) {
@@ -70,7 +70,8 @@ namespace GOTHIC_ENGINE {
 
 	void FocusStatusBar::PrintValueOutside(zSTRING str, oCNpc* npc)
 	{
-		auto protPlacement = GetProtPlacement(npc);
+		auto statuses = GetProtectionVisibleStatuses(npc);
+		auto protPlacement = GetProtPlacement(statuses);
 		int offsetY = bar->vsizey / 2 + valueView->FontY();
 		int x = bar->vposx + bar->vsizex / 2 - valueView->FontSize(str) / 2;
 		int y = bar->vposy - offsetY;
@@ -120,7 +121,7 @@ namespace GOTHIC_ENGINE {
 			return false;
 		}
 
-		auto placement = GetProtPlacement(npc);
+		auto placement = GetProtPlacement(statuses);
 		int margin = GetProtMargin();
 		int size = GetProtSize();
 		int startX = GetProtStartX(placement);
@@ -341,29 +342,6 @@ namespace GOTHIC_ENGINE {
 		}
 
 		return vec;
-	}
-
-	int FocusStatusBar::GetProtectionStatusesVisibleCount(oCNpc* npc) {
-		if (playerStatus.focusBar->IsShowTargetProtectionDisabled()) {
-			return 0;
-		}
-
-		if (npc->HasFlag(NPC_FLAG_IMMORTAL)) {
-			return 1;
-		}
-
-		int count = 0;
-		auto damageIndexes = GetDamageIndexes();
-		for (auto damageIndex : damageIndexes)
-		{
-			if (!CanRenderProtectionStatus(npc, damageIndex)) {
-				continue;
-			}
-
-			count++;
-		}
-
-		return count;
 	}
 
 	void FocusStatusBar::BuildFightModeDamage(DamageMask& mask)

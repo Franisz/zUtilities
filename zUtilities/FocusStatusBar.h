@@ -41,7 +41,7 @@ namespace GOTHIC_ENGINE {
 		int GetProtStartX(FocusStatusProtectionPlacement placement);
 		int GetProtStartY(FocusStatusProtectionPlacement placement);
 		int CalcProtRenderWidth(const std::vector<NpcProtectionStatus>& statuses);
-		FocusStatusProtectionPlacement GetProtPlacement(oCNpc* npc);
+		FocusStatusProtectionPlacement GetProtPlacement(const std::vector<NpcProtectionStatus>& statuses);
 		zSTRING GetIconNameByDamageIndex(const oEIndexDamage& index);
 		virtual void PrintValueOutside(zSTRING str, oCNpc* npc) override;
 		void RenderProtectionIconsClose(int startX, int startY, int size, int margin, const NpcProtectionStatus& status);
@@ -55,7 +55,6 @@ namespace GOTHIC_ENGINE {
 		void BuildFightModeDamage(DamageMask& mask);
 		void BuildNoFightModeDamage(DamageMask& mask);
 		std::vector<NpcProtectionStatus> GetProtectionVisibleStatuses(oCNpc* npc);
-		int GetProtectionStatusesVisibleCount(oCNpc* npc);
 
 	public:
 		static bool IsDistanceWeaponDamageTypeOverwritten;
