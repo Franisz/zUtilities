@@ -2924,10 +2924,10 @@
     <ClInclude Include="ManaStatusBar.cpp" />
     <ClInclude Include="SwimStatusBar.cpp" />
     <ClInclude Include="SwimStatusBar.h" />
-    <ClInclude Include="NpcHelper.cpp">
+    <ClInclude Include="DamageMaskHelper.h">
       <Filter>Plugin\Workspace\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="NpcHelper.h">
+    <ClInclude Include="DamageMaskHelper.cpp">
       <Filter>Plugin\Workspace\Misc</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,88 +4,6 @@
 namespace GOTHIC_ENGINE {
 	bool FocusStatusBar::IsDistanceWeaponDamageTypeOverwritten = false;
 
-	const std::vector<oEIndexDamage> PROTECTION_DAMAGE_INDEXES = std::vector<oEIndexDamage>({
-		oEIndexDamage::oEDamageIndex_Edge,
-		oEIndexDamage::oEDamageIndex_Blunt,
-		oEIndexDamage::oEDamageIndex_Point,
-		oEIndexDamage::oEDamageIndex_Fire,
-		oEIndexDamage::oEDamageIndex_Magic,
-		oEIndexDamage::oEDamageIndex_Fly,
-		oEIndexDamage::oEDamageIndex_Fall
-		});
-
-
-	inline static void MarkWeaponDamage(const oCItem* weapon, DamageMask& mask)
-	{
-		for (int i = 0; i < oEDamageIndex::oEDamageIndex_MAX; ++i) {
-			if (weapon->damage[i] > 0) {
-				mask.set(i);
-			}
-		}
-	}
-
-	inline static void MarkIntDamageType(const int& damageTypeMask, DamageMask& mask)
-	{
-		for (const auto& mapItem : DAMAGE_MAP) {
-			if (damageTypeMask & mapItem.type) {
-				mask.set(mapItem.index);
-			}
-		}
-	}
-
-	inline static void MarkMunitionDamage(const oCItem* weapon, DamageMask& mask)
-	{
-		const bool hasMunition = weapon->munition != 0;
-		const bool isCrossbow = (weapon->flags & ITM_FLAG_CROSSBOW) != 0;
-
-		const oCItem* leftHand = player->GetLeftHand()->CastTo<oCItem>();
-		const oCItem* rightHand = player->GetRightHand()->CastTo<oCItem>();
-		const oCItem* handItem = isCrossbow ? leftHand : rightHand;
-
-		const int handInstanz =
-			reinterpret_cast<int>(handItem)
-			? handItem->instanz
-			: 0;
-
-		const bool useMunition =
-			static_cast<bool>(
-				hasMunition &
-				(handItem != nullptr) &
-				(handInstanz == weapon->munition)
-				);
-
-		const oCItem* damageSource = useMunition ? handItem : weapon;
-
-		MarkWeaponDamage(damageSource, mask);
-	}
-
-	/* In G1 default damageType for spell is `oEDamageType_Blunt` so for summon/transformation etc. spells
-	it's best to reset this flag in mask to hide incorrect protection icon.
-	In G2 default damageType for spell is `oEDamageType_Magic` so it's left untouched.*/
-	inline static void FixupSpellDamageMask(DamageMask& mask)
-	{
-#if ENGINE <= Engine_G1A
-		mask.reset(oEDamageIndex_Blunt);
-#endif
-	}
-
-	inline static bool ItemHasDistanceOrMunitionCategoryFlag(const oCItem* item) {
-		return item->mainflag & (ITM_CAT_FF | ITM_CAT_MUN);
-	}
-
-	inline static std::vector<oEIndexDamage> BuildOrderedDamageIndexes(const DamageMask& mask)
-	{
-		std::vector<oEIndexDamage> result;
-		result.reserve(PROTECTION_DAMAGE_INDEXES.size());
-
-		for (auto index : PROTECTION_DAMAGE_INDEXES) {
-			if (mask.test(index)) {
-				result.push_back(index);
-			}
-		}
-		return result;
-	}
-
 	FocusStatusBar::FocusStatusBar() : StatusBar(ogame->focusBar)
 	{
 	}
@@ -378,7 +296,7 @@ namespace GOTHIC_ENGINE {
 			: Options::ShowTargetProtectionNoFight;
 
 		if (protectionMode == TargetProtectionMode::All) {
-			return PROTECTION_DAMAGE_INDEXES;
+			return DamageMaskHelper::PROTECTION_DAMAGE_INDEXES;
 		}
 
 		DamageMask mask;
@@ -391,7 +309,7 @@ namespace GOTHIC_ENGINE {
 			BuildNoFightModeDamage(mask);
 		}
 
-		return BuildOrderedDamageIndexes(mask);
+		return DamageMaskHelper::BuildOrderedDamageIndexes(mask);
 	}
 
 	std::vector<NpcProtectionStatus> FocusStatusBar::GetProtectionVisibleStatuses(oCNpc* npc) {
@@ -453,19 +371,19 @@ namespace GOTHIC_ENGINE {
 		// Check for active spell
 		if (player->IsInFightMode_S(NPC_WEAPON_MAG)) {
 			if (auto spell = player->mag_book->GetSelectedSpell()) {
-				MarkIntDamageType(spell->damageType, mask);
-				FixupSpellDamageMask(mask);
+				DamageMaskHelper::MarkIntDamageType(spell->damageType, mask);
+				DamageMaskHelper::FixupSpellDamageMask(mask);
 			}
 			return;
 		}
 
 		// Check for active melee/distance(munition) weapon
 		if (auto weapon = player->GetWeapon()) {
-			if (ItemHasDistanceOrMunitionCategoryFlag(weapon)) {
+			if (DamageMaskHelper::ItemHasDistanceOrMunitionCategoryFlag(weapon)) {
 				mask = Options::DistanceWeaponDamageType;
 			}
 			else {
-				MarkWeaponDamage(weapon, mask);
+				DamageMaskHelper::MarkWeaponDamage(weapon, mask);
 			}
 		}
 		else {
@@ -479,15 +397,15 @@ namespace GOTHIC_ENGINE {
 		if (player->mag_book) {
 			auto& spells = player->mag_book->spells;
 			for (int i = 0; i < spells.GetNum(); ++i) {
-				MarkIntDamageType(spells[i]->damageType, mask);
+				DamageMaskHelper::MarkIntDamageType(spells[i]->damageType, mask);
 			}
-			FixupSpellDamageMask(mask);
+			DamageMaskHelper::FixupSpellDamageMask(mask);
 		}
 
 		// Check for melee weapon
 		auto weapon = player->GetEquippedMeleeWeapon();
 		if (weapon) {
-			MarkWeaponDamage(weapon, mask);
+			DamageMaskHelper::MarkWeaponDamage(weapon, mask);
 		}
 		else {
 			mask.set(oEDamageIndex_Blunt); // Fist damage
@@ -529,12 +447,12 @@ namespace GOTHIC_ENGINE {
 		if (!desc.pItemWeapon)
 			return;
 
-		if (!ItemHasDistanceOrMunitionCategoryFlag(desc.pItemWeapon))
+		if (!DamageMaskHelper::ItemHasDistanceOrMunitionCategoryFlag(desc.pItemWeapon))
 			return;
 
 		if (Options::DistanceWeaponDamageTypeFromIni != desc.enuModeDamage) {
 			DamageMask tmp{};
-			MarkIntDamageType(desc.enuModeDamage, tmp);
+			DamageMaskHelper::MarkIntDamageType(desc.enuModeDamage, tmp);
 			Options::DistanceWeaponDamageType = tmp;
 			Options::DistanceWeaponDamageTypeFromIni = desc.enuModeDamage;
 			zoptions->WriteInt(PLUGIN_NAME, "DistanceWeaponDamageType", desc.enuModeDamage, 0);
@@ -549,7 +467,7 @@ namespace GOTHIC_ENGINE {
 		if (this != player)
 			return;
 
-		if (!ItemHasDistanceOrMunitionCategoryFlag(item))
+		if (!DamageMaskHelper::ItemHasDistanceOrMunitionCategoryFlag(item))
 			return;
 
 		FocusStatusBar::IsDistanceWeaponDamageTypeOverwritten = false;

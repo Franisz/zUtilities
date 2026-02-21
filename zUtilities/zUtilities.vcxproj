@@ -869,6 +869,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DamageMaskHelper.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="DamageMaskHelper.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClCompile Include="DllMain.cpp" />
     <ClInclude Include="Archive.cpp">
       <SubType>
@@ -983,14 +991,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Misc.cpp">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="NpcHelper.cpp">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="NpcHelper.h">
       <SubType>
       </SubType>
     </ClInclude>

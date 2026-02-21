@@ -6,7 +6,7 @@
 #include "Misc.cpp"
 #include "User.cpp"
 #include "Commands.cpp"
-#include "NpcHelper.cpp"
+#include "DamageMaskHelper.cpp"
 #include "IconInfo.cpp"
 #include "DebugHelper.cpp"
 #include "FocusColor.cpp"
