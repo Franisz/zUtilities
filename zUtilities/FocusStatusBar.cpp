@@ -68,17 +68,19 @@ namespace GOTHIC_ENGINE {
 		return bar->vposy + bar->vsizey / 2 - GetProtSize();
 	}
 
-	void FocusStatusBar::PrintValueOutside(zSTRING str, oCNpc* npc)
+	void FocusStatusBar::PrintValueOutside(zSTRING& str)
 	{
-		auto statuses = GetProtectionVisibleStatuses(npc);
-		auto protPlacement = GetProtPlacement(statuses);
+		auto protPlacement = FocusStatusProtectionPlacement::NONE;
+
+		if (hasProtectionContext)
+			protPlacement = currentProtectionContext.placement;
+
 		int offsetY = bar->vsizey / 2 + valueView->FontY();
 		int x = bar->vposx + bar->vsizex / 2 - valueView->FontSize(str) / 2;
 		int y = bar->vposy - offsetY;
 
-		if (protPlacement == FocusStatusProtectionPlacement::TOP) {
-			y = GetProtStartY(protPlacement) - offsetY;
-		}
+		if (protPlacement == FocusStatusProtectionPlacement::TOP)
+			y = currentProtectionContext.startY - offsetY;
 
 		valueView->SetFontColor(zCOLOR(valueView->color.r, valueView->color.g, valueView->color.b, bar->alpha));
 		valueView->Print(x, y, str);
@@ -206,12 +208,13 @@ namespace GOTHIC_ENGINE {
 			return false;
 
 		MoveFocusBar(x, y, npc);
-		ProtectionContext ctx;
-		if (BuildProtectionContext(npc, ctx))
+		hasProtectionContext = BuildProtectionContext(npc, currentProtectionContext);
+
+		if (hasProtectionContext)
 		{
-			RenderProtection(ctx);
+			RenderProtection(currentProtectionContext);
 		}
-		PrintValue(npc);
+		PrintValue();
 		return Options::ShowEnemyBarAboveHim;
 	}
 

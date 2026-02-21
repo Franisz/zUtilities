@@ -28,7 +28,7 @@ namespace GOTHIC_ENGINE {
 		zCOLOR color;
 	};
 
-	enum ProtectionRenderMode {
+	enum class ProtectionRenderMode {
 		Disabled,
 		Immortal,
 		Normal
@@ -58,11 +58,13 @@ namespace GOTHIC_ENGINE {
 		int CalcProtRenderWidth(const std::vector<NpcProtectionStatus>& statuses);
 		FocusStatusProtectionPlacement GetProtPlacement(const std::vector<NpcProtectionStatus>& statuses);
 		zSTRING GetIconNameByDamageIndex(const oEIndexDamage& index);
-		virtual void PrintValueOutside(zSTRING str, oCNpc* npc) override;
+		virtual void PrintValueOutside(zSTRING& str) override;
 		void RenderProtectionIconsClose(int startX, int startY, int size, int margin, const NpcProtectionStatus& status);
 		void RenderProtectionIconsTop(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses);
 		void RenderProtectionIconsRight(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses);
 
+		ProtectionContext currentProtectionContext;
+		bool hasProtectionContext = false;
 		bool BuildProtectionContext(oCNpc* npc, ProtectionContext& ctx);
 		void RenderProtection(const ProtectionContext& ctx);
 
