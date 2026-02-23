@@ -167,14 +167,11 @@ namespace GOTHIC_ENGINE {
 			break;
 
 		case FocusStatusProtectionPlacement::TOP:
-			RenderProtectionIconsTop(ctx.startX, ctx.startY, ctx.size, ctx.margin, const_cast<std::vector<NpcProtectionStatus>*>(&ctx.statuses));
+			RenderProtectionIconsTop(ctx.startX, ctx.startY, ctx.size, ctx.margin, ctx.statuses);
 			break;
 
 		case FocusStatusProtectionPlacement::RIGHT:
-			RenderProtectionIconsRight(ctx.startX, ctx.startY, ctx.size, ctx.margin, const_cast<std::vector<NpcProtectionStatus>*>(&ctx.statuses));
-			break;
-
-		default:
+			RenderProtectionIconsRight(ctx.startX, ctx.startY, ctx.size, ctx.margin, ctx.statuses);
 			break;
 		}
 	}
@@ -267,12 +264,12 @@ namespace GOTHIC_ENGINE {
 		IconInfo(startX + margin, startY, size, data.color, data.texture, data.text);
 	}
 
-	void FocusStatusBar::RenderProtectionIconsTop(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses)
+	void FocusStatusBar::RenderProtectionIconsTop(int startX, int startY, int size, int margin, const std::vector<NpcProtectionStatus>& statuses)
 	{
-		startX = startX + bar->vsizex / 2 - CalcProtRenderWidth((*statuses)) / 2;
+		startX = startX + bar->vsizex / 2 - CalcProtRenderWidth(statuses) / 2;
 		unsigned char alpha = ogame->hpBar ? ogame->hpBar->alpha : 255;
 
-		for (const auto& status : *statuses)
+		for (const auto& status : statuses)
 		{
 			auto data = BuildRenderData(status, alpha);
 
@@ -281,11 +278,11 @@ namespace GOTHIC_ENGINE {
 		}
 	}
 
-	void FocusStatusBar::RenderProtectionIconsRight(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses)
+	void FocusStatusBar::RenderProtectionIconsRight(int startX, int startY, int size, int margin, const std::vector<NpcProtectionStatus>& statuses)
 	{
 		unsigned char alpha = ogame->hpBar ? ogame->hpBar->alpha : 255;
 
-		for (const auto& status : *statuses)
+		for (const auto& status : statuses)
 		{
 			auto data = BuildRenderData(status, alpha);
 

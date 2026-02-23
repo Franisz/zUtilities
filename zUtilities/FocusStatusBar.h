@@ -60,8 +60,8 @@ namespace GOTHIC_ENGINE {
 		zSTRING GetIconNameByDamageIndex(const oEIndexDamage& index);
 		virtual void PrintValueOutside(zSTRING& str) override;
 		void RenderProtectionIconsClose(int startX, int startY, int size, int margin, const NpcProtectionStatus& status);
-		void RenderProtectionIconsTop(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses);
-		void RenderProtectionIconsRight(int startX, int startY, int size, int margin, std::vector<NpcProtectionStatus>* statuses);
+		void RenderProtectionIconsTop(int startX, int startY, int size, int margin, const std::vector<NpcProtectionStatus>& statuses);
+		void RenderProtectionIconsRight(int startX, int startY, int size, int margin, const std::vector<NpcProtectionStatus>& statuses);
 
 		ProtectionContext currentProtectionContext;
 		bool hasProtectionContext = false;
