@@ -22,7 +22,7 @@ namespace GOTHIC_ENGINE {
 		All = 2
 	};
 
-	struct ProtectionRenderData {
+	struct ProtectionIconRenderData {
 		zSTRING text;
 		zSTRING texture;
 		zCOLOR color;
@@ -51,7 +51,8 @@ namespace GOTHIC_ENGINE {
 		const int protectionPlacementRightMargin = 250;
 		zCView* protView;
 		void MoveFocusBar(int x, int y, oCNpc* npc);
-		int GetProtMargin();
+		int GetHorizontalProtMargin();
+		int GetVerticalProtMargin();
 		int GetProtSize();
 		int GetProtStartX(FocusStatusProtectionPlacement placement);
 		int GetProtStartY(FocusStatusProtectionPlacement placement);
@@ -68,7 +69,7 @@ namespace GOTHIC_ENGINE {
 		bool BuildProtectionContext(oCNpc* npc, ProtectionContext& ctx);
 		void RenderProtection(const ProtectionContext& ctx);
 
-		ProtectionRenderData BuildRenderData(const NpcProtectionStatus& status, unsigned char alpha);
+		ProtectionIconRenderData BuildIconRenderData(const NpcProtectionStatus& status, unsigned char alpha);
 
 		std::vector<oEIndexDamage> GetDamageIndexes();
 		bool CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex);

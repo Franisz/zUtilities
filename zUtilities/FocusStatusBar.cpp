@@ -22,8 +22,12 @@ namespace GOTHIC_ENGINE {
 		del(protView);
 	}
 
-	int FocusStatusBar::GetProtMargin() {
-		return protView->FontY() * 0.1f;
+	int FocusStatusBar::GetHorizontalProtMargin() {
+		return protView->FontY() * 0.1f + 30;
+	}
+
+	int FocusStatusBar::GetVerticalProtMargin() {
+		return protView->FontY() * 0.1f + 85;
 	}
 
 	int FocusStatusBar::GetProtSize() {
@@ -62,7 +66,7 @@ namespace GOTHIC_ENGINE {
 
 	int FocusStatusBar::GetProtStartY(FocusStatusProtectionPlacement placement) {
 		if (placement == FocusStatusProtectionPlacement::TOP) {
-			return bar->vposy - GetProtMargin() - GetProtSize() - bar->vsizey;
+			return bar->vposy - GetHorizontalProtMargin() - GetProtSize() - bar->vsizey;
 		}
 
 		return bar->vposy + bar->vsizey / 2 - GetProtSize();
@@ -88,28 +92,15 @@ namespace GOTHIC_ENGINE {
 
 	int FocusStatusBar::CalcProtRenderWidth(const std::vector<NpcProtectionStatus>& statuses) {
 		int width = 0;
+		int margin = GetHorizontalProtMargin();
 		int size = GetProtSize();
-		int margin = GetProtMargin();
-		auto statusCount = statuses.size();
+		int iconSpacing = screen->FontY() * 0.1f;
 
-		if (statusCount == 1) {
-			return size;
+		for (const auto& status : statuses) {
+			int textSize = screen->FontSize(status.immune ? zSTRING(IMMUNE_ABBREVIATION) : zSTRING(status.value));
+			width += size + textSize + margin + iconSpacing;
 		}
-
-		for (int i = 0; i < statusCount; ++i)
-		{
-			const auto& status = statuses[i];
-
-			int fontValue = (status.value < 0)
-				? screen->FontSize(zSTRING(IMMUNE_ABBREVIATION))
-				: screen->FontSize(zSTRING(status.value));
-
-			width += size + screen->FontY() / 10 + fontValue;
-
-			if (i + 1 < statusCount) {
-				width += margin;
-			}
-		}
+		width -= margin;
 
 		return width;
 	}
@@ -126,7 +117,7 @@ namespace GOTHIC_ENGINE {
 		{
 			ctx.mode = ProtectionRenderMode::Immortal;
 			ctx.placement = FocusStatusProtectionPlacement::CLOSE;
-			ctx.margin = GetProtMargin();
+			ctx.margin = GetHorizontalProtMargin();
 			ctx.size = GetProtSize();
 			ctx.startX = GetProtStartX(ctx.placement);
 			ctx.startY = GetProtStartY(ctx.placement);
@@ -140,10 +131,11 @@ namespace GOTHIC_ENGINE {
 
 		ctx.mode = ProtectionRenderMode::Normal;
 		ctx.placement = GetProtPlacement(ctx.statuses);
-		ctx.margin = GetProtMargin();
 		ctx.size = GetProtSize();
 		ctx.startX = GetProtStartX(ctx.placement);
 		ctx.startY = GetProtStartY(ctx.placement);
+		ctx.margin = ctx.placement == FocusStatusProtectionPlacement::RIGHT
+			? GetVerticalProtMargin() : GetHorizontalProtMargin();
 
 		return true;
 	}
@@ -259,7 +251,7 @@ namespace GOTHIC_ENGINE {
 	void FocusStatusBar::RenderProtectionIconsClose(int startX, int startY, int size, int margin, const NpcProtectionStatus& status)
 	{
 		unsigned char alpha = ogame->hpBar ? ogame->hpBar->alpha : 255;
-		auto data = BuildRenderData(status, alpha);
+		auto data = BuildIconRenderData(status, alpha);
 
 		IconInfo(startX + margin, startY, size, data.color, data.texture, data.text);
 	}
@@ -271,10 +263,10 @@ namespace GOTHIC_ENGINE {
 
 		for (const auto& status : statuses)
 		{
-			auto data = BuildRenderData(status, alpha);
+			auto data = BuildIconRenderData(status, alpha);
 
-			auto icon = IconInfo(startX + margin, startY, size, data.color, data.texture, data.text);
-			startX += icon.GetSize() + 30; // +30 is an additional spacing to separate icons from each other and from the text
+			auto icon = IconInfo(startX, startY, size, data.color, data.texture, data.text);
+			startX += icon.GetSize() + margin;
 		}
 	}
 
@@ -284,10 +276,10 @@ namespace GOTHIC_ENGINE {
 
 		for (const auto& status : statuses)
 		{
-			auto data = BuildRenderData(status, alpha);
+			auto data = BuildIconRenderData(status, alpha);
 
 			IconInfo(startX, startY, size, data.color, data.texture, data.text);
-			startY += screen->FontY() + 85; // +85 is an additional spacing between rendered icons in column
+			startY += margin;
 		}
 	}
 
@@ -410,9 +402,9 @@ namespace GOTHIC_ENGINE {
 		}
 	}
 
-	ProtectionRenderData FocusStatusBar::BuildRenderData(const NpcProtectionStatus& status, unsigned char alpha)
+	ProtectionIconRenderData FocusStatusBar::BuildIconRenderData(const NpcProtectionStatus& status, unsigned char alpha)
 	{
-		ProtectionRenderData data;
+		ProtectionIconRenderData data;
 
 		data.text = status.immune ? IMMUNE_ABBREVIATION : zSTRING(status.value);
 
