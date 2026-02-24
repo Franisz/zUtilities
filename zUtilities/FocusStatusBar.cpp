@@ -27,7 +27,7 @@ namespace GOTHIC_ENGINE {
 	}
 
 	int FocusStatusBar::GetVerticalProtMargin() {
-		return protView->FontY() * 0.1f + 85;
+		return GetProtSize() + 85;
 	}
 
 	int FocusStatusBar::GetProtSize() {
@@ -279,7 +279,7 @@ namespace GOTHIC_ENGINE {
 			auto data = BuildIconRenderData(status, alpha);
 
 			IconInfo(startX, startY, size, data.color, data.texture, data.text);
-			startY += margin;
+			startY += size + margin;
 		}
 	}
 
