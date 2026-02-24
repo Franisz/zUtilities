@@ -34,9 +34,12 @@ namespace GOTHIC_ENGINE {
 		Normal
 	};
 
-	struct ProtectionContext {
+	struct ProtectionModel {
 		ProtectionRenderMode mode = ProtectionRenderMode::Disabled;
 		std::vector<NpcProtectionStatus> statuses;
+	};
+
+	struct ProtectionLayout {
 		FocusStatusProtectionPlacement placement = FocusStatusProtectionPlacement::NONE;
 		int startX = 0;
 		int startY = 0;
@@ -64,10 +67,10 @@ namespace GOTHIC_ENGINE {
 		void RenderProtectionIconsTop(int startX, int startY, int size, int margin, const std::vector<NpcProtectionStatus>& statuses);
 		void RenderProtectionIconsRight(int startX, int startY, int size, int margin, const std::vector<NpcProtectionStatus>& statuses);
 
-		ProtectionContext currentProtectionContext;
-		bool hasProtectionContext = false;
-		bool BuildProtectionContext(oCNpc* npc, ProtectionContext& ctx);
-		void RenderProtection(const ProtectionContext& ctx);
+		int valueOffsetY = 0;
+		bool BuildProtectionModel(oCNpc* npc, ProtectionModel& model);
+		void BuildProtectionLayout(const ProtectionModel& model, ProtectionLayout& layout);
+		void RenderProtectionWithLayout(const ProtectionModel& model, const ProtectionLayout& layout);
 
 		ProtectionIconRenderData BuildIconRenderData(const NpcProtectionStatus& status, unsigned char alpha);
 

@@ -74,17 +74,10 @@ namespace GOTHIC_ENGINE {
 
 	void FocusStatusBar::PrintValueOutside(zSTRING& str)
 	{
-		auto protPlacement = FocusStatusProtectionPlacement::NONE;
-
-		if (hasProtectionContext)
-			protPlacement = currentProtectionContext.placement;
-
 		int offsetY = bar->vsizey / 2 + valueView->FontY();
 		int x = bar->vposx + bar->vsizex / 2 - valueView->FontSize(str) / 2;
-		int y = bar->vposy - offsetY;
 
-		if (protPlacement == FocusStatusProtectionPlacement::TOP)
-			y = currentProtectionContext.startY - offsetY;
+		int y = bar->vposy - offsetY + valueOffsetY;
 
 		valueView->SetFontColor(zCOLOR(valueView->color.r, valueView->color.g, valueView->color.b, bar->alpha));
 		valueView->Print(x, y, str);
@@ -103,69 +96,6 @@ namespace GOTHIC_ENGINE {
 		width -= margin;
 
 		return width;
-	}
-
-	bool FocusStatusBar::BuildProtectionContext(oCNpc* npc, ProtectionContext& ctx)
-	{
-		if (!bar || npc->attribute[NPC_ATR_HITPOINTS] <= 0)
-			return false;
-
-		if (IsShowTargetProtectionDisabled())
-			return false;
-
-		if (npc->HasFlag(NPC_FLAG_IMMORTAL))
-		{
-			ctx.mode = ProtectionRenderMode::Immortal;
-			ctx.placement = FocusStatusProtectionPlacement::CLOSE;
-			ctx.margin = GetHorizontalProtMargin();
-			ctx.size = GetProtSize();
-			ctx.startX = GetProtStartX(ctx.placement);
-			ctx.startY = GetProtStartY(ctx.placement);
-			return true;
-		}
-
-		ctx.statuses = GetProtectionVisibleStatuses(npc);
-
-		if (ctx.statuses.empty())
-			return false;
-
-		ctx.mode = ProtectionRenderMode::Normal;
-		ctx.placement = GetProtPlacement(ctx.statuses);
-		ctx.size = GetProtSize();
-		ctx.startX = GetProtStartX(ctx.placement);
-		ctx.startY = GetProtStartY(ctx.placement);
-		ctx.margin = ctx.placement == FocusStatusProtectionPlacement::RIGHT
-			? GetVerticalProtMargin() : GetHorizontalProtMargin();
-
-		return true;
-	}
-
-	void FocusStatusBar::RenderProtection(const ProtectionContext& ctx)
-	{
-		if (ctx.mode == ProtectionRenderMode::Immortal)
-		{
-			auto color = Colors::Gray;
-			if (ogame->hpBar)
-				color.alpha = ogame->hpBar->alpha;
-
-			IconInfo(ctx.startX + ctx.margin, ctx.startY, ctx.size, color, crackedShieldTexture);
-			return;
-		}
-
-		switch (ctx.placement)
-		{
-		case FocusStatusProtectionPlacement::CLOSE:
-			RenderProtectionIconsClose(ctx.startX, ctx.startY, ctx.size, ctx.margin, ctx.statuses[0]);
-			break;
-
-		case FocusStatusProtectionPlacement::TOP:
-			RenderProtectionIconsTop(ctx.startX, ctx.startY, ctx.size, ctx.margin, ctx.statuses);
-			break;
-
-		case FocusStatusProtectionPlacement::RIGHT:
-			RenderProtectionIconsRight(ctx.startX, ctx.startY, ctx.size, ctx.margin, ctx.statuses);
-			break;
-		}
 	}
 
 	void FocusStatusBar::MoveFocusBar(int x, int y, oCNpc* npc) {
@@ -196,13 +126,23 @@ namespace GOTHIC_ENGINE {
 		if (!bar || !npc || npc->attribute[NPC_ATR_HITPOINTS] <= 0)
 			return false;
 
+		valueOffsetY = 0;
 		MoveFocusBar(x, y, npc);
-		hasProtectionContext = BuildProtectionContext(npc, currentProtectionContext);
 
-		if (hasProtectionContext)
+		ProtectionModel model;
+		if (BuildProtectionModel(npc, model))
 		{
-			RenderProtection(currentProtectionContext);
+			ProtectionLayout layout;
+			BuildProtectionLayout(model, layout);
+
+			if (layout.placement == FocusStatusProtectionPlacement::TOP)
+			{
+				valueOffsetY = layout.startY - bar->vposy;
+			}
+
+			RenderProtectionWithLayout(model, layout);
 		}
+
 		PrintValue();
 		return Options::ShowEnemyBarAboveHim;
 	}
@@ -416,6 +356,77 @@ namespace GOTHIC_ENGINE {
 		data.color.alpha = alpha;
 
 		return data;
+	}
+
+	bool FocusStatusBar::BuildProtectionModel(oCNpc* npc, ProtectionModel& model)
+	{
+		if (IsShowTargetProtectionDisabled())
+			return false;
+
+		if (npc->HasFlag(NPC_FLAG_IMMORTAL))
+		{
+			model.mode = ProtectionRenderMode::Immortal;
+			return true;
+		}
+
+		auto statuses = GetProtectionVisibleStatuses(npc);
+		if (statuses.empty())
+			return false;
+
+		model.mode = ProtectionRenderMode::Normal;
+		model.statuses = std::move(statuses);
+
+		return true;
+	}
+
+	void FocusStatusBar::BuildProtectionLayout(const ProtectionModel& model, ProtectionLayout& layout)
+	{
+		if (model.mode == ProtectionRenderMode::Immortal)
+		{
+			layout.placement = FocusStatusProtectionPlacement::CLOSE;
+			layout.size = GetProtSize();
+			layout.margin = GetHorizontalProtMargin();
+			layout.startX = GetProtStartX(layout.placement);
+			layout.startY = GetProtStartY(layout.placement);
+			return;
+		}
+
+		layout.placement = GetProtPlacement(model.statuses);
+		layout.size = GetProtSize();
+		layout.startX = GetProtStartX(layout.placement);
+		layout.startY = GetProtStartY(layout.placement);
+
+		layout.margin = layout.placement == FocusStatusProtectionPlacement::RIGHT
+			? GetVerticalProtMargin()
+			: GetHorizontalProtMargin();
+	}
+
+	void FocusStatusBar::RenderProtectionWithLayout(const ProtectionModel& model, const ProtectionLayout& layout)
+	{
+		if (model.mode == ProtectionRenderMode::Immortal)
+		{
+			auto color = Colors::Gray;
+			if (ogame->hpBar)
+				color.alpha = ogame->hpBar->alpha;
+
+			IconInfo(layout.startX + layout.margin, layout.startY, layout.size, color, crackedShieldTexture);
+			return;
+		}
+
+		switch (layout.placement)
+		{
+		case FocusStatusProtectionPlacement::CLOSE:
+			RenderProtectionIconsClose(layout.startX, layout.startY, layout.size, layout.margin, model.statuses[0]);
+			break;
+
+		case FocusStatusProtectionPlacement::TOP:
+			RenderProtectionIconsTop(layout.startX, layout.startY, layout.size, layout.margin, model.statuses);
+			break;
+
+		case FocusStatusProtectionPlacement::RIGHT:
+			RenderProtectionIconsRight(layout.startX, layout.startY, layout.size, layout.margin, model.statuses);
+			break;
+		}
 	}
 
 	HOOK Ivk_OnDamage_Hit_DistanceWeapon PATCH(&oCNpc::OnDamage_Hit, &oCNpc::OnDamage_Hit_DistanceWeapon);
