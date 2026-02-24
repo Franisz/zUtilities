@@ -31,7 +31,7 @@ namespace GOTHIC_ENGINE {
 		static void MarkIntDamageType(const int& damageTypeMask, DamageMask& mask);
 		static void MarkMunitionDamage(const oCItem* weapon, DamageMask& mask);
 		static void MarkWeaponDamage(const oCItem* weapon, DamageMask& mask);
-		static std::vector<oEIndexDamage> BuildOrderedDamageIndexes(const DamageMask& mask);
+		static void BuildOrderedDamageIndexes(const DamageMask& mask, std::vector<oEIndexDamage>& vec);
 		static bool ItemHasDistanceOrMunitionCategoryFlag(const oCItem* item);
 		static void FixupSpellDamageMask(DamageMask& mask);
 	};

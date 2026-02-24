@@ -36,7 +36,6 @@ namespace GOTHIC_ENGINE {
 
 	struct ProtectionModel {
 		ProtectionRenderMode mode = ProtectionRenderMode::Disabled;
-		std::vector<NpcProtectionStatus> statuses;
 	};
 
 	struct ProtectionLayout {
@@ -52,6 +51,8 @@ namespace GOTHIC_ENGINE {
 		const zSTRING IMMUNE_ABBREVIATION = "IMM";
 		const zSTRING crackedShieldTexture = zSTRING("ICON_PROTECTIONS"); // https://game-icons.net/1x1/lorc/cracked-shield.html
 		const int protectionPlacementRightMargin = 250;
+		std::vector<oEIndexDamage> activeDamageIndexes;
+		std::vector<NpcProtectionStatus> activeStatuses;
 		zCView* protView;
 		void MoveFocusBar(int x, int y, oCNpc* npc);
 		int GetHorizontalProtMargin();
@@ -59,26 +60,25 @@ namespace GOTHIC_ENGINE {
 		int GetProtSize();
 		int GetProtStartX(FocusStatusProtectionPlacement placement);
 		int GetProtStartY(FocusStatusProtectionPlacement placement);
-		int CalcProtRenderWidth(const std::vector<NpcProtectionStatus>& statuses);
+		int CalcProtRenderWidth();
 		FocusStatusProtectionPlacement GetProtPlacement(const std::vector<NpcProtectionStatus>& statuses);
 		zSTRING GetIconNameByDamageIndex(const oEIndexDamage& index);
 		virtual void PrintValueOutside(zSTRING& str) override;
 		void RenderProtectionIconsClose(int startX, int startY, int size, int margin, const NpcProtectionStatus& status);
-		void RenderProtectionIconsTop(int startX, int startY, int size, int margin, const std::vector<NpcProtectionStatus>& statuses);
-		void RenderProtectionIconsRight(int startX, int startY, int size, int margin, const std::vector<NpcProtectionStatus>& statuses);
+		void RenderProtectionIconsTop(int startX, int startY, int size, int margin);
+		void RenderProtectionIconsRight(int startX, int startY, int size, int margin);
 
 		int valueOffsetY = 0;
 		bool BuildProtectionModel(oCNpc* npc, ProtectionModel& model);
 		void BuildProtectionLayout(const ProtectionModel& model, ProtectionLayout& layout);
 		void RenderProtectionWithLayout(const ProtectionModel& model, const ProtectionLayout& layout);
 
-		ProtectionIconRenderData BuildIconRenderData(const NpcProtectionStatus& status, unsigned char alpha);
+		ProtectionIconRenderData BuildIconRenderData(const NpcProtectionStatus& status, unsigned char alpha);		
 
-		std::vector<oEIndexDamage> GetDamageIndexes();
+		void FillDamageIndexesBuffer();
 		bool CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex);
 		void BuildFightModeDamage(DamageMask& mask);
 		void BuildNoFightModeDamage(DamageMask& mask);
-		std::vector<NpcProtectionStatus> GetProtectionVisibleStatuses(oCNpc* npc);
 
 	public:
 		static bool IsDistanceWeaponDamageTypeOverwritten;

@@ -57,17 +57,13 @@ namespace GOTHIC_ENGINE
 		MarkWeaponDamage(damageSource, mask);
 	}
 
-	std::vector<oEIndexDamage> DamageMaskHelper::BuildOrderedDamageIndexes(const DamageMask& mask)
+	void DamageMaskHelper::BuildOrderedDamageIndexes(const DamageMask& mask, std::vector<oEIndexDamage>& vec)
 	{
-		std::vector<oEIndexDamage> result;
-		result.reserve(PROTECTION_DAMAGE_INDEXES.size());
-
 		for (auto index : PROTECTION_DAMAGE_INDEXES) {
 			if (mask.test(index)) {
-				result.push_back(index);
+				vec.push_back(index);
 			}
 		}
-		return result;
 	}
 
 	bool DamageMaskHelper::ItemHasDistanceOrMunitionCategoryFlag(const oCItem* item) {

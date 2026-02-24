@@ -6,6 +6,8 @@ namespace GOTHIC_ENGINE {
 
 	FocusStatusBar::FocusStatusBar() : StatusBar(ogame->focusBar)
 	{
+		activeDamageIndexes.reserve(oEDamageIndex_MAX);
+		activeStatuses.reserve(oEDamageIndex_MAX);
 	}
 
 	bool FocusStatusBar::Init() {
@@ -83,13 +85,14 @@ namespace GOTHIC_ENGINE {
 		valueView->Print(x, y, str);
 	}
 
-	int FocusStatusBar::CalcProtRenderWidth(const std::vector<NpcProtectionStatus>& statuses) {
+	int FocusStatusBar::CalcProtRenderWidth()
+	{
 		int width = 0;
 		int margin = GetHorizontalProtMargin();
 		int size = GetProtSize();
 		int iconSpacing = screen->FontY() * 0.1f;
 
-		for (const auto& status : statuses) {
+		for (const auto& status : activeStatuses) {
 			int textSize = screen->FontSize(status.immune ? zSTRING(IMMUNE_ABBREVIATION) : zSTRING(status.value));
 			width += size + textSize + margin + iconSpacing;
 		}
@@ -196,12 +199,12 @@ namespace GOTHIC_ENGINE {
 		IconInfo(startX + margin, startY, size, data.color, data.texture, data.text);
 	}
 
-	void FocusStatusBar::RenderProtectionIconsTop(int startX, int startY, int size, int margin, const std::vector<NpcProtectionStatus>& statuses)
+	void FocusStatusBar::RenderProtectionIconsTop(int startX, int startY, int size, int margin)
 	{
-		startX = startX + bar->vsizex / 2 - CalcProtRenderWidth(statuses) / 2;
+		startX = startX + bar->vsizex / 2 - CalcProtRenderWidth() / 2;
 		unsigned char alpha = ogame->hpBar ? ogame->hpBar->alpha : 255;
 
-		for (const auto& status : statuses)
+		for (const auto& status : activeStatuses)
 		{
 			auto data = BuildIconRenderData(status, alpha);
 
@@ -210,11 +213,11 @@ namespace GOTHIC_ENGINE {
 		}
 	}
 
-	void FocusStatusBar::RenderProtectionIconsRight(int startX, int startY, int size, int margin, const std::vector<NpcProtectionStatus>& statuses)
+	void FocusStatusBar::RenderProtectionIconsRight(int startX, int startY, int size, int margin)
 	{
 		unsigned char alpha = ogame->hpBar ? ogame->hpBar->alpha : 255;
 
-		for (const auto& status : statuses)
+		for (const auto& status : activeStatuses)
 		{
 			auto data = BuildIconRenderData(status, alpha);
 
@@ -246,15 +249,18 @@ namespace GOTHIC_ENGINE {
 		}
 	}
 
-	std::vector<oEIndexDamage> FocusStatusBar::GetDamageIndexes()
+	void FocusStatusBar::FillDamageIndexesBuffer()
 	{
+		activeDamageIndexes.clear();
 		bool isInFightMode = !player->IsInFightMode_S(NPC_WEAPON_NONE);
 		auto protectionMode = isInFightMode
 			? Options::ShowTargetProtectionInFight
 			: Options::ShowTargetProtectionNoFight;
 
 		if (protectionMode == TargetProtectionMode::All) {
-			return DamageMaskHelper::PROTECTION_DAMAGE_INDEXES;
+			activeDamageIndexes.assign(DamageMaskHelper::PROTECTION_DAMAGE_INDEXES.begin(),
+				DamageMaskHelper::PROTECTION_DAMAGE_INDEXES.end());
+			return;
 		}
 
 		DamageMask mask;
@@ -267,27 +273,7 @@ namespace GOTHIC_ENGINE {
 			BuildNoFightModeDamage(mask);
 		}
 
-		return DamageMaskHelper::BuildOrderedDamageIndexes(mask);
-	}
-
-	std::vector<NpcProtectionStatus> FocusStatusBar::GetProtectionVisibleStatuses(oCNpc* npc) {
-		auto vec = std::vector<NpcProtectionStatus>();
-
-		auto damageIndexes = GetDamageIndexes();
-		for (auto damageIndex : damageIndexes)
-		{
-			if (!CanRenderProtectionStatus(npc, damageIndex)) {
-				continue;
-			}
-
-			NpcProtectionStatus status;
-			status.value = npc->GetProtectionByIndex(damageIndex);
-			status.damageIndex = damageIndex;
-			status.immune = status.value < 0;
-			vec.push_back(status);
-		}
-
-		return vec;
+		DamageMaskHelper::BuildOrderedDamageIndexes(mask, activeDamageIndexes);
 	}
 
 	void FocusStatusBar::BuildFightModeDamage(DamageMask& mask)
@@ -363,19 +349,29 @@ namespace GOTHIC_ENGINE {
 		if (IsShowTargetProtectionDisabled())
 			return false;
 
+		activeStatuses.clear();
+
 		if (npc->HasFlag(NPC_FLAG_IMMORTAL))
 		{
 			model.mode = ProtectionRenderMode::Immortal;
 			return true;
 		}
 
-		auto statuses = GetProtectionVisibleStatuses(npc);
-		if (statuses.empty())
-			return false;
+		FillDamageIndexesBuffer();
+
+		for (auto& index : activeDamageIndexes) {
+			if (CanRenderProtectionStatus(npc, index)) {
+				NpcProtectionStatus status;
+				status.value = npc->GetProtectionByIndex(index);
+				status.damageIndex = index;
+				status.immune = status.value < 0;
+				activeStatuses.push_back(status);
+			}
+		}
+
+		if (activeStatuses.empty()) return false;
 
 		model.mode = ProtectionRenderMode::Normal;
-		model.statuses = std::move(statuses);
-
 		return true;
 	}
 
@@ -391,7 +387,7 @@ namespace GOTHIC_ENGINE {
 			return;
 		}
 
-		layout.placement = GetProtPlacement(model.statuses);
+		layout.placement = GetProtPlacement(activeStatuses);
 		layout.size = GetProtSize();
 		layout.startX = GetProtStartX(layout.placement);
 		layout.startY = GetProtStartY(layout.placement);
@@ -416,15 +412,15 @@ namespace GOTHIC_ENGINE {
 		switch (layout.placement)
 		{
 		case FocusStatusProtectionPlacement::CLOSE:
-			RenderProtectionIconsClose(layout.startX, layout.startY, layout.size, layout.margin, model.statuses[0]);
+			RenderProtectionIconsClose(layout.startX, layout.startY, layout.size, layout.margin, activeStatuses[0]);
 			break;
 
 		case FocusStatusProtectionPlacement::TOP:
-			RenderProtectionIconsTop(layout.startX, layout.startY, layout.size, layout.margin, model.statuses);
+			RenderProtectionIconsTop(layout.startX, layout.startY, layout.size, layout.margin);
 			break;
 
 		case FocusStatusProtectionPlacement::RIGHT:
-			RenderProtectionIconsRight(layout.startX, layout.startY, layout.size, layout.margin, model.statuses);
+			RenderProtectionIconsRight(layout.startX, layout.startY, layout.size, layout.margin);
 			break;
 		}
 	}
