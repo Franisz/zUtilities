@@ -35,9 +35,9 @@ namespace GOTHIC_ENGINE {
 	};
 
 	struct ProtectionModel {
-		ProtectionRenderMode mode = ProtectionRenderMode::Disabled;
+		ProtectionRenderMode renderMode = ProtectionRenderMode::Disabled;
 		bool isInFightMode = false;
-		TargetProtectionMode protectionMode = TargetProtectionMode::Disabled;
+		TargetProtectionMode targetProtectionMode = TargetProtectionMode::Disabled;
 	};
 
 	struct ProtectionLayout {

@@ -207,7 +207,7 @@ namespace GOTHIC_ENGINE {
 
 	bool FocusStatusBar::CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex) const
 	{
-		if (protectionModel.protectionMode != TargetProtectionMode::All)
+		if (protectionModel.targetProtectionMode != TargetProtectionMode::All)
 			return true;
 
 		if (Options::HideTargetProtectionZeroValues && npc->GetProtectionByIndex(damageIndex) == 0) {
@@ -230,7 +230,7 @@ namespace GOTHIC_ENGINE {
 	{
 		activeDamageIndexes.clear();
 
-		if (protectionModel.protectionMode == TargetProtectionMode::All) {
+		if (protectionModel.targetProtectionMode == TargetProtectionMode::All) {
 			activeDamageIndexes.assign(DamageMaskHelper::PROTECTION_DAMAGE_INDEXES.begin(),
 				DamageMaskHelper::PROTECTION_DAMAGE_INDEXES.end());
 			return;
@@ -320,18 +320,18 @@ namespace GOTHIC_ENGINE {
 	bool FocusStatusBar::BuildProtectionModel(oCNpc* npc)
 	{
 		protectionModel.isInFightMode = player->fmode != 0;
-		protectionModel.protectionMode = protectionModel.isInFightMode
+		protectionModel.targetProtectionMode = protectionModel.isInFightMode
 			? (TargetProtectionMode)Options::ShowTargetProtectionInFight
 			: (TargetProtectionMode)Options::ShowTargetProtectionNoFight;
 
-		if (protectionModel.protectionMode == TargetProtectionMode::Disabled)
+		if (protectionModel.targetProtectionMode == TargetProtectionMode::Disabled)
 			return false;
 
 		activeStatuses.clear();
 
 		if (npc->HasFlag(NPC_FLAG_IMMORTAL))
 		{
-			protectionModel.mode = ProtectionRenderMode::Immortal;
+			protectionModel.renderMode = ProtectionRenderMode::Immortal;
 			return true;
 		}
 
@@ -349,7 +349,7 @@ namespace GOTHIC_ENGINE {
 
 		if (activeStatuses.empty()) return false;
 
-		protectionModel.mode = ProtectionRenderMode::Normal;
+		protectionModel.renderMode = ProtectionRenderMode::Normal;
 		return true;
 	}
 
@@ -357,7 +357,7 @@ namespace GOTHIC_ENGINE {
 	{
 		layout.size = GetProtSize();
 
-		if (protectionModel.mode == ProtectionRenderMode::Immortal)
+		if (protectionModel.renderMode == ProtectionRenderMode::Immortal)
 		{
 			layout.placement = FocusStatusProtectionPlacement::CLOSE;
 			layout.margin = GetHorizontalProtMargin();
@@ -419,7 +419,7 @@ namespace GOTHIC_ENGINE {
 
 	void FocusStatusBar::RenderProtectionWithLayout(const ProtectionLayout& layout)
 	{
-		if (protectionModel.mode == ProtectionRenderMode::Immortal)
+		if (protectionModel.renderMode == ProtectionRenderMode::Immortal)
 		{
 			auto color = Colors::Gray;
 			if (ogame->hpBar)
