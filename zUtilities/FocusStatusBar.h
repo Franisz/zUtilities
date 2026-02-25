@@ -44,11 +44,12 @@ namespace GOTHIC_ENGINE {
 		int startY = 0;
 		int size = 0;
 		int margin = 0;
+		int totalContentSize = 0;
 	};
 
 	class FocusStatusBar : public StatusBar {
 	private:
-		const zSTRING IMMUNE_ABBREVIATION = "IMM";
+		zSTRING IMMUNE_ABBREVIATION = "IMM";
 		const zSTRING crackedShieldTexture = zSTRING("ICON_PROTECTIONS"); // https://game-icons.net/1x1/lorc/cracked-shield.html
 		const int protectionPlacementRightMargin = 250;
 		std::vector<oEIndexDamage> activeDamageIndexes;
@@ -60,20 +61,19 @@ namespace GOTHIC_ENGINE {
 		int GetProtSize();
 		int GetProtStartX(FocusStatusProtectionPlacement placement);
 		int GetProtStartY(FocusStatusProtectionPlacement placement);
-		int CalcProtRenderWidth();
 		FocusStatusProtectionPlacement GetProtPlacement(const std::vector<NpcProtectionStatus>& statuses);
 		zSTRING GetIconNameByDamageIndex(const oEIndexDamage& index);
 		virtual void PrintValueOutside(zSTRING& str) override;
-		void RenderProtectionIconsClose(int startX, int startY, int size, int margin, const NpcProtectionStatus& status);
-		void RenderProtectionIconsTop(int startX, int startY, int size, int margin);
-		void RenderProtectionIconsRight(int startX, int startY, int size, int margin);
+		void RenderProtectionIconsClose(const ProtectionLayout& layout);
+		void RenderProtectionIconsTop(const ProtectionLayout& layout);
+		void RenderProtectionIconsRight(const ProtectionLayout& layout);
 
 		int valueOffsetY = 0;
 		bool BuildProtectionModel(oCNpc* npc, ProtectionModel& model);
 		void BuildProtectionLayout(const ProtectionModel& model, ProtectionLayout& layout);
 		void RenderProtectionWithLayout(const ProtectionModel& model, const ProtectionLayout& layout);
 
-		ProtectionIconRenderData BuildIconRenderData(const NpcProtectionStatus& status, unsigned char alpha);		
+		ProtectionIconRenderData BuildIconRenderData(const NpcProtectionStatus& status, unsigned char alpha);
 
 		void FillDamageIndexesBuffer();
 		bool CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex);

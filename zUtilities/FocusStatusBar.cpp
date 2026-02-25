@@ -85,22 +85,6 @@ namespace GOTHIC_ENGINE {
 		valueView->Print(x, y, str);
 	}
 
-	int FocusStatusBar::CalcProtRenderWidth()
-	{
-		int width = 0;
-		int margin = GetHorizontalProtMargin();
-		int size = GetProtSize();
-		int iconSpacing = screen->FontY() * 0.1f;
-
-		for (const auto& status : activeStatuses) {
-			int textSize = screen->FontSize(status.immune ? zSTRING(IMMUNE_ABBREVIATION) : zSTRING(status.value));
-			width += size + textSize + margin + iconSpacing;
-		}
-		width -= margin;
-
-		return width;
-	}
-
 	void FocusStatusBar::MoveFocusBar(int x, int y, oCNpc* npc) {
 		if (!Options::ShowEnemyBarAboveHim)
 			return;
@@ -191,38 +175,39 @@ namespace GOTHIC_ENGINE {
 		}
 	}
 
-	void FocusStatusBar::RenderProtectionIconsClose(int startX, int startY, int size, int margin, const NpcProtectionStatus& status)
+	void FocusStatusBar::RenderProtectionIconsClose(const ProtectionLayout& layout)
 	{
 		unsigned char alpha = ogame->hpBar ? ogame->hpBar->alpha : 255;
-		auto data = BuildIconRenderData(status, alpha);
+		auto data = BuildIconRenderData(activeStatuses[0], alpha);
 
-		IconInfo(startX + margin, startY, size, data.color, data.texture, data.text);
+		IconInfo(layout.startX + layout.margin, layout.startY, layout.size, data.color, data.texture, data.text);
 	}
 
-	void FocusStatusBar::RenderProtectionIconsTop(int startX, int startY, int size, int margin)
+	void FocusStatusBar::RenderProtectionIconsTop(const ProtectionLayout& layout)
 	{
-		startX = startX + bar->vsizex / 2 - CalcProtRenderWidth() / 2;
+		int currentX = layout.startX + bar->vsizex / 2 - layout.totalContentSize / 2;
 		unsigned char alpha = ogame->hpBar ? ogame->hpBar->alpha : 255;
 
 		for (const auto& status : activeStatuses)
 		{
 			auto data = BuildIconRenderData(status, alpha);
 
-			auto icon = IconInfo(startX, startY, size, data.color, data.texture, data.text);
-			startX += icon.GetSize() + margin;
+			auto icon = IconInfo(currentX, layout.startY, layout.size, data.color, data.texture, data.text);
+			currentX += icon.GetSize() + layout.margin;
 		}
 	}
 
-	void FocusStatusBar::RenderProtectionIconsRight(int startX, int startY, int size, int margin)
+	void FocusStatusBar::RenderProtectionIconsRight(const ProtectionLayout& layout)
 	{
+		int currentY = layout.startY;
 		unsigned char alpha = ogame->hpBar ? ogame->hpBar->alpha : 255;
 
 		for (const auto& status : activeStatuses)
 		{
 			auto data = BuildIconRenderData(status, alpha);
 
-			IconInfo(startX, startY, size, data.color, data.texture, data.text);
-			startY += size + margin;
+			IconInfo(layout.startX, currentY, layout.size, data.color, data.texture, data.text);
+			currentY += layout.size + layout.margin;
 		}
 	}
 
@@ -377,24 +362,66 @@ namespace GOTHIC_ENGINE {
 
 	void FocusStatusBar::BuildProtectionLayout(const ProtectionModel& model, ProtectionLayout& layout)
 	{
+		layout.size = GetProtSize();
+
 		if (model.mode == ProtectionRenderMode::Immortal)
 		{
 			layout.placement = FocusStatusProtectionPlacement::CLOSE;
-			layout.size = GetProtSize();
 			layout.margin = GetHorizontalProtMargin();
+			layout.totalContentSize = layout.size;
+
 			layout.startX = GetProtStartX(layout.placement);
 			layout.startY = GetProtStartY(layout.placement);
 			return;
 		}
 
 		layout.placement = GetProtPlacement(activeStatuses);
-		layout.size = GetProtSize();
-		layout.startX = GetProtStartX(layout.placement);
-		layout.startY = GetProtStartY(layout.placement);
-
-		layout.margin = layout.placement == FocusStatusProtectionPlacement::RIGHT
+		layout.margin = (layout.placement == FocusStatusProtectionPlacement::RIGHT)
 			? GetVerticalProtMargin()
 			: GetHorizontalProtMargin();
+
+		layout.totalContentSize = 0;
+
+		switch (layout.placement)
+		{
+			case FocusStatusProtectionPlacement::TOP:
+			{
+				const int iconSpacing = screen->FontY() * 0.1f;
+				const int immuneStringSize = screen->FontSize(IMMUNE_ABBREVIATION);
+
+				for (const auto& status : activeStatuses)
+				{
+					const int textSize = status.immune
+						? immuneStringSize
+						: screen->FontSize(zSTRING(status.value));
+
+					layout.totalContentSize += layout.size + iconSpacing + textSize;
+					layout.totalContentSize += layout.margin;
+				}
+				layout.totalContentSize -= layout.margin;
+				break;
+			}
+			case FocusStatusProtectionPlacement::RIGHT:
+			{
+				layout.totalContentSize = activeStatuses.size() * (layout.size + layout.margin) - layout.margin;
+				break;
+			}
+			case FocusStatusProtectionPlacement::CLOSE:
+			{
+				const int iconSpacing = screen->FontY() * 0.1f;
+				const auto& status = activeStatuses.front();
+
+				const int textSize = status.immune
+					? screen->FontSize(zSTRING(IMMUNE_ABBREVIATION))
+					: screen->FontSize(zSTRING(status.value));
+
+				layout.totalContentSize = layout.size + iconSpacing + textSize;
+				break;
+			}
+		}
+
+		layout.startX = GetProtStartX(layout.placement);
+		layout.startY = GetProtStartY(layout.placement);
 	}
 
 	void FocusStatusBar::RenderProtectionWithLayout(const ProtectionModel& model, const ProtectionLayout& layout)
@@ -412,15 +439,15 @@ namespace GOTHIC_ENGINE {
 		switch (layout.placement)
 		{
 		case FocusStatusProtectionPlacement::CLOSE:
-			RenderProtectionIconsClose(layout.startX, layout.startY, layout.size, layout.margin, activeStatuses[0]);
+			RenderProtectionIconsClose(layout);
 			break;
 
 		case FocusStatusProtectionPlacement::TOP:
-			RenderProtectionIconsTop(layout.startX, layout.startY, layout.size, layout.margin);
+			RenderProtectionIconsTop(layout);
 			break;
 
 		case FocusStatusProtectionPlacement::RIGHT:
-			RenderProtectionIconsRight(layout.startX, layout.startY, layout.size, layout.margin);
+			RenderProtectionIconsRight(layout);
 			break;
 		}
 	}
