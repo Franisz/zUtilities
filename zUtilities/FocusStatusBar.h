@@ -36,6 +36,8 @@ namespace GOTHIC_ENGINE {
 
 	struct ProtectionModel {
 		ProtectionRenderMode mode = ProtectionRenderMode::Disabled;
+		bool isInFightMode = false;
+		TargetProtectionMode protectionMode = TargetProtectionMode::Disabled;
 	};
 
 	struct ProtectionLayout {
@@ -69,14 +71,15 @@ namespace GOTHIC_ENGINE {
 		void RenderProtectionIconsRight(const ProtectionLayout& layout);
 
 		int valueOffsetY = 0;
-		bool BuildProtectionModel(oCNpc* npc, ProtectionModel& model);
-		void BuildProtectionLayout(const ProtectionModel& model, ProtectionLayout& layout);
-		void RenderProtectionWithLayout(const ProtectionModel& model, const ProtectionLayout& layout);
+		ProtectionModel protectionModel = {};
+		bool BuildProtectionModel(oCNpc* npc);
+		void BuildProtectionLayout(ProtectionLayout& layout);
+		void RenderProtectionWithLayout(const ProtectionLayout& layout);
 
 		ProtectionIconRenderData BuildIconRenderData(const NpcProtectionStatus& status, unsigned char alpha);
 
 		void FillDamageIndexesBuffer();
-		bool CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex);
+		bool CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex) const;
 		void BuildFightModeDamage(DamageMask& mask);
 		void BuildNoFightModeDamage(DamageMask& mask);
 
