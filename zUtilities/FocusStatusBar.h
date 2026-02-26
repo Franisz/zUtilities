@@ -44,7 +44,7 @@ namespace GOTHIC_ENGINE {
 		FocusStatusProtectionPlacement placement = FocusStatusProtectionPlacement::NONE;
 		int startX = 0;
 		int startY = 0;
-		int size = 0;
+		int iconSize = 0;
 		int margin = 0;
 		int fontY = 0;
 		int totalContentSize = 0;
@@ -85,7 +85,6 @@ namespace GOTHIC_ENGINE {
 	public:
 		static bool IsDistanceWeaponDamageTypeOverwritten;
 		FocusStatusBar();
-		bool IsShowTargetProtectionDisabled();
 		bool NeedAdjustPosition(int x, int y, oCNpc* npc);
 		virtual void Loop() override;
 		virtual bool Init() override;
