@@ -26,12 +26,9 @@ namespace GOTHIC_ENGINE {
 
 	class DamageMaskHelper {
 	public:
-		static const std::vector<oEIndexDamage> PROTECTION_DAMAGE_INDEXES;
-
 		static void MarkIntDamageType(const int& damageTypeMask, DamageMask& mask);
 		static void MarkMunitionDamage(const oCItem* weapon, DamageMask& mask);
 		static void MarkWeaponDamage(const oCItem* weapon, DamageMask& mask);
-		static void BuildOrderedDamageIndexes(const DamageMask& mask, std::vector<oEIndexDamage>& vec);
 		static bool ItemHasDistanceOrMunitionCategoryFlag(const oCItem* item);
 		static void FixupSpellDamageMask(DamageMask& mask);
 	};

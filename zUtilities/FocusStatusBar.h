@@ -52,16 +52,22 @@ namespace GOTHIC_ENGINE {
 
 	class FocusStatusBar : public StatusBar {
 	private:
+		static constexpr int PROTECTION_COUNT = 7;
+		static const oEIndexDamage PROTECTION_DAMAGE_ORDERED_INDEXES[PROTECTION_COUNT];
 		zSTRING IMMUNE_ABBREVIATION = "IMM";
 		const zSTRING crackedShieldTexture = zSTRING("ICON_PROTECTIONS"); // https://game-icons.net/1x1/lorc/cracked-shield.html		
 		const int protectionPlacementRightMargin = 250;
-		std::vector<oEIndexDamage> activeDamageIndexes;
-		std::vector<NpcProtectionStatus> activeStatuses;
+		oEIndexDamage activeDamageIndexes[oEDamageIndex_MAX]; // not `PROTECTION_COUNT` because of bound safety
+		int activeDamageIndexesCount = 0;
+
+		NpcProtectionStatus activeStatuses[oEDamageIndex_MAX]; // not `PROTECTION_COUNT` because of bound safety
+		int activeStatusesCount = 0;
+
 		zCView* protView;
 		void MoveFocusBar(int x, int y, oCNpc* npc);
 		int GetHorizontalProtMargin(int fontY);
 		int GetVerticalProtMargin(int fontY);
-		FocusStatusProtectionPlacement GetProtPlacement(const std::vector<NpcProtectionStatus>& statuses);
+		FocusStatusProtectionPlacement GetProtPlacement() const;
 		const zSTRING& GetIconNameByDamageIndex(const oEIndexDamage& index);
 		virtual void PrintValueOutside(zSTRING& str) override;
 		void RenderProtectionIconsClose(const ProtectionLayout& layout);

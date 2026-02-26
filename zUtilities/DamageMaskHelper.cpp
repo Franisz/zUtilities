@@ -3,16 +3,6 @@
 
 namespace GOTHIC_ENGINE
 {
-	const std::vector<oEIndexDamage> DamageMaskHelper::PROTECTION_DAMAGE_INDEXES = std::vector<oEIndexDamage>({
-		oEIndexDamage::oEDamageIndex_Edge,
-		oEIndexDamage::oEDamageIndex_Blunt,
-		oEIndexDamage::oEDamageIndex_Point,
-		oEIndexDamage::oEDamageIndex_Fire,
-		oEIndexDamage::oEDamageIndex_Magic,
-		oEIndexDamage::oEDamageIndex_Fly,
-		oEIndexDamage::oEDamageIndex_Fall
-		});
-
 	void DamageMaskHelper::MarkIntDamageType(const int& damageTypeMask, DamageMask& mask)
 	{
 		for (const auto& mapItem : DAMAGE_MAP) {
@@ -55,15 +45,6 @@ namespace GOTHIC_ENGINE
 		const oCItem* damageSource = useMunition ? handItem : weapon;
 
 		MarkWeaponDamage(damageSource, mask);
-	}
-
-	void DamageMaskHelper::BuildOrderedDamageIndexes(const DamageMask& mask, std::vector<oEIndexDamage>& vec)
-	{
-		for (auto index : PROTECTION_DAMAGE_INDEXES) {
-			if (mask.test(index)) {
-				vec.push_back(index);
-			}
-		}
 	}
 
 	bool DamageMaskHelper::ItemHasDistanceOrMunitionCategoryFlag(const oCItem* item) {

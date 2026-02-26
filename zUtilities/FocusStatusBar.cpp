@@ -4,11 +4,18 @@
 namespace GOTHIC_ENGINE {
 	bool FocusStatusBar::IsDistanceWeaponDamageTypeOverwritten = false;
 
+	const oEIndexDamage FocusStatusBar::PROTECTION_DAMAGE_ORDERED_INDEXES[PROTECTION_COUNT] = {
+	oEDamageIndex_Edge,
+	oEDamageIndex_Blunt,
+	oEDamageIndex_Point,
+	oEDamageIndex_Fire,
+	oEDamageIndex_Magic,
+	oEDamageIndex_Fly,
+	oEDamageIndex_Fall
+	};
+
 	FocusStatusBar::FocusStatusBar() : StatusBar(ogame->focusBar)
 	{
-		activeDamageIndexes.reserve(oEDamageIndex_MAX);
-		activeStatuses.reserve(oEDamageIndex_MAX);
-
 		iconCache[oEDamageIndex_Barrier] = "DMGICON_BARRIER";
 		iconCache[oEDamageIndex_Blunt] = "DMGICON_BLUNT";     // https://game-icons.net/1x1/lorc/cross-mark.html
 		iconCache[oEDamageIndex_Edge] = "DMGICON_EDGE";       // https://game-icons.net/1x1/lorc/ragged-wound.html
@@ -42,10 +49,9 @@ namespace GOTHIC_ENGINE {
 		return fontY + 85;
 	}
 
-	FocusStatusProtectionPlacement FocusStatusBar::GetProtPlacement(const std::vector<NpcProtectionStatus>& statuses)
+	FocusStatusProtectionPlacement FocusStatusBar::GetProtPlacement() const
 	{
-		auto count = statuses.size();
-		if (count == 1) {
+		if (activeStatusesCount == 1) {
 			return FocusStatusProtectionPlacement::CLOSE;
 		}
 
@@ -53,7 +59,7 @@ namespace GOTHIC_ENGINE {
 			return FocusStatusProtectionPlacement::TOP;
 		}
 
-		if (count <= 0) {
+		if (activeStatusesCount <= 0) {
 			return FocusStatusProtectionPlacement::NONE;
 		}
 
@@ -154,9 +160,9 @@ namespace GOTHIC_ENGINE {
 		int currentX = layout.startX + bar->vsizex / 2 - layout.totalContentSize / 2;
 		unsigned char alpha = ogame->hpBar ? ogame->hpBar->alpha : 255;
 
-		for (const auto& status : activeStatuses)
+		for (int i = 0; i < activeStatusesCount; ++i)
 		{
-			auto data = BuildIconRenderData(status, alpha);
+			auto data = BuildIconRenderData(activeStatuses[i], alpha);
 
 			auto icon = IconInfo(currentX, layout.startY, layout.iconSize, data.color, data.texture, data.text);
 			currentX += icon.GetSize() + layout.margin;
@@ -168,9 +174,9 @@ namespace GOTHIC_ENGINE {
 		int currentY = layout.startY;
 		unsigned char alpha = ogame->hpBar ? ogame->hpBar->alpha : 255;
 
-		for (const auto& status : activeStatuses)
+		for (int i = 0; i < activeStatusesCount; ++i)
 		{
-			auto data = BuildIconRenderData(status, alpha);
+			auto data = BuildIconRenderData(activeStatuses[i], alpha);
 
 			IconInfo(layout.startX, currentY, layout.iconSize, data.color, data.texture, data.text);
 			currentY += layout.iconSize + layout.margin;
@@ -200,11 +206,13 @@ namespace GOTHIC_ENGINE {
 
 	void FocusStatusBar::FillDamageIndexesBuffer()
 	{
-		activeDamageIndexes.clear();
+		activeDamageIndexesCount = 0;
 
 		if (protectionModel.targetProtectionMode == TargetProtectionMode::All) {
-			activeDamageIndexes.assign(DamageMaskHelper::PROTECTION_DAMAGE_INDEXES.begin(),
-				DamageMaskHelper::PROTECTION_DAMAGE_INDEXES.end());
+			for (int i = 0; i < PROTECTION_COUNT; ++i)
+			{
+				activeDamageIndexes[activeDamageIndexesCount++] = PROTECTION_DAMAGE_ORDERED_INDEXES[i];
+			}
 			return;
 		}
 
@@ -218,7 +226,11 @@ namespace GOTHIC_ENGINE {
 			BuildNoFightModeDamage(mask);
 		}
 
-		DamageMaskHelper::BuildOrderedDamageIndexes(mask, activeDamageIndexes);
+		for (int i = 0; i < oEDamageIndex_MAX; i++) {
+			if (mask.test(i)) {
+				activeDamageIndexes[activeDamageIndexesCount++] = (oEIndexDamage)i;
+			}
+		}
 	}
 
 	void FocusStatusBar::BuildFightModeDamage(DamageMask& mask)
@@ -291,6 +303,7 @@ namespace GOTHIC_ENGINE {
 
 	bool FocusStatusBar::BuildProtectionModel(oCNpc* npc)
 	{
+		activeStatusesCount = 0;
 		protectionModel.isInFightMode = player->fmode != 0;
 		protectionModel.targetProtectionMode = protectionModel.isInFightMode
 			? (TargetProtectionMode)Options::ShowTargetProtectionInFight
@@ -298,8 +311,6 @@ namespace GOTHIC_ENGINE {
 
 		if (protectionModel.targetProtectionMode == TargetProtectionMode::Disabled)
 			return false;
-
-		activeStatuses.clear();
 
 		if (npc->HasFlag(NPC_FLAG_IMMORTAL))
 		{
@@ -309,20 +320,19 @@ namespace GOTHIC_ENGINE {
 
 		FillDamageIndexesBuffer();
 
-		for (auto& index : activeDamageIndexes) {
+		for (int i = 0; i < activeDamageIndexesCount; ++i) {
+			oEIndexDamage index = activeDamageIndexes[i];
+
 			if (CanRenderProtectionStatus(npc, index)) {
-				NpcProtectionStatus status;
+				NpcProtectionStatus& status = activeStatuses[activeStatusesCount++];
 				status.value = npc->GetProtectionByIndex(index);
 				status.damageIndex = index;
 				status.immune = status.value < 0;
-				activeStatuses.push_back(status);
 			}
 		}
-
-		if (activeStatuses.empty()) return false;
-
 		protectionModel.renderMode = ProtectionRenderMode::Normal;
-		return true;
+
+		return activeStatusesCount > 0;
 	}
 
 	void FocusStatusBar::BuildProtectionLayout(ProtectionLayout& layout)
@@ -339,7 +349,7 @@ namespace GOTHIC_ENGINE {
 			return;
 		}
 
-		layout.placement = GetProtPlacement(activeStatuses);
+		layout.placement = GetProtPlacement();
 		switch (layout.placement)
 		{
 		case FocusStatusProtectionPlacement::TOP:
@@ -349,11 +359,11 @@ namespace GOTHIC_ENGINE {
 			const int iconSpacing = layout.fontY * 0.1f;
 			const int immuneStringSize = screen->FontSize(IMMUNE_ABBREVIATION);
 
-			for (const auto& status : activeStatuses)
+			for (int i = 0; i < activeStatusesCount; ++i)
 			{
-				const int textSize = status.immune
+				const int textSize = activeStatuses[i].immune
 					? immuneStringSize
-					: screen->FontSize(zSTRING(status.value));
+					: screen->FontSize(zSTRING(activeStatuses[i].value));
 
 				layout.totalContentSize += layout.iconSize + iconSpacing + textSize + layout.margin;
 			}
@@ -365,7 +375,7 @@ namespace GOTHIC_ENGINE {
 		case FocusStatusProtectionPlacement::RIGHT:
 		{
 			layout.margin = GetVerticalProtMargin(layout.fontY);
-			layout.totalContentSize = activeStatuses.size() * (layout.iconSize + layout.margin) - layout.margin;
+			layout.totalContentSize = activeStatusesCount * (layout.iconSize + layout.margin) - layout.margin;
 			layout.startX = bar->vposx + bar->vsizex + protectionPlacementRightMargin;
 			layout.startY = bar->vposy + bar->vsizey / 2 - layout.iconSize;
 			break;
@@ -374,11 +384,10 @@ namespace GOTHIC_ENGINE {
 		{
 			layout.margin = GetHorizontalProtMargin(layout.fontY);
 			const int iconSpacing = layout.fontY * 0.1f;
-			const auto& status = activeStatuses.front();
 
-			const int textSize = status.immune
+			const int textSize = activeStatuses[0].immune
 				? screen->FontSize(IMMUNE_ABBREVIATION)
-				: screen->FontSize(zSTRING(status.value));
+				: screen->FontSize(zSTRING(activeStatuses[0].value));
 
 			layout.totalContentSize = layout.iconSize + iconSpacing + textSize;
 			layout.startX = bar->vposx + bar->vsizex;
