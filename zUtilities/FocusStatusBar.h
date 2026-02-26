@@ -46,6 +46,7 @@ namespace GOTHIC_ENGINE {
 		int startY = 0;
 		int size = 0;
 		int margin = 0;
+		int fontY = 0;
 		int totalContentSize = 0;
 	};
 
@@ -58,11 +59,8 @@ namespace GOTHIC_ENGINE {
 		std::vector<NpcProtectionStatus> activeStatuses;
 		zCView* protView;
 		void MoveFocusBar(int x, int y, oCNpc* npc);
-		int GetHorizontalProtMargin();
-		int GetVerticalProtMargin();
-		int GetProtSize();
-		int GetProtStartX(FocusStatusProtectionPlacement placement);
-		int GetProtStartY(FocusStatusProtectionPlacement placement);
+		int GetHorizontalProtMargin(int fontY);
+		int GetVerticalProtMargin(int fontY);
 		FocusStatusProtectionPlacement GetProtPlacement(const std::vector<NpcProtectionStatus>& statuses);
 		const zSTRING& GetIconNameByDamageIndex(const oEIndexDamage& index);
 		virtual void PrintValueOutside(zSTRING& str) override;

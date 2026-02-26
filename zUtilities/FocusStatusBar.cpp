@@ -34,28 +34,12 @@ namespace GOTHIC_ENGINE {
 		del(protView);
 	}
 
-	int FocusStatusBar::GetHorizontalProtMargin() {
-		return protView->FontY() * 0.1f + 30;
+	int FocusStatusBar::GetHorizontalProtMargin(int fontY) {
+		return fontY * 0.1f + 30;
 	}
 
-	int FocusStatusBar::GetVerticalProtMargin() {
-		return GetProtSize() + 85;
-	}
-
-	int FocusStatusBar::GetProtSize() {
-		return protView->FontY() * 0.75f;
-	}
-
-	int FocusStatusBar::GetProtStartX(FocusStatusProtectionPlacement placement) {
-		if (placement == FocusStatusProtectionPlacement::TOP) {
-			return bar->vposx;
-		}
-
-		if (placement == FocusStatusProtectionPlacement::RIGHT) {
-			return bar->vposx + bar->vsizex + protectionPlacementRightMargin;
-		}
-
-		return bar->vposx + bar->vsizex;
+	int FocusStatusBar::GetVerticalProtMargin(int fontY) {
+		return fontY + 85;
 	}
 
 	FocusStatusProtectionPlacement FocusStatusBar::GetProtPlacement(const std::vector<NpcProtectionStatus>& statuses)
@@ -74,14 +58,6 @@ namespace GOTHIC_ENGINE {
 		}
 
 		return FocusStatusProtectionPlacement::RIGHT;
-	}
-
-	int FocusStatusBar::GetProtStartY(FocusStatusProtectionPlacement placement) {
-		if (placement == FocusStatusProtectionPlacement::TOP) {
-			return bar->vposy - GetHorizontalProtMargin() - GetProtSize() - bar->vsizey;
-		}
-
-		return bar->vposy + bar->vsizey / 2 - GetProtSize();
 	}
 
 	void FocusStatusBar::PrintValueOutside(zSTRING& str)
@@ -351,31 +327,26 @@ namespace GOTHIC_ENGINE {
 
 	void FocusStatusBar::BuildProtectionLayout(ProtectionLayout& layout)
 	{
-		layout.size = GetProtSize();
+		layout.fontY = protView->FontY();
+		layout.size = layout.fontY * 0.75f;
 
-		if (protectionModel.renderMode == ProtectionRenderMode::Immortal)
-		{
+		if (protectionModel.renderMode == ProtectionRenderMode::Immortal) {
 			layout.placement = FocusStatusProtectionPlacement::CLOSE;
-			layout.margin = GetHorizontalProtMargin();
+			layout.margin = GetHorizontalProtMargin(layout.fontY);
 			layout.totalContentSize = layout.size;
-
-			layout.startX = GetProtStartX(layout.placement);
-			layout.startY = GetProtStartY(layout.placement);
+			layout.startX = bar->vposx + bar->vsizex;
+			layout.startY = bar->vposy + bar->vsizey / 2 - layout.size;
 			return;
 		}
 
 		layout.placement = GetProtPlacement(activeStatuses);
-		layout.margin = (layout.placement == FocusStatusProtectionPlacement::RIGHT)
-			? GetVerticalProtMargin()
-			: GetHorizontalProtMargin();
-
-		layout.totalContentSize = 0;
-
 		switch (layout.placement)
 		{
 		case FocusStatusProtectionPlacement::TOP:
 		{
-			const int iconSpacing = screen->FontY() * 0.1f;
+			layout.margin = GetHorizontalProtMargin(layout.fontY);
+
+			const int iconSpacing = layout.fontY * 0.1f;
 			const int immuneStringSize = screen->FontSize(IMMUNE_ABBREVIATION);
 
 			for (const auto& status : activeStatuses)
@@ -384,33 +355,37 @@ namespace GOTHIC_ENGINE {
 					? immuneStringSize
 					: screen->FontSize(zSTRING(status.value));
 
-				layout.totalContentSize += layout.size + iconSpacing + textSize;
-				layout.totalContentSize += layout.margin;
+				layout.totalContentSize += layout.size + iconSpacing + textSize + layout.margin;
 			}
 			layout.totalContentSize -= layout.margin;
+			layout.startX = bar->vposx;
+			layout.startY = bar->vposy - layout.margin - layout.size - bar->vsizey;
 			break;
 		}
 		case FocusStatusProtectionPlacement::RIGHT:
 		{
+			layout.margin = GetVerticalProtMargin(layout.fontY);
 			layout.totalContentSize = activeStatuses.size() * (layout.size + layout.margin) - layout.margin;
+			layout.startX = bar->vposx + bar->vsizex + protectionPlacementRightMargin;
+			layout.startY = bar->vposy + bar->vsizey / 2 - layout.size;
 			break;
 		}
 		case FocusStatusProtectionPlacement::CLOSE:
 		{
-			const int iconSpacing = screen->FontY() * 0.1f;
+			layout.margin = GetHorizontalProtMargin(layout.fontY);
+			const int iconSpacing = layout.fontY * 0.1f;
 			const auto& status = activeStatuses.front();
 
 			const int textSize = status.immune
-				? screen->FontSize(zSTRING(IMMUNE_ABBREVIATION))
+				? screen->FontSize(IMMUNE_ABBREVIATION)
 				: screen->FontSize(zSTRING(status.value));
 
 			layout.totalContentSize = layout.size + iconSpacing + textSize;
+			layout.startX = bar->vposx + bar->vsizex;
+			layout.startY = bar->vposy + bar->vsizey / 2 - layout.size;
 			break;
 		}
 		}
-
-		layout.startX = GetProtStartX(layout.placement);
-		layout.startY = GetProtStartY(layout.placement);
 	}
 
 	void FocusStatusBar::RenderProtectionWithLayout(const ProtectionLayout& layout)
