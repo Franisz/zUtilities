@@ -8,6 +8,16 @@ namespace GOTHIC_ENGINE {
 	{
 		activeDamageIndexes.reserve(oEDamageIndex_MAX);
 		activeStatuses.reserve(oEDamageIndex_MAX);
+
+		iconCache[oEDamageIndex_Barrier] = "DMGICON_BARRIER";
+		iconCache[oEDamageIndex_Blunt] = "DMGICON_BLUNT";     // https://game-icons.net/1x1/lorc/cross-mark.html
+		iconCache[oEDamageIndex_Edge] = "DMGICON_EDGE";       // https://game-icons.net/1x1/lorc/ragged-wound.html
+		iconCache[oEDamageIndex_Fire] = "DMGICON_FIRE";       // https://game-icons.net/1x1/lorc/burning-embers.html
+		iconCache[oEDamageIndex_Fly] = "DMGICON_FLY";         // https://game-icons.net/1x1/lorc/fluffy-trefoil.html
+		iconCache[oEDamageIndex_Magic] = "DMGICON_MAGIC";     // https://game-icons.net/1x1/delapouite/polar-star.html
+		iconCache[oEDamageIndex_Point] = "DMGICON_POINT";     // https://game-icons.net/1x1/skoll/bullseye.html
+		iconCache[oEDamageIndex_Fall] = "DMGICON_FALL";       // https://game-icons.net/1x1/sbed/falling.html
+		iconCache[oEDamageIndex_MAX] = "DMGICON_UNKNOWN";     // https://game-icons.net/1x1/lorc/scar-wound.html
 	}
 
 	bool FocusStatusBar::Init() {
@@ -147,26 +157,12 @@ namespace GOTHIC_ENGINE {
 		}
 	}
 
-	zSTRING FocusStatusBar::GetIconNameByDamageIndex(const oEIndexDamage& index) {
-		switch (index)
-		{
-		case oEIndexDamage::oEDamageIndex_Edge:
-			return zSTRING("DMGICON_EDGE"); // https://game-icons.net/1x1/lorc/ragged-wound.html
-		case oEIndexDamage::oEDamageIndex_Blunt:
-			return zSTRING("DMGICON_BLUNT"); // https://game-icons.net/1x1/lorc/cross-mark.html
-		case oEIndexDamage::oEDamageIndex_Point:
-			return zSTRING("DMGICON_POINT"); // https://game-icons.net/1x1/skoll/bullseye.html
-		case oEIndexDamage::oEDamageIndex_Fire:
-			return zSTRING("DMGICON_FIRE"); // https://game-icons.net/1x1/lorc/burning-embers.html
-		case oEIndexDamage::oEDamageIndex_Magic:
-			return zSTRING("DMGICON_MAGIC"); // https://game-icons.net/1x1/delapouite/polar-star.html
-		case oEIndexDamage::oEDamageIndex_Fly:
-			return zSTRING("DMGICON_FLY"); // https://game-icons.net/1x1/lorc/fluffy-trefoil.html
-		case oEIndexDamage::oEDamageIndex_Fall:
-			return zSTRING("DMGICON_FALL"); // https://game-icons.net/1x1/sbed/falling.html
-		default:
-			return zSTRING("DMGICON_UNKNOWN"); // https://game-icons.net/1x1/lorc/scar-wound.html
-		}
+	const zSTRING& FocusStatusBar::GetIconNameByDamageIndex(const oEIndexDamage& index)
+	{
+		if (index < 0 || index >= oEDamageIndex_MAX)
+			return iconCache[oEDamageIndex_MAX]; // fallback
+
+		return iconCache[index];
 	}
 
 	void FocusStatusBar::RenderProtectionIconsClose(const ProtectionLayout& layout)
@@ -308,7 +304,7 @@ namespace GOTHIC_ENGINE {
 		data.text = status.immune ? IMMUNE_ABBREVIATION : zSTRING(status.value);
 
 		data.texture = Options::TargetProtectionIconStyle
-			? zSTRING("ICON_PROTECTIONS")
+			? crackedShieldTexture
 			: GetIconNameByDamageIndex(status.damageIndex);
 
 		data.color = Colors::GetColorByDamageIndex(status.damageIndex);
@@ -377,40 +373,40 @@ namespace GOTHIC_ENGINE {
 
 		switch (layout.placement)
 		{
-			case FocusStatusProtectionPlacement::TOP:
-			{
-				const int iconSpacing = screen->FontY() * 0.1f;
-				const int immuneStringSize = screen->FontSize(IMMUNE_ABBREVIATION);
+		case FocusStatusProtectionPlacement::TOP:
+		{
+			const int iconSpacing = screen->FontY() * 0.1f;
+			const int immuneStringSize = screen->FontSize(IMMUNE_ABBREVIATION);
 
-				for (const auto& status : activeStatuses)
-				{
-					const int textSize = status.immune
-						? immuneStringSize
-						: screen->FontSize(zSTRING(status.value));
-
-					layout.totalContentSize += layout.size + iconSpacing + textSize;
-					layout.totalContentSize += layout.margin;
-				}
-				layout.totalContentSize -= layout.margin;
-				break;
-			}
-			case FocusStatusProtectionPlacement::RIGHT:
+			for (const auto& status : activeStatuses)
 			{
-				layout.totalContentSize = activeStatuses.size() * (layout.size + layout.margin) - layout.margin;
-				break;
-			}
-			case FocusStatusProtectionPlacement::CLOSE:
-			{
-				const int iconSpacing = screen->FontY() * 0.1f;
-				const auto& status = activeStatuses.front();
-
 				const int textSize = status.immune
-					? screen->FontSize(zSTRING(IMMUNE_ABBREVIATION))
+					? immuneStringSize
 					: screen->FontSize(zSTRING(status.value));
 
-				layout.totalContentSize = layout.size + iconSpacing + textSize;
-				break;
+				layout.totalContentSize += layout.size + iconSpacing + textSize;
+				layout.totalContentSize += layout.margin;
 			}
+			layout.totalContentSize -= layout.margin;
+			break;
+		}
+		case FocusStatusProtectionPlacement::RIGHT:
+		{
+			layout.totalContentSize = activeStatuses.size() * (layout.size + layout.margin) - layout.margin;
+			break;
+		}
+		case FocusStatusProtectionPlacement::CLOSE:
+		{
+			const int iconSpacing = screen->FontY() * 0.1f;
+			const auto& status = activeStatuses.front();
+
+			const int textSize = status.immune
+				? screen->FontSize(zSTRING(IMMUNE_ABBREVIATION))
+				: screen->FontSize(zSTRING(status.value));
+
+			layout.totalContentSize = layout.size + iconSpacing + textSize;
+			break;
+		}
 		}
 
 		layout.startX = GetProtStartX(layout.placement);

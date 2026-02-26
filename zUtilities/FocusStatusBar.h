@@ -52,7 +52,7 @@ namespace GOTHIC_ENGINE {
 	class FocusStatusBar : public StatusBar {
 	private:
 		zSTRING IMMUNE_ABBREVIATION = "IMM";
-		const zSTRING crackedShieldTexture = zSTRING("ICON_PROTECTIONS"); // https://game-icons.net/1x1/lorc/cracked-shield.html
+		const zSTRING crackedShieldTexture = zSTRING("ICON_PROTECTIONS"); // https://game-icons.net/1x1/lorc/cracked-shield.html		
 		const int protectionPlacementRightMargin = 250;
 		std::vector<oEIndexDamage> activeDamageIndexes;
 		std::vector<NpcProtectionStatus> activeStatuses;
@@ -64,13 +64,14 @@ namespace GOTHIC_ENGINE {
 		int GetProtStartX(FocusStatusProtectionPlacement placement);
 		int GetProtStartY(FocusStatusProtectionPlacement placement);
 		FocusStatusProtectionPlacement GetProtPlacement(const std::vector<NpcProtectionStatus>& statuses);
-		zSTRING GetIconNameByDamageIndex(const oEIndexDamage& index);
+		const zSTRING& GetIconNameByDamageIndex(const oEIndexDamage& index);
 		virtual void PrintValueOutside(zSTRING& str) override;
 		void RenderProtectionIconsClose(const ProtectionLayout& layout);
 		void RenderProtectionIconsTop(const ProtectionLayout& layout);
 		void RenderProtectionIconsRight(const ProtectionLayout& layout);
 
 		int valueOffsetY = 0;
+		zSTRING iconCache[oEDamageIndex_MAX + 1];
 		ProtectionModel protectionModel = {};
 		bool BuildProtectionModel(oCNpc* npc);
 		void BuildProtectionLayout(ProtectionLayout& layout);
