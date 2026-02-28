@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZOBJECT_H__VER3__
 #define __ZOBJECT_H__VER3__
@@ -103,6 +103,7 @@ namespace Gothic_II_Addon {
     zCObject* hashNext;       // sizeof 04h    offset 0Ch
     zSTRING objectName;       // sizeof 14h    offset 10h
 
+    zDefineInheritableCtor( zCObject ) {}
     void zCObject_OnInit()                                              zCall( 0x00401D60 );
     zCObject()                                                          zInit( zCObject_OnInit() );
     int Release()                                                       zCall( 0x0040C310 );
@@ -140,7 +141,8 @@ namespace Gothic_II_Addon {
   public:
     zCLASS_DECLARATION( zCObjectFactory )
 
-    zCObjectFactory() {}
+    zDefineInheritableCtor( zCObjectFactory ) : zCtor( zCObject ) {}
+    zCObjectFactory() : zCtor( zCObject ) {}
     static zCObject* _CreateNewInstance()                  zCall( 0x005A8B00 );
     virtual zCClassDef* _GetClassDef( void ) const         zCall( 0x00426C80 );
     virtual ~zCObjectFactory( void )                       zCall( 0x00426CE0 );

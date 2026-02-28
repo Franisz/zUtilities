@@ -3,7 +3,7 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    bool ShowGameTime, ShowMunitionAmount, ShowPickpocketIcon, UseTimeMultiplier;
+    bool ShowGameTime, ShowMunitionAmount, ShowPickpocketIcon, UseTimeMultiplier, ShowHumanNpcXpRewardIcon;
     int ShowSystemTime, KeyTimeMultiplier, ShowTargetProtectionNoFight, ShowTargetProtectionInFight, TargetProtectionIconStyle;
     Array<float> TimeMultipliers;
     int TargetProtectionIconPosition, DistanceWeaponDamageTypeFromIni, SaveReminder;
@@ -17,6 +17,7 @@ namespace GOTHIC_ENGINE {
 #if ENGINE >= Engine_G2
       ShowPickpocketIcon = zoptions->ReadBool( PLUGIN_NAME, "ShowPickpocketIcon", true );
 #endif
+      ShowHumanNpcXpRewardIcon = zoptions->ReadBool( PLUGIN_NAME, "ShowHumanNpcXpRewardIcon", false );
       UseTimeMultiplier = zoptions->ReadBool( PLUGIN_NAME, "UseTimeMultiplier", false );
       KeyTimeMultiplier = GetEmulationKeyCode( zoptions->ReadString( PLUGIN_NAME, "KeyTimeMultiplier", "KEY_Z" ) );
       string MulString = A zoptions->ReadString( PLUGIN_NAME, "TimeMultipliers", "1.0|2.5" );
@@ -71,6 +72,7 @@ namespace GOTHIC_ENGINE {
     FocusStatusBar* focusBar;
     bool CanPickpocketNpc( oCNpc* npc );
     void GetPickpocketInfos();
+    bool IsHumanNpcEligibleForXpReward( oCNpc* npc );
     bool CanChangeZtimer();
     bool KnowStateFunc( zCVob* vob );
     void TryAddStateFunc( zCVob* vob );

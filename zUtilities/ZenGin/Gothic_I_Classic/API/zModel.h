@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMODEL_H__VER0__
 #define __ZMODEL_H__VER0__
@@ -71,7 +71,7 @@ namespace Gothic_I_Classic {
     zCArray<zCMeshSoftSkin*> meshSoftSkinList; // sizeof 0Ch    offset 30h
 
     void zCModelMeshLib_OnInit()                                                            zCall( 0x0057F3D0 );
-    zCModelMeshLib()                                                                        zInit( zCModelMeshLib_OnInit() );
+    zCModelMeshLib() : zCtor( zCObject )                                                    zInit( zCModelMeshLib_OnInit() );
     void ReleaseData()                                                                      zCall( 0x0057F570 );
     void AllocNumNodeVisuals( int )                                                         zCall( 0x0057F5E0 );
     void AddMeshSoftSkin( zCMeshSoftSkin* )                                                 zCall( 0x0057F660 );
@@ -215,7 +215,7 @@ namespace Gothic_I_Classic {
     aniFlags;                         // sizeof 01h    offset E0h
 
     void zCModelAni_OnInit()                                            zCall( 0x0056A870 );
-    zCModelAni()                                                        zInit( zCModelAni_OnInit() );
+    zCModelAni() : zCtor( zCObject )                                    zInit( zCModelAni_OnInit() );
     void PrecacheAniEventData()                                         zCall( 0x0056AC80 );
     float GetAniVelocity() const                                        zCall( 0x0056AD50 );
     zVEC3 GetAniTranslation() const                                     zCall( 0x0056AED0 );
@@ -601,107 +601,107 @@ namespace Gothic_I_Classic {
     float timeScale;                                       // sizeof 04h    offset 1D0h
     zCModelAni** aniHistoryList;                           // sizeof 04h    offset 1D4h
 
-    zCModel() {}
-    void zCModel_OnInit( zCModelPrototype* )                                                                        zCall( 0x0055E9F0 );
-    zCModelAni* GetAniFromAniID( int ) const                                                                        zCall( 0x0046D1E0 );
-    int IsAniActive( zCModelAni* )                                                                                  zCall( 0x0046D220 );
-    int GetAniIDFromAniName( zSTRING const& ) const                                                                 zCall( 0x0047EC50 );
-    void Init()                                                                                                     zCall( 0x0055E7D0 );
-    zCModel( zCModelPrototype* a0 )                                                                                 zInit( zCModel_OnInit( a0 ));
-    void CopyProtoNodeList()                                                                                        zCall( 0x0055EB90 );
-    int ApplyModelProtoOverlay( zSTRING const& )                                                                    zCall( 0x0055EFB0 );
-    int ApplyModelProtoOverlay( zCModelPrototype* )                                                                 zCall( 0x0055F000 );
-    int HasAppliedModelProtoOverlay( zCModelPrototype* ) const                                                      zCall( 0x0055F210 );
-    int HasAppliedModelProtoOverlay( zSTRING const& ) const                                                         zCall( 0x0055F240 );
-    void RemoveModelProtoOverlay( zSTRING const& )                                                                  zCall( 0x0055F3C0 );
-    void RemoveModelProtoOverlay( zCModelPrototype* )                                                               zCall( 0x0055F5C0 );
-    void CalcNodeListBBoxWorld()                                                                                    zCall( 0x0055F740 );
-    zTBBox3D GetBBox3DNodeWorld( zCModelNodeInst* )                                                                 zCall( 0x0055F870 );
-    zVEC3 GetNodePositionWorld( zCModelNodeInst* )                                                                  zCall( 0x0055F8C0 );
-    void CalcModelBBox3DWorld()                                                                                     zCall( 0x0055F8F0 );
-    void SetNodeVisual( zCModelNodeInst*, zCVisual*, int )                                                          zCall( 0x0055FA00 );
-    void SetDynLightMode( int )                                                                                     zCall( 0x0055FA30 );
-    void __fastcall RenderNodeList( zTRenderContext&, zCArray<zMAT4*>&, zCRenderLightContainer&, zTPMLightingMode ) zCall( 0x0055FA50 );
-    void CheckNodeCollisionList( zCOBBox3D const&, zMAT4& )                                                         zCall( 0x00560A10 );
-    void CheckNodeCollision( zCModel*, zCModelNodeInst*, zMAT4&, zCList<zCModelNodeInst>& )                         zCall( 0x00560AB0 );
-    zMAT4 GetTrafoNodeToModel( zCModelNodeInst* )                                                                   zCall( 0x00560BF0 );
-    void SetRandAnisEnabled( int )                                                                                  zCall( 0x00560D20 );
-    zCModelAniActive* GetActiveAni( int ) const                                                                     zCall( 0x00560D90 );
-    zCModelAniActive* GetActiveAni( zCModelAni* ) const                                                             zCall( 0x00560DD0 );
-    void StopAni( int )                                                                                             zCall( 0x00560E10 );
-    void StopAni( zCModelAni* )                                                                                     zCall( 0x00560E90 );
-    void StopAni( zCModelAniActive* )                                                                               zCall( 0x00560EE0 );
-    zVEC3 GetAniTransLerp( zCModelAni*, float, int ) const                                                          zCall( 0x005610A0 );
-    void StartAni( zSTRING const&, int )                                                                            zCall( 0x005611A0 );
-    void StartAni( int, int )                                                                                       zCall( 0x005612A0 );
-    void StartAni( zCModelAni*, int )                                                                               zCall( 0x005612F0 );
-    void AssertActiveAniListAlloced()                                                                               zCall( 0x005619C0 );
-    void DoAniEvents( zCModelAniActive* )                                                                           zCall( 0x00561AF0 );
-    void __fastcall AdvanceAni( zCModelAniActive*, int& )                                                           zCall( 0x00562A10 );
-    void AdvanceAnis()                                                                                              zCall( 0x00562CD0 );
-    void SetModelScale( zVEC3 const& )                                                                              zCall( 0x00563BC0 );
-    int IsStateActive( zCModelAni const* ) const                                                                    zCall( 0x00563D30 );
-    zCModelNodeInst* SearchNode( zSTRING const& )                                                                   zCall( 0x00563F80 );
-    int SetNodeMeshTexture( zSTRING const&, int, int, zSTRING* )                                                    zCall( 0x00564030 );
-    int SetMeshLibTexture( zSTRING const&, int, int, zSTRING* )                                                     zCall( 0x00564150 );
-    void RemoveMeshLibAll()                                                                                         zCall( 0x00564350 );
-    int RemoveMeshLib( zSTRING const& )                                                                             zCall( 0x00564380 );
-    int ApplyMeshLib( zSTRING const& )                                                                              zCall( 0x00564590 );
-    void UpdateMeshLibTexAniState()                                                                                 zCall( 0x005649F0 );
-    void FadeOutAni( int )                                                                                          zCall( 0x00564ED0 );
-    void FadeOutAni( zCModelAni* )                                                                                  zCall( 0x00564F60 );
-    void FadeOutAni( zCModelAniActive* )                                                                            zCall( 0x00564FA0 );
-    void FadeOutAnisLayerRange( int, int )                                                                          zCall( 0x00565170 );
-    void StopAnisLayerRange( int, int )                                                                             zCall( 0x005651C0 );
-    float GetProgressPercent( zSTRING const& ) const                                                                zCall( 0x00565210 );
-    float GetProgressPercent( int ) const                                                                           zCall( 0x005652C0 );
-    void SetCombineAniXY( int, float, float ) const                                                                 zCall( 0x00565330 );
-    int GetCombineAniXY( int, float&, float& ) const                                                                zCall( 0x00565380 );
-    void CalcNodeListAniBlending()                                                                                  zCall( 0x00565800 );
-    void CalcTransBlending()                                                                                        zCall( 0x00565860 );
-    void AttachChildVobToNode( zCVob*, zCModelNodeInst* )                                                           zCall( 0x005665B0 );
-    void RemoveChildVobFromNode( zCVob* )                                                                           zCall( 0x00566720 );
-    void RemoveAllChildVobsFromNode()                                                                               zCall( 0x005667A0 );
-    void UpdateAttachedVobs()                                                                                       zCall( 0x005667F0 );
-    void RemoveStartedVobFX( zCVob* )                                                                               zCall( 0x00566940 );
-    zVEC3 GetVelocityRing() const                                                                                   zCall( 0x005669F0 );
-    void ResetVelocity()                                                                                            zCall( 0x00566A50 );
-    void GetAniMinMaxWeight( zCModelAniActive*, float&, float& )                                                    zCall( 0x00566AE0 );
-    void PrintStatus( int, int )                                                                                    zCall( 0x00566D10 );
-    void psb_WriteAniBlock( zCBuffer&, int, int ) const                                                             zCall( 0x00567360 );
-    void psb_ReadAniBlock( zCBuffer&, int, zCModelAniActive* )                                                      zCall( 0x005674F0 );
-    void PackStateBinary( zCBuffer& )                                                                               zCall( 0x00567740 );
-    void UnpackStateBinary( zCBuffer& )                                                                             zCall( 0x00567AB0 );
-    void ShowAniListAdd( zCModelAni* )                                                                              zCall( 0x00568240 );
-    void ShowAniList( int )                                                                                         zCall( 0x005682C0 );
-    zTAniAttachment* SearchAniAttachList( int ) const                                                               zCall( 0x00568AF0 );
-    void RemoveAniAttachment( int )                                                                                 zCall( 0x00568B70 );
-    void RemoveAllAniAttachments()                                                                                  zCall( 0x00568CB0 );
-    zTAniAttachment* GetCreateAniAttachment( int )                                                                  zCall( 0x00568D00 );
-    void DeleteRandAniList( int )                                                                                   zCall( 0x00568EC0 );
-    void InsertRandAni( int, int, int )                                                                             zCall( 0x00568F40 );
-    float GetRandAniFreq( int ) const                                                                               zCall( 0x00569060 );
-    void SetRandAniFreq( int, float )                                                                               zCall( 0x005690F0 );
-    void __fastcall RecalcRootPosLocal( int )                                                                       zCall( 0x00569110 );
-    static zCObject* _CreateNewInstance()                                                                           zCall( 0x0055CC90 );
-    static int AniAttachmentCompare( void const*, void const* )                                                     zCall( 0x00568AC0 );
-    virtual zCClassDef* _GetClassDef() const                                                                        zCall( 0x0055CE10 );
-    virtual ~zCModel()                                                                                              zCall( 0x0055E4F0 );
-    virtual int Render( zTRenderContext& )                                                                          zCall( 0x00560770 );
-    virtual int IsBBox3DLocal()                                                                                     zCall( 0x0055CE20 );
-    virtual zTBBox3D GetBBox3D()                                                                                    zCall( 0x00563EB0 );
-    virtual zSTRING GetVisualName()                                                                                 zCall( 0x00563EF0 );
-    virtual void SetVisualUsedBy( zCVob* )                                                                          zCall( 0x0055EE80 );
-    virtual unsigned long GetRenderSortKey() const                                                                  zCall( 0x00568330 );
-    virtual int CanTraceRay() const                                                                                 zCall( 0x0055CE30 );
-    virtual int TraceRay( zVEC3 const&, zVEC3 const&, int, zTTraceRayReport& )                                      zCall( 0x00568350 );
-    virtual void HostVobRemovedFromWorld( zCVob*, zCWorld* )                                                        zCall( 0x00561A40 );
-    virtual zSTRING const* GetFileExtension( int )                                                                  zCall( 0x0055EEF0 );
-    virtual zCVisual* LoadVisualVirtual( zSTRING const& ) const                                                     zCall( 0x0055EF10 );
-    virtual void StartAnimation( zSTRING const& )                                                                   zCall( 0x0055CE40 );
-    virtual void StopAnimation( zSTRING const& )                                                                    zCall( 0x0055CE50 );
-    virtual int IsAnimationActive( zSTRING const& )                                                                 zCall( 0x0055CEF0 );
-    virtual zSTRING const* GetAnyAnimation()                                                                        zCall( 0x00561050 );
+    zCModel() : zCtor( zCVisualAnimate ) {}
+    void zCModel_OnInit( zCModelPrototype* )                                                                                                   zCall( 0x0055E9F0 );
+    zCModelAni* GetAniFromAniID( int ) const                                                                                                   zCall( 0x0046D1E0 );
+    int IsAniActive( zCModelAni* )                                                                                                             zCall( 0x0046D220 );
+    int GetAniIDFromAniName( zSTRING const& ) const                                                                                            zCall( 0x0047EC50 );
+    void Init()                                                                                                                                zCall( 0x0055E7D0 );
+    zCModel( zCModelPrototype* a0 ) : zCtor( zCVisualAnimate )                                                                                 zInit( zCModel_OnInit( a0 ));
+    void CopyProtoNodeList()                                                                                                                   zCall( 0x0055EB90 );
+    int ApplyModelProtoOverlay( zSTRING const& )                                                                                               zCall( 0x0055EFB0 );
+    int ApplyModelProtoOverlay( zCModelPrototype* )                                                                                            zCall( 0x0055F000 );
+    int HasAppliedModelProtoOverlay( zCModelPrototype* ) const                                                                                 zCall( 0x0055F210 );
+    int HasAppliedModelProtoOverlay( zSTRING const& ) const                                                                                    zCall( 0x0055F240 );
+    void RemoveModelProtoOverlay( zSTRING const& )                                                                                             zCall( 0x0055F3C0 );
+    void RemoveModelProtoOverlay( zCModelPrototype* )                                                                                          zCall( 0x0055F5C0 );
+    void CalcNodeListBBoxWorld()                                                                                                               zCall( 0x0055F740 );
+    zTBBox3D GetBBox3DNodeWorld( zCModelNodeInst* )                                                                                            zCall( 0x0055F870 );
+    zVEC3 GetNodePositionWorld( zCModelNodeInst* )                                                                                             zCall( 0x0055F8C0 );
+    void CalcModelBBox3DWorld()                                                                                                                zCall( 0x0055F8F0 );
+    void SetNodeVisual( zCModelNodeInst*, zCVisual*, int )                                                                                     zCall( 0x0055FA00 );
+    void SetDynLightMode( int )                                                                                                                zCall( 0x0055FA30 );
+    void __fastcall RenderNodeList( zTRenderContext&, zCArray<zMAT4*>&, zCRenderLightContainer&, zTPMLightingMode )                            zCall( 0x0055FA50 );
+    void CheckNodeCollisionList( zCOBBox3D const&, zMAT4& )                                                                                    zCall( 0x00560A10 );
+    void CheckNodeCollision( zCModel*, zCModelNodeInst*, zMAT4&, zCList<zCModelNodeInst>& )                                                    zCall( 0x00560AB0 );
+    zMAT4 GetTrafoNodeToModel( zCModelNodeInst* )                                                                                              zCall( 0x00560BF0 );
+    void SetRandAnisEnabled( int )                                                                                                             zCall( 0x00560D20 );
+    zCModelAniActive* GetActiveAni( int ) const                                                                                                zCall( 0x00560D90 );
+    zCModelAniActive* GetActiveAni( zCModelAni* ) const                                                                                        zCall( 0x00560DD0 );
+    void StopAni( int )                                                                                                                        zCall( 0x00560E10 );
+    void StopAni( zCModelAni* )                                                                                                                zCall( 0x00560E90 );
+    void StopAni( zCModelAniActive* )                                                                                                          zCall( 0x00560EE0 );
+    zVEC3 GetAniTransLerp( zCModelAni*, float, int ) const                                                                                     zCall( 0x005610A0 );
+    void StartAni( zSTRING const&, int )                                                                                                       zCall( 0x005611A0 );
+    void StartAni( int, int )                                                                                                                  zCall( 0x005612A0 );
+    void StartAni( zCModelAni*, int )                                                                                                          zCall( 0x005612F0 );
+    void AssertActiveAniListAlloced()                                                                                                          zCall( 0x005619C0 );
+    void DoAniEvents( zCModelAniActive* )                                                                                                      zCall( 0x00561AF0 );
+    void __fastcall AdvanceAni( zCModelAniActive*, int& )                                                                                      zCall( 0x00562A10 );
+    void AdvanceAnis()                                                                                                                         zCall( 0x00562CD0 );
+    void SetModelScale( zVEC3 const& )                                                                                                         zCall( 0x00563BC0 );
+    int IsStateActive( zCModelAni const* ) const                                                                                               zCall( 0x00563D30 );
+    zCModelNodeInst* SearchNode( zSTRING const& )                                                                                              zCall( 0x00563F80 );
+    int SetNodeMeshTexture( zSTRING const&, int, int, zSTRING* )                                                                               zCall( 0x00564030 );
+    int SetMeshLibTexture( zSTRING const&, int, int, zSTRING* )                                                                                zCall( 0x00564150 );
+    void RemoveMeshLibAll()                                                                                                                    zCall( 0x00564350 );
+    int RemoveMeshLib( zSTRING const& )                                                                                                        zCall( 0x00564380 );
+    int ApplyMeshLib( zSTRING const& )                                                                                                         zCall( 0x00564590 );
+    void UpdateMeshLibTexAniState()                                                                                                            zCall( 0x005649F0 );
+    void FadeOutAni( int )                                                                                                                     zCall( 0x00564ED0 );
+    void FadeOutAni( zCModelAni* )                                                                                                             zCall( 0x00564F60 );
+    void FadeOutAni( zCModelAniActive* )                                                                                                       zCall( 0x00564FA0 );
+    void FadeOutAnisLayerRange( int, int )                                                                                                     zCall( 0x00565170 );
+    void StopAnisLayerRange( int, int )                                                                                                        zCall( 0x005651C0 );
+    float GetProgressPercent( zSTRING const& ) const                                                                                           zCall( 0x00565210 );
+    float GetProgressPercent( int ) const                                                                                                      zCall( 0x005652C0 );
+    void SetCombineAniXY( int, float, float ) const                                                                                            zCall( 0x00565330 );
+    int GetCombineAniXY( int, float&, float& ) const                                                                                           zCall( 0x00565380 );
+    void CalcNodeListAniBlending()                                                                                                             zCall( 0x00565800 );
+    void CalcTransBlending()                                                                                                                   zCall( 0x00565860 );
+    void AttachChildVobToNode( zCVob*, zCModelNodeInst* )                                                                                      zCall( 0x005665B0 );
+    void RemoveChildVobFromNode( zCVob* )                                                                                                      zCall( 0x00566720 );
+    void RemoveAllChildVobsFromNode()                                                                                                          zCall( 0x005667A0 );
+    void UpdateAttachedVobs()                                                                                                                  zCall( 0x005667F0 );
+    void RemoveStartedVobFX( zCVob* )                                                                                                          zCall( 0x00566940 );
+    zVEC3 GetVelocityRing() const                                                                                                              zCall( 0x005669F0 );
+    void ResetVelocity()                                                                                                                       zCall( 0x00566A50 );
+    void GetAniMinMaxWeight( zCModelAniActive*, float&, float& )                                                                               zCall( 0x00566AE0 );
+    void PrintStatus( int, int )                                                                                                               zCall( 0x00566D10 );
+    void psb_WriteAniBlock( zCBuffer&, int, int ) const                                                                                        zCall( 0x00567360 );
+    void psb_ReadAniBlock( zCBuffer&, int, zCModelAniActive* )                                                                                 zCall( 0x005674F0 );
+    void PackStateBinary( zCBuffer& )                                                                                                          zCall( 0x00567740 );
+    void UnpackStateBinary( zCBuffer& )                                                                                                        zCall( 0x00567AB0 );
+    void ShowAniListAdd( zCModelAni* )                                                                                                         zCall( 0x00568240 );
+    void ShowAniList( int )                                                                                                                    zCall( 0x005682C0 );
+    zTAniAttachment* SearchAniAttachList( int ) const                                                                                          zCall( 0x00568AF0 );
+    void RemoveAniAttachment( int )                                                                                                            zCall( 0x00568B70 );
+    void RemoveAllAniAttachments()                                                                                                             zCall( 0x00568CB0 );
+    zTAniAttachment* GetCreateAniAttachment( int )                                                                                             zCall( 0x00568D00 );
+    void DeleteRandAniList( int )                                                                                                              zCall( 0x00568EC0 );
+    void InsertRandAni( int, int, int )                                                                                                        zCall( 0x00568F40 );
+    float GetRandAniFreq( int ) const                                                                                                          zCall( 0x00569060 );
+    void SetRandAniFreq( int, float )                                                                                                          zCall( 0x005690F0 );
+    void __fastcall RecalcRootPosLocal( int )                                                                                                  zCall( 0x00569110 );
+    static zCObject* _CreateNewInstance()                                                                                                      zCall( 0x0055CC90 );
+    static int AniAttachmentCompare( void const*, void const* )                                                                                zCall( 0x00568AC0 );
+    virtual zCClassDef* _GetClassDef() const                                                                                                   zCall( 0x0055CE10 );
+    virtual ~zCModel()                                                                                                                         zCall( 0x0055E4F0 );
+    virtual int Render( zTRenderContext& )                                                                                                     zCall( 0x00560770 );
+    virtual int IsBBox3DLocal()                                                                                                                zCall( 0x0055CE20 );
+    virtual zTBBox3D GetBBox3D()                                                                                                               zCall( 0x00563EB0 );
+    virtual zSTRING GetVisualName()                                                                                                            zCall( 0x00563EF0 );
+    virtual void SetVisualUsedBy( zCVob* )                                                                                                     zCall( 0x0055EE80 );
+    virtual unsigned long GetRenderSortKey() const                                                                                             zCall( 0x00568330 );
+    virtual int CanTraceRay() const                                                                                                            zCall( 0x0055CE30 );
+    virtual int TraceRay( zVEC3 const&, zVEC3 const&, int, zTTraceRayReport& )                                                                 zCall( 0x00568350 );
+    virtual void HostVobRemovedFromWorld( zCVob*, zCWorld* )                                                                                   zCall( 0x00561A40 );
+    virtual zSTRING const* GetFileExtension( int )                                                                                             zCall( 0x0055EEF0 );
+    virtual zCVisual* LoadVisualVirtual( zSTRING const& ) const                                                                                zCall( 0x0055EF10 );
+    virtual void StartAnimation( zSTRING const& )                                                                                              zCall( 0x0055CE40 );
+    virtual void StopAnimation( zSTRING const& )                                                                                               zCall( 0x0055CE50 );
+    virtual int IsAnimationActive( zSTRING const& )                                                                                            zCall( 0x0055CEF0 );
+    virtual zSTRING const* GetAnyAnimation()                                                                                                   zCall( 0x00561050 );
 
 
     // static properties
@@ -716,7 +716,7 @@ namespace Gothic_I_Classic {
   public:
 
     void zCModelConvertFileHandler_OnInit()                            zCall( 0x00581C00 );
-    zCModelConvertFileHandler()                                        zInit( zCModelConvertFileHandler_OnInit() );
+    zCModelConvertFileHandler() : zCtor( zCScanDirFileHandler )        zInit( zCModelConvertFileHandler_OnInit() );
     virtual ~zCModelConvertFileHandler()                               zCall( 0x00424090 );
     virtual int HandleFile( zSTRING const&, char const*, _finddata_t ) zCall( 0x00581D30 );
 

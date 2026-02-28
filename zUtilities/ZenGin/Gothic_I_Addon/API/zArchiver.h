@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZARCHIVER_H__VER1__
 #define __ZARCHIVER_H__VER1__
@@ -80,7 +80,8 @@ namespace Gothic_I_Addon {
     zTArchiveMedium medium; // sizeof 04h    offset 24h
     zTArchiveMode mode;     // sizeof 04h    offset 28h
 
-    zCArchiver() {}
+    zDefineInheritableCtor( zCArchiver ) : zCtor( zCObject ) {}
+    zCArchiver() : zCtor( zCObject ) {}
     virtual zCClassDef* _GetClassDef() const                                                           zCall( 0x00520C30 );
     virtual ~zCArchiver()                                                                              zCall( 0x00520C40 );
     virtual void __fastcall WriteInt( char const*, int )                                               zPureCall;

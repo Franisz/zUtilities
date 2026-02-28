@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCOLLISION_OBJECT_MISC_H__VER0__
 #define __ZCOLLISION_OBJECT_MISC_H__VER0__
@@ -9,12 +9,13 @@ namespace Gothic_I_Classic {
   class zCCollObjectBase : public zCCollisionObject {
   public:
 
-    zCCollObjectBase() {}
-    static float __fastcall S_CalcAdaptiveCollStepFromVisualBBox( zCVisual* )                                      zCall( 0x0053A4D0 );
-    static void __fastcall S_CalcGeneric_CollNormal_ContactPoint( zCVob const*, zCVob const*, zCCollisionReport& ) zCall( 0x0053A550 );
-    static void __fastcall S_RegisterCollisionTestFuncs( zCCollisionDetector* )                                    zCall( 0x0053A760 );
-    virtual ~zCCollObjectBase()                                                                                    zCall( 0x005392E0 );
-    virtual void __fastcall GetLargestBBox3DLocal( zTBBox3D& )                                                     zCall( 0x0053A6D0 );
+    zDefineInheritableCtor( zCCollObjectBase ) : zCtor( zCCollisionObject )  {}
+zCCollObjectBase() : zCtor( zCCollisionObject ) {}
+    static float __fastcall S_CalcAdaptiveCollStepFromVisualBBox( zCVisual* )                                                                   zCall( 0x0053A4D0 );
+    static void __fastcall S_CalcGeneric_CollNormal_ContactPoint( zCVob const*, zCVob const*, zCCollisionReport& )                              zCall( 0x0053A550 );
+    static void __fastcall S_RegisterCollisionTestFuncs( zCCollisionDetector* )                                                                 zCall( 0x0053A760 );
+    virtual ~zCCollObjectBase()                                                                                                                 zCall( 0x005392E0 );
+    virtual void __fastcall GetLargestBBox3DLocal( zTBBox3D& )                                                                                  zCall( 0x0053A6D0 );
 
     // user API
     #include "zCCollObjectBase.inl"
@@ -25,10 +26,10 @@ namespace Gothic_I_Classic {
   public:
     zCOLLISION_OBJECT_DECLARATION( zCCollObjectUndef )
 
-    zCCollObjectUndef() {}
-    static zCCollisionObject* _CreateNewInstance()        zCall( 0x00539140 );
-    virtual zCCollisionObjectDef* GetCollObjClass() const zCall( 0x00539180 );
-    virtual ~zCCollObjectUndef()                          zCall( 0x005391B0 );
+    zCCollObjectUndef() : zCtor( zCCollObjectBase ) {}
+    static zCCollisionObject* _CreateNewInstance()                                    zCall( 0x00539140 );
+    virtual zCCollisionObjectDef* GetCollObjClass() const                             zCall( 0x00539180 );
+    virtual ~zCCollObjectUndef()                                                      zCall( 0x005391B0 );
 
     // user API
     #include "zCCollObjectUndef.inl"
@@ -39,16 +40,17 @@ namespace Gothic_I_Classic {
   public:
     zCOLLISION_OBJECT_DECLARATION( zCCollObjectPoint )
 
-    zCCollObjectPoint() {}
-    zVEC3 __fastcall GetCenterOffsetLocal() const                                                                    zCall( 0x005399E0 );
-    zVEC3 __fastcall GetCenterOffsetNew() const                                                                      zCall( 0x00539A60 );
-    void __fastcall SetUpVectorNew( zVEC3 const& )                                                                   zCall( 0x00539BC0 );
-    static zCCollisionObject* _CreateNewInstance()                                                                   zCall( 0x005393E0 );
-    virtual zCCollisionObjectDef* GetCollObjClass() const                                                            zCall( 0x00539420 );
-    virtual ~zCCollObjectPoint()                                                                                     zCall( 0x00539450 );
-    virtual void __fastcall DetectCollisionsSelf( zCArray<zCCollisionObject*> const&, zCArray<zCCollisionReport*>& ) zCall( 0x00539DE0 );
-    virtual void __fastcall CollisionResponse( zCArray<zCCollisionReport*> const&, int& )                            zCall( 0x00539810 );
-    virtual void __fastcall GetLargestBBox3DLocal( zTBBox3D& )                                                       zCall( 0x00539770 );
+    zDefineInheritableCtor( zCCollObjectPoint ) : zCtor( zCCollObjectBase )  {}
+zCCollObjectPoint() : zCtor( zCCollObjectBase ) {}
+    zVEC3 __fastcall GetCenterOffsetLocal() const                                                                                                zCall( 0x005399E0 );
+    zVEC3 __fastcall GetCenterOffsetNew() const                                                                                                  zCall( 0x00539A60 );
+    void __fastcall SetUpVectorNew( zVEC3 const& )                                                                                               zCall( 0x00539BC0 );
+    static zCCollisionObject* _CreateNewInstance()                                                                                               zCall( 0x005393E0 );
+    virtual zCCollisionObjectDef* GetCollObjClass() const                                                                                        zCall( 0x00539420 );
+    virtual ~zCCollObjectPoint()                                                                                                                 zCall( 0x00539450 );
+    virtual void __fastcall DetectCollisionsSelf( zCArray<zCCollisionObject*> const&, zCArray<zCCollisionReport*>& )                             zCall( 0x00539DE0 );
+    virtual void __fastcall CollisionResponse( zCArray<zCCollisionReport*> const&, int& )                                                        zCall( 0x00539810 );
+    virtual void __fastcall GetLargestBBox3DLocal( zTBBox3D& )                                                                                   zCall( 0x00539770 );
 
     // user API
     #include "zCCollObjectPoint.inl"
@@ -59,10 +61,10 @@ namespace Gothic_I_Classic {
   public:
     zCOLLISION_OBJECT_DECLARATION( zCCollObjectProjectile )
 
-    zCCollObjectProjectile() {}
-    static zCCollisionObject* _CreateNewInstance()        zCall( 0x005394A0 );
-    virtual zCCollisionObjectDef* GetCollObjClass() const zCall( 0x005394E0 );
-    virtual ~zCCollObjectProjectile()                     zCall( 0x00539510 );
+    zCCollObjectProjectile() : zCtor( zCCollObjectPoint ) {}
+    static zCCollisionObject* _CreateNewInstance()                                     zCall( 0x005394A0 );
+    virtual zCCollisionObjectDef* GetCollObjClass() const                              zCall( 0x005394E0 );
+    virtual ~zCCollObjectProjectile()                                                  zCall( 0x00539510 );
 
     // user API
     #include "zCCollObjectProjectile.inl"
@@ -73,12 +75,12 @@ namespace Gothic_I_Classic {
   public:
     zCOLLISION_OBJECT_DECLARATION( zCCollObjectComplex )
 
-    zCCollObjectComplex() {}
-    static zCCollisionObject* _CreateNewInstance()                                        zCall( 0x00539560 );
-    virtual zCCollisionObjectDef* GetCollObjClass() const                                 zCall( 0x005395A0 );
-    virtual ~zCCollObjectComplex()                                                        zCall( 0x005395D0 );
-    virtual void __fastcall CollisionResponse( zCArray<zCCollisionReport*> const&, int& ) zCall( 0x00539E70 );
-    virtual float __fastcall GetAdaptiveStepSize()                                        zCall( 0x00539DF0 );
+    zCCollObjectComplex() : zCtor( zCCollObjectBase ) {}
+    static zCCollisionObject* _CreateNewInstance()                                                                    zCall( 0x00539560 );
+    virtual zCCollisionObjectDef* GetCollObjClass() const                                                             zCall( 0x005395A0 );
+    virtual ~zCCollObjectComplex()                                                                                    zCall( 0x005395D0 );
+    virtual void __fastcall CollisionResponse( zCArray<zCCollisionReport*> const&, int& )                             zCall( 0x00539E70 );
+    virtual float __fastcall GetAdaptiveStepSize()                                                                    zCall( 0x00539DF0 );
 
     // user API
     #include "zCCollObjectComplex.inl"
@@ -92,7 +94,7 @@ namespace Gothic_I_Classic {
     zCArray<zCPolygon*> m_aoPolyList; // sizeof 0Ch    offset 8Ch
 
     void zCCollObjectLevelPolys_OnInit()                  zCall( 0x005F1800 );
-    zCCollObjectLevelPolys()                              zInit( zCCollObjectLevelPolys_OnInit() );
+    zCCollObjectLevelPolys() : zCtor( zCCollObjectBase )  zInit( zCCollObjectLevelPolys_OnInit() );
     static zCCollisionObject* _CreateNewInstance()        zCall( 0x00539200 );
     virtual zCCollisionObjectDef* GetCollObjClass() const zCall( 0x00539250 );
     virtual ~zCCollObjectLevelPolys()                     zCall( 0x00539280 );
@@ -106,11 +108,11 @@ namespace Gothic_I_Classic {
   public:
     zCOLLISION_OBJECT_DECLARATION( zCCollObjectBoxPassThrough )
 
-    zCCollObjectBoxPassThrough() {}
-    static zCCollisionObject* _CreateNewInstance()        zCall( 0x005396E0 );
-    virtual zCCollisionObjectDef* GetCollObjClass() const zCall( 0x00539720 );
-    virtual ~zCCollObjectBoxPassThrough()                 zCall( 0x00539760 );
-    virtual int __fastcall SuppressCollisionResponse()    zCall( 0x00539730 );
+    zCCollObjectBoxPassThrough() : zCtor( zCCollObjectBase ) {}
+    static zCCollisionObject* _CreateNewInstance()                                    zCall( 0x005396E0 );
+    virtual zCCollisionObjectDef* GetCollObjClass() const                             zCall( 0x00539720 );
+    virtual ~zCCollObjectBoxPassThrough()                                             zCall( 0x00539760 );
+    virtual int __fastcall SuppressCollisionResponse()                                zCall( 0x00539730 );
 
     // user API
     #include "zCCollObjectBoxPassThrough.inl"
@@ -121,10 +123,10 @@ namespace Gothic_I_Classic {
   public:
     zCOLLISION_OBJECT_DECLARATION( zCCollObjectBoxBlocker )
 
-    zCCollObjectBoxBlocker() {}
-    static zCCollisionObject* _CreateNewInstance()        zCall( 0x00539620 );
-    virtual zCCollisionObjectDef* GetCollObjClass() const zCall( 0x00539660 );
-    virtual ~zCCollObjectBoxBlocker()                     zCall( 0x00539690 );
+    zCCollObjectBoxBlocker() : zCtor( zCCollObjectBase ) {}
+    static zCCollisionObject* _CreateNewInstance()                                    zCall( 0x00539620 );
+    virtual zCCollisionObjectDef* GetCollObjClass() const                             zCall( 0x00539660 );
+    virtual ~zCCollObjectBoxBlocker()                                                 zCall( 0x00539690 );
 
     // user API
     #include "zCCollObjectBoxBlocker.inl"
@@ -241,9 +243,10 @@ namespace Gothic_I_Classic {
     zTConfig m_oConfig;                         // sizeof 10h    offset FCh
     zTInterferenceReport m_oInterferenceReport; // sizeof 30h    offset 10Ch
 
+    zDefineInheritableCtor( zCCollObjectCharacter ) : zCtor( zCCollObjectBase )  {}
     void zCCollObjectCharacter_OnInit()                                                                              zCall( 0x0053B230 );
     int __fastcall IsMoveInvalid( zVEC3 const&, zVEC3 const&, zVEC3&, zTSpatialState&, zVEC3& )                      zCall( 0x00501500 );
-    zCCollObjectCharacter()                                                                                          zInit( zCCollObjectCharacter_OnInit() );
+    zCCollObjectCharacter() : zCtor( zCCollObjectBase )                                                              zInit( zCCollObjectCharacter_OnInit() );
     void __fastcall GetFallbackTrafoCC( zMAT4 const&, zMAT4 const&, zVEC3 const&, int, zMAT4& ) const                zCall( 0x0053B600 );
     void __fastcall GetCollisionPoleYDims( float&, float& ) const                                                    zCall( 0x0053C350 );
     int __fastcall CalcSlideVector( zVEC3 const&, zVEC3 const&, zVEC3&, zVEC3&, float& )                             zCall( 0x0053C380 );

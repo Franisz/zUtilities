@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OANI_CTRL_H__VER1__
 #define __OANI_CTRL_H__VER1__
@@ -333,8 +333,9 @@ namespace Gothic_I_Addon {
     int t_shoot_2_stand;                       // sizeof 04h    offset 11F0h
     int dummyLastVar;                          // sizeof 04h    offset 11F4h
 
+    zDefineInheritableCtor( oCAniCtrl_Human ) : zCtor( zCAIPlayer ) {}
     void oCAniCtrl_Human_OnInit()                                       zCall( 0x0063EE90 );
-    oCAniCtrl_Human()                                                   zInit( oCAniCtrl_Human_OnInit() );
+    oCAniCtrl_Human() : zCtor( zCAIPlayer )                             zInit( oCAniCtrl_Human_OnInit() );
     int StartAni( int, int )                                            zCall( 0x0063F120 );
     void SetNextAni( int, int )                                         zCall( 0x0063F320 );
     void InitAnimations()                                               zCall( 0x0063F390 );

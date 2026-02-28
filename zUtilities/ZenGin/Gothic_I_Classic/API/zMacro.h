@@ -1,10 +1,10 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMACRO_H__VER0__
 #define __ZMACRO_H__VER0__
+#include <crtversion.h>
 
 namespace Gothic_I_Classic {
-
 #define zRELEASE( obj ) { (obj)->Release(); obj = Null; }
 #define zADDREF( obj )  (obj)->AddRef()
 #define zNEW( obj ) new obj
@@ -22,20 +22,17 @@ namespace Gothic_I_Classic {
 #define virtual
 #endif
 #define group struct
-#define RGBA(r,g,b,a)   ((zUINT32)(zUINT8)(r)|(zUINT32)(zUINT8)(g)<<8|(zUINT32)(zUINT8)(b)<<16|(zUINT32)(zUINT8)(a)<<24)
+#define RGBA(r,g,b,a)   ((zUINT32)(zUINT8)(a)|(zUINT32)(zUINT8)(b)<<8|(zUINT32)(zUINT8)(g)<<16|(zUINT32)(zUINT8)(r)<<24)
 #define EXTRACT_R(rgba) (rgba		& 0xff)
 #define EXTRACT_G(rgba) (rgba >> 8	& 0xff)
 #define EXTRACT_B(rgba) (rgba >> 16 & 0xff)
 #define EXTRACT_A(rgba) (rgba >> 24 & 0xff)
 #define zMEMPOOL_VOLATILE_DECLARATION( className )
 
-
 #define SafeDiv( a, b ) \
     ( b == 0.0 ? 0.0 : a / b )
 
-
 #define sqr(a) (a * a)
-
 
 #define CalcAngle(a, b)                     \
     if( b == 0.0f ) {                       \
@@ -61,7 +58,6 @@ namespace Gothic_I_Classic {
                                             \
     return angle;
 
-
 #define RotAngle(a, b, c)                     \
     float radAngle = GetAngle##c();           \
     float length   = sqrt(sqr(a) + sqr(b));   \
@@ -70,9 +66,6 @@ namespace Gothic_I_Classic {
     b              = cos(radAngle) * length;  \
     return *this;
 	
-
-
-
 // ZMEMPOOL INTERFACE
 // memory pool declaration for gothic api containers
 #define zMEMPOOL_DECLARATION_TEMPLATE( classname, address )                                         \
@@ -92,8 +85,6 @@ namespace Gothic_I_Classic {
     static void PreAlloc( size_t num, zBOOL force_oneblock = False ){                               \
       ((zCMemPoolBase*)address)->PreAlloc( num, force_oneblock );                                   \
     }
-
-
 
 // memory pool declaration for gothic api classes
 #define zMEMPOOL_DECLARATION( classname, address )                                                  \
@@ -117,8 +108,6 @@ namespace Gothic_I_Classic {
       ((zCMemPoolBase*)address)->PoolAdd( mem, num_objects, free );                                 \
     }
 
-
-
 // ZOBJECT INTERFACE
 // class declaration for gothic api zobject classes
 #define zCLASS_DECLARATION( className )                               \
@@ -133,8 +122,6 @@ namespace Gothic_I_Classic {
     ::operator delete( mem );                                         \
   };
 
-
-
 // class declaration for union zobject classes
 #define zCLASS_UNION_DECLARATION( className )                \
   static zCClassDef* className::classDef;                    \
@@ -142,8 +129,6 @@ namespace Gothic_I_Classic {
   virtual zCClassDef* className::_GetClassDef( void ) const; \
   void* className::operator new(size_t size);                \
   void className::operator delete(void* mem);
-
-
 
 // class definition for union zobject classes
 #define zCLASS_UNION_DEFINITION( className, baseClassName, classFlags, archiveVersion )                                                         \
@@ -165,8 +150,6 @@ namespace Gothic_I_Classic {
     ::operator delete( mem );                                                                                                                   \
   };
 
-
-
 // COLLISION INTERFACE
 // class declaration for gothic api collision object classes
 #define zCOLLISION_OBJECT_DECLARATION( className )                    \
@@ -175,14 +158,12 @@ namespace Gothic_I_Classic {
     };                                                                \
     static zCCollisionObjectDef* className::s_oCollObjClass; 
 
-
 // class declaration for union collision object classes
 #define zCOLLISION_OBJECT_UNION_DECLARATION( className )                                                           \
   static  zCCollisionObjectDef* className::S_GetCollObjClass(void)      { return &(className::s_oCollObjClass); }; \
   virtual zCCollisionObjectDef* className::GetCollObjClass(void) const  { return &(className::s_oCollObjClass); }; \
   static  zCCollisionObjectDef  className::s_oCollObjClass;                                                        \
   static  zCCollisionObject*    className::_CreateNewInstance(void);
-
 
 // class definition for union collision object classes
 #define zCOLLISION_OBJECT_UNION_DEFINITION( className, isVolatile )                           \
@@ -191,6 +172,15 @@ namespace Gothic_I_Classic {
     return new className;                                                                     \
   }
 
+#if defined(_VC_CRT_MAJOR_VERSION) && defined(_MSVC_LANG) && _VC_CRT_MAJOR_VERSION > 10 && _MSVC_LANG > 199711L
+#define InheritableInterfaceObject zIInheritableInterfaceObject&&
+#else
+#define InheritableInterfaceObject zIInheritableInterfaceObject
+#endif
+
+struct zIInheritableInterfaceObject {};
+#define zDefineInheritableCtor(className) className(InheritableInterfaceObject) 
+#define zCtor(baseClassName) baseClassName(zIInheritableInterfaceObject())
 } // namespace Gothic_II_Addon
 
 #endif // __ZMACRO_H__VER0__

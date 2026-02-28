@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZBSP_H__VER0__
 #define __ZBSP_H__VER0__
@@ -37,6 +37,7 @@ namespace Gothic_I_Classic {
     int numPolys;           // sizeof 04h    offset 20h
     zTBspNodeType nodeType; // sizeof 04h    offset 24h
 
+    zDefineInheritableCtor( zCBspBase ) {}
     void zCBspBase_OnInit()                                                                   zCall( 0x00526200 );
     void DescribeTree( int )                                                                  zCall( 0x00518C50 );
     int CountNodes()                                                                          zCall( 0x0051A320 );
@@ -85,7 +86,7 @@ namespace Gothic_I_Classic {
     char hasLOD;                 // sizeof 01h    offset 49h
 
     void zCBspNode_OnInit()              zCall( 0x0051A300 );
-    zCBspNode()                          zInit( zCBspNode_OnInit() );
+    zCBspNode() : zCtor( zCBspBase )     zInit( zCBspNode_OnInit() );
     void CalcPlaneSignbits( zCBspTree* ) zCall( 0x0051E180 );
 
     // user API
@@ -106,7 +107,7 @@ namespace Gothic_I_Classic {
     zVEC3 lightPosition;               // sizeof 0Ch    offset 50h
 
     void zCBspLeaf_OnInit()                                                             zCall( 0x005198F0 );
-    zCBspLeaf()                                                                         zInit( zCBspLeaf_OnInit() );
+    zCBspLeaf() : zCtor( zCBspBase )                                                    zInit( zCBspLeaf_OnInit() );
     ~zCBspLeaf()                                                                        zCall( 0x0051B490 );
     void PolyPlueckerAddRef()                                                           zCall( 0x0051B6E0 );
     void PolyPlueckerRelease()                                                          zCall( 0x0051B960 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OCS_TRIGGER_H__VER1__
 #define __OCS_TRIGGER_H__VER1__
@@ -12,7 +12,7 @@ namespace Gothic_I_Addon {
   public:
     zCLASS_DECLARATION( oCCSTrigger )
 
-    oCCSTrigger() {}
+    oCCSTrigger() : zCtor( zCTrigger ) {}
     static zCObject* _CreateNewInstance()                               zCall( 0x00404840 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00404980 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x00405330 );

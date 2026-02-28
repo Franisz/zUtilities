@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIEW_DIALOG_TRADE_H__VER1__
 #define __OVIEW_DIALOG_TRADE_H__VER1__
@@ -41,7 +41,7 @@ namespace Gothic_I_Addon {
 
     void oCViewDialogTrade_OnInit()                                     zCall( 0x00766910 );
     void UpdateViewSettings()                                           zCall( 0x00766750 );
-    oCViewDialogTrade()                                                 zInit( oCViewDialogTrade_OnInit() );
+    oCViewDialogTrade() : zCtor( zCViewDialog )                         zInit( oCViewDialogTrade_OnInit() );
     void __fastcall AllDialogsStop()                                    zCall( 0x007671A0 );
     void __fastcall AllDialogsDisable()                                 zCall( 0x007671E0 );
     void __fastcall TransferAccept()                                    zCall( 0x00767230 );

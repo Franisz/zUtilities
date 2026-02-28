@@ -18,7 +18,7 @@ namespace Gothic_II_Classic {
 
 #ifdef __OFOCUS_H__VER2__
   oCNpcFocus*& oCNpcFocus::focus             = *(oCNpcFocus**)0x00981290;
-  oCNpcFocus**& oCNpcFocus::focuslist        = *(oCNpcFocus***)0x00981250;
+  oCNpcFocus** oCNpcFocus::focuslist         = (oCNpcFocus**)0x00981250;
   int& oCNpcFocus::s_iHightlightMeleeFocus   = *(int*)0x00981294;
   int& oCNpcFocus::s_bHighlightInteractFocus = *(int*)0x0089E450;
   oCVisualFX*& oCNpcFocus::highLightFX       = *(oCVisualFX**)0x00981298;
@@ -44,7 +44,7 @@ namespace Gothic_II_Classic {
   zCGfx*& oCItemContainer::gfx_equip                 = *(zCGfx**)0x00981C44;
   zCGfx*& oCItemContainer::gfx_cursor                = *(zCGfx**)0x00981C48;
   zCGfx*& oCItemContainer::gfx_cursor_equip          = *(zCGfx**)0x00981C4C;
-  zCGfx**& oCItemContainer::gfx_arrow                = *(zCGfx***)0x00981C50;
+  zCGfx** oCItemContainer::gfx_arrow                 = (zCGfx**)0x00981C50;
   zCGfx*& oCNpcInventory::gfx_title                  = *(zCGfx**)0x00981C70;
 #endif // __OINVENTORY_H__VER2__
 
@@ -156,7 +156,7 @@ namespace Gothic_II_Classic {
   int& zCPolygon::s_numClipFeatScene                                                 = *(int*)0x00912C64;
   int& zCPolygon::s_numVertListScene                                                 = *(int*)0x0094AD28;
   int& zCPolygon::s_numFeatListScene                                                 = *(int*)0x0093AC7C;
-  zCVertex**& zCPolygon::s_actClipVert                                               = *(zCVertex***)0x0094AE00;
+  zCVertex** zCPolygon::s_actClipVert                                                = (zCVertex**)0x0094AE00;
   int& zCPolygon::s_actNumClipVert                                                   = *(int*)0x0094AE04;
   zCArraySort<zCPolygon::zSVertexSavedValues>& zCPolygon::morphedVerticesList_Height = *(zCArraySort<zCPolygon::zSVertexSavedValues>*)0x0094AD48;
   zCArraySort<zCPolygon::zSVertexSavedValues>& zCPolygon::morphedVerticesList_Wall   = *(zCArraySort<zCPolygon::zSVertexSavedValues>*)0x0094AD2C;
@@ -240,7 +240,7 @@ namespace Gothic_II_Classic {
   zSTRING& zFILE::s_physPathString                   = *(zSTRING*)0x008B4EBC;
   zSTRING& zFILE::s_rootDirString                    = *(zSTRING*)0x008B4EA8;
   bool& zFILE::s_initialized                         = *(bool*)0x008B4EF8;
-  zCBuffer**& zFILE::bufferList                      = *(zCBuffer***)0x008B4E74;
+  zCBuffer** zFILE::bufferList                       = (zCBuffer**)0x008B4E74;
   int*& zFILE::bufferFlag                            = *(int**)0x008B4E8C;
 #endif // __ZDISK_H__VER2__
 
@@ -255,7 +255,7 @@ namespace Gothic_II_Classic {
   const unsigned int& zCMgcEigenD::invalid_size      = *(const unsigned int*)0x008240A4;
   const unsigned int& zCMgcEigenD::allocation_failed = *(const unsigned int*)0x008240A8;
   const unsigned int& zCMgcEigenD::ql_exceeded       = *(const unsigned int*)0x008240AC;
-  const char**& zCMgcEigenD::message                 = *(const char***)0x008931C8;
+  const char** zCMgcEigenD::message                  = (const char**)0x008931C8;
 #endif // __ZEIGEN_H__VER2__
 
 #ifdef __ZEVENT_MAN_H__VER2__
@@ -435,7 +435,7 @@ namespace Gothic_II_Classic {
   unsigned long& zCRnd_D3D::xd3d_actFrameNumber                                 = *(unsigned long*)0x009D1B58;
   int& zCRnd_D3D::xd3d_dd7inuse                                                 = *(int*)0x009D1B50;
   int& zCRnd_D3D::xd3d_palsupp                                                  = *(int*)0x009D1B54;
-  zCSurfaceCache_D3D::zD3D_SlotHeader**& zCSurfaceCache_D3D::xsc_listofsurfaces = *(zCSurfaceCache_D3D::zD3D_SlotHeader***)0x009A8140;
+  zCSurfaceCache_D3D::zD3D_SlotHeader** zCSurfaceCache_D3D::xsc_listofsurfaces  = (zCSurfaceCache_D3D::zD3D_SlotHeader**)0x009A8140;
   int& zCSurfaceCache_D3D::xsc_listposition                                     = *(int*)0x009D1B78;
   zCArray<zCVertexBuffer_D3D*>& zCVertexBuffer_D3D::xvb_vertexbufferList        = *(zCArray<zCVertexBuffer_D3D*>*)0x009D1B94;
 #endif // __ZRND_D3D_H__VER2__
@@ -546,8 +546,8 @@ namespace Gothic_II_Classic {
 #endif // __ZZONE_H__VER2__
 
 #ifdef __OLOG_MANAGER_H__VER2__
-  char**& oCLogTopic::ms_strSections = *(char***)0x008AD100;
-  char**& oCLogTopic::ms_strStati    = *(char***)0x008AD10C;
+  char** oCLogTopic::ms_strSections = (char**)0x008AD100;
+  char** oCLogTopic::ms_strStati    = (char**)0x008AD10C;
 #endif // __OLOG_MANAGER_H__VER2__
 
 #ifdef __ZCOLLISION_OBJECT_MISC_H__VER2__

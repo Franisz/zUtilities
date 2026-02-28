@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMORPH_MESH_H__VER2__
 #define __ZMORPH_MESH_H__VER2__
@@ -131,47 +131,47 @@ namespace Gothic_II_Classic {
     zCArraySort<zTMorphAniEntry*>aniChannels; // sizeof 10h    offset 6Ch
     zCArray<zTRandAni> randAniList;           // sizeof 0Ch    offset 7Ch
 
-    zCMorphMesh() {}
-    void zCMorphMesh_OnInit( zCMorphMeshProto* )                               zCall( 0x005A09F0 );
-    void Init()                                                                zCall( 0x005A09D0 );
-    zCMorphMesh( zCMorphMeshProto* a0 )                                        zInit( zCMorphMesh_OnInit( a0 ));
-    zCMorphMeshAni* SearchAni( zSTRING const& )                                zCall( 0x005A0D60 );
-    int Render_novt( zTRenderContext&, zCRenderLightContainer*, float, float ) zCall( 0x005A0E90 );
-    void CalcVertPositions()                                                   zCall( 0x005A0F20 );
-    void AdvanceAnis()                                                         zCall( 0x005A12D0 );
-    int IsAniActive( zSTRING const& )                                          zCall( 0x005A14E0 );
-    int IsAniActive( zCMorphMeshAni* )                                         zCall( 0x005A15C0 );
-    void StopAni( zSTRING const& )                                             zCall( 0x005A1600 );
-    void StopAni( zCMorphMeshAni* )                                            zCall( 0x005A1720 );
-    void FadeOutAni( zSTRING const& )                                          zCall( 0x005A17A0 );
-    void FadeOutAni( zCMorphMeshAni* )                                         zCall( 0x005A1890 );
-    void StartAni( zSTRING const&, float, float )                              zCall( 0x005A1900 );
-    void StartAni( zCMorphMeshAni*, float, float )                             zCall( 0x005A19D0 );
-    void RemoveRandAni( zCMorphMeshAni* )                                      zCall( 0x005A1B90 );
-    void AddRandAni( zCMorphMeshAni*, float, float, float, float, float )      zCall( 0x005A1C00 );
-    void ProcessRandAnis()                                                     zCall( 0x005A1D70 );
-    void SetTextureVar( int, int, zSTRING* )                                   zCall( 0x005A1E80 );
-    void PrintStatus( int, int )                                               zCall( 0x005A1EB0 );
-    static zCObject* _CreateNewInstance()                                      zCall( 0x0059D760 );
-    static zCMorphMesh* Load( zSTRING const& )                                 zCall( 0x005A0BC0 );
-    virtual zCClassDef* _GetClassDef() const                                   zCall( 0x0059D840 );
-    virtual ~zCMorphMesh()                                                     zCall( 0x005A0AD0 );
-    virtual int Render( zTRenderContext& )                                     zCall( 0x005A0E10 );
-    virtual int IsBBox3DLocal()                                                zCall( 0x0059D850 );
-    virtual zTBBox3D GetBBox3D()                                               zCall( 0x005A0CF0 );
-    virtual zCOBBox3D* GetOBBox3D()                                            zCall( 0x0059D860 );
-    virtual zSTRING GetVisualName()                                            zCall( 0x005A0D30 );
-    virtual unsigned long GetRenderSortKey() const                             zCall( 0x0059D870 );
-    virtual int CanTraceRay() const                                            zCall( 0x0059D8A0 );
-    virtual int TraceRay( zVEC3 const&, zVEC3 const&, int, zTTraceRayReport& ) zCall( 0x005A1E90 );
-    virtual zSTRING const* GetFileExtension( int )                             zCall( 0x005A0C80 );
-    virtual int GetAlphaTestingEnabled() const                                 zCall( 0x0059D880 );
-    virtual void SetAlphaTestingEnabled( int )                                 zCall( 0x0059D890 );
-    virtual zCVisual* LoadVisualVirtual( zSTRING const& ) const                zCall( 0x005A0CE0 );
-    virtual void StartAnimation( zSTRING const& )                              zCall( 0x0059D8B0 );
-    virtual void StopAnimation( zSTRING const& )                               zCall( 0x0059D970 );
-    virtual int IsAnimationActive( zSTRING const& )                            zCall( 0x0059DA90 );
-    virtual zSTRING const* GetAnyAnimation()                                   zCall( 0x005A18E0 );
+    zCMorphMesh() : zCtor( zCVisualAnimate ) {}
+    void zCMorphMesh_OnInit( zCMorphMeshProto* )                                                          zCall( 0x005A09F0 );
+    void Init()                                                                                           zCall( 0x005A09D0 );
+    zCMorphMesh( zCMorphMeshProto* a0 ) : zCtor( zCVisualAnimate )                                        zInit( zCMorphMesh_OnInit( a0 ));
+    zCMorphMeshAni* SearchAni( zSTRING const& )                                                           zCall( 0x005A0D60 );
+    int Render_novt( zTRenderContext&, zCRenderLightContainer*, float, float )                            zCall( 0x005A0E90 );
+    void CalcVertPositions()                                                                              zCall( 0x005A0F20 );
+    void AdvanceAnis()                                                                                    zCall( 0x005A12D0 );
+    int IsAniActive( zSTRING const& )                                                                     zCall( 0x005A14E0 );
+    int IsAniActive( zCMorphMeshAni* )                                                                    zCall( 0x005A15C0 );
+    void StopAni( zSTRING const& )                                                                        zCall( 0x005A1600 );
+    void StopAni( zCMorphMeshAni* )                                                                       zCall( 0x005A1720 );
+    void FadeOutAni( zSTRING const& )                                                                     zCall( 0x005A17A0 );
+    void FadeOutAni( zCMorphMeshAni* )                                                                    zCall( 0x005A1890 );
+    void StartAni( zSTRING const&, float, float )                                                         zCall( 0x005A1900 );
+    void StartAni( zCMorphMeshAni*, float, float )                                                        zCall( 0x005A19D0 );
+    void RemoveRandAni( zCMorphMeshAni* )                                                                 zCall( 0x005A1B90 );
+    void AddRandAni( zCMorphMeshAni*, float, float, float, float, float )                                 zCall( 0x005A1C00 );
+    void ProcessRandAnis()                                                                                zCall( 0x005A1D70 );
+    void SetTextureVar( int, int, zSTRING* )                                                              zCall( 0x005A1E80 );
+    void PrintStatus( int, int )                                                                          zCall( 0x005A1EB0 );
+    static zCObject* _CreateNewInstance()                                                                 zCall( 0x0059D760 );
+    static zCMorphMesh* Load( zSTRING const& )                                                            zCall( 0x005A0BC0 );
+    virtual zCClassDef* _GetClassDef() const                                                              zCall( 0x0059D840 );
+    virtual ~zCMorphMesh()                                                                                zCall( 0x005A0AD0 );
+    virtual int Render( zTRenderContext& )                                                                zCall( 0x005A0E10 );
+    virtual int IsBBox3DLocal()                                                                           zCall( 0x0059D850 );
+    virtual zTBBox3D GetBBox3D()                                                                          zCall( 0x005A0CF0 );
+    virtual zCOBBox3D* GetOBBox3D()                                                                       zCall( 0x0059D860 );
+    virtual zSTRING GetVisualName()                                                                       zCall( 0x005A0D30 );
+    virtual unsigned long GetRenderSortKey() const                                                        zCall( 0x0059D870 );
+    virtual int CanTraceRay() const                                                                       zCall( 0x0059D8A0 );
+    virtual int TraceRay( zVEC3 const&, zVEC3 const&, int, zTTraceRayReport& )                            zCall( 0x005A1E90 );
+    virtual zSTRING const* GetFileExtension( int )                                                        zCall( 0x005A0C80 );
+    virtual int GetAlphaTestingEnabled() const                                                            zCall( 0x0059D880 );
+    virtual void SetAlphaTestingEnabled( int )                                                            zCall( 0x0059D890 );
+    virtual zCVisual* LoadVisualVirtual( zSTRING const& ) const                                           zCall( 0x005A0CE0 );
+    virtual void StartAnimation( zSTRING const& )                                                         zCall( 0x0059D8B0 );
+    virtual void StopAnimation( zSTRING const& )                                                          zCall( 0x0059D970 );
+    virtual int IsAnimationActive( zSTRING const& )                                                       zCall( 0x0059DA90 );
+    virtual zSTRING const* GetAnyAnimation()                                                              zCall( 0x005A18E0 );
 
     // user API
     #include "zCMorphMesh.inl"
@@ -182,7 +182,7 @@ namespace Gothic_II_Classic {
   public:
 
     void zCMorphMeshConvertFileHandler_OnInit()                        zCall( 0x005A2600 );
-    zCMorphMeshConvertFileHandler()                                    zInit( zCMorphMeshConvertFileHandler_OnInit() );
+    zCMorphMeshConvertFileHandler() : zCtor( zCScanDirFileHandler )    zInit( zCMorphMeshConvertFileHandler_OnInit() );
     virtual ~zCMorphMeshConvertFileHandler()                           zCall( 0x00424920 );
     virtual int HandleFile( zSTRING const&, char const*, _finddata_t ) zCall( 0x005A26E0 );
 

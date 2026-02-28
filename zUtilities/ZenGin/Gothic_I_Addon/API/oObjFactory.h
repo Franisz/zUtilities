@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OOBJ_FACTORY_H__VER1__
 #define __OOBJ_FACTORY_H__VER1__
@@ -10,7 +10,7 @@ namespace Gothic_I_Addon {
   public:
     zCLASS_DECLARATION( oCObjectFactory )
 
-    oCObjectFactory() {}
+    oCObjectFactory() : zCtor( zCObjectFactory ) {}
     static zCObject* _CreateNewInstance()                               zCall( 0x006FE020 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00428590 );
     virtual ~oCObjectFactory()                                          zCall( 0x00428750 );

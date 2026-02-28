@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZDISK__VDFS_H__VER1__
 #define __ZDISK__VDFS_H__VER1__
@@ -29,8 +29,8 @@ namespace Gothic_I_Addon {
     void zFILE_VDFS_OnInit()                                      zCall( 0x0044A7A0 );
     void zFILE_VDFS_OnInit( zSTRING const& )                      zCall( 0x0044A9E0 );
     void Init( zSTRING const& )                                   zCall( 0x0044A770 );
-    zFILE_VDFS()                                                  zInit( zFILE_VDFS_OnInit() );
-    zFILE_VDFS( zSTRING const& a0 )                               zInit( zFILE_VDFS_OnInit( a0 ));
+    zFILE_VDFS() : zCtor( zFILE_FILE )                            zInit( zFILE_VDFS_OnInit() );
+    zFILE_VDFS( zSTRING const& a0 ) : zCtor( zFILE_FILE )         zInit( zFILE_VDFS_OnInit( a0 ));
     int HandleError( zSTRING const&, zSTRING const&, int )        zCall( 0x0044ACD0 );
     static bool InitFileSystem()                                  zCall( 0x0044C920 );
     static bool DeinitFileSystem()                                zCall( 0x0044CD90 );

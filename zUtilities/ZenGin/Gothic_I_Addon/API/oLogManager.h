@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OLOG_MANAGER_H__VER1__
 #define __OLOG_MANAGER_H__VER1__
@@ -48,8 +48,8 @@ namespace Gothic_I_Addon {
     void __fastcall Unarchive( zCArchiver& )   zCall( 0x0076D3C0 );
 
     // statics
-    static char**& ms_strSections;
-    static char**& ms_strStati;
+    static char** ms_strSections;
+    static char** ms_strStati;
 
     // user API
     #include "oCLogTopic.inl"

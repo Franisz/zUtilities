@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIDEO__WIN32_H__VER1__
 #define __ZVIDEO__WIN32_H__VER1__

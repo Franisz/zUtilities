@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVOB_H__VER0__
 #define __ZVOB_H__VER0__
@@ -55,10 +55,11 @@ namespace Gothic_I_Classic {
     unsigned short int subType; // sizeof 02h    offset 24h
     int inCutscene;             // sizeof 04h    offset 28h
 
+    zDefineInheritableCtor( zCEventMessage ) : zCtor( zCObject )  {}
     void zCEventMessage_OnInit()                                                    zCall( 0x00413590 );
     void zCEventMessage_OnInit( unsigned short )                                    zCall( 0x005D8D10 );
-    zCEventMessage()                                                                zInit( zCEventMessage_OnInit() );
-    zCEventMessage( unsigned short a0 )                                             zInit( zCEventMessage_OnInit( a0 ));
+    zCEventMessage() : zCtor( zCObject )                                            zInit( zCEventMessage_OnInit() );
+    zCEventMessage( unsigned short a0 ) : zCtor( zCObject )                         zInit( zCEventMessage_OnInit( a0 ));
     unsigned long GetMessageID() const                                              zCall( 0x005D8E80 );
     void PackToBuffer( zCBuffer&, zCEventManager* )                                 zCall( 0x005D8EE0 );
     unsigned short GetSubType() const                                               zCall( 0x0073F4C0 );
@@ -116,18 +117,18 @@ namespace Gothic_I_Classic {
     zCVob* inflictorVob;  // sizeof 04h    offset 3Ch
     zVEC3 hitLocation;    // sizeof 0Ch    offset 40h
 
-    zCEventCore() {}
-    void Clear()                                                        zCall( 0x005D97D0 );
-    static zCObject* _CreateNewInstance()                               zCall( 0x005D2060 );
-    virtual zCClassDef* _GetClassDef() const                            zCall( 0x00401FE0 );
-    virtual void Archive( zCArchiver& )                                 zCall( 0x005D9C00 );
-    virtual void Unarchive( zCArchiver& )                               zCall( 0x005D9C70 );
-    virtual ~zCEventCore()                                              zCall( 0x005D9810 );
-    virtual int IsNetRelevant()                                         zCall( 0x00402000 );
-    virtual int MD_GetNumOfSubTypes()                                   zCall( 0x00401FF0 );
-    virtual zSTRING MD_GetSubTypeString( int )                          zCall( 0x005D9A00 );
-    virtual void Pack( zCBuffer&, zCEventManager* )                     zCall( 0x005D9830 );
-    virtual void Unpack( zCBuffer&, zCEventManager* )                   zCall( 0x005D98E0 );
+    zCEventCore() : zCtor( zCEventMessage ) {}
+    void Clear()                                                                                  zCall( 0x005D97D0 );
+    static zCObject* _CreateNewInstance()                                                         zCall( 0x005D2060 );
+    virtual zCClassDef* _GetClassDef() const                                                      zCall( 0x00401FE0 );
+    virtual void Archive( zCArchiver& )                                                           zCall( 0x005D9C00 );
+    virtual void Unarchive( zCArchiver& )                                                         zCall( 0x005D9C70 );
+    virtual ~zCEventCore()                                                                        zCall( 0x005D9810 );
+    virtual int IsNetRelevant()                                                                   zCall( 0x00402000 );
+    virtual int MD_GetNumOfSubTypes()                                                             zCall( 0x00401FF0 );
+    virtual zSTRING MD_GetSubTypeString( int )                                                    zCall( 0x005D9A00 );
+    virtual void Pack( zCBuffer&, zCEventManager* )                                               zCall( 0x005D9830 );
+    virtual void Unpack( zCBuffer&, zCEventManager* )                                             zCall( 0x005D98E0 );
 
     // user API
     #include "zCEventCore.inl"
@@ -233,12 +234,13 @@ namespace Gothic_I_Classic {
     zCCollisionObjectDef* m_poCollisionObjectClass; // sizeof 04h    offset F8h
     zCCollisionObject* m_poCollisionObject;         // sizeof 04h    offset FCh
 
+    zDefineInheritableCtor( zCVob ) : zCtor( zCObject )  {}
     void zCVob_OnInit()                                                                                zCall( 0x005D3030 );
     zVEC3 GetPositionWorld() const                                                                     zCall( 0x0051B3C0 );
     zVEC3 GetAtVectorWorld() const                                                                     zCall( 0x0051B3E0 );
     zVEC3 GetUpVectorWorld() const                                                                     zCall( 0x0051B400 );
     zVEC3 GetRightVectorWorld() const                                                                  zCall( 0x0051B420 );
-    zCVob()                                                                                            zInit( zCVob_OnInit() );
+    zCVob() : zCtor( zCObject )                                                                        zInit( zCVob_OnInit() );
     void SetVobID( unsigned long const& )                                                              zCall( 0x005D3720 );
     void SetAI( zCAIBase* )                                                                            zCall( 0x005D3730 );
     void SetVobPresetName( zSTRING const& )                                                            zCall( 0x005D3780 );
@@ -468,12 +470,12 @@ namespace Gothic_I_Classic {
     zCVobLightData lightData; // sizeof 48h    offset 24h
     zSTRING presetName;       // sizeof 14h    offset 6Ch
 
-    zCVobLightPreset() {}
-    static zCObject* _CreateNewInstance()                               zCall( 0x005D2350 );
-    virtual zCClassDef* _GetClassDef() const                            zCall( 0x005D24B0 );
-    virtual void Archive( zCArchiver& )                                 zCall( 0x005DCA90 );
-    virtual void Unarchive( zCArchiver& )                               zCall( 0x005DCAC0 );
-    virtual ~zCVobLightPreset()                                         zCall( 0x005D24F0 );
+    zCVobLightPreset() : zCtor( zCObject ) {}
+    static zCObject* _CreateNewInstance()                                                   zCall( 0x005D2350 );
+    virtual zCClassDef* _GetClassDef() const                                                zCall( 0x005D24B0 );
+    virtual void Archive( zCArchiver& )                                                     zCall( 0x005DCA90 );
+    virtual void Unarchive( zCArchiver& )                                                   zCall( 0x005DCAC0 );
+    virtual ~zCVobLightPreset()                                                             zCall( 0x005D24F0 );
 
     // user API
     #include "zCVobLightPreset.inl"
@@ -488,7 +490,7 @@ namespace Gothic_I_Classic {
     zSTRING lightPresetInUse; // sizeof 14h    offset 148h
 
     void zCVobLight_OnInit()                                                              zCall( 0x005DB4A0 );
-    zCVobLight()                                                                          zInit( zCVobLight_OnInit() );
+    zCVobLight() : zCtor( zCVob )                                                         zInit( zCVobLight_OnInit() );
     void DoAnimation()                                                                    zCall( 0x005DB820 );
     void SetRange( float, int )                                                           zCall( 0x005DBAF0 );
     void AddThisToPresetList( zSTRING const& ) const                                      zCall( 0x005DC0E0 );
@@ -521,7 +523,7 @@ namespace Gothic_I_Classic {
     zCLASS_DECLARATION( zCVobLevelCompo )
 
     void zCVobLevelCompo_OnInit()                                       zCall( 0x005D8A30 );
-    zCVobLevelCompo()                                                   zInit( zCVobLevelCompo_OnInit() );
+    zCVobLevelCompo() : zCtor( zCVob )                                  zInit( zCVobLevelCompo_OnInit() );
     int HasIdentityTrafo() const                                        zCall( 0x005D8A90 );
     static zCObject* _CreateNewInstance()                               zCall( 0x005D29C0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x005D2A80 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_FX_H__VER0__
 #define __ZVIEW_FX_H__VER0__
@@ -28,8 +28,9 @@ namespace Gothic_I_Classic {
     unsigned long ModeClose; // sizeof 04h    offset 98h
     zVEC2 TextureOffset[2];  // sizeof 10h    offset 9Ch
 
+    zDefineInheritableCtor( zCViewFX ) : zCtor( zCViewDraw )  {}
     void zCViewFX_OnInit()                                                                           zCall( 0x00753F20 );
-    zCViewFX()                                                                                       zInit( zCViewFX_OnInit() );
+    zCViewFX() : zCtor( zCViewDraw )                                                                 zInit( zCViewFX_OnInit() );
     void __fastcall Init( zCViewObject*, int, unsigned long, unsigned long, float, float, zSTRING& ) zCall( 0x00754020 );
     void __fastcall Open()                                                                           zCall( 0x007540A0 );
     void __fastcall OpenSafe()                                                                       zCall( 0x007540D0 );

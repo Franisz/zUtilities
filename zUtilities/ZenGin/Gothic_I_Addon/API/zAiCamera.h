@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZAI_CAMERA_H__VER1__
 #define __ZAI_CAMERA_H__VER1__
@@ -73,7 +73,7 @@ namespace Gothic_I_Addon {
     int firstPerson;                         // sizeof 04h    offset 290h
 
     void zCAICamera_OnInit()                                                          zCall( 0x004A59C0 );
-    zCAICamera()                                                                      zInit( zCAICamera_OnInit() );
+    zCAICamera() : zCtor( zCAIBase )                                                  zInit( zCAICamera_OnInit() );
     void StartUp()                                                                    zCall( 0x004A5F10 );
     void CleanUp()                                                                    zCall( 0x004A6460 );
     float GetBestRange()                                                              zCall( 0x004A6520 );

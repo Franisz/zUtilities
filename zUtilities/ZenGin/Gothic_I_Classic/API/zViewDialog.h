@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_DIALOG_H__VER0__
 #define __ZVIEW_DIALOG_H__VER0__
@@ -13,8 +13,9 @@ namespace Gothic_I_Classic {
     int IsDone;      // sizeof 04h    offset F0h
     int IsActivated; // sizeof 04h    offset F4h
 
+    zDefineInheritableCtor( zCViewDialog ) : zCtor( zCViewPrint ), zCtor( zCInputCallback )  {}
     void zCViewDialog_OnInit()                                          zCall( 0x00758450 );
-    zCViewDialog()                                                      zInit( zCViewDialog_OnInit() );
+    zCViewDialog() : zCtor( zCViewPrint ), zCtor( zCInputCallback )     zInit( zCViewDialog_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x007582C0 );
     /* for zCObject num : 15*/
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x007250D0 );

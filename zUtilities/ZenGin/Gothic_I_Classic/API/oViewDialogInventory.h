@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIEW_DIALOG_INVENTORY_H__VER0__
 #define __OVIEW_DIALOG_INVENTORY_H__VER0__
@@ -21,7 +21,7 @@ namespace Gothic_I_Classic {
     oEInventoryAlignment Alignment;            // sizeof 04h    offset 104h
 
     void oCViewDialogInventory_OnInit()                                 zCall( 0x007269E0 );
-    oCViewDialogInventory()                                             zInit( oCViewDialogInventory_OnInit() );
+    oCViewDialogInventory() : zCtor( zCViewDialog )                     zInit( oCViewDialogInventory_OnInit() );
     void __fastcall SetInventory( oCNpcInventory* )                     zCall( 0x00726AD0 );
     void __fastcall SetAlignment( oEInventoryAlignment )                zCall( 0x00726B00 );
     oCItem* __fastcall GetSelectedItem()                                zCall( 0x00726B10 );

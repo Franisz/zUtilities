@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMUSIC__DM_H__VER0__
 #define __ZMUSIC__DM_H__VER0__
@@ -14,9 +14,9 @@ namespace Gothic_I_Classic {
   public:
     void* seg; // sizeof 04h    offset 48h
 
-    zCMusicTheme_DM() {}
-    virtual ~zCMusicTheme_DM()   zCall( 0x004DA0D0 );
-    virtual int IsActive() const zCall( 0x004DA240 );
+    zCMusicTheme_DM() : zCtor( zCMusicTheme ) {}
+    virtual ~zCMusicTheme_DM()                           zCall( 0x004DA0D0 );
+    virtual int IsActive() const                         zCall( 0x004DA240 );
 
     // user API
     #include "zCMusicTheme_DM.inl"
@@ -26,7 +26,7 @@ namespace Gothic_I_Classic {
   class zCMusicJingle_DM : public zCMusicJingle {
   public:
 
-    zCMusicJingle_DM() {}
+    zCMusicJingle_DM() : zCtor( zCMusicJingle ) {}
 
     // user API
     #include "zCMusicJingle_DM.inl"
@@ -54,7 +54,7 @@ namespace Gothic_I_Classic {
     zCMusicTheme* defTheme;  // sizeof 04h    offset 2Ch
 
     void zCMusicSys_DirectMusic_OnInit()                                                                     zCall( 0x004DA270 );
-    zCMusicSys_DirectMusic()                                                                                 zInit( zCMusicSys_DirectMusic_OnInit() );
+    zCMusicSys_DirectMusic() : zCtor( zCMusicSystem )                                                        zInit( zCMusicSys_DirectMusic_OnInit() );
     virtual ~zCMusicSys_DirectMusic()                                                                        zCall( 0x004DB790 );
     virtual void PlayThemeByScript( zSTRING const&, int, int* )                                              zCall( 0x004DB850 );
     virtual zCMusicTheme* LoadThemeByScript( zSTRING const& )                                                zCall( 0x004DBA20 );

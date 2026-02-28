@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __Z3D_H__VER2__
 #define __Z3D_H__VER2__
@@ -364,6 +364,7 @@ namespace Gothic_II_Classic {
     unsigned char polyNumVert; // sizeof 01h    offset 30h
     TFlags flags;              // sizeof 03h    offset 31h
 
+    zDefineInheritableCtor( zCPolygon ) {}
     void zCPolygon_OnInit()                                                                                           zCall( 0x005B1430 );
     int RenderPoly( int )                                                                                             zCall( 0x00526FE0 );
     void ApplyMorphing()                                                                                              zCall( 0x00527620 );
@@ -457,7 +458,7 @@ namespace Gothic_II_Classic {
     static int& s_numClipFeatScene;
     static int& s_numVertListScene;
     static int& s_numFeatListScene;
-    static zCVertex**& s_actClipVert;
+    static zCVertex** s_actClipVert;
     static int& s_actNumClipVert;
     static zCArraySort<zSVertexSavedValues>& morphedVerticesList_Height;
     static zCArraySort<zSVertexSavedValues>& morphedVerticesList_Wall;
@@ -477,12 +478,12 @@ namespace Gothic_II_Classic {
     zCBspNode* backBspNode;  // sizeof 04h    offset 38h
     int lastTimeCompletely;  // sizeof 04h    offset 3Ch
 
-    zCPortal() {}
-    void zCPortal_OnInit( zTPlane const&, zCMesh* ) zCall( 0x005265C0 );
-    void RemoveFromBsp()                            zCall( 0x005265A0 );
-    zCPortal( zTPlane const& a0, zCMesh* a1 )       zInit( zCPortal_OnInit( a0, a1 ));
-    void Init()                                     zCall( 0x00539C50 );
-    ~zCPortal()                                     zCall( 0x0053A0B0 );
+    zCPortal() : zCtor( zCPolygon ) {}
+    void zCPortal_OnInit( zTPlane const&, zCMesh* )                      zCall( 0x005265C0 );
+    void RemoveFromBsp()                                                 zCall( 0x005265A0 );
+    zCPortal( zTPlane const& a0, zCMesh* a1 ) : zCtor( zCPolygon )       zInit( zCPortal_OnInit( a0, a1 ));
+    void Init()                                                          zCall( 0x00539C50 );
+    ~zCPortal()                                                          zCall( 0x0053A0B0 );
 
     // static properties
     static zCMaterial*& portalDummyMaterial;

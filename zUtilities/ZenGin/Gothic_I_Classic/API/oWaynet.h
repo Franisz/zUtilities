@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OWAYNET_H__VER0__
 #define __OWAYNET_H__VER0__
@@ -12,7 +12,7 @@ namespace Gothic_I_Classic {
   public:
 
     void oCWaypoint_OnInit()              zCall( 0x006D4FC0 );
-    oCWaypoint()                          zInit( oCWaypoint_OnInit() );
+    oCWaypoint() : zCtor( zCWaypoint )    zInit( oCWaypoint_OnInit() );
     virtual ~oCWaypoint()                 zCall( 0x006D5020 );
     virtual int CanBeUsed( zCVob const* ) zCall( 0x006D5030 );
 
@@ -27,7 +27,7 @@ namespace Gothic_I_Classic {
     oCMobDoor* door;     // sizeof 04h    offset 24h
 
     void oCWay_OnInit()                           zCall( 0x006D50A0 );
-    oCWay()                                       zInit( oCWay_OnInit() );
+    oCWay() : zCtor( zCWay )                      zInit( oCWay_OnInit() );
     oCMobLadder* GetLadder()                      zCall( 0x006D5970 );
     oCMobDoor* GetDoor()                          zCall( 0x006D5980 );
     virtual ~oCWay()                              zCall( 0x006D50E0 );

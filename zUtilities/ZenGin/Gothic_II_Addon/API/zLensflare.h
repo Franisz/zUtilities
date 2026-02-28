@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZLENSFLARE_H__VER3__
 #define __ZLENSFLARE_H__VER3__
@@ -45,7 +45,7 @@ namespace Gothic_II_Addon {
     zCLensFlareFXEnum1 flareMix;                // sizeof 04h    offset 30h
     float fadeScale;                            // sizeof 04h    offset 34h
 
-    zCLensFlareFX() {}
+    zCLensFlareFX() : zCtor( zCObject ) {}
     void RenderLensFlares( zCVob* )          zCall( 0x00563040 );
     void RenderLensFlares( zVEC2& )          zCall( 0x00563880 );
     void SetAlpha( int )                     zCall( 0x00563A10 );

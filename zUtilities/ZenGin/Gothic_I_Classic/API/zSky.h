@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSKY_H__VER0__
 #define __ZSKY_H__VER0__
@@ -113,11 +113,11 @@ namespace Gothic_I_Classic {
   public:
     zVEC3 camPosLastFrame; // sizeof 0Ch    offset B0h
 
-    zCUnderwaterPFX() {}
-    void ProcessParticles()                zCall( 0x005BADC0 );
-    void CreateParticles()                 zCall( 0x005BB1C0 );
-    virtual ~zCUnderwaterPFX()             zCall( 0x005BA960 );
-    virtual int Render( zTRenderContext& ) zCall( 0x005BADA0 );
+    zCUnderwaterPFX() : zCtor( zCParticleFX ) {}
+    void ProcessParticles()                                        zCall( 0x005BADC0 );
+    void CreateParticles()                                         zCall( 0x005BB1C0 );
+    virtual ~zCUnderwaterPFX()                                     zCall( 0x005BA960 );
+    virtual int Render( zTRenderContext& )                         zCall( 0x005BADA0 );
 
     // user API
     #include "zCUnderwaterPFX.inl"
@@ -140,8 +140,9 @@ namespace Gothic_I_Classic {
     int fillBackground;           // sizeof 04h    offset 30h
     zCTexture* backgroundTexture; // sizeof 04h    offset 34h
 
+    zDefineInheritableCtor( zCSkyControler ) : zCtor( zCObject )  {}
     void zCSkyControler_OnInit()                            zCall( 0x005BA160 );
-    zCSkyControler()                                        zInit( zCSkyControler_OnInit() );
+    zCSkyControler() : zCtor( zCObject )                    zInit( zCSkyControler_OnInit() );
     void ClearBackground( zCOLOR )                          zCall( 0x005BA2F0 );
     virtual zCClassDef* _GetClassDef() const                zCall( 0x005B80A0 );
     virtual ~zCSkyControler()                               zCall( 0x005BA280 );
@@ -191,8 +192,9 @@ namespace Gothic_I_Classic {
     zCOLOR scrPolyColor;                   // sizeof 04h    offset 60h
     zTRnd_AlphaBlendFunc scrPolyAlphaFunc; // sizeof 04h    offset 64h
 
+    zDefineInheritableCtor( zCSkyControler_Mid ) : zCtor( zCSkyControler )  {}
     void zCSkyControler_Mid_OnInit()                     zCall( 0x005BA5A0 );
-    zCSkyControler_Mid()                                 zInit( zCSkyControler_Mid_OnInit() );
+    zCSkyControler_Mid() : zCtor( zCSkyControler )       zInit( zCSkyControler_Mid_OnInit() );
     void InitUnderwaterPFX()                             zCall( 0x005BA6A0 );
     void InitScreenBlend()                               zCall( 0x005BB2A0 );
     void RenderScreenBlend()                             zCall( 0x005BB3D0 );
@@ -230,7 +232,7 @@ namespace Gothic_I_Classic {
     float time;                // sizeof 04h    offset 70h
 
     void zCSkyControler_Indoor_OnInit()                                 zCall( 0x005BB5D0 );
-    zCSkyControler_Indoor()                                             zInit( zCSkyControler_Indoor_OnInit() );
+    zCSkyControler_Indoor() : zCtor( zCSkyControler_Mid )               zInit( zCSkyControler_Indoor_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x005B7DD0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x005B7F70 );
     virtual ~zCSkyControler_Indoor()                                    zCall( 0x005B7FE0 );
@@ -303,8 +305,9 @@ namespace Gothic_I_Classic {
     float skyPFXTimer;                    // sizeof 04h    offset 660h
     zTRainFX rainFX;                      // sizeof 1Ch    offset 664h
 
+    zDefineInheritableCtor( zCSkyControler_Outdoor ) : zCtor( zCSkyControler_Mid )  {}
     void zCSkyControler_Outdoor_OnInit()                                    zCall( 0x005BC440 );
-    zCSkyControler_Outdoor()                                                zInit( zCSkyControler_Outdoor_OnInit() );
+    zCSkyControler_Outdoor() : zCtor( zCSkyControler_Mid )                  zInit( zCSkyControler_Outdoor_OnInit() );
     void Init()                                                             zCall( 0x005BCA80 );
     int GetStateTextureSearch( int, int, int )                              zCall( 0x005BCFA0 );
     void ApplyStateTexToLayer( int, int )                                   zCall( 0x005BCFF0 );

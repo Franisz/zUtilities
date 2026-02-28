@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZBINK_PLAYER_H__VER0__
 #define __ZBINK_PLAYER_H__VER0__
@@ -23,8 +23,9 @@ namespace Gothic_I_Classic {
     RECT mSourceRect;     // sizeof 10h    offset 60h
     RECT mTargetRect;     // sizeof 10h    offset 70h
 
+    zDefineInheritableCtor( zCBinkPlayer ) : zCtor( zCVideoPlayer )  {}
     void zCBinkPlayer_OnInit()               zCall( 0x0043A3A0 );
-    zCBinkPlayer()                           zInit( zCBinkPlayer_OnInit() );
+    zCBinkPlayer() : zCtor( zCVideoPlayer )  zInit( zCBinkPlayer_OnInit() );
     long GetPixelFormat( zTRndSurfaceDesc& ) zCall( 0x0043C9E0 );
     void SetFullscreen( int, zSTRING )       zCall( 0x0043CBB0 );
     virtual ~zCBinkPlayer()                  zCall( 0x0043A4F0 );

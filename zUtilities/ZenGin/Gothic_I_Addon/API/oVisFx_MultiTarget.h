@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIS_FX__MULTI_TARGET_H__VER1__
 #define __OVIS_FX__MULTI_TARGET_H__VER1__
@@ -15,7 +15,7 @@ namespace Gothic_I_Addon {
     zCArray<oCVisualFX*> visList; // sizeof 0Ch    offset 5C8h
 
     void oCVisFX_MultiTarget_OnInit()                                   zCall( 0x004A47A0 );
-    oCVisFX_MultiTarget()                                               zInit( oCVisFX_MultiTarget_OnInit() );
+    oCVisFX_MultiTarget() : zCtor( oCVisualFX )                         zInit( oCVisFX_MultiTarget_OnInit() );
     static zCObject* _CreateNewInstance()                               zCall( 0x004A53C0 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x004A47E0 );
     virtual void Archive( zCArchiver& )                                 zCall( 0x004A51A0 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OMUSIC_ZONE_H__VER3__
 #define __OMUSIC_ZONE_H__VER3__
@@ -40,8 +40,9 @@ namespace Gothic_II_Addon {
     int dayEntranceDone;   // sizeof 04h    offset 140h
     int nightEntranceDone; // sizeof 04h    offset 144h
 
+    zDefineInheritableCtor( oCZoneMusic ) : zCtor( zCZoneMusic ) {}
     void oCZoneMusic_OnInit()                                                                          zCall( 0x006404C0 );
-    oCZoneMusic()                                                                                      zInit( oCZoneMusic_OnInit() );
+    oCZoneMusic() : zCtor( zCZoneMusic )                                                               zInit( oCZoneMusic_OnInit() );
     void SetEnabled( int )                                                                             zCall( 0x00641080 );
     int IsEnabled() const                                                                              zCall( 0x00641090 );
     void SetPriority( int )                                                                            zCall( 0x006410A0 );
@@ -96,11 +97,11 @@ namespace Gothic_II_Addon {
   public:
     zCLASS_DECLARATION( oCZoneMusicDefault )
 
-    void oCZoneMusicDefault_OnInit()         zCall( 0x00642430 );
-    oCZoneMusicDefault()                     zInit( oCZoneMusicDefault_OnInit() );
-    static zCObject* _CreateNewInstance()    zCall( 0x006403D0 );
-    virtual zCClassDef* _GetClassDef() const zCall( 0x006404B0 );
-    virtual ~oCZoneMusicDefault()            zCall( 0x006424C0 );
+    void oCZoneMusicDefault_OnInit()            zCall( 0x00642430 );
+    oCZoneMusicDefault() : zCtor( oCZoneMusic ) zInit( oCZoneMusicDefault_OnInit() );
+    static zCObject* _CreateNewInstance()       zCall( 0x006403D0 );
+    virtual zCClassDef* _GetClassDef() const    zCall( 0x006404B0 );
+    virtual ~oCZoneMusicDefault()               zCall( 0x006424C0 );
 
     // user API
     #include "oCZoneMusicDefault.inl"

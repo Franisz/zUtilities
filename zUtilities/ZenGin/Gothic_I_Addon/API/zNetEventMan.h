@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZNET_EVENT_MAN_H__VER1__
 #define __ZNET_EVENT_MAN_H__VER1__
@@ -17,8 +17,8 @@ namespace Gothic_I_Addon {
 
     void zCNetEventManager_OnInit()                                        zCall( 0x00459E90 );
     void zCNetEventManager_OnInit( zCVob* )                                zCall( 0x00459EE0 );
-    zCNetEventManager()                                                    zInit( zCNetEventManager_OnInit() );
-    zCNetEventManager( zCVob* a0 )                                         zInit( zCNetEventManager_OnInit( a0 ));
+    zCNetEventManager() : zCtor( zCEventManager )                          zInit( zCNetEventManager_OnInit() );
+    zCNetEventManager( zCVob* a0 ) : zCtor( zCEventManager )               zInit( zCNetEventManager_OnInit( a0 ));
     void Init()                                                            zCall( 0x00459F10 );
     static zCObject* _CreateNewInstance()                                  zCall( 0x004590C0 );
     static int HandleNetMessage( zCNetMessage*, unsigned short, zCWorld* ) zCall( 0x00459190 );

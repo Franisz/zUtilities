@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OWORLD_H__VER0__
 #define __OWORLD_H__VER0__
@@ -27,7 +27,7 @@ namespace Gothic_I_Classic {
     void oCWorld_OnInit()                                                zCall( 0x006D5C80 );
     zSTRING GetWorldName()                                               zCall( 0x00428B00 );
     zSTRING GetWorldFilename()                                           zCall( 0x0063B680 );
-    oCWorld()                                                            zInit( oCWorld_OnInit() );
+    oCWorld() : zCtor( zCWorld )                                         zInit( oCWorld_OnInit() );
     oCVob* CreateVob_novt( zTVobType, zSTRING const& )                   zCall( 0x006D6190 );
     void ClearNpcPerceptionVobLists()                                    zCall( 0x006D7630 );
     void __fastcall InsertInLists( zCVob* )                              zCall( 0x006D7670 );

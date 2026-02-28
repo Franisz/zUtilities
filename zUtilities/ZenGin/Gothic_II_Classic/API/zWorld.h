@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZWORLD_H__VER2__
 #define __ZWORLD_H__VER2__
@@ -37,6 +37,7 @@ namespace Gothic_II_Classic {
   class zCCallback {
   public:
 
+    zDefineInheritableCtor( zCCallback ) {}
     zCCallback() {}
 
     // user API
@@ -47,7 +48,7 @@ namespace Gothic_II_Classic {
   class zCVobCallback : public zCCallback {
   public:
 
-    zCVobCallback() {}
+    zCVobCallback() : zCtor( zCCallback ) {}
     virtual void HandleVob( zCVob*, void* ) zPureCall;
 
     // user API
@@ -59,7 +60,7 @@ namespace Gothic_II_Classic {
   public:
     
     virtual void DoWorldPerFrameCallback( zCWorld*, zCCamera* ) zPureCall;
-    zCWorldPerFrameCallback() {}
+    zCWorldPerFrameCallback() : zCtor( zCCallback ) {}
 
     // user API
     #include "zCWorldPerFrameCallback.inl"
@@ -231,8 +232,9 @@ namespace Gothic_II_Classic {
     zCArray<zCVob*> walkList;                                    // sizeof 0Ch    offset 248h
     zCArray<zCVob*> vobHashTable[zNUM_VOB_HASH];                 // sizeof 6000h  offset 254h
 
+    zDefineInheritableCtor( zCWorld ) : zCtor( zCObject ) {}
     void zCWorld_OnInit()                                                                                          zCall( 0x006182F0 );
-    zCWorld()                                                                                                      zInit( zCWorld_OnInit() );
+    zCWorld() : zCtor( zCObject )                                                                                  zInit( zCWorld_OnInit() );
     zCSkyControler* GetActiveSkyControler()                                                                        zCall( 0x00618C50 );
     void SetSkyControlerIndoor( zCSkyControler* )                                                                  zCall( 0x00618C80 );
     void SetSkyControlerOutdoor( zCSkyControler* )                                                                 zCall( 0x00618CC0 );

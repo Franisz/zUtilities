@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZRENDERER_H__VER1__
 #define __ZRENDERER_H__VER1__
@@ -221,6 +221,7 @@ namespace Gothic_I_Addon {
     zCRndAlphaSortObject* nextSortObject; // sizeof 04h    offset 04h
     float zvalue;                         // sizeof 04h    offset 08h
 
+    zDefineInheritableCtor( zCRndAlphaSortObject ) {}
     zCRndAlphaSortObject() {}
     virtual ~zCRndAlphaSortObject() zCall( 0x0052D810 );
     virtual void Draw( int )        zPureCall;
@@ -348,6 +349,7 @@ namespace Gothic_I_Addon {
     int vid_gsize;                   // sizeof 04h    offset 2Ch
     int vid_bsize;                   // sizeof 04h    offset 30h
 
+    zDefineInheritableCtor( zCRenderer ) {}
     zCRenderer() {}
     zTRnd_AlphaBlendFunc AlphaBlendFuncStringToType( zSTRING const& ) const                            zCall( 0x005CB5A0 );
     zSTRING AlphaBlendFuncTypeToString( zTRnd_AlphaBlendFunc ) const                                   zCall( 0x005CB690 );

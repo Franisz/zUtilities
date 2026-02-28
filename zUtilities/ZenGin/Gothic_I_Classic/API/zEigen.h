@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZEIGEN_H__VER0__
 #define __ZEIGEN_H__VER0__
@@ -50,7 +50,7 @@ namespace Gothic_I_Classic {
     static const unsigned int& invalid_size;
     static const unsigned int& allocation_failed;
     static const unsigned int& ql_exceeded;
-    static const char**& message;
+    static const char** message;
 
     // user API
     #include "zCMgcEigenD.inl"

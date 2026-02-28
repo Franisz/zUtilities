@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZAI_CAMERA_H__VER3__
 #define __ZAI_CAMERA_H__VER3__
@@ -76,7 +76,7 @@ namespace Gothic_II_Addon {
     int targetInPortalRoom;                  // sizeof 04h    offset 298h
 
     void zCAICamera_OnInit()                                                          zCall( 0x0049FD30 );
-    zCAICamera()                                                                      zInit( zCAICamera_OnInit() );
+    zCAICamera() : zCtor( zCAIBase )                                                  zInit( zCAICamera_OnInit() );
     void StartUp()                                                                    zCall( 0x004A0230 );
     void CleanUp()                                                                    zCall( 0x004A0850 );
     float GetBestRange()                                                              zCall( 0x004A08F0 );

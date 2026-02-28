@@ -18,7 +18,7 @@ namespace Gothic_I_Classic {
 
 #ifdef __OFOCUS_H__VER0__
   oCNpcFocus*& oCNpcFocus::focus      = *(oCNpcFocus**)0x008DA648;
-  oCNpcFocus**& oCNpcFocus::focuslist = *(oCNpcFocus***)0x008DA630;
+  oCNpcFocus** oCNpcFocus::focuslist  = (oCNpcFocus**)0x008DA630;
 #endif // __OFOCUS_H__VER0__
 
 #ifdef __OINFO_H__VER0__
@@ -32,8 +32,8 @@ namespace Gothic_I_Classic {
   zCGfx*& oCItemContainer::gfx_equip                 = *(zCGfx**)0x008DAA0C;
   zCGfx*& oCItemContainer::gfx_cursor                = *(zCGfx**)0x008DAA10;
   zCGfx*& oCItemContainer::gfx_cursor_equip          = *(zCGfx**)0x008DAA14;
-  zCGfx**& oCItemContainer::gfx_arrow                = *(zCGfx***)0x008DAA18;
-  zCGfx**& oCNpcInventory::gfx_cats                  = *(zCGfx***)0x008DAA2C;
+  zCGfx** oCItemContainer::gfx_arrow                 = (zCGfx**)0x008DAA18;
+  zCGfx** oCNpcInventory::gfx_cats                   = (zCGfx**)0x008DAA2C;
 #endif // __OINVENTORY_H__VER0__
 
 #ifdef __OITEM_REACT_H__VER0__
@@ -136,7 +136,7 @@ namespace Gothic_I_Classic {
   int& zCPolygon::s_numClipFeatScene                     = *(int*)0x0089C488;
   int& zCPolygon::s_numVertListScene                     = *(int*)0x008B4540;
   int& zCPolygon::s_numFeatListScene                     = *(int*)0x008AC494;
-  zCVertex**& zCPolygon::s_actClipVert                   = *(zCVertex***)0x008B4548;
+  zCVertex** zCPolygon::s_actClipVert                    = (zCVertex**)0x008B4548;
   int& zCPolygon::s_actNumClipVert                       = *(int*)0x008B454C;
   zCMaterial*& zCPortal::portalDummyMaterial             = *(zCMaterial**)0x00873090;
 #endif // __Z3D_H__VER0__
@@ -210,7 +210,7 @@ namespace Gothic_I_Classic {
   zSTRING& zFILE::s_physPathString                   = *(zSTRING*)0x0085F284;
   zSTRING& zFILE::s_rootDirString                    = *(zSTRING*)0x0085F270;
   bool& zFILE::s_initialized                         = *(bool*)0x0085F2C0;
-  zCBuffer**& zFILE::bufferList                      = *(zCBuffer***)0x0085F23C;
+  zCBuffer** zFILE::bufferList                       = (zCBuffer**)0x0085F23C;
   int*& zFILE::bufferFlag                            = *(int**)0x0085F254;
 #endif // __ZDISK_H__VER0__
 
@@ -226,7 +226,7 @@ namespace Gothic_I_Classic {
   const unsigned int& zCMgcEigenD::invalid_size      = *(const unsigned int*)0x007D3E54;
   const unsigned int& zCMgcEigenD::allocation_failed = *(const unsigned int*)0x007D3E58;
   const unsigned int& zCMgcEigenD::ql_exceeded       = *(const unsigned int*)0x007D3E5C;
-  const char**& zCMgcEigenD::message                 = *(const char***)0x0083D874;
+  const char** zCMgcEigenD::message                  = (const char**)0x0083D874;
 #endif // __ZEIGEN_H__VER0__
 
 #ifdef __ZEVENT_MAN_H__VER0__
@@ -402,7 +402,7 @@ namespace Gothic_I_Classic {
   unsigned long& zCRnd_D3D::xd3d_actFrameNumber                                 = *(unsigned long*)0x00929D68;
   int& zCRnd_D3D::xd3d_dd7inuse                                                 = *(int*)0x00929D60;
   int& zCRnd_D3D::xd3d_palsupp                                                  = *(int*)0x00929D64;
-  zCSurfaceCache_D3D::zD3D_SlotHeader**& zCSurfaceCache_D3D::xsc_listofsurfaces = *(zCSurfaceCache_D3D::zD3D_SlotHeader***)0x00900350;
+  zCSurfaceCache_D3D::zD3D_SlotHeader** zCSurfaceCache_D3D::xsc_listofsurfaces  = (zCSurfaceCache_D3D::zD3D_SlotHeader**)0x00900350;
   int& zCSurfaceCache_D3D::xsc_listposition                                     = *(int*)0x00929D88;
   zCArray<zCVertexBuffer_D3D*>& zCVertexBuffer_D3D::xvb_vertexbufferList        = *(zCArray<zCVertexBuffer_D3D*>*)0x00929DA4;
 #endif // __ZRND_D3D_H__VER0__
@@ -505,8 +505,8 @@ namespace Gothic_I_Classic {
 #endif // __ZALGEBRA_H__VER0__
 
 #ifdef __OLOG_MANAGER_H__VER0__
-  char**& oCLogTopic::ms_strSections = *(char***)0x00857708;
-  char**& oCLogTopic::ms_strStati    = *(char***)0x00857714;
+  char** oCLogTopic::ms_strSections = (char**)0x00857708;
+  char** oCLogTopic::ms_strStati    = (char**)0x00857714;
 #endif // __OLOG_MANAGER_H__VER0__
 
 #ifdef __ZCOLLISION_OBJECT_MISC_H__VER0__

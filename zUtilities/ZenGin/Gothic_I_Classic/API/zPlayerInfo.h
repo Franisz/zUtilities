@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZPLAYER_INFO_H__VER0__
 #define __ZPLAYER_INFO_H__VER0__
@@ -27,6 +27,7 @@ namespace Gothic_I_Classic {
       unsigned long reserved : 22; // sizeof 16h    offset bit
     };
 
+    zDefineInheritableCtor( zCPlayerInfo ) {}
     void zCPlayerInfo_OnInit()                          zCall( 0x004621D0 );
     zSTRING GetName() const                             zCall( 0x00454DF0 );
     zCPlayerInfo()                                      zInit( zCPlayerInfo_OnInit() );

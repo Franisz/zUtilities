@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_PRINT__FONT_H__VER2__
 #define __ZVIEW_PRINT__FONT_H__VER2__

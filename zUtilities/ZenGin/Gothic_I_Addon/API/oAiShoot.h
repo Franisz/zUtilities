@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OAI_SHOOT_H__VER1__
 #define __OAI_SHOOT_H__VER1__
@@ -19,7 +19,8 @@ namespace Gothic_I_Addon {
     int slideSoundHandle; // sizeof 04h    offset 24h
     char slideSoundOn;    // sizeof 01h    offset 28h
 
-    oCAISound() {}
+    zDefineInheritableCtor( oCAISound ) : zCtor( zCAIBase ) {}
+    oCAISound() : zCtor( zCAIBase ) {}
     void RemoveSlideSound()                                         zCall( 0x0063A7C0 );
     void CheckSlideSound( zCVob* )                                  zCall( 0x0063A7E0 );
     int GetSoundMaterial( zCVob*, zCSoundManager::zTSndManMedium& ) zCall( 0x0063A870 );
@@ -47,8 +48,9 @@ namespace Gothic_I_Addon {
     int trailActive;             // sizeof 04h    offset 4Ch
     float trailTime;             // sizeof 04h    offset 50h
 
+    zDefineInheritableCtor( oCAIArrowBase ) : zCtor( oCAISound ) {}
     void oCAIArrowBase_OnInit()                                         zCall( 0x0063B8E0 );
-    oCAIArrowBase()                                                     zInit( oCAIArrowBase_OnInit() );
+    oCAIArrowBase() : zCtor( oCAISound )                                zInit( oCAIArrowBase_OnInit() );
     void AddIgnoreCDVob( zCVob* )                                       zCall( 0x0063BB40 );
     void ClearIgnoreCDVob()                                             zCall( 0x0063BB60 );
     void CreateTrail( zCVob* )                                          zCall( 0x0063BBD0 );
@@ -77,7 +79,7 @@ namespace Gothic_I_Addon {
     zCVob* targetNPC; // sizeof 04h    offset 60h
 
     void oCAIArrow_OnInit()                                             zCall( 0x0063C330 );
-    oCAIArrow()                                                         zInit( oCAIArrow_OnInit() );
+    oCAIArrow() : zCtor( oCAIArrowBase )                                zInit( oCAIArrow_OnInit() );
     void SetTarget( zCVob* )                                            zCall( 0x0063C520 );
     void ClearUsedVobs()                                                zCall( 0x0063C560 );
     void SetupAIVob( zCVob*, zCVob*, zCVob* )                           zCall( 0x0063C620 );
@@ -107,7 +109,7 @@ namespace Gothic_I_Addon {
     float count;                 // sizeof 04h    offset 44h
 
     void oCAIDrop_OnInit()                                              zCall( 0x0063CF90 );
-    oCAIDrop()                                                          zInit( oCAIDrop_OnInit() );
+    oCAIDrop() : zCtor( oCAISound )                                     zInit( oCAIDrop_OnInit() );
     void AddIgnoreCDVob( zCVob* )                                       zCall( 0x0063D230 );
     void ClearIgnoreCDVob()                                             zCall( 0x0063D250 );
     void SetupAIVob( zCVob*, zCVob* )                                   zCall( 0x0063D2C0 );
@@ -136,8 +138,9 @@ namespace Gothic_I_Addon {
     zCVob* owner;                // sizeof 04h    offset 30h
     zCList<zCVob> ignoreVobList; // sizeof 08h    offset 34h
 
+    zDefineInheritableCtor( oCAIVobMove ) : zCtor( oCAISound ) {}
     void oCAIVobMove_OnInit()                                           zCall( 0x0063A950 );
-    oCAIVobMove()                                                       zInit( oCAIVobMove_OnInit() );
+    oCAIVobMove() : zCtor( oCAISound )                                  zInit( oCAIVobMove_OnInit() );
     void AddIgnoreCDVob( zCVob* )                                       zCall( 0x0063B320 );
     void ClearIgnoreCDVob()                                             zCall( 0x0063B340 );
     static zCObject* _CreateNewInstance()                               zCall( 0x0063E5E0 );
@@ -162,7 +165,7 @@ namespace Gothic_I_Addon {
     float timer; // sizeof 04h    offset 3Ch
 
     void oCAIVobMoveTorch_OnInit()                                      zCall( 0x0063B3B0 );
-    oCAIVobMoveTorch()                                                  zInit( oCAIVobMoveTorch_OnInit() );
+    oCAIVobMoveTorch() : zCtor( oCAIVobMove )                           zInit( oCAIVobMoveTorch_OnInit() );
     int CheckWater()                                                    zCall( 0x0063B600 );
     void BurnedOut()                                                    zCall( 0x0063B6E0 );
     static zCObject* _CreateNewInstance()                               zCall( 0x0063E8E0 );

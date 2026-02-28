@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSND_MSS_H__VER3__
 #define __ZSND_MSS_H__VER3__
@@ -202,7 +202,7 @@ namespace Gothic_II_Addon {
     int m_bReverbEnabled;      // sizeof 04h    offset 10h
 
     void zCSndSys_MSS_OnInit()                                                              zCall( 0x004EAAF0 );
-    zCSndSys_MSS()                                                                          zInit( zCSndSys_MSS_OnInit() );
+    zCSndSys_MSS() : zCtor( zCSoundSystem )                                                 zInit( zCSndSys_MSS_OnInit() );
     void InitializeMSS()                                                                    zCall( 0x004EB830 );
     void* GetDigitalDriverHandle()                                                          zCall( 0x004EC700 );
     void SetNumAudioChannels( int )                                                         zCall( 0x004ED710 );
@@ -274,7 +274,7 @@ namespace Gothic_II_Addon {
     zCArray<zCSndChannel*> channelList; // sizeof 0Ch    offset 78h
 
     void zCSndFX_MSS_OnInit()                      zCall( 0x004F4D10 );
-    zCSndFX_MSS()                                  zInit( zCSndFX_MSS_OnInit() );
+    zCSndFX_MSS() : zCtor( zCSoundFX )             zInit( zCSndFX_MSS_OnInit() );
     void LoadChannel( int )                        zCall( 0x004F4F60 );
     void SetDefaultProperties()                    zCall( 0x004F5970 );
     int IsActive()                                 zCall( 0x004F62D0 );

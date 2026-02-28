@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OFOCUS_H__VER2__
 #define __OFOCUS_H__VER2__
@@ -73,7 +73,7 @@ namespace Gothic_II_Classic {
 
     // static properties
     static oCNpcFocus*& focus;
-    static oCNpcFocus**& focuslist;
+    static oCNpcFocus** focuslist;
     static int& s_iHightlightMeleeFocus;
     static int& s_bHighlightInteractFocus;
     static oCVisualFX*& highLightFX;

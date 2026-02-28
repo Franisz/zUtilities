@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIDEO_PLAYER_H__VER3__
 #define __ZVIDEO_PLAYER_H__VER3__
@@ -16,6 +16,7 @@ namespace Gothic_II_Addon {
     float mSoundVolume;     // sizeof 04h    offset 28h
     float mScaleValue;      // sizeof 04h    offset 2Ch
 
+    zDefineInheritableCtor( zCVideoPlayer ) {}
     void zCVideoPlayer_OnInit()           zCall( 0x0046E480 );
     zSTRING GetVideoFilename()            zCall( 0x0043F030 );
     zCVideoPlayer()                       zInit( zCVideoPlayer_OnInit() );

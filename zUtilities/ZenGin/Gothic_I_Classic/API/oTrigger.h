@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OTRIGGER_H__VER0__
 #define __OTRIGGER_H__VER0__
@@ -18,7 +18,7 @@ namespace Gothic_I_Classic {
     zSTRING startVob;  // sizeof 14h    offset 15Ch
 
     void oCTriggerChangeLevel_OnInit()                                       zCall( 0x00438240 );
-    oCTriggerChangeLevel()                                                   zInit( oCTriggerChangeLevel_OnInit() );
+    oCTriggerChangeLevel() : zCtor( zCTrigger )                              zInit( oCTriggerChangeLevel_OnInit() );
     void SetLevelName( zSTRING const&, zSTRING const& )                      zCall( 0x004386B0 );
     static zCObject* _CreateNewInstance()                                    zCall( 0x00437E60 );
     virtual zCClassDef* _GetClassDef() const                                 zCall( 0x00437F60 );
@@ -40,7 +40,7 @@ namespace Gothic_I_Classic {
     zSTRING scriptFunc; // sizeof 14h    offset 148h
 
     void oCTriggerScript_OnInit()                                       zCall( 0x00438960 );
-    oCTriggerScript()                                                   zInit( oCTriggerScript_OnInit() );
+    oCTriggerScript() : zCtor( zCTrigger )                              zInit( oCTriggerScript_OnInit() );
     void SetScriptFunc( zSTRING const&, int )                           zCall( 0x00439020 );
     static zCObject* _CreateNewInstance()                               zCall( 0x00438160 );
     virtual zCClassDef* _GetClassDef() const                            zCall( 0x00438230 );
@@ -61,7 +61,7 @@ namespace Gothic_I_Classic {
     zSTRING objectName; // sizeof 14h    offset 104h
 
     void oCObjectGenerator_OnInit()          zCall( 0x004391D0 );
-    oCObjectGenerator()                      zInit( oCObjectGenerator_OnInit() );
+    oCObjectGenerator() : zCtor( zCVob )     zInit( oCObjectGenerator_OnInit() );
     void SetObjectName( zSTRING const& )     zCall( 0x004392E0 );
     void SetObjectSpeed( float )             zCall( 0x00439420 );
     virtual void Archive( zCArchiver& )      zCall( 0x00439720 );

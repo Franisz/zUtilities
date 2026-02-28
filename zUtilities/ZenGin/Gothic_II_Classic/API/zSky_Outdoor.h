@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZSKY__OUTDOOR_H__VER2__
 #define __ZSKY__OUTDOOR_H__VER2__
@@ -184,56 +184,57 @@ namespace Gothic_II_Classic {
     zVEC3 m_bWindVec;                      // sizeof 0Ch    offset 688h
     zTRainFX rainFX;                       // sizeof 28h    offset 694h
 
-    zCSkyControler_Outdoor() {}
-    void zCSkyControler_Outdoor_OnInit( int )                               zCall( 0x005DF470 );
-    zCSkyControler_Outdoor( int a0 )                                        zInit( zCSkyControler_Outdoor_OnInit( a0 ));
-    void Init()                                                             zCall( 0x005DFC50 );
-    int GetStateTextureSearch( int, int, int )                              zCall( 0x005E0560 );
-    void ApplyStateTexToLayer( int, int )                                   zCall( 0x005E05B0 );
-    void RenderPlanets( float )                                             zCall( 0x005E0A80 );
-    void ReadFogColorsFromINI()                                             zCall( 0x005E10F0 );
-    void __fastcall ApplyFogColorsFromINI( int )                            zCall( 0x005E1840 );
-    void CreateDefault()                                                    zCall( 0x005E1920 );
-    void Interpolate()                                                      zCall( 0x005E1E70 );
-    void CalcPolyLightCLUT( zVEC3 const&, zVEC3 const& )                    zCall( 0x005E2610 );
-    void InitSkyPFX()                                                       zCall( 0x005E2730 );
-    void CalcFog()                                                          zCall( 0x005E2910 );
-    void RenderSkyPFX()                                                     zCall( 0x005E3120 );
-    void CalcGlobalWind()                                                   zCall( 0x005E3460 );
-    void ProcessRainFX()                                                    zCall( 0x005E4180 );
-    void SetRainFXWeight( float, float )                                    zCall( 0x005E4480 );
-    void RenderSetup()                                                      zCall( 0x005E45B0 );
-    void RenderSky()                                                        zCall( 0x005E4620 );
-    static zCObject* _CreateNewInstance()                                   zCall( 0x005DA200 );
-    virtual zCClassDef* _GetClassDef() const                                zCall( 0x005DF930 );
-    virtual void Archive( zCArchiver& )                                     zCall( 0x005E4890 );
-    virtual void Unarchive( zCArchiver& )                                   zCall( 0x005E4980 );
-    virtual ~zCSkyControler_Outdoor()                                       zCall( 0x005DFA40 );
-    virtual void SetTime( float )                                           zCall( 0x005E25A0 );
-    virtual float GetTime() const                                           zCall( 0x005DF940 );
-    virtual void ResetTime()                                                zCall( 0x005E25D0 );
-    virtual void SetFarZ( float )                                           zCall( 0x005E30A0 );
-    virtual float GetFarZ() const                                           zCall( 0x005E30B0 );
-    virtual void SetFarZScalability( float )                                zCall( 0x005E30C0 );
-    virtual float GetFarZScalability() const                                zCall( 0x005E3110 );
-    virtual void SetBackgroundColor( zCOLOR )                               zCall( 0x005DF950 );
-    virtual zCOLOR GetBackgroundColor() const                               zCall( 0x005DF960 );
-    virtual zCOLOR GetBackgroundColorDef() const                            zCall( 0x005DF990 );
-    virtual void SetOverrideColor( zVEC3 )                                  zCall( 0x005DF9A0 );
-    virtual void SetOverrideColorFlag( int )                                zCall( 0x005DF9C0 );
-    virtual float GetCloudShadowScale() const                               zCall( 0x005E3A40 );
-    virtual void SetCloudShadowScale( float )                               zCall( 0x005E3A60 );
-    virtual void UpdateWorldDependencies()                                  zCall( 0x005E0510 );
-    virtual zCOLOR GetDaylightColorFromIntensity( int )                     zCall( 0x005E25F0 );
-    virtual void RenderSkyPre()                                             zCall( 0x005E3AA0 );
-    virtual void RenderSkyPost( int )                                       zCall( 0x005E47D0 );
-    virtual int GetGlobalWindVec( zVEC3&, zTAnimationMode )                 zCall( 0x005E3A00 );
-    virtual void SetGlobalSkyScale( float )                                 zCall( 0x005E04E0 );
-    virtual float GetGlobalSkyScale() const                                 zCall( 0x005DF9F0 );
-    virtual int GetGlobalSkyScaleChanged() const                            zCall( 0x005DFA00 );
-    virtual void SetCameraLocationHint( zCSkyControler::zTCamLocationHint ) zCall( 0x005DF9E0 );
-    virtual void SetWeatherType( zTWeather )                                zCall( 0x005E4A80 );
-    virtual int GetRenderLightning() const                                  zCall( 0x005DF9D0 );
+    zDefineInheritableCtor( zCSkyControler_Outdoor ) : zCtor( zCSkyControler_Mid ) {}
+    zCSkyControler_Outdoor() : zCtor( zCSkyControler_Mid ) {}
+    void zCSkyControler_Outdoor_OnInit( int )                                                             zCall( 0x005DF470 );
+    zCSkyControler_Outdoor( int a0 ) : zCtor( zCSkyControler_Mid )                                        zInit( zCSkyControler_Outdoor_OnInit( a0 ));
+    void Init()                                                                                           zCall( 0x005DFC50 );
+    int GetStateTextureSearch( int, int, int )                                                            zCall( 0x005E0560 );
+    void ApplyStateTexToLayer( int, int )                                                                 zCall( 0x005E05B0 );
+    void RenderPlanets( float )                                                                           zCall( 0x005E0A80 );
+    void ReadFogColorsFromINI()                                                                           zCall( 0x005E10F0 );
+    void __fastcall ApplyFogColorsFromINI( int )                                                          zCall( 0x005E1840 );
+    void CreateDefault()                                                                                  zCall( 0x005E1920 );
+    void Interpolate()                                                                                    zCall( 0x005E1E70 );
+    void CalcPolyLightCLUT( zVEC3 const&, zVEC3 const& )                                                  zCall( 0x005E2610 );
+    void InitSkyPFX()                                                                                     zCall( 0x005E2730 );
+    void CalcFog()                                                                                        zCall( 0x005E2910 );
+    void RenderSkyPFX()                                                                                   zCall( 0x005E3120 );
+    void CalcGlobalWind()                                                                                 zCall( 0x005E3460 );
+    void ProcessRainFX()                                                                                  zCall( 0x005E4180 );
+    void SetRainFXWeight( float, float )                                                                  zCall( 0x005E4480 );
+    void RenderSetup()                                                                                    zCall( 0x005E45B0 );
+    void RenderSky()                                                                                      zCall( 0x005E4620 );
+    static zCObject* _CreateNewInstance()                                                                 zCall( 0x005DA200 );
+    virtual zCClassDef* _GetClassDef() const                                                              zCall( 0x005DF930 );
+    virtual void Archive( zCArchiver& )                                                                   zCall( 0x005E4890 );
+    virtual void Unarchive( zCArchiver& )                                                                 zCall( 0x005E4980 );
+    virtual ~zCSkyControler_Outdoor()                                                                     zCall( 0x005DFA40 );
+    virtual void SetTime( float )                                                                         zCall( 0x005E25A0 );
+    virtual float GetTime() const                                                                         zCall( 0x005DF940 );
+    virtual void ResetTime()                                                                              zCall( 0x005E25D0 );
+    virtual void SetFarZ( float )                                                                         zCall( 0x005E30A0 );
+    virtual float GetFarZ() const                                                                         zCall( 0x005E30B0 );
+    virtual void SetFarZScalability( float )                                                              zCall( 0x005E30C0 );
+    virtual float GetFarZScalability() const                                                              zCall( 0x005E3110 );
+    virtual void SetBackgroundColor( zCOLOR )                                                             zCall( 0x005DF950 );
+    virtual zCOLOR GetBackgroundColor() const                                                             zCall( 0x005DF960 );
+    virtual zCOLOR GetBackgroundColorDef() const                                                          zCall( 0x005DF990 );
+    virtual void SetOverrideColor( zVEC3 )                                                                zCall( 0x005DF9A0 );
+    virtual void SetOverrideColorFlag( int )                                                              zCall( 0x005DF9C0 );
+    virtual float GetCloudShadowScale() const                                                             zCall( 0x005E3A40 );
+    virtual void SetCloudShadowScale( float )                                                             zCall( 0x005E3A60 );
+    virtual void UpdateWorldDependencies()                                                                zCall( 0x005E0510 );
+    virtual zCOLOR GetDaylightColorFromIntensity( int )                                                   zCall( 0x005E25F0 );
+    virtual void RenderSkyPre()                                                                           zCall( 0x005E3AA0 );
+    virtual void RenderSkyPost( int )                                                                     zCall( 0x005E47D0 );
+    virtual int GetGlobalWindVec( zVEC3&, zTAnimationMode )                                               zCall( 0x005E3A00 );
+    virtual void SetGlobalSkyScale( float )                                                               zCall( 0x005E04E0 );
+    virtual float GetGlobalSkyScale() const                                                               zCall( 0x005DF9F0 );
+    virtual int GetGlobalSkyScaleChanged() const                                                          zCall( 0x005DFA00 );
+    virtual void SetCameraLocationHint( zCSkyControler::zTCamLocationHint )                               zCall( 0x005DF9E0 );
+    virtual void SetWeatherType( zTWeather )                                                              zCall( 0x005E4A80 );
+    virtual int GetRenderLightning() const                                                                zCall( 0x005DF9D0 );
 
     // user API
     #include "zCSkyControler_Outdoor.inl"

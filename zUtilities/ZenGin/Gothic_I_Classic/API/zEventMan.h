@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZEVENT_MAN_H__VER0__
 #define __ZEVENT_MAN_H__VER0__
@@ -19,10 +19,11 @@ namespace Gothic_I_Classic {
     zCArray<zCEventMessage*> messageList; // sizeof 0Ch    offset 30h
     zCVob* hostVob;                       // sizeof 04h    offset 3Ch
 
+    zDefineInheritableCtor( zCEventManager ) : zCtor( zCObject )  {}
     void zCEventManager_OnInit()                                        zCall( 0x006DCCC0 );
     void zCEventManager_OnInit( zCVob* )                                zCall( 0x006DCE10 );
-    zCEventManager()                                                    zInit( zCEventManager_OnInit() );
-    zCEventManager( zCVob* a0 )                                         zInit( zCEventManager_OnInit( a0 ));
+    zCEventManager() : zCtor( zCObject )                                zInit( zCEventManager_OnInit() );
+    zCEventManager( zCVob* a0 ) : zCtor( zCObject )                     zInit( zCEventManager_OnInit( a0 ));
     void KillMessages()                                                 zCall( 0x006DD030 );
     void ShowMessageCommunication( zCVob*, zCVob* )                     zCall( 0x006DDB30 );
     void Print_db( zSTRING const&, zCVob* )                             zCall( 0x006DE5C0 );

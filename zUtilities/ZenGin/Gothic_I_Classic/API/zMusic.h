@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMUSIC_H__VER0__
 #define __ZMUSIC_H__VER0__
@@ -45,6 +45,7 @@ namespace Gothic_I_Classic {
     unsigned char dScriptEnd;     // sizeof 01h    offset 30h
     zSTRING name;                 // sizeof 14h    offset 34h
 
+    zDefineInheritableCtor( zCMusicTheme ) {}
     void zCMusicTheme_OnInit()   zCall( 0x004DABE0 );
     zCMusicTheme()               zInit( zCMusicTheme_OnInit() );
     virtual ~zCMusicTheme()      zCall( 0x004DA190 );
@@ -65,6 +66,7 @@ namespace Gothic_I_Classic {
     int refCtr;                   // sizeof 04h    offset 28h
     zSTRING name;                 // sizeof 14h    offset 2Ch
 
+    zDefineInheritableCtor( zCMusicJingle ) {}
     void zCMusicJingle_OnInit()     zCall( 0x004DAC20 );
     zCMusicJingle()                 zInit( zCMusicJingle_OnInit() );
     virtual ~zCMusicJingle()        zCall( 0x004DAC70 );
@@ -85,7 +87,8 @@ namespace Gothic_I_Classic {
     float volume; // sizeof 04h    offset 04h
     float reverb; // sizeof 04h    offset 08h
 
-    zCMusicSystem() {}
+    zDefineInheritableCtor( zCMusicSystem ) {}
+zCMusicSystem() {}
     static void DisableMusicSystem( int )                                                                    zCall( 0x004DA050 );
     virtual ~zCMusicSystem()                                                                                 zCall( 0x004DAD70 );
     virtual void PlayThemeByScript( zSTRING const&, int, int* )                                              zCall( 0x004DAD80 );
@@ -120,13 +123,13 @@ namespace Gothic_I_Classic {
   class zCMusicSys_Dummy : public zCMusicSystem {
   public:
 
-    zCMusicSys_Dummy() {}
-    virtual ~zCMusicSys_Dummy()                                 zCall( 0x00608910 );
-    virtual zCMusicTheme* LoadThemeByScript( zSTRING const& )   zCall( 0x00603930 );
-    virtual zCMusicTheme* LoadTheme( zSTRING const& )           zCall( 0x00603990 );
-    virtual zCMusicJingle* LoadJingleByScript( zSTRING const& ) zCall( 0x006039F0 );
-    virtual zCMusicJingle* LoadJingle( zSTRING const& )         zCall( 0x00603A60 );
-    virtual void DoMusicUpdate()                                zCall( 0x00603AD0 );
+    zCMusicSys_Dummy() : zCtor( zCMusicSystem ) {}
+    virtual ~zCMusicSys_Dummy()                                                          zCall( 0x00608910 );
+    virtual zCMusicTheme* LoadThemeByScript( zSTRING const& )                            zCall( 0x00603930 );
+    virtual zCMusicTheme* LoadTheme( zSTRING const& )                                    zCall( 0x00603990 );
+    virtual zCMusicJingle* LoadJingleByScript( zSTRING const& )                          zCall( 0x006039F0 );
+    virtual zCMusicJingle* LoadJingle( zSTRING const& )                                  zCall( 0x00603A60 );
+    virtual void DoMusicUpdate()                                                         zCall( 0x00603AD0 );
 
     // user API
     #include "zCMusicSys_Dummy.inl"

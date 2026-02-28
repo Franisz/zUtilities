@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_H__VER2__
 #define __ZVIEW_H__VER2__
@@ -21,6 +21,10 @@ namespace Gothic_II_Classic {
   const int zInputKeyNext   = 0;
   const int zInputKeyStop   = 1;
 
+  static zCOLOR& NPC_COLOR_TALK_PC  = *(zCOLOR*)0x00982B34;
+  static zCOLOR& NPC_COLOR_TALK_NPC = *(zCOLOR*)0x009829E8;
+  static zCOLOR& NPC_COLOR_NOISE    = *(zCOLOR*)0x00982A04;
+
   enum zTviewID {
     VIEW_SCREEN,
     VIEW_VIEWPORT,
@@ -31,6 +35,7 @@ namespace Gothic_II_Classic {
   class zCInputCallback {
   public:
 
+    zDefineInheritableCtor( zCInputCallback ) {}
     void zCInputCallback_OnInit()    zCall( 0x007458F0 );
     zCInputCallback()                zInit( zCInputCallback_OnInit() );
     ~zCInputCallback()               zCall( 0x00745900 );
@@ -131,112 +136,113 @@ namespace Gothic_II_Classic {
     zVEC2 posCurrent[2];            // sizeof 10h    offset E0h
     zVEC2 posOpenClose[2];          // sizeof 10h    offset F0h
 
-    void zCView_OnInit()                                                            zCall( 0x00745B40 );
-    void zCView_OnInit( int, int, int, int, zTviewID )                              zCall( 0x00745C00 );
-    zCView()                                                                        zInit( zCView_OnInit() );
-    zCView( int a0, int a1, int a2, int a3, zTviewID a4 = zTviewID::VIEW_ITEM  )    zInit( zCView_OnInit( a0, a1, a2, a3, a4 ));
-    void Init()                                                                     zCall( 0x00745E90 );
-    void Init( int, int, int, int, zTviewID )                                       zCall( 0x00746020 );
-    void Init( int, int, zSTRING const&, zTviewID )                                 zCall( 0x007461C0 );
-    void SetAutoScroll( float )                                                     zCall( 0x00746420 );
-    void CheckAutoScroll()                                                          zCall( 0x00746460 );
-    void SetTransparency( int )                                                     zCall( 0x00746560 );
-    void SetAlphaBlendFunc( zTRnd_AlphaBlendFunc const& )                           zCall( 0x00746570 );
-    void SetColor( zCOLOR const& )                                                  zCall( 0x00746580 );
-    zCOLOR GetColor()                                                               zCall( 0x00746590 );
-    void Setflags( int )                                                            zCall( 0x007465A0 );
-    void ClrFlags( int )                                                            zCall( 0x007465B0 );
-    int HasFlag( int )                                                              zCall( 0x007465D0 );
-    void InsertBack( zCTexture* )                                                   zCall( 0x007465F0 );
-    void InsertBack( zSTRING const& )                                               zCall( 0x00746630 );
-    void InitPrintwin()                                                             zCall( 0x00746730 );
-    void BlitText()                                                                 zCall( 0x007467A0 );
-    void Top()                                                                      zCall( 0x00746C90 );
-    void Create( zSTRING const&, zEViewFX, zEViewFX, float, int )                   zCall( 0x00746D10 );
-    void ForceOpen()                                                                zCall( 0x00746E90 );
-    void Open()                                                                     zCall( 0x00747100 );
-    void Close()                                                                    zCall( 0x00747330 );
-    void ApplyOpenClose( zVEC2&, zVEC2& )                                           zCall( 0x00747440 );
-    void UpdateOpen()                                                               zCall( 0x007476C0 );
-    void UpdateClose()                                                              zCall( 0x00747710 );
-    void UpdateOpenZoom()                                                           zCall( 0x007477C0 );
-    void UpdateCloseZoom()                                                          zCall( 0x007478C0 );
-    void RecalcChildsSize()                                                         zCall( 0x007479D0 );
-    void RecalcChildsPos()                                                          zCall( 0x00747A40 );
-    void SetPos( int, int )                                                         zCall( 0x00747AB0 );
-    void GetPos( int&, int& )                                                       zCall( 0x00747B60 );
-    void CalcPixelPos( int&, int& )                                                 zCall( 0x00747B80 );
-    void GetPixelPos( int&, int& )                                                  zCall( 0x00747BC0 );
-    void Move( int, int )                                                           zCall( 0x00747BE0 );
-    void SetSize( int, int )                                                        zCall( 0x00747CA0 );
-    void GetSize( int&, int& )                                                      zCall( 0x00747D10 );
-    void GetPixelSize( int&, int& )                                                 zCall( 0x00747D30 );
-    void GetExtends( int&, int&, int&, int& )                                       zCall( 0x00747D60 );
-    void GetScreenExtends( int&, int&, int&, int& )                                 zCall( 0x00747DA0 );
-    void GetPixelExtends( float&, float&, float&, float& )                          zCall( 0x00747E10 );
-    int IsIn( int, int )                                                            zCall( 0x00747E60 );
-    zCView* GetItem( int, int )                                                     zCall( 0x00747EF0 );
-    zCViewText* CreateText( int, int, zSTRING const&, float, zCOLOR&, int, int )    zCall( 0x00747FB0 );
-    void CheckTimedText()                                                           zCall( 0x00748150 );
-    void PrintTimed( int, int, zSTRING const&, float, zCOLOR* )                     zCall( 0x00748220 );
-    void PrintTimedCX( int, zSTRING const&, float, zCOLOR* )                        zCall( 0x007482B0 );
-    void PrintTimedCY( int, zSTRING const&, float, zCOLOR* )                        zCall( 0x00748400 );
-    void PrintTimedCXY( zSTRING const&, float, zCOLOR* )                            zCall( 0x007484C0 );
-    void PrintMessage( zSTRING const&, zSTRING const&, float, zCOLOR& )             zCall( 0x00748640 );
-    void PrintMessageCXY( zSTRING const&, zSTRING const&, float, zCOLOR& )          zCall( 0x00748950 );
-    void PrintSelection( zSTRING const&, zSTRING const&, zCOLOR&, zCOLOR& )         zCall( 0x007490B0 );
-    void Dialog( int, int, zSTRING const&, float, zCOLOR* )                         zCall( 0x00749240 );
-    void DialogCX( int, zSTRING const&, float, zCOLOR* )                            zCall( 0x00749310 );
-    void DialogCY( int, zSTRING const&, float, zCOLOR* )                            zCall( 0x00749370 );
-    void DialogCXY( zSTRING const&, float, zCOLOR* )                                zCall( 0x00749460 );
-    void DialogMessage( zSTRING const&, zSTRING const&, float, zCOLOR& )            zCall( 0x007494B0 );
-    void DialogMessageCXY( zSTRING const&, zSTRING const&, float, zCOLOR& )         zCall( 0x00749740 );
-    void DialogSelection( zSTRING const&, zSTRING const&, zCOLOR&, zCOLOR&, float ) zCall( 0x007499D0 );
-    void SetFont( zCFont* )                                                         zCall( 0x00749DF0 );
-    void SetFontColor( zCOLOR const& )                                              zCall( 0x00749E10 );
-    void SetFont( zSTRING const& )                                                  zCall( 0x00749E20 );
-    zCFont* GetFont()                                                               zCall( 0x00749E50 );
-    zSTRING GetFontName()                                                           zCall( 0x00749E60 );
-    int FontY()                                                                     zCall( 0x00749EF0 );
-    int FontSize( zSTRING& )                                                        zCall( 0x00749F10 );
-    void Print( int, int, zSTRING const& )                                          zCall( 0x00749F40 );
-    void PrintChars( int, int, zSTRING const& )                                     zCall( 0x0074A010 );
-    void PrintCX( int, zSTRING const& )                                             zCall( 0x0074A350 );
-    void PrintCY( int, zSTRING const& )                                             zCall( 0x0074A440 );
-    void PrintCXY( zSTRING const& )                                                 zCall( 0x0074A530 );
-    void ClrPrintwin()                                                              zCall( 0x0074A640 );
-    zCViewText* CreateText( int, int, zSTRING const& )                              zCall( 0x0074A7B0 );
-    zSTRING GetFirstText()                                                          zCall( 0x0074A920 );
-    void Nextline( zSTRING const&, float, zCOLOR*, int* )                           zCall( 0x0074A9A0 );
-    void DefPrintwin( int, int, int, int )                                          zCall( 0x0074AC30 );
-    void Printwin( zSTRING const& )                                                 zCall( 0x0074ADD0 );
-    zSTRING Input( int )                                                            zCall( 0x0074B1C0 );
-    zSTRING Input( int, zSTRING& )                                                  zCall( 0x0074B260 );
-    zSTRING Input( int, int, int, zSTRING& )                                        zCall( 0x0074B810 );
-    int InputNumber( int, int )                                                     zCall( 0x0074BAE0 );
-    void InsertItem( zCView*, int = False )                                         zCall( 0x0074BFD0 );
-    void RemoveItem( zCView* )                                                      zCall( 0x0074C210 );
-    void Render()                                                                   zCall( 0x0074C710 );
-    zSTRING PatchMenuItemPrintwin()                                                 zCall( 0x0074CC50 );
-    static void StdPrintwin( zSTRING const& )                                       zCall( 0x00746400 );
-    static void PrintDebug( zSTRING const& )                                        zCall( 0x0074BF90 );
-    static void SetShowDebug( int )                                                 zCall( 0x0074BFB0 );
-    static int GetShowDebug()                                                       zCall( 0x0074BFC0 );
-    static void ChangeMode()                                                        zCall( 0x0074C290 );
-    static void SetNextMode()                                                       zCall( 0x0074C2A0 );
-    static void SetMode( int, int, int, HWND__** )                                  zCall( 0x0074C2B0 );
+    zDefineInheritableCtor( zCView ) : zCtor( zCViewBase ), zCtor( zCInputCallback ) {}
+    void zCView_OnInit()                                                                                                         zCall( 0x00745B40 );
+    void zCView_OnInit( int, int, int, int, zTviewID )                                                                           zCall( 0x00745C00 );
+    zCView() : zCtor( zCViewBase ), zCtor( zCInputCallback )                                                                     zInit( zCView_OnInit() );
+    zCView( int a0, int a1, int a2, int a3, zTviewID a4 = zTviewID::VIEW_ITEM  ) : zCtor( zCViewBase ), zCtor( zCInputCallback ) zInit( zCView_OnInit( a0, a1, a2, a3, a4 ));
+    void Init()                                                                                                                  zCall( 0x00745E90 );
+    void Init( int, int, int, int, zTviewID )                                                                                    zCall( 0x00746020 );
+    void Init( int, int, zSTRING const&, zTviewID )                                                                              zCall( 0x007461C0 );
+    void SetAutoScroll( float )                                                                                                  zCall( 0x00746420 );
+    void CheckAutoScroll()                                                                                                       zCall( 0x00746460 );
+    void SetTransparency( int )                                                                                                  zCall( 0x00746560 );
+    void SetAlphaBlendFunc( zTRnd_AlphaBlendFunc const& )                                                                        zCall( 0x00746570 );
+    void SetColor( zCOLOR const& )                                                                                               zCall( 0x00746580 );
+    zCOLOR GetColor()                                                                                                            zCall( 0x00746590 );
+    void Setflags( int )                                                                                                         zCall( 0x007465A0 );
+    void ClrFlags( int )                                                                                                         zCall( 0x007465B0 );
+    int HasFlag( int )                                                                                                           zCall( 0x007465D0 );
+    void InsertBack( zCTexture* )                                                                                                zCall( 0x007465F0 );
+    void InsertBack( zSTRING const& )                                                                                            zCall( 0x00746630 );
+    void InitPrintwin()                                                                                                          zCall( 0x00746730 );
+    void BlitText()                                                                                                              zCall( 0x007467A0 );
+    void Top()                                                                                                                   zCall( 0x00746C90 );
+    void Create( zSTRING const&, zEViewFX, zEViewFX, float, int )                                                                zCall( 0x00746D10 );
+    void ForceOpen()                                                                                                             zCall( 0x00746E90 );
+    void Open()                                                                                                                  zCall( 0x00747100 );
+    void Close()                                                                                                                 zCall( 0x00747330 );
+    void ApplyOpenClose( zVEC2&, zVEC2& )                                                                                        zCall( 0x00747440 );
+    void UpdateOpen()                                                                                                            zCall( 0x007476C0 );
+    void UpdateClose()                                                                                                           zCall( 0x00747710 );
+    void UpdateOpenZoom()                                                                                                        zCall( 0x007477C0 );
+    void UpdateCloseZoom()                                                                                                       zCall( 0x007478C0 );
+    void RecalcChildsSize()                                                                                                      zCall( 0x007479D0 );
+    void RecalcChildsPos()                                                                                                       zCall( 0x00747A40 );
+    void SetPos( int, int )                                                                                                      zCall( 0x00747AB0 );
+    void GetPos( int&, int& )                                                                                                    zCall( 0x00747B60 );
+    void CalcPixelPos( int&, int& )                                                                                              zCall( 0x00747B80 );
+    void GetPixelPos( int&, int& )                                                                                               zCall( 0x00747BC0 );
+    void Move( int, int )                                                                                                        zCall( 0x00747BE0 );
+    void SetSize( int, int )                                                                                                     zCall( 0x00747CA0 );
+    void GetSize( int&, int& )                                                                                                   zCall( 0x00747D10 );
+    void GetPixelSize( int&, int& )                                                                                              zCall( 0x00747D30 );
+    void GetExtends( int&, int&, int&, int& )                                                                                    zCall( 0x00747D60 );
+    void GetScreenExtends( int&, int&, int&, int& )                                                                              zCall( 0x00747DA0 );
+    void GetPixelExtends( float&, float&, float&, float& )                                                                       zCall( 0x00747E10 );
+    int IsIn( int, int )                                                                                                         zCall( 0x00747E60 );
+    zCView* GetItem( int, int )                                                                                                  zCall( 0x00747EF0 );
+    zCViewText* CreateText( int, int, zSTRING const&, float, zCOLOR&, int, int )                                                 zCall( 0x00747FB0 );
+    void CheckTimedText()                                                                                                        zCall( 0x00748150 );
+    void PrintTimed( int, int, zSTRING const&, float, zCOLOR* )                                                                  zCall( 0x00748220 );
+    void PrintTimedCX( int, zSTRING const&, float, zCOLOR* )                                                                     zCall( 0x007482B0 );
+    void PrintTimedCY( int, zSTRING const&, float, zCOLOR* )                                                                     zCall( 0x00748400 );
+    void PrintTimedCXY( zSTRING const&, float, zCOLOR* )                                                                         zCall( 0x007484C0 );
+    void PrintMessage( zSTRING const&, zSTRING const&, float, zCOLOR& )                                                          zCall( 0x00748640 );
+    void PrintMessageCXY( zSTRING const&, zSTRING const&, float, zCOLOR& )                                                       zCall( 0x00748950 );
+    void PrintSelection( zSTRING const&, zSTRING const&, zCOLOR&, zCOLOR& )                                                      zCall( 0x007490B0 );
+    void Dialog( int, int, zSTRING const&, float, zCOLOR* )                                                                      zCall( 0x00749240 );
+    void DialogCX( int, zSTRING const&, float, zCOLOR* )                                                                         zCall( 0x00749310 );
+    void DialogCY( int, zSTRING const&, float, zCOLOR* )                                                                         zCall( 0x00749370 );
+    void DialogCXY( zSTRING const&, float, zCOLOR* )                                                                             zCall( 0x00749460 );
+    void DialogMessage( zSTRING const&, zSTRING const&, float, zCOLOR& )                                                         zCall( 0x007494B0 );
+    void DialogMessageCXY( zSTRING const&, zSTRING const&, float, zCOLOR& )                                                      zCall( 0x00749740 );
+    void DialogSelection( zSTRING const&, zSTRING const&, zCOLOR&, zCOLOR&, float )                                              zCall( 0x007499D0 );
+    void SetFont( zCFont* )                                                                                                      zCall( 0x00749DF0 );
+    void SetFontColor( zCOLOR const& )                                                                                           zCall( 0x00749E10 );
+    void SetFont( zSTRING const& )                                                                                               zCall( 0x00749E20 );
+    zCFont* GetFont()                                                                                                            zCall( 0x00749E50 );
+    zSTRING GetFontName()                                                                                                        zCall( 0x00749E60 );
+    int FontY()                                                                                                                  zCall( 0x00749EF0 );
+    int FontSize( zSTRING& )                                                                                                     zCall( 0x00749F10 );
+    void Print( int, int, zSTRING const& )                                                                                       zCall( 0x00749F40 );
+    void PrintChars( int, int, zSTRING const& )                                                                                  zCall( 0x0074A010 );
+    void PrintCX( int, zSTRING const& )                                                                                          zCall( 0x0074A350 );
+    void PrintCY( int, zSTRING const& )                                                                                          zCall( 0x0074A440 );
+    void PrintCXY( zSTRING const& )                                                                                              zCall( 0x0074A530 );
+    void ClrPrintwin()                                                                                                           zCall( 0x0074A640 );
+    zCViewText* CreateText( int, int, zSTRING const& )                                                                           zCall( 0x0074A7B0 );
+    zSTRING GetFirstText()                                                                                                       zCall( 0x0074A920 );
+    void Nextline( zSTRING const&, float, zCOLOR*, int* )                                                                        zCall( 0x0074A9A0 );
+    void DefPrintwin( int, int, int, int )                                                                                       zCall( 0x0074AC30 );
+    void Printwin( zSTRING const& )                                                                                              zCall( 0x0074ADD0 );
+    zSTRING Input( int )                                                                                                         zCall( 0x0074B1C0 );
+    zSTRING Input( int, zSTRING& )                                                                                               zCall( 0x0074B260 );
+    zSTRING Input( int, int, int, zSTRING& )                                                                                     zCall( 0x0074B810 );
+    int InputNumber( int, int )                                                                                                  zCall( 0x0074BAE0 );
+    void InsertItem( zCView*, int = False )                                                                                      zCall( 0x0074BFD0 );
+    void RemoveItem( zCView* )                                                                                                   zCall( 0x0074C210 );
+    void Render()                                                                                                                zCall( 0x0074C710 );
+    zSTRING PatchMenuItemPrintwin()                                                                                              zCall( 0x0074CC50 );
+    static void StdPrintwin( zSTRING const& )                                                                                    zCall( 0x00746400 );
+    static void PrintDebug( zSTRING const& )                                                                                     zCall( 0x0074BF90 );
+    static void SetShowDebug( int )                                                                                              zCall( 0x0074BFB0 );
+    static int GetShowDebug()                                                                                                    zCall( 0x0074BFC0 );
+    static void ChangeMode()                                                                                                     zCall( 0x0074C290 );
+    static void SetNextMode()                                                                                                    zCall( 0x0074C2A0 );
+    static void SetMode( int, int, int, HWND__** )                                                                               zCall( 0x0074C2B0 );
     /* for zCViewBase num : 12*/
-    virtual int anx( int )                                                          zCall( 0x00746380 );
-    virtual int any( int )                                                          zCall( 0x007463C0 );
-    virtual int nax( int )                                                          zCall( 0x00746300 );
-    virtual int nay( int )                                                          zCall( 0x00746340 );
-    virtual int ClipLine( int&, int&, int&, int& )                                  zCall( 0x0074C560 );
-    virtual void Line( int, int, int, int, zCOLOR const& )                          zCall( 0x0074C470 );
-    virtual void __fastcall GetViewport( int&, int&, int&, int& )                   zCall( 0x0043CEC0 );
-    virtual int GetCode( int, int )                                                 zCall( 0x0074C520 );
-    virtual ~zCView()                                                               zCall( 0x00745CC0 );
-    virtual void Blit()                                                             zCall( 0x007468C0 );
-    virtual void DrawItems()                                                        zCall( 0x00746C50 );
+    virtual int anx( int )                                                                                                       zCall( 0x00746380 );
+    virtual int any( int )                                                                                                       zCall( 0x007463C0 );
+    virtual int nax( int )                                                                                                       zCall( 0x00746300 );
+    virtual int nay( int )                                                                                                       zCall( 0x00746340 );
+    virtual int ClipLine( int&, int&, int&, int& )                                                                               zCall( 0x0074C560 );
+    virtual void Line( int, int, int, int, zCOLOR const& )                                                                       zCall( 0x0074C470 );
+    virtual void __fastcall GetViewport( int&, int&, int&, int& )                                                                zCall( 0x0043CEC0 );
+    virtual int GetCode( int, int )                                                                                              zCall( 0x0074C520 );
+    virtual ~zCView()                                                                                                            zCall( 0x00745CC0 );
+    virtual void Blit()                                                                                                          zCall( 0x007468C0 );
+    virtual void DrawItems()                                                                                                     zCall( 0x00746C50 );
     /* for zCInputCallback num : 1*/
 
     // static properties

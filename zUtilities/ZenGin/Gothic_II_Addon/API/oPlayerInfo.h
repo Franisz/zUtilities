@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OPLAYER_INFO_H__VER3__
 #define __OPLAYER_INFO_H__VER3__
@@ -24,7 +24,7 @@ namespace Gothic_II_Addon {
     TPlayerInstance instance; // sizeof 04h    offset 3Ch
 
     void oCPlayerInfo_OnInit()                          zCall( 0x004363E0 );
-    oCPlayerInfo()                                      zInit( oCPlayerInfo_OnInit() );
+    oCPlayerInfo() : zCtor( zCPlayerInfo )              zInit( oCPlayerInfo_OnInit() );
     zSTRING GetInstanceName() const                     zCall( 0x004366D0 );
     TPlayerInstance GetInstance() const                 zCall( 0x00436720 );
     virtual ~oCPlayerInfo()                             zCall( 0x00436570 );

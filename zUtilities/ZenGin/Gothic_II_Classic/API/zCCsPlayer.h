@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCCS_PLAYER_H__VER2__
 #define __ZCCS_PLAYER_H__VER2__
@@ -25,8 +25,9 @@ namespace Gothic_II_Classic {
     zCCSManager* ownerManager;                       // sizeof 04h    offset 60h
     zCWorld* ownerWorld;                             // sizeof 04h    offset 64h
 
+    zDefineInheritableCtor( zCCSPlayer ) : zCtor( zCObject ), zCtor( zCCSDebugger ) {}
     void zCCSPlayer_OnInit()                                                   zCall( 0x0041C7D0 );
-    zCCSPlayer()                                                               zInit( zCCSPlayer_OnInit() );
+    zCCSPlayer() : zCtor( zCObject ), zCtor( zCCSDebugger )                    zInit( zCCSPlayer_OnInit() );
     void Interrupt()                                                           zCall( 0x0041DB80 );
     void Resume()                                                              zCall( 0x0041DBE0 );
     int IsAssigned( zSTRING&, zSTRING& )                                       zCall( 0x0041FE50 );

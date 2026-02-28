@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZNET_VOB_CONTROL_H__VER1__
 #define __ZNET_VOB_CONTROL_H__VER1__
@@ -18,7 +18,7 @@ namespace Gothic_I_Addon {
     int isLocalChained;       // sizeof 04h    offset 2Ch
 
     void zCNetVobControl_OnInit()                                                 zCall( 0x0045FBB0 );
-    zCNetVobControl()                                                             zInit( zCNetVobControl_OnInit() );
+    zCNetVobControl() : zCtor( zCObject )                                         zInit( zCNetVobControl_OnInit() );
     static zCObject* _CreateNewInstance()                                         zCall( 0x0045FA20 );
     static int HandleNetMessage( zCNetMessage*, unsigned short const&, zCWorld* ) zCall( 0x004602D0 );
     virtual zCClassDef* _GetClassDef() const                                      zCall( 0x0045FB80 );

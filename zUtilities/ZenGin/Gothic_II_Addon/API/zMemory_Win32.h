@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMEMORY__WIN32_H__VER3__
 #define __ZMEMORY__WIN32_H__VER3__
@@ -21,7 +21,7 @@ namespace Gothic_II_Addon {
     int ShowNoFilename;                // sizeof 04h    offset 4C8h
     int ShowNoName;                    // sizeof 04h    offset 4CCh
 
-    zCMallocWin32Debug() {}
+    zCMallocWin32Debug() : zCtor( zCMalloc ) {}
 
     // user API
     #include "zCMallocWin32Debug.inl"

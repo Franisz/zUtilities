@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZMATERIAL_H__VER1__
 #define __ZMATERIAL_H__VER1__
@@ -78,9 +78,9 @@ namespace Gothic_I_Addon {
     void zCMaterial_OnInit( zSTRING const& )                                 zCall( 0x00565450 );
     void zCMaterial_OnInit( zCMaterial const& )                              zCall( 0x00565510 );
     zSTRING const& GetName() const                                           zCall( 0x00561220 );
-    zCMaterial()                                                             zInit( zCMaterial_OnInit() );
-    zCMaterial( zSTRING const& a0 )                                          zInit( zCMaterial_OnInit( a0 ));
-    zCMaterial( zCMaterial const& a0 )                                       zInit( zCMaterial_OnInit( a0 ));
+    zCMaterial() : zCtor( zCObject )                                         zInit( zCMaterial_OnInit() );
+    zCMaterial( zSTRING const& a0 ) : zCtor( zCObject )                      zInit( zCMaterial_OnInit( a0 ));
+    zCMaterial( zCMaterial const& a0 ) : zCtor( zCObject )                   zInit( zCMaterial_OnInit( a0 ));
     zCMaterial& operator =( zCMaterial const& )                              zCall( 0x005655C0 );
     void InitThisByMaterial( zCMaterial const& )                             zCall( 0x005656A0 );
     void InitValues()                                                        zCall( 0x00565790 );

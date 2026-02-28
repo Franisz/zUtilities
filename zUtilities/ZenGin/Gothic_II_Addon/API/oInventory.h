@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OINVENTORY_H__VER3__
 #define __OINVENTORY_H__VER3__
@@ -72,10 +72,11 @@ namespace Gothic_II_Addon {
     int m_bManipulateItemsDisabled;    // sizeof 04h    offset 98h
     int m_bCanTransferMoreThanOneItem; // sizeof 04h    offset 9Ch
 
+    zDefineInheritableCtor( oCItemContainer ) : zCtor( zCInputCallback ) {}
     void oCItemContainer_OnInit()                              zCall( 0x00704D00 );
     oCItemContainer* GetNextContainerLeft( oCItemContainer* )  zCall( 0x00704BC0 );
     oCItemContainer* GetNextContainerRight( oCItemContainer* ) zCall( 0x00704C60 );
-    oCItemContainer()                                          zInit( oCItemContainer_OnInit() );
+    oCItemContainer() : zCtor( zCInputCallback )               zInit( oCItemContainer_OnInit() );
     zCListSort<oCItem>* JumpOffset( int&, int& )               zCall( 0x00706AB0 );
     int ActivateNextContainer( int )                           zCall( 0x0070A150 );
     static int GetInvSplitScreen()                             zCall( 0x007045E0 );
@@ -144,7 +145,7 @@ namespace Gothic_II_Addon {
     static zCGfx*& gfx_equip;
     static zCGfx*& gfx_cursor;
     static zCGfx*& gfx_cursor_equip;
-    static zCGfx**& gfx_arrow;
+    static zCGfx** gfx_arrow;
 
     // user API
     #include "oCItemContainer.inl"
@@ -155,13 +156,14 @@ namespace Gothic_II_Addon {
   public:
     oCNpc* owner; // sizeof 04h    offset A0h
 
-    void oCStealContainer_OnInit()  zCall( 0x0070ABF0 );
-    oCStealContainer()              zInit( oCStealContainer_OnInit() );
-    virtual int HandleEvent( int )  zCall( 0x0070B090 );
-    virtual ~oCStealContainer()     zCall( 0x0070AC30 );
-    virtual void SetOwner( oCNpc* ) zCall( 0x0070ADB0 );
-    virtual oCNpc* GetOwner()       zCall( 0x0070ADD0 );
-    virtual void CreateList()       zCall( 0x0070ADE0 );
+    zDefineInheritableCtor( oCStealContainer ) : zCtor( oCItemContainer ) {}
+    void oCStealContainer_OnInit()                zCall( 0x0070ABF0 );
+    oCStealContainer() : zCtor( oCItemContainer ) zInit( oCStealContainer_OnInit() );
+    virtual int HandleEvent( int )                zCall( 0x0070B090 );
+    virtual ~oCStealContainer()                   zCall( 0x0070AC30 );
+    virtual void SetOwner( oCNpc* )               zCall( 0x0070ADB0 );
+    virtual oCNpc* GetOwner()                     zCall( 0x0070ADD0 );
+    virtual void CreateList()                     zCall( 0x0070ADE0 );
 
     // user API
     #include "oCStealContainer.inl"
@@ -171,13 +173,13 @@ namespace Gothic_II_Addon {
   class oCNpcContainer : public oCStealContainer {
   public:
 
-    void oCNpcContainer_OnInit()      zCall( 0x0070B3C0 );
-    oCNpcContainer()                  zInit( oCNpcContainer_OnInit() );
-    virtual int HandleEvent( int )    zCall( 0x0070B6F0 );
-    virtual ~oCNpcContainer()         zCall( 0x0070B400 );
-    virtual oCItem* Insert( oCItem* ) zCall( 0x0070B9F0 );
-    virtual void Remove( oCItem* )    zCall( 0x0070BA30 );
-    virtual void CreateList()         zCall( 0x0070B570 );
+    void oCNpcContainer_OnInit()                 zCall( 0x0070B3C0 );
+    oCNpcContainer() : zCtor( oCStealContainer ) zInit( oCNpcContainer_OnInit() );
+    virtual int HandleEvent( int )               zCall( 0x0070B6F0 );
+    virtual ~oCNpcContainer()                    zCall( 0x0070B400 );
+    virtual oCItem* Insert( oCItem* )            zCall( 0x0070B9F0 );
+    virtual void Remove( oCItem* )               zCall( 0x0070BA30 );
+    virtual void CreateList()                    zCall( 0x0070B570 );
 
     // user API
     #include "oCNpcContainer.inl"
@@ -193,7 +195,7 @@ namespace Gothic_II_Addon {
     int maxSlots;                 // sizeof 04h    offset C8h
 
     void oCNpcInventory_OnInit()                             zCall( 0x0082DF4B );
-    oCNpcInventory()                                         zInit( oCNpcInventory_OnInit() );
+    oCNpcInventory() : zCtor( oCItemContainer )              zInit( oCNpcInventory_OnInit() );
     void ClearInventory()                                    zCall( 0x0070BDB0 );
     void SetOwner( oCNpc* )                                  zCall( 0x0070C320 );
     oCNpc* GetOwner()                                        zCall( 0x0070C330 );

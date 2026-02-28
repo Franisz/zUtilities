@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZCCS_PROPS_H__VER2__
 #define __ZCCS_PROPS_H__VER2__
@@ -36,10 +36,11 @@ namespace Gothic_II_Classic {
     zTCSRunBehaviour runBehaviour; // sizeof 04h    offset 7Ch
     int runBehaviourValue;         // sizeof 04h    offset 80h
 
+    zDefineInheritableCtor( zCCSProps ) : zCtor( zCObject ) {}
     void zCCSProps_OnInit()                     zCall( 0x00421B70 );
     zSTRING GetName()                           zCall( 0x00406300 );
     zSTRING GetScriptFuncOnStop()               zCall( 0x00407670 );
-    zCCSProps()                                 zInit( zCCSProps_OnInit() );
+    zCCSProps() : zCtor( zCObject )             zInit( zCCSProps_OnInit() );
     static zCObject* _CreateNewInstance()       zCall( 0x00421B10 );
     virtual zCClassDef* _GetClassDef() const    zCall( 0x00421D30 );
     virtual void Archive( zCArchiver& )         zCall( 0x00421E30 );

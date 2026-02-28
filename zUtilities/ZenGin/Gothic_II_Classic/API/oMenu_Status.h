@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OMENU__STATUS_H__VER2__
 #define __OMENU__STATUS_H__VER2__
@@ -73,22 +73,22 @@ namespace Gothic_II_Classic {
     zCMenuItemList* listItemLog;    // sizeof 04h    offset CD0h
     zCMenuItemText* contentViewer;  // sizeof 04h    offset CD4h
 
-    oCMenu_Log() {}
-    void oCMenu_Log_OnInit( zSTRING const& )          zCall( 0x0047A490 );
-    oCMenu_Log( zSTRING const& a0 )                   zInit( oCMenu_Log_OnInit( a0 ));
-    void SetDayTime( zSTRING const&, zSTRING const& ) zCall( 0x0047AA20 );
-    void SetLogTopics( zCList<oCLogTopic> const& )    zCall( 0x0047AAC0 );
-    void SetInfo( zCMenuItem const* )                 zCall( 0x0047B1B0 );
-    void InitForDisplay()                             zCall( 0x0047B8F0 );
-    virtual int HandleEvent( int )                    zCall( 0x0047B890 );
-    virtual int HandleEnterItem( zCMenuItem* )        zCall( 0x0047B410 );
-    virtual int HandleLeaveItem( zCMenuItem* )        zCall( 0x0047B640 );
-    virtual int HandleActivateItem( zCMenuItem* )     zCall( 0x0047B880 );
-    virtual void Activate()                           zCall( 0x0047B8E0 );
-    virtual ~oCMenu_Log()                             zCall( 0x0047A4D0 );
-    virtual void ScreenInit()                         zCall( 0x0047A4E0 );
-    virtual void ScreenDone()                         zCall( 0x0047A910 );
-    virtual int ExecCommand( zSTRING const& )         zCall( 0x0047B1C0 );
+    oCMenu_Log() : zCtor( zCMenu ) {}
+    void oCMenu_Log_OnInit( zSTRING const& )                            zCall( 0x0047A490 );
+    oCMenu_Log( zSTRING const& a0 ) : zCtor( zCMenu )                   zInit( oCMenu_Log_OnInit( a0 ));
+    void SetDayTime( zSTRING const&, zSTRING const& )                   zCall( 0x0047AA20 );
+    void SetLogTopics( zCList<oCLogTopic> const& )                      zCall( 0x0047AAC0 );
+    void SetInfo( zCMenuItem const* )                                   zCall( 0x0047B1B0 );
+    void InitForDisplay()                                               zCall( 0x0047B8F0 );
+    virtual int HandleEvent( int )                                      zCall( 0x0047B890 );
+    virtual int HandleEnterItem( zCMenuItem* )                          zCall( 0x0047B410 );
+    virtual int HandleLeaveItem( zCMenuItem* )                          zCall( 0x0047B640 );
+    virtual int HandleActivateItem( zCMenuItem* )                       zCall( 0x0047B880 );
+    virtual void Activate()                                             zCall( 0x0047B8E0 );
+    virtual ~oCMenu_Log()                                               zCall( 0x0047A4D0 );
+    virtual void ScreenInit()                                           zCall( 0x0047A4E0 );
+    virtual void ScreenDone()                                           zCall( 0x0047A910 );
+    virtual int ExecCommand( zSTRING const& )                           zCall( 0x0047B1C0 );
 
     // user API
     #include "oCMenu_Log.inl"
@@ -101,20 +101,20 @@ namespace Gothic_II_Classic {
     zCArray<oSMenuInfoTalent> m_listTalents;       // sizeof 0Ch    offset CD0h
     zCArray<oSMenuInfoArmor> m_listArmory;         // sizeof 0Ch    offset CDCh
 
-    oCMenu_Status() {}
-    void oCMenu_Status_OnInit( zSTRING const& )                       zCall( 0x0047C2C0 );
-    void SetPlayerName( zSTRING const& )                              zCall( 0x0047BB20 );
-    void SetGuild( zSTRING const& )                                   zCall( 0x0047BB70 );
-    void SetMagicalGuild( zSTRING const& )                            zCall( 0x0047BC60 );
-    void SetExperience( unsigned long, unsigned long, unsigned long ) zCall( 0x0047BD50 );
-    void SetLearnPoints( unsigned long )                              zCall( 0x0047C180 );
-    oCMenu_Status( zSTRING const& a0 )                                zInit( oCMenu_Status_OnInit( a0 ));
-    void AddArmor( oSMenuInfoArmor const& )                           zCall( 0x0047C410 );
-    void AddAttribute( oSMenuInfoAttribute const& )                   zCall( 0x0047C520 );
-    void AddTalent( oSMenuInfoTalent const& )                         zCall( 0x0047C700 );
-    void InitForDisplay()                                             zCall( 0x0047C8F0 );
-    virtual int HandleEvent( int )                                    zCall( 0x0047B930 );
-    virtual ~oCMenu_Status()                                          zCall( 0x0047C340 );
+    oCMenu_Status() : zCtor( zCMenu ) {}
+    void oCMenu_Status_OnInit( zSTRING const& )                                         zCall( 0x0047C2C0 );
+    void SetPlayerName( zSTRING const& )                                                zCall( 0x0047BB20 );
+    void SetGuild( zSTRING const& )                                                     zCall( 0x0047BB70 );
+    void SetMagicalGuild( zSTRING const& )                                              zCall( 0x0047BC60 );
+    void SetExperience( unsigned long, unsigned long, unsigned long )                   zCall( 0x0047BD50 );
+    void SetLearnPoints( unsigned long )                                                zCall( 0x0047C180 );
+    oCMenu_Status( zSTRING const& a0 ) : zCtor( zCMenu )                                zInit( oCMenu_Status_OnInit( a0 ));
+    void AddArmor( oSMenuInfoArmor const& )                                             zCall( 0x0047C410 );
+    void AddAttribute( oSMenuInfoAttribute const& )                                     zCall( 0x0047C520 );
+    void AddTalent( oSMenuInfoTalent const& )                                           zCall( 0x0047C700 );
+    void InitForDisplay()                                                               zCall( 0x0047C8F0 );
+    virtual int HandleEvent( int )                                                      zCall( 0x0047B930 );
+    virtual ~oCMenu_Status()                                                            zCall( 0x0047C340 );
 
     // user API
     #include "oCMenu_Status.inl"

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVIEW_DRAW_H__VER1__
 #define __ZVIEW_DRAW_H__VER1__
@@ -16,8 +16,9 @@ namespace Gothic_I_Addon {
     int TextureAlpha;                      // sizeof 04h    offset 68h
     zVEC2 TexturePosition[2];              // sizeof 10h    offset 6Ch
 
+    zDefineInheritableCtor( zCViewDraw ) : zCtor( zCViewObject ) {}
     void zCViewDraw_OnInit()                                                zCall( 0x007956F0 );
-    zCViewDraw()                                                            zInit( zCViewDraw_OnInit() );
+    zCViewDraw() : zCtor( zCViewObject )                                    zInit( zCViewDraw_OnInit() );
     void __fastcall RemoveChild( zSTRING& )                                 zCall( 0x00795830 );
     void __fastcall SetTextureAlphaBlendFunc( zTRnd_AlphaBlendFunc const& ) zCall( 0x00795920 );
     void __fastcall SetTexture( zSTRING const& )                            zCall( 0x00795930 );

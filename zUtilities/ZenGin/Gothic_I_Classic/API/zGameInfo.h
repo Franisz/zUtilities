@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZGAME_INFO_H__VER0__
 #define __ZGAME_INFO_H__VER0__
@@ -18,6 +18,7 @@ namespace Gothic_I_Classic {
   public:
     zSTRING name; // sizeof 14h    offset 04h
 
+    zDefineInheritableCtor( zCGameInfo ) {}
     void zCGameInfo_OnInit()                                     zCall( 0x0044B6A0 );
     zCGameInfo()                                                 zInit( zCGameInfo_OnInit() );
     void PackToBuffer( zCBuffer&, unsigned char )                zCall( 0x0044B8F0 );

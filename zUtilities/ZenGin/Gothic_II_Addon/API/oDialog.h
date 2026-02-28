@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ODIALOG_H__VER3__
 #define __ODIALOG_H__VER3__
@@ -19,7 +19,7 @@ namespace Gothic_II_Addon {
     zCDecal* thumb[3]; // sizeof 0Ch    offset 3Ch
 
     void oCAskBox_OnInit()            zCall( 0x006BBC80 );
-    oCAskBox()                        zInit( oCAskBox_OnInit() );
+    oCAskBox() : zCtor( zCAIBase )    zInit( oCAskBox_OnInit() );
     void Init( oCNpc*, oCNpc* )       zCall( 0x006BBE70 );
     void Delete()                     zCall( 0x006BC140 );
     void SetNeutral()                 zCall( 0x006BC2F0 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZTEX_CONVERT_H__VER1__
 #define __ZTEX_CONVERT_H__VER1__
@@ -8,13 +8,13 @@
 
 namespace Gothic_I_Addon {
 
-  // sizeof 10h
+  // sizeof 04h
   struct RGBPIXEL {
   public:
     unsigned char b; // sizeof 01h    offset 00h
-    unsigned g;      // sizeof 04h    offset 04h
-    unsigned r;      // sizeof 04h    offset 08h
-    unsigned a;      // sizeof 04h    offset 0Ch
+    unsigned char g; // sizeof 01h    offset 01h
+    unsigned char r; // sizeof 01h    offset 02h
+    unsigned char a; // sizeof 01h    offset 03h
   };
 
   // sizeof 33Ch
@@ -32,7 +32,7 @@ namespace Gothic_I_Addon {
 
     void zCTexConGeneric_OnInit()                            zCall( 0x0075F640 );
     zCOLOR GetAverageColor()                                 zCall( 0x0075F5D0 );
-    zCTexConGeneric()                                        zInit( zCTexConGeneric_OnInit() );
+    zCTexConGeneric() : zCtor( zCTextureConvert )            zInit( zCTexConGeneric_OnInit() );
     virtual ~zCTexConGeneric()                               zCall( 0x0075F6D0 );
     virtual int Lock( int )                                  zCall( 0x0075F740 );
     virtual int Unlock()                                     zCall( 0x0075F760 );

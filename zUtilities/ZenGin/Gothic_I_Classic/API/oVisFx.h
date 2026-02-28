@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIS_FX_H__VER0__
 #define __OVIS_FX_H__VER0__
@@ -299,8 +299,9 @@ namespace Gothic_I_Classic {
     int emTrjFollowHitLastCheck;              // sizeof 04h    offset 5C0h
     int bIsProjectile;                        // sizeof 04h    offset 5C4h
 
+    zDefineInheritableCtor( oCVisualFX ) : zCtor( zCEffect )  {}
     void oCVisualFX_OnInit()                                                                             zCall( 0x004820C0 );
-    oCVisualFX()                                                                                         zInit( oCVisualFX_OnInit() );
+    oCVisualFX() : zCtor( zCEffect )                                                                     zInit( oCVisualFX_OnInit() );
     void CreateHierachy()                                                                                zCall( 0x00483300 );
     void DisposeHierachy()                                                                               zCall( 0x004835D0 );
     void InitValues()                                                                                    zCall( 0x00483B90 );
@@ -407,11 +408,11 @@ namespace Gothic_I_Classic {
     zCVob* vob;    // sizeof 04h    offset 24h
     int delete_it; // sizeof 04h    offset 28h
 
-    oCVisualFXAI() {}
-    virtual ~oCVisualFXAI()                                      zCall( 0x00484190 );
-    virtual void DoAI( zCVob*, int& )                            zCall( 0x0048FC60 );
-    virtual void ReportCollisionToAI( zCCollisionReport const& ) zCall( 0x00484130 );
-    virtual void HostVobAddedToWorld( zCVob*, zCWorld* )         zCall( 0x00484150 );
+    oCVisualFXAI() : zCtor( zCAIBase ) {}
+    virtual ~oCVisualFXAI()                                                          zCall( 0x00484190 );
+    virtual void DoAI( zCVob*, int& )                                                zCall( 0x0048FC60 );
+    virtual void ReportCollisionToAI( zCCollisionReport const& )                     zCall( 0x00484130 );
+    virtual void HostVobAddedToWorld( zCVob*, zCWorld* )                             zCall( 0x00484150 );
 
     // user API
     #include "oCVisualFXAI.inl"

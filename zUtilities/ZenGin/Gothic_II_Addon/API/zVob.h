@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZVOB_H__VER3__
 #define __ZVOB_H__VER3__
@@ -66,10 +66,11 @@ namespace Gothic_II_Addon {
     unsigned short int subType; // sizeof 02h    offset 24h
     int inCutscene;             // sizeof 04h    offset 28h
 
+    zDefineInheritableCtor( zCEventMessage ) : zCtor( zCObject ) {}
     void zCEventMessage_OnInit()                                                    zCall( 0x00413B60 );
     void zCEventMessage_OnInit( unsigned short )                                    zCall( 0x00605560 );
-    zCEventMessage()                                                                zInit( zCEventMessage_OnInit() );
-    zCEventMessage( unsigned short a0 )                                             zInit( zCEventMessage_OnInit( a0 ));
+    zCEventMessage() : zCtor( zCObject )                                            zInit( zCEventMessage_OnInit() );
+    zCEventMessage( unsigned short a0 ) : zCtor( zCObject )                         zInit( zCEventMessage_OnInit( a0 ));
     unsigned long GetMessageID() const                                              zCall( 0x006056D0 );
     void PackToBuffer( zCBuffer&, zCEventManager* )                                 zCall( 0x00605730 );
     unsigned short GetSubType() const                                               zCall( 0x00674290 );
@@ -128,7 +129,7 @@ namespace Gothic_II_Addon {
     zCVob* inflictorVob;  // sizeof 04h    offset 3Ch
     zVEC3 hitLocation;    // sizeof 0Ch    offset 40h
 
-    zCEventCore() {}
+    zCEventCore() : zCtor( zCEventMessage ) {}
     void Clear()                                      zCall( 0x006060C0 );
     static zCObject* _CreateNewInstance()             zCall( 0x005FD250 );
     virtual zCClassDef* _GetClassDef() const          zCall( 0x00402130 );
@@ -253,12 +254,13 @@ namespace Gothic_II_Addon {
     zCCollisionObjectDef* m_poCollisionObjectClass; // sizeof 04h    offset 118h
     zCCollisionObject* m_poCollisionObject;         // sizeof 04h    offset 11Ch
 
+    zDefineInheritableCtor( zCVob ) : zCtor( zCObject ) {}
     void zCVob_OnInit()                                                                                           zCall( 0x005FE1E0 );
     zVEC3 GetPositionWorld() const                                                                                zCall( 0x0052DC90 );
     zVEC3 GetAtVectorWorld() const                                                                                zCall( 0x0052DCB0 );
     zVEC3 GetUpVectorWorld() const                                                                                zCall( 0x0052DCD0 );
     zVEC3 GetRightVectorWorld() const                                                                             zCall( 0x0052DCF0 );
-    zCVob()                                                                                                       zInit( zCVob_OnInit() );
+    zCVob() : zCtor( zCObject )                                                                                   zInit( zCVob_OnInit() );
     void SetVobID( unsigned long const& )                                                                         zCall( 0x005FE8E0 );
     void SetAI( zCAIBase* )                                                                                       zCall( 0x005FE8F0 );
     void SetVobPresetName( zSTRING const& )                                                                       zCall( 0x005FE940 );
@@ -496,7 +498,7 @@ namespace Gothic_II_Addon {
     zCVobLightData lightData; // sizeof 48h    offset 24h
     zSTRING presetName;       // sizeof 14h    offset 6Ch
 
-    zCVobLightPreset() {}
+    zCVobLightPreset() : zCtor( zCObject ) {}
     static zCObject* _CreateNewInstance()    zCall( 0x005FD520 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x005FD690 );
     virtual void Archive( zCArchiver& )      zCall( 0x00609790 );
@@ -517,7 +519,7 @@ namespace Gothic_II_Addon {
     zSTRING lightPresetInUse;                         // sizeof 14h    offset 174h
 
     void zCVobLight_OnInit()                                                              zCall( 0x00607D10 );
-    zCVobLight()                                                                          zInit( zCVobLight_OnInit() );
+    zCVobLight() : zCtor( zCVob )                                                         zInit( zCVobLight_OnInit() );
     void DoAnimation()                                                                    zCall( 0x006081C0 );
     void SetRange( float, int )                                                           zCall( 0x00608320 );
     void AddThisToPresetList( zSTRING const& ) const                                      zCall( 0x00608910 );
@@ -551,7 +553,7 @@ namespace Gothic_II_Addon {
     zCLASS_DECLARATION( zCVobLevelCompo )
 
     void zCVobLevelCompo_OnInit()            zCall( 0x00605280 );
-    zCVobLevelCompo()                        zInit( zCVobLevelCompo_OnInit() );
+    zCVobLevelCompo() : zCtor( zCVob )       zInit( zCVobLevelCompo_OnInit() );
     int HasIdentityTrafo() const             zCall( 0x006052E0 );
     static zCObject* _CreateNewInstance()    zCall( 0x005FDB90 );
     virtual zCClassDef* _GetClassDef() const zCall( 0x005FDC30 );

@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __ZAI_PLAYER_H__VER0__
 #define __ZAI_PLAYER_H__VER0__
@@ -121,8 +121,9 @@ namespace Gothic_I_Classic {
     unsigned char dummyLastVar;                                       // sizeof 01h    offset 100h
     zSTRING bloodDefaultTexName;                                      // sizeof 14h    offset 104h
 
+    zDefineInheritableCtor( zCAIPlayer ) : zCtor( zCAIBase )  {}
     void zCAIPlayer_OnInit()                                            zCall( 0x004FCB90 );
-    zCAIPlayer()                                                        zInit( zCAIPlayer_OnInit() );
+    zCAIPlayer() : zCtor( zCAIBase )                                    zInit( zCAIPlayer_OnInit() );
     void RemoveEffects()                                                zCall( 0x004FCF50 );
     float GetJumpUpHeight()                                             zCall( 0x004FD040 );
     void SetJumpUpForceByHeight( float )                                zCall( 0x004FD080 );

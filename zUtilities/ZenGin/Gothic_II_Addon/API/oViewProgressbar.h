@@ -1,4 +1,4 @@
-// Supported with union (c) 2018-2021 Union team
+﻿// Supported with union (c) 2018-2021 Union team
 
 #ifndef __OVIEW_PROGRESSBAR_H__VER3__
 #define __OVIEW_PROGRESSBAR_H__VER3__
@@ -12,7 +12,7 @@ namespace Gothic_II_Addon {
   public:
     int progressbar_sizex; // sizeof 04h    offset 130h
 
-    oCViewGothicProgressBar() {}
+    oCViewGothicProgressBar() : zCtor( zCViewProgressBar ) {}
     /* for zCViewBase num : 15*/
     virtual ~oCViewGothicProgressBar() zCall( 0x006C2610 );
     virtual void Init()                zCall( 0x0043D2B0 );
