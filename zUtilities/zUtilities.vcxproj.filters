@@ -250,7 +250,7 @@
     <Filter Include="Plugin\Workspace\Features\IconInfo">
       <UniqueIdentifier>{ad1d68b4-22dc-4e58-914f-444545260f86}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Plugin\Workspace\Features\FocusStatusBar">
+    <Filter Include="Plugin\Workspace\Features\PlayerStatus\FocusStatusBar">
       <UniqueIdentifier>{9d696232-6486-45d7-a379-af59a6476b5c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -2932,10 +2932,10 @@
       <Filter>Plugin\Workspace\Misc</Filter>
     </ClInclude>
     <ClInclude Include="FocusStatusBar.h">
-      <Filter>Plugin\Workspace\Features\FocusStatusBar</Filter>
+      <Filter>Plugin\Workspace\Features\PlayerStatus\FocusStatusBar</Filter>
     </ClInclude>
     <ClInclude Include="FocusStatusBar.cpp">
-      <Filter>Plugin\Workspace\Features\FocusStatusBar</Filter>
+      <Filter>Plugin\Workspace\Features\PlayerStatus\FocusStatusBar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
