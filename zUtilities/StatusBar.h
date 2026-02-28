@@ -39,8 +39,8 @@ namespace GOTHIC_ENGINE {
       zCArray<zSTRING> symbols;
       zSTRING name;
       Array<string> userPos;
-      void PrintValue(oCNpc* npc);
-      virtual void PrintValueOutside(zSTRING str, oCNpc* npc);
+      void PrintValue();
+      virtual void PrintValueOutside(zSTRING& str);
       bool IsBarActive();
       StatusBar(oCViewStatusBar* bar);
       virtual zSTRING GetBarValue();

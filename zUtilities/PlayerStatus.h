@@ -3,11 +3,12 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    bool ShowGameTime, ShowMunitionAmount, ShowTargetProtection, ShowPickpocketIcon, UseTimeMultiplier, ShowCurrWeapProtOnly, ShowProtOnlyInFight,ShowProtAllDamageTypes;
-    bool ShowHumanNpcXpRewardIcon;
-    int ShowSystemTime, KeyTimeMultiplier;
+    bool ShowGameTime, ShowMunitionAmount, ShowPickpocketIcon, UseTimeMultiplier, ShowHumanNpcXpRewardIcon;
+    int ShowSystemTime, KeyTimeMultiplier, ShowTargetProtectionNoFight, ShowTargetProtectionInFight, TargetProtectionIconStyle;
     Array<float> TimeMultipliers;
-    int SaveReminder;
+    int TargetProtectionIconPosition, DistanceWeaponDamageTypeFromIni, SaveReminder;
+    bool HideTargetProtectionZeroValues, HideTargetProtectionFallDamage, HideTargetProtectionFlyDamage, HideTargetProtectionFireDamage;
+    DamageMask DistanceWeaponDamageType = DamageMask{ oEDamageType::oEDamageType_Point }; // Default type fallback
 
     void PlayerStatus() {
       ShowSystemTime = zoptions->ReadInt( PLUGIN_NAME, "ShowSystemTime", 0 );
@@ -28,15 +29,21 @@ namespace GOTHIC_ENGINE {
 
       SaveReminder = zoptions->ReadInt(PLUGIN_NAME, "SaveReminder", 5);
 
-      auto showTargetProtectionValue = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtection", true);
-      if (showTargetProtectionValue < 0 || showTargetProtectionValue > 2) {
-          return;
-      }
+      ShowTargetProtectionNoFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionNoFight", TargetProtectionMode::Disabled);
+      ShowTargetProtectionInFight = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtectionInFight", TargetProtectionMode::CurrentWeapon);
+      TargetProtectionIconStyle = zoptions->ReadInt(PLUGIN_NAME, "TargetProtectionIconStyle", 0);
+      TargetProtectionIconPosition = zoptions->ReadInt(PLUGIN_NAME, "TargetProtectionIconPosition", 0);
+      HideTargetProtectionZeroValues = zoptions->ReadBool(PLUGIN_NAME, "HideTargetProtectionZeroValues", false);
+      HideTargetProtectionFallDamage = zoptions->ReadBool(PLUGIN_NAME, "HideTargetProtectionFallDamage", false);
+      HideTargetProtectionFlyDamage = zoptions->ReadBool(PLUGIN_NAME, "HideTargetProtectionFlyDamage", false);
+      HideTargetProtectionFireDamage = zoptions->ReadBool(PLUGIN_NAME, "HideTargetProtectionFireDamage", false);
 
-      ShowTargetProtection = showTargetProtectionValue >= 1;
-      ShowCurrWeapProtOnly = showTargetProtectionValue == 1;
-      ShowProtOnlyInFight = zoptions->ReadBool(PLUGIN_NAME, "ShowProtOnlyInFight", true);
-      ShowProtAllDamageTypes = zoptions->ReadBool(PLUGIN_NAME, "ShowProtAllDamageTypes", false);
+	  // when value form ini is 0, do not override default to avoid showing nothing for distance weapons
+	  if (DistanceWeaponDamageTypeFromIni = zoptions->ReadInt(PLUGIN_NAME, "DistanceWeaponDamageType", 0)) {
+          for (const auto& entry : DAMAGE_MAP) {
+              DistanceWeaponDamageType[entry.index] = (DistanceWeaponDamageTypeFromIni & entry.type) != 0;
+          }
+      }
     }
   }
 

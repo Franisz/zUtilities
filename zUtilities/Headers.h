@@ -3,6 +3,7 @@
 
 // Automatically generated block
 #include <chrono>
+#include <bitset>
 #pragma region Includes
 #include "Const.h"
 #include "Colors.h"
@@ -10,7 +11,7 @@
 #include "Randomizer.h"
 #include "KeyCode.h"
 #include "IconInfo.h"
-#include "NpcHelper.h"
+#include "DamageMaskHelper.h"
 #include "PlayerHelper.h"
 #include "DebugHelper.h"
 #include "FocusColor.h"

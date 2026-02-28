@@ -5,6 +5,8 @@
 
 void __thiscall OnChrzonszcz( zCVob* );
 void OnDamage_Hit_Union( oSDamageDescriptor& );
+void OnDamage_Hit_DistanceWeapon( oSDamageDescriptor& );
+void EquipItem_Union( oCItem* );
 int GetAivar( zSTRING aivar );
 int EV_UseItemToState_Union( oCMsgManipulate* );
 int GetFistDamageIndex();

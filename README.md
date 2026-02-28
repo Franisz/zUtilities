@@ -70,10 +70,26 @@ This is a plugin with a set of many quality-of-life and utility features made fo
   - World speed will cycle in the order of set multipliers after pressing `Z`. Shortcut can also be changed with `KeyTimeMultiplier` option.
   - Currently used multiplier will be shown next to the time icon.
 
-- Displays protection icon and value next to the focused npc hp bar.
+- Displays protection icons and values next to the focused npc hp bar.
 
-  - Setting `ShowTargetProtection` option to `0` disables this feature, `1` displays the protection that matches currently used weapon and `2` shows all protection stats.
-  - `ShowProtOnlyInFight` and `ShowProtAllDamageTypes` are extra options that can be used, to alter what is displayed.
+  - Setting are split in two modes and works separately, fight and no fight. Fight means when melee/distance weapon or spell is drawn, No fight means otherwise.
+  - `ShowTargetProtectionNoFight` option for no fight mode.
+  - `ShowTargetProtectionInFight` option for fight mode.
+  - There are 3 options for above settings:
+    - `0` - _Disabled_ No icons and values will be shown.
+    - `1` - _CurrentWeapon_ Only icons and values for current drawn or equipped weapon will be shown. In no fight mode, there is the possibility of more than one icon and value being shown, depending on the equipped distance/melee weapon and/or spell.
+    - `2` - _All_ Displays all icons and values for all protections. This option could be filtered with some of the options described in section below.
+  - Note that:
+    - Transformation into a monster is treated as fight mode.
+    - When option is set higher than `0` and target has flag `NPC_FLAG_IMMORTAL` then only one icon (cracked shield) will be shown. There is no point in showing all the icons if target is immortal.
+    - Immunity to a specific protection type is treated as non-zero value and is utilized in the hide options described in the section below.
+  - Icon style is determined by `TargetProtectionIconStyle` option. Set it to `0` - _DamagePopup_ then corresponding protection icons and colors will be same as damage popup. Set it to `1` - _Shields_ for simple shield icons distinguished only by colors.
+  - Icon position is defined by `TargetProtectionIconPosition` option. Set it to `0` - _Top_ then protection icons will be positioned above focused health bar in row. Set it to `1` - _Right_ then icons will be positioned in column to the right of focused health bar. Note that if there will be only one icon to show then this setting will be omitted temporary and icon will be shown as close as possible to the right of the focused health bar.
+  - Some protection icons can be hidden but only when `ShowTargetProtectionInFight` or `ShowTargetProtectionNoFight` option is set to `2` - _All_. Conditions are checked from top to bottom, so for example if `HideTargetProtectionZeroValues` is enabled and `HideTargetProtectionFallDamage` is disabled and target has fall damage protection equal to zero then fall damage icon will not be shown.
+    - `HideTargetProtectionZeroValues` option hides protection icons with zero value, but they will still be shown if target is immune.
+    - `HideTargetProtectionFallDamage` option hides fall damage protection icon even if target is immune.
+    - `HideTargetProtectionFlyDamage` option hides fly damage protection icon even if target is immune.
+    - `HideTargetProtectionFireDamage` option hides fire damage protection icon even if target is immune.
 
 - Displays coin icon next to the focused npc name if player can pickpocket him.
 
@@ -199,14 +215,33 @@ SaveReminder=5
 ; ... Time in minutes after which the reminder to save the game appears on the screen
 ; ... set to -1 to disable
 
-ShowTargetProtection=1
-; ... enables for currently equipped weapon (1) or shows all protection stats (2) or disables (0) protection icon and value next to the focused npc hp bar
+ShowTargetProtectionNoFight=0
+;... specifies mode for showing target protection in no fight mode by
+;... (0) - 'Disabled', (1) - 'CurrentWeapon', (2) - 'All'
 
-ShowProtOnlyInFight=1
-; ... enables (1) or disables (0) showing protection stats only during combat
+ShowTargetProtectionInFight=1
+;... specifies mode for showing target protection in fight mode by
+;... (0) - 'Disabled', (1) - 'CurrentWeapon', (2) - 'All'
 
-ShowProtAllDamageTypes=0
-; ... enables (1) or disables (0) showing all protection stats, even if they are 0
+TargetProtectionIconStyle=0
+;... specifies style for protection icons
+;... (0) - 'DamagePopup', (1) - 'Shields'
+
+TargetProtectionIconPosition=0
+;... specifies position for protection icons
+;... (0) - 'Top', (1) - 'Right'
+
+HideTargetProtectionZeroValues=0
+... hides protection icons with zero value; (0) - 'Disabled', (1) - 'Enabled'
+
+HideTargetProtectionFallDamage=0
+... hides protection icon for fall damage; (0) - 'Disabled', (1) - 'Enabled'
+
+HideTargetProtectionFlyDamage=0
+... hides protection icon for fly damage; (0) - 'Disabled', (1) - 'Enabled'
+
+HideTargetProtectionFireDamage=0
+... hides protection icon for fire damage; (0) - 'Disabled', (1) - 'Enabled'
 
 RecoveryVisualization=1
 ; ... enables (1) or disables (0) visualization of healing that hovered in the inventory item gives
@@ -313,6 +348,9 @@ DamagePopupColorDmgTypes=1
 
 DamagePopupColorOnlyIcon=0
 ; ... enables (1) or disables (0) coloring only the popup icon
+
+DistanceWeaponDamageType=64
+; ... This value is used to override distance weapon protection icon type. It's maintained by plugin itself. Do not change it.
 ```
 
 </details>
