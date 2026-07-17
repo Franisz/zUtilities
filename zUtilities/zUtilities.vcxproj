@@ -994,6 +994,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="RemoveEmptyBodies.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="RemoveEmptyBodies.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="SwimStatusBar.cpp">
       <SubType>
       </SubType>

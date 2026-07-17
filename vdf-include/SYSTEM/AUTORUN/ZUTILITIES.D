@@ -133,7 +133,7 @@ instance MenuItem_Opt_Open_Link(C_MENU_ITEM_DEF)
   oneventaction[1] = Act_OpenWebLink;
   flags            = flags | IT_TXT_CENTER;
   text[0]          = Str_GetLocalizedString(
-    "Открыть ѝтраницу проекта",
+    "Открыть ѝтраницј проекта",
     "Open project page",
     "Projektseite öffnen",
     "Otwórz stronę projektu"
@@ -584,6 +584,27 @@ instance MenuItem_Opt_Page2_LabelMissionItems_Choice(C_MENU_ITEM_DEF)
   posy += Menu_DY * CurrentMenuItem_PY;
   
   onchgsetoption        = "LabelMissionItems";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Off|On";
+};
+
+instance MenuItem_Opt_Page2_RemoveEmptyBodies(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 7;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "RemoveEmptyBodies";
+  text[1] = "remove empty bodies from world (fade away)";
+};
+
+instance MenuItem_Opt_Page2_RemoveEmptyBodies_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_BASE();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "RemoveEmptyBodies";
   onchgsetoptionsection = "zUtilities";
   text[0]               = "Off|On";
 };

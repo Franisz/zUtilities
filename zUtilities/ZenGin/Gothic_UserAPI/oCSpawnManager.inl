@@ -3,3 +3,4 @@
 // User API for oCSpawnManager
 // Add your methods here
 
+int CheckRemoveNpc_Union(oCNpc*);

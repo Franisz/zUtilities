@@ -35,6 +35,7 @@ namespace GOTHIC_ENGINE {
       FocusColor();
       ItemLabel();
       DamagePopup();
+      RemoveEmptyBodies();
     }
 
     void AddTrivias() {
@@ -102,6 +103,7 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "SelectedDialogueColor", "... defines color of selected line in dialogues" + nline + "... use 'R|G|B' or 'R|G|B|A' format" + nline + "... leave empty to use default color" );
 
       zoptions->AddTrivia( PLUGIN_NAME, "SaveReminder", "... Time in minutes after which the reminder to save the game appears on the screen" + nline + "... set to -1 to disable");
+      zoptions->AddTrivia( PLUGIN_NAME, "RemoveEmptyBodies", "... enables (1) or disables (0) removing of dead empty bodies from the world" + nline + "... bodies fade away over time" );
     }
   }
 }

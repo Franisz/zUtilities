@@ -24,6 +24,7 @@
 #include "FocusStatusBar.h"
 #include "LogBook.h"
 #include "PlayerStatus.h"
+#include "RemoveEmptyBodies.h"
 #include "Options.h"
 #include "Plugin.h"
 #pragma endregion
