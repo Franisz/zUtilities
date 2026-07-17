@@ -65,23 +65,38 @@ namespace GOTHIC_ENGINE {
     }
 
     if ( w2 == "Debug" ) {
-      Options::UsingDebugHelper = (Options::UsingDebugHelper) ? false : true;
-      zSTRING state = (Options::UsingDebugHelper) ? "ON" : "OFF";
+			Options::UsingDebugHelper = ( Options::UsingDebugHelper ) ? false : true;
+			zSTRING state = ( Options::UsingDebugHelper ) ? "ON" : "OFF";
       msg = "zUtilites debug helper " + state;
       return true;
     }
 
-    if (w2 == "GiveAllItems") {
+		if ( w2 == "GiveAllItems" ) {
         auto result = GiveAllItems();
         msg = "Created " + Z result + " instances.";
 
         return true;
     }
 
-    if (w2 == "ShowTriggers") {
+		if ( w2 == "ShowTriggers" ) {
       Options::ShowTriggers = !Options::ShowTriggers;
-      zSTRING state = (Options::ShowTriggers) ? "ON" : "OFF";
+			zSTRING state = ( Options::ShowTriggers ) ? "ON" : "OFF";
       msg = "zUtilities showing triggers " + state;
+			if ( Options::ShowTriggers && !Options::UsingDebugHelper ) {
+				msg += "\nYou have to turn on zUtilities Debug";
+			}
+			return true;
+		}
+
+    if ( w2 == "ShowVobsVisualNames" ) {
+      Options::ShowVobsVisualNames = !Options::ShowVobsVisualNames;
+      zSTRING state = ( Options::ShowVobsVisualNames ) ? "ON" : "OFF";
+      msg = "zUtilities showing vobs visual names " + state;
+
+      if ( Options::ShowVobsVisualNames && !Options::UsingDebugHelper ) {
+        msg += "\nYou have to turn on zUtilities Debug";
+      }
+
       return true;
     }
 
@@ -105,5 +120,6 @@ namespace GOTHIC_ENGINE {
     zcon->Register( "zUtilities Debug", "Toggles debug mode" );
     zcon->Register( "zUtilities GiveAllItems", "Gives all items" );
     zcon->Register( "zUtilities ShowTriggers", "Toggles the display of invisible triggers in debug mode" );
+    zcon->Register( "zUtilities ShowVobsVisualNames", "Toggles the display of vob visual names near player" );
   }
 }

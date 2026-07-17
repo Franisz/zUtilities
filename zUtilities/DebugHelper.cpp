@@ -318,6 +318,14 @@ namespace GOTHIC_ENGINE {
     }
   }
 
+  void DebugHelper::ShowVobsVisualNames() {
+    if ( !Options::ShowVobsVisualNames ) {
+      return;
+    }
+
+    noGrass.ShowVisualsNames();
+  }
+
   void DebugHelper::Loop() {
     if ( !Options::UsingDebugHelper
       || ogame->pause_screen
@@ -357,6 +365,7 @@ namespace GOTHIC_ENGINE {
     textLinesRight = 0;
     
     ShowTriggerBoxes();
+    ShowVobsVisualNames();
 
     if ( TryPrintInfo() ) {
       mainView->SetSize( textLinesRight == 0 ? xsize / 1.7 : xsize, ysize );

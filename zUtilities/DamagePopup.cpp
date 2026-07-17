@@ -2,8 +2,6 @@
 // Union SOURCE file
 
 namespace GOTHIC_ENGINE {
-  Array<DamagePopup*> popups;
-
 #if ENGINE >= Engine_G2
   typedef struct _tiddata {
     static constexpr size_t _tiddata_size = 0x74; // 116

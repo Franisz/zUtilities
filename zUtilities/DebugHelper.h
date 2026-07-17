@@ -5,6 +5,7 @@ namespace GOTHIC_ENGINE {
   namespace Options {
     bool UsingDebugHelper = false;
     bool ShowTriggers = false;
+    bool ShowVobsVisualNames = false;
   }
 
   class DebugHelper {
@@ -25,6 +26,7 @@ namespace GOTHIC_ENGINE {
     void Print( zCView* view, zSTRING name, zSTRING value );
     bool TryPrintInfo();
     void ShowTriggerBoxes();
+    void ShowVobsVisualNames();
 
   public:
     void Clear();

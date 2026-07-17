@@ -986,6 +986,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="NoGrass.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="NoGrass.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="NpcHelper.cpp">
       <SubType>
       </SubType>

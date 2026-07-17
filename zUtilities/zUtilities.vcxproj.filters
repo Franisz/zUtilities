@@ -250,6 +250,9 @@
     <Filter Include="Plugin\Workspace\Features\IconInfo">
       <UniqueIdentifier>{ad1d68b4-22dc-4e58-914f-444545260f86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\Workspace\Features\NoGrass">
+      <UniqueIdentifier>{c8b60c7e-0a02-44e3-81fc-b854c8865ed3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2929,6 +2932,12 @@
     </ClInclude>
     <ClInclude Include="NpcHelper.h">
       <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="NoGrass.cpp">
+      <Filter>Plugin\Workspace\Features\NoGrass</Filter>
+    </ClInclude>
+    <ClInclude Include="NoGrass.h">
+      <Filter>Plugin\Workspace\Features\NoGrass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

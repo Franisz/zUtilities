@@ -50,7 +50,6 @@ namespace GOTHIC_ENGINE {
     void SetIcon();
     void SetScale();
     float GetRandomDist( float start, int random, bool invertable );
-    bool WorldToView( const zVEC3& worldPos, zCView* view, zVEC2& pos );
     float Scale( float p, float max );
     void CalcOffset( float lifetime );
     void CalcViewport( zSTRING& text, zCView* view, zVEC2 viewPos, const zVEC2& scaling );
@@ -64,7 +63,10 @@ namespace GOTHIC_ENGINE {
     };
 
     void Update();
+    static bool WorldToView(const zVEC3& worldPos, zCView* view, zVEC2& pos);
     DamagePopup( oCNpc* targetNpc, oCNpc::oSDamageDescriptor& desc, int dmgAmount, bool isCrit );
     ~DamagePopup();
   };
+
+  Array<DamagePopup*> popups;
 }
