@@ -1012,6 +1012,14 @@ $(ALLUSERSPROFILE)\Union\SDK\Union\v1.0m\Build\incver.exe $(ProjectDir)</Command
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="RemoveEmptyBodies.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="RemoveEmptyBodies.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="SwimStatusBar.cpp">
       <SubType>
       </SubType>

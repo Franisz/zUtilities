@@ -108,4 +108,37 @@ namespace GOTHIC_ENGINE {
 
     return (weapon->HasFlag( ITM_FLAG_CROSSBOW )) ? this->GetLeftHand()->CastTo<oCItem>() : this->GetRightHand()->CastTo<oCItem>();
   }
+
+  bool oCNpc::IsInventoryEmpty(bool ignoreArmor, bool ignoreActive) {
+    this->inventory2.UnpackAllItems();
+
+#if ENGINE <= Engine_G1A
+    for (int cat = 0; cat < INV_MAX; cat++) {
+      auto npcInv = this->inventory2.inventory[cat].next;
+#else
+    auto npcInv = this->inventory2.inventory.next;
+#endif
+
+    while (npcInv) {
+      auto item = npcInv->GetData();
+      npcInv = npcInv->next;
+
+      if (item->instanz < 0)
+        continue;
+
+      if (ignoreArmor && item->HasFlag(ITM_CAT_ARMOR))
+        continue;
+
+      if (ignoreActive && item->HasFlag(ITM_FLAG_ACTIVE))
+        continue;
+
+      return false;
+    }
+
+#if ENGINE <= Engine_G1A
+    }
+#endif
+
+    return true;
+  }
 }

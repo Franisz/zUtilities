@@ -250,6 +250,9 @@
     <Filter Include="Plugin\Workspace\Features\IconInfo">
       <UniqueIdentifier>{ad1d68b4-22dc-4e58-914f-444545260f86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Plugin\Workspace\Features\RemoveEmptyBodies">
+      <UniqueIdentifier>{67fd777e-979f-4e5e-9ff6-762e82d11d07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interface.cpp">
@@ -2929,6 +2932,12 @@
     </ClInclude>
     <ClInclude Include="NpcHelper.h">
       <Filter>Plugin\Workspace\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoveEmptyBodies.h">
+      <Filter>Plugin\Workspace\Features\RemoveEmptyBodies</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoveEmptyBodies.cpp">
+      <Filter>Plugin\Workspace\Features\RemoveEmptyBodies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
