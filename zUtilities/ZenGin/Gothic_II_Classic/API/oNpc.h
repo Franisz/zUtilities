@@ -414,7 +414,7 @@ namespace Gothic_II_Classic {
       oSFightAI() {}
       void Init( zCParser*, int ) zCall( 0x00792FF0 );
       int GetOwnAction( int )     zCall( 0x00793020 );
-    } oCNpc::oSFightAI;
+    } oSFightAI;
 
     // sizeof D0h
     typedef struct oSDamageDescriptor {
