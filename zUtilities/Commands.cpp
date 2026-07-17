@@ -10,6 +10,8 @@ namespace GOTHIC_ENGINE {
           return 0;
       }
 
+		oCItem* tempItem = nullptr;
+
       int itemsCreated = 0;
       for (int i = 0; i < parser->symtab.GetNumInList(); i++) {
           zCPar_Symbol* symbol = parser->symtab.table[i];
@@ -37,6 +39,16 @@ namespace GOTHIC_ENGINE {
           if (baseClass != c_item) {
               continue;
           }
+
+			tempItem = new oCItem();
+			parser->CreateInstance(i, tempItem);
+			auto itemFlags = tempItem->flags;
+			tempItem->Release();
+			tempItem = nullptr;
+
+			if (itemFlags == -1) {
+				continue;
+			}
 
           oCItem* item = static_cast<oCItem*>(ogame->GetGameWorld()->CreateVob(zVOB_TYPE_ITEM, i));
           if (item->HasFlag(ITM_FLAG_MULTI)) {
