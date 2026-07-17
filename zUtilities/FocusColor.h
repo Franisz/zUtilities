@@ -17,7 +17,7 @@ namespace GOTHIC_ENGINE {
   private:
     zCView* focusView;
     zCOLOR colDefault = zCOLOR( 255, 255, 255 );
-    zCOLOR colUnknown = zCOLOR( 1, 1, 1,);
+    zCOLOR colUnknown = zCOLOR( 1, 1, 1);
     bool vobOnScreen = false;
 
     int TYPE_FRIEND;
