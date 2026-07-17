@@ -104,6 +104,11 @@ namespace GOTHIC_ENGINE {
 
       zoptions->AddTrivia( PLUGIN_NAME, "SaveReminder", "... Time in minutes after which the reminder to save the game appears on the screen" + nline + "... set to -1 to disable");
       zoptions->AddTrivia( PLUGIN_NAME, "RemoveEmptyBodies", "... enables (1) or disables (0) removing of dead empty bodies from the world" + nline + "... bodies fade away over time" );
+
+      zoptions->AddTrivia( PLUGIN_NAME, "NoGrass", "... enables (1) or disables (0) hiding visuals for grass and other specified vobs" );
+      zoptions->AddTrivia( PLUGIN_NAME, "NoGrassDebugShowHidden", "... enables (1) or disables (0) showing names of hidden vobs in debug mode" );
+      zoptions->AddTrivia( PLUGIN_NAME, "NoGrassRemoveVobsWithDynamicCollisions", "... enables (1) or disables (0) hiding visuals for vobs with dynamic collisions" );
+      zoptions->AddTrivia( PLUGIN_NAME, "NoGrassVisualNames0", "... parts of the names of visuals that should be hidden in the game separated by the `,` comma" + nline + "... to add more names either add it to an existing entry with names" + nline + "... or create new entry NoGrassVisualNamesX, where X is the next number in order" + nline + "... NoGrassVisualNames0, NoGrassVisualNames1 and NoGrassVisualNames2 are predefined by the plugin" );
     }
   }
 }

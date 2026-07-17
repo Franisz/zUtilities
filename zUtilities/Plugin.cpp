@@ -8,6 +8,7 @@ namespace GOTHIC_ENGINE {
 
   void Game_Init() {
     Options::ReadOptions();
+    noGrass.Update();
     Options::AddTrivias();
     RegisterCommands();
     quickSave = new QuickSave();
@@ -40,12 +41,14 @@ namespace GOTHIC_ENGINE {
   void Game_SaveBegin() {
     quickSave->isSaving = true;
     playerStatus.Clear();
+    noGrass.RestoreVisibility();
   }
 
   void Game_SaveEnd() {
     quickSave->saveEnd = true;
     Archive();
     playerStatus.ResetSaveReminder();
+    noGrass.UpdateVisuals();
   }
 
   void LoadBegin() {
@@ -56,6 +59,7 @@ namespace GOTHIC_ENGINE {
     playerStatus.Clear();
     for (; popups.GetNum() > 0; )
       delete popups[0];
+    noGrass.RestoreVisibility();
   }
 
   void LoadEnd() {
@@ -64,6 +68,7 @@ namespace GOTHIC_ENGINE {
     playerStatus.GetPickpocketInfos();
 #endif
     playerStatus.ResetSaveReminder();
+    noGrass.UpdateVisuals();
   }
 
   void Game_LoadBegin_NewGame() {
@@ -107,6 +112,7 @@ namespace GOTHIC_ENGINE {
   }
 
   void Game_ApplyOptions() {
+    noGrass.Update();
   }
 
   /*

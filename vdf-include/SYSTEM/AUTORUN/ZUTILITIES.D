@@ -110,9 +110,9 @@ instance MenuItem_Opt_Headline(C_MENU_ITEM_DEF)
   flags   = flags & ~IT_SELECTABLE;
   flags   = flags | IT_TXT_CENTER;
   text[0] = Str_GetLocalizedString(
-    "ZUTILITIES ННСТРОЙКИ",
+    "НАСТРОЙКИ ZUTILITIES",
     "ZUTILITIES SETTINGS",
-    "ZUTILITIES EINSTELLUNGEN",
+    "ZUTILITIES-EINSTELLUNGEN",
     "USTAWIENIA ZUTILITIES"
   );
 };
@@ -133,7 +133,7 @@ instance MenuItem_Opt_Open_Link(C_MENU_ITEM_DEF)
   oneventaction[1] = Act_OpenWebLink;
   flags            = flags | IT_TXT_CENTER;
   text[0]          = Str_GetLocalizedString(
-    "Открыть ѝтраницј проекта",
+    "Открыть страницу проекта",
     "Open project page",
     "Projektseite öffnen",
     "Otwórz stronę projektu"
@@ -179,6 +179,11 @@ instance Menu_Opt_Page4(C_EMPTY_MENU_DEF)
 instance Menu_Opt_Page5(C_EMPTY_MENU_DEF)
 {
   Menu_SearchItems("ZUTILITIES:MENUITEM_OPT_PAGE5_*");
+};
+
+instance Menu_Opt_Page6(C_EMPTY_MENU_DEF)
+{
+  Menu_SearchItems("ZUTILITIES:MENUITEM_OPT_PAGE6_*");
 };
 
 // Page 0
@@ -275,6 +280,24 @@ instance MenuItem_Opt_Page0_GoTo_Page5(C_MENU_ITEM_UNION_DEF)
   text[0] = "ProtectionIcon";
   onselaction[0]   = SEL_ACTION_STARTMENU;
   onselaction_s[0] = "zUtilities:Menu_Opt_Page5";
+};
+
+instance MenuItem_Opt_Page0_GoTo_Page6(C_MENU_ITEM_UNION_DEF)
+{
+  CurrentMenuItem_PY = 6;
+  C_MENU_ITEM_TEXT_BASE();
+  // fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY;
+  posx    = 0;
+
+  flags = flags | IT_TXT_CENTER;
+
+  type    = MENU_ITEM_TEXT;
+  dimx    = 8100;
+
+  text[0] = "NoGrass";
+  onselaction[0]   = SEL_ACTION_STARTMENU;
+  onselaction_s[0] = "zUtilities:Menu_Opt_Page6";
 };
 
 instance MenuItem_Opt_Page0_Open_Link(C_MENU_ITEM)
@@ -959,6 +982,75 @@ instance MenuItem_Opt_Page5_ShowProtAllDamageTypes_Choice(C_MENU_ITEM_DEF)
   posy += Menu_DY * CurrentMenuItem_PY;
   
   onchgsetoption        = "ShowProtAllDamageTypes";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Off|On";
+};
+
+// Page 6
+instance MenuItem_Opt_Page6_Headline(C_MENU_ITEM)
+{
+  MenuItem_Opt_Headline();
+};
+
+instance MenuItem_Opt_Page6_NoGrass(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 1;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "NoGrass";
+  text[1] = "hide visuals of grass and other vobs";
+};
+
+instance MenuItem_Opt_Page6_NoGrass_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_BASE();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "NoGrass";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Off|On";
+};
+
+instance MenuItem_Opt_Page6_NoGrassDebugShowHidden(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 2;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "NoGrassDebugShowHidden";
+  text[1] = "show visual names of hidden vobs";
+};
+
+instance MenuItem_Opt_Page6_NoGrassDebugShowHidden_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_BASE();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "NoGrassDebugShowHidden";
+  onchgsetoptionsection = "zUtilities";
+  text[0]               = "Off|On";
+};
+
+instance MenuItem_Opt_Page6_NoGrassRemoveVobsWithDynamicCollisions(C_MENU_ITEM)
+{
+  CurrentMenuItem_PY = 3;
+  C_MENU_ITEM_TEXT_BASE();
+  fontname = FontSmall;
+  posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
+  
+  text[0] = "NoGrassRemoveVobsWithDynamicCollisions";
+  text[1] = "hide also visuals of vobs with dynamic collisions";
+};
+
+instance MenuItem_Opt_Page6_NoGrassRemoveVobsWithDynamicCollisions_Choice(C_MENU_ITEM_DEF)
+{
+  C_MENUITEM_CHOICE_BASE();
+  posy += Menu_DY * CurrentMenuItem_PY;
+  
+  onchgsetoption        = "NoGrassRemoveVobsWithDynamicCollisions";
   onchgsetoptionsection = "zUtilities";
   text[0]               = "Off|On";
 };

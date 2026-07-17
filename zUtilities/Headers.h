@@ -25,6 +25,7 @@
 #include "LogBook.h"
 #include "PlayerStatus.h"
 #include "RemoveEmptyBodies.h"
+#include "NoGrass.h"
 #include "Options.h"
 #include "Plugin.h"
 #pragma endregion
