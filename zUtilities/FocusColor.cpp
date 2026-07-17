@@ -302,7 +302,7 @@ namespace GOTHIC_ENGINE {
       if ( oCMobInter* inter = vob->CastTo<oCMobInter>() )
         return InterColor( inter );
 
-    return colDefault;
+    return colUnknown;
   }
 
   zSTRING FocusColor::GetName( zCVob* vob ) {
@@ -323,8 +323,8 @@ namespace GOTHIC_ENGINE {
 
   bool FocusColor::TryPrintFocus( int x, int y, zSTRING name, zCVob* vob ) {
     zCOLOR col = GetFocusColor( vob );
-    if ( col.GetDescription() == colDefault.GetDescription() )
-      col = screen->GetColor();
+    if ( col.GetDescription() == colUnknown.GetDescription() )
+      col = screen->fontColor;
 
     if ( focusView == nullptr ) {
       focusView = new zCView( 0, 0, 8192, 8192 );
