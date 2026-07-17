@@ -65,7 +65,7 @@ using std::ostream;
 #if True
   #ifdef __ZCON_B_VER3__
     #define __Z2D_B_VER3__
-    #include "zview.h"
+    #include "zView.h"
     #include "zViewObject.h"
     #include "zViewDraw.h"
     #include "zViewFx.h"
@@ -89,7 +89,7 @@ using std::ostream;
     #include "oViewDialogItemContainer.h"
     #include "oViewDialogStealContainer.h"
     #include "oViewDialogTrade.h"
-    #include "oViewStatusBar.h"
+    #include "oViewStatusbar.h"
     #include "oDoc.h"
     #include "oDocumentManager.h"
     #include "oHelp.h"
@@ -141,7 +141,7 @@ using std::ostream;
     #include "zProgMesh.h"
     #include "zVertexTransform.h"
     #include "zPolyPool.h"
-    #include "oVisFX.h"
+    #include "oVisFx.h"
     #include "oVisFx_MultiTarget.h"
     #include "oMagic.h"
     #include "oMagFrontier.h"
@@ -154,10 +154,10 @@ using std::ostream;
 #if True
   #ifdef __ZWLD_B_VER3__
     #define __ZAI_B_VER3__
-    #include "zAIPlayer.h"
+    #include "zAiPlayer.h"
     #include "zPhysics.h"
     #include "zMoving.h"
-    #include "oAIShoot.h"
+    #include "oAiShoot.h"
     #include "oDialog.h"
     #include "oItemReact.h"
     #include "oFocus.h"
@@ -238,8 +238,8 @@ using std::ostream;
   #ifdef __ZWLD_B_VER3__
     #define __ZCS_B_VER3__
     #include "zCCsPool.h"
-    #include "oCSPlayer.h"
-    #include "oCSManager.h"
+    #include "oCsPlayer.h"
+    #include "oCsManager.h"
     #include "oCsProps.h"
     #include "oCsTrigger.h"
     #include "oTrigger.h"

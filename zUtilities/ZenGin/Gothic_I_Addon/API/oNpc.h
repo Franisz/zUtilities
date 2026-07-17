@@ -389,7 +389,7 @@ namespace Gothic_I_Addon {
       oSActionBlock myactions[FA_MAX_SITUATIONS]; // sizeof 1DCh   offset 00h
 
       oSFightAI() {}
-    } oCNpc::oSFightAI;
+    } oSFightAI;
 
     // sizeof CCh
     typedef struct oSDamageDescriptor {

@@ -85,31 +85,6 @@ namespace Gothic_I_Addon {
       n[1] = a0[1];
     }
 
-    float LengthApprox() const {
-      float ix = n[VX];
-      float iy = n[VY];
-      float iz = n[VZ];
-
-      if( ix < 0.0f ) ix *= -1.0;
-      if( iy < 0.0f ) iy *= -1.0;
-      if( iz < 0.0f ) iz *= -1.0;
-
-      if( ix < iy ) {
-        float it = ix;
-        ix = iy;
-        iy = it;
-      }
-
-      if( ix < iz ) {
-        float it = ix;
-        ix = iz;
-        iz = it;
-      }
-
-      float t = iy + iz;
-      return ix - (ix * (1.0f / 16.0f)) + (t * (1.0f / 4.0f)) + (t * (1.0f / 8.0f));
-    }
-
     float Length() const
     {
       return sqrt( Length_Sqr() );
@@ -257,6 +232,31 @@ namespace Gothic_I_Addon {
       n[0] = a0[0];
       n[1] = a0[1];
       n[2] = a0[2];
+    }
+
+    float LengthApprox() const {
+      float ix = n[VX];
+      float iy = n[VY];
+      float iz = n[VZ];
+
+      if (ix < 0.0f) ix *= -1.0;
+      if (iy < 0.0f) iy *= -1.0;
+      if (iz < 0.0f) iz *= -1.0;
+
+      if (ix < iy) {
+        float it = ix;
+        ix = iy;
+        iy = it;
+      }
+
+      if (ix < iz) {
+        float it = ix;
+        ix = iz;
+        iz = it;
+      }
+
+      float t = iy + iz;
+      return ix - (ix * (1.0f / 16.0f)) + (t * (1.0f / 4.0f)) + (t * (1.0f / 8.0f));
     }
 
     float Length() const

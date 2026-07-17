@@ -25,6 +25,7 @@
 #include "Dialogue.cpp"
 #include "LogBook.cpp"
 #include "PlayerStatus.cpp"
+#include "RemoveEmptyBodies.cpp"
 #include "NoGrass.cpp"
 #include "Archive.cpp"
 #include "Plugin.cpp"
