@@ -2,9 +2,9 @@
 // Union HEADER file
 
 namespace GOTHIC_ENGINE {
-	class HealthStatusBar : public StatusBar {
-	public:
-		HealthStatusBar();
-		virtual bool Init() override;
-	};
+  class HealthStatusBar : public StatusBar {
+  public:
+    HealthStatusBar();
+    virtual bool Init() override;
+  };
 }

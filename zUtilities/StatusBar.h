@@ -33,18 +33,18 @@ namespace GOTHIC_ENGINE {
 
 
   protected:
-      zCView* valueView;
-      oCViewStatusBar* bar;
-      int restoreAttribute = -1;
-      zCArray<zSTRING> symbols;
-      zSTRING name;
-      Array<string> userPos;
-      void PrintValue(oCNpc* npc);
-      virtual void PrintValueOutside(zSTRING str, oCNpc* npc);
-      bool IsBarActive();
-      StatusBar(oCViewStatusBar* bar);
-      virtual zSTRING GetBarValue();
-      bool CanLoop();
+    zCView* valueView;
+    oCViewStatusBar* bar;
+    int restoreAttribute = -1;
+    zCArray<zSTRING> symbols;
+    zSTRING name;
+    Array<string> userPos;
+    void PrintValue(oCNpc* npc);
+    virtual void PrintValueOutside(zSTRING str, oCNpc* npc);
+    bool IsBarActive();
+    StatusBar(oCViewStatusBar* bar);
+    virtual zSTRING GetBarValue();
+    bool CanLoop();
 
   public:
     enum ValueMode {

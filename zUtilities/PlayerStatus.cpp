@@ -125,13 +125,13 @@ namespace GOTHIC_ENGINE {
   }
 
   bool PlayerStatus::IsHumanNpcEligibleForXpReward( oCNpc* npc ) {
-      if ( !npc->IsHuman() || npc->HasFlag( NPC_FLAG_IMMORTAL ) )
-          return false;
+    if ( !npc->IsHuman() || npc->HasFlag( NPC_FLAG_IMMORTAL ) )
+      return false;
 
 #if ENGINE < Engine_G2
-      return !npc->GetAivar( "AIV_WASDEFEATEDBYSC" );
+    return !npc->GetAivar( "AIV_WASDEFEATEDBYSC" );
 #else
-      return !npc->GetAivar( "AIV_VICTORYXPGIVEN" );
+    return !npc->GetAivar( "AIV_VICTORYXPGIVEN" );
 #endif
   }
 
@@ -293,30 +293,30 @@ namespace GOTHIC_ENGINE {
   }
 
   void PlayerStatus::ShowSystemTime() {
-      if ( !Options::ShowSystemTime )
-          return;
+    if ( !Options::ShowSystemTime )
+      return;
 
-      if ( playerHelper.LeftInvOpen() || playerHelper.IsConUp() || !ogame->GetShowPlayerStatus() || !ogame->hpBar )
-          return;
+    if ( playerHelper.LeftInvOpen() || playerHelper.IsConUp() || !ogame->GetShowPlayerStatus() || !ogame->hpBar )
+      return;
 
-      zSTRING str = "";
-      zCOLOR color = GFX_WHITE;
-      tm timeStructure;
+    zSTRING str = "";
+    zCOLOR color = GFX_WHITE;
+    tm timeStructure;
 
-      time_t currentTime = time( NULL );
-      localtime_s( &timeStructure, &currentTime );
+    time_t currentTime = time( NULL );
+    localtime_s( &timeStructure, &currentTime );
 
-      str = ( timeStructure.tm_hour < 10 ? "0" : "" ) + Z timeStructure.tm_hour + ":"
+    str = ( timeStructure.tm_hour < 10 ? "0" : "" ) + Z timeStructure.tm_hour + ":"
           + ( timeStructure.tm_min < 10 ? "0" : "" ) + Z timeStructure.tm_min;
 
-      if ( Options::ShowSystemTime > 1 )
-          str = str + ":" + ( timeStructure.tm_sec < 10 ? "0" : "" ) + Z timeStructure.tm_sec;
+    if ( Options::ShowSystemTime > 1 )
+      str = str + ":" + ( timeStructure.tm_sec < 10 ? "0" : "" ) + Z timeStructure.tm_sec;
 
-      zSTRING texture = "ICON_WATCH"; // https://game-icons.net/1x1/delapouite/watch.html
+    zSTRING texture = "ICON_WATCH"; // https://game-icons.net/1x1/delapouite/watch.html
 
-      infoIcons++;
-      color.alpha = ogame->hpBar->alpha;
-      IconInfo icon = IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, screen->FontY() * 0.9f, color, texture, str );
+    infoIcons++;
+    color.alpha = ogame->hpBar->alpha;
+    IconInfo icon = IconInfo( screen->FontY(), screen->FontY() * 2.5 * infoIcons, screen->FontY() * 0.9f, color, texture, str );
   }
 
   void PlayerStatus::ShowGameTime() {
@@ -422,28 +422,28 @@ namespace GOTHIC_ENGINE {
   }
 
   void PlayerStatus::StatusBars() {
-   if ( !hpBar )
-   {
-       hpBar = new HealthStatusBar();
-       hpBar->Init();
-   }
+    if ( !hpBar )
+    {
+      hpBar = new HealthStatusBar();
+      hpBar->Init();
+    }
 
     if ( !manaBar )
     {
-        manaBar = new ManaStatusBar();
-        manaBar->Init();
+      manaBar = new ManaStatusBar();
+      manaBar->Init();
     }
 
     if ( !focusBar )
     {
-        focusBar = new FocusStatusBar();
-        focusBar->Init();
+      focusBar = new FocusStatusBar();
+      focusBar->Init();
     }
 
     if ( !swimBar )
     {
-        swimBar = new SwimStatusBar();
-        swimBar->Init();
+      swimBar = new SwimStatusBar();
+      swimBar->Init();
     }
 
     hpBar->Loop();

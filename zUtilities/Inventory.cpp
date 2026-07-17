@@ -36,14 +36,14 @@ namespace GOTHIC_ENGINE {
       return;
 
     if (!player->inventory2.IsOpen())
-        return;
+      return;
 
     if (lastActiveMunition) {
-        if (player->inventory2.IsIn(lastActiveMunition, 1) == nullptr
+      if (player->inventory2.IsIn(lastActiveMunition, 1) == nullptr
             && player->GetLeftHand() != lastActiveMunition
             && player->GetRightHand() != lastActiveMunition) {
-            lastActiveMunition = nullptr;
-        }
+        lastActiveMunition = nullptr;
+      }
     }
 
     if ( playerStatus.traderNpc ) {

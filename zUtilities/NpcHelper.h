@@ -2,22 +2,22 @@
 // Union HEADER file
 
 namespace GOTHIC_ENGINE {
-	struct NpcProtectionStatus {
-		bool immune;
-		int value;
-		oEIndexDamage damageIndex;
-	};
+  struct NpcProtectionStatus {
+    bool immune;
+    int value;
+    oEIndexDamage damageIndex;
+  };
 
-	class NpcHelper {
+  class NpcHelper {
 
-	private:
-		std::vector<oEIndexDamage> GetDamageIndexes();
-		bool CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex);
+  private:
+    std::vector<oEIndexDamage> GetDamageIndexes();
+    bool CanRenderProtectionStatus(oCNpc* npc, oEIndexDamage damageIndex);
 
-	public:
-		std::vector<NpcProtectionStatus> GetProtectionVisibleStatuses(oCNpc* npc);
-		int GetProtectionStatusesVisibleCount(oCNpc* npc);
-	};
+  public:
+    std::vector<NpcProtectionStatus> GetProtectionVisibleStatuses(oCNpc* npc);
+    int GetProtectionStatusesVisibleCount(oCNpc* npc);
+  };
 
-	NpcHelper npcHelper;
+  NpcHelper npcHelper;
 }

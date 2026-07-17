@@ -2,13 +2,13 @@
 // Union HEADER file
 
 namespace GOTHIC_ENGINE {
-	class SwimStatusBar : public StatusBar {
+  class SwimStatusBar : public StatusBar {
 
-	protected:
-		virtual zSTRING GetBarValue() override;
+  protected:
+    virtual zSTRING GetBarValue() override;
 
-	public:
-		SwimStatusBar();
-		virtual bool Init() override;
-	};
+  public:
+    SwimStatusBar();
+    virtual bool Init() override;
+  };
 }

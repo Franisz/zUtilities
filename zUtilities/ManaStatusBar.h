@@ -2,10 +2,10 @@
 // Union HEADER file
 
 namespace GOTHIC_ENGINE {
-	class ManaStatusBar : public StatusBar {
+  class ManaStatusBar : public StatusBar {
 
-	public:
-		ManaStatusBar();
-		virtual bool Init() override;
-	};
+  public:
+    ManaStatusBar();
+    virtual bool Init() override;
+  };
 }
