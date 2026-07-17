@@ -132,10 +132,25 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
   - This is disabled by default and can be enabled with `AlternativeDialogueBoxes` option.
 
+- Removes dead npcs with empty inventories from the world.
+
+  - Bodies fade away instead of disappearing instantly.
+  - Npcs carrying mission items are never removed.
+  - This is disabled by default and can be enabled with `RemoveEmptyBodies` option.
+
+- Hides grass and other configured world object visuals.
+
+  - This is disabled by default and can be enabled with `NoGrass` option.
+  - Visuals to hide are configured as comma-separated, case-insensitive wildcard patterns in `NoGrassVisualNames0`, `NoGrassVisualNames1`, `NoGrassVisualNames2` and any additional sequential `NoGrassVisualNamesX` entries.
+  - The plugin creates the first three visual-name lists with defaults for common grass, plants, bushes, mushrooms and water vegetation.
+  - Vobs with dynamic collision are left visible by default. Set `NoGrassRemoveVobsWithDynamicCollisions` to `1` to hide their visuals too.
+  - In debug mode, use `zutilities showvobsvisualnames` to display nearby visual names. Hidden visuals are orange; set `NoGrassDebugShowHidden` to `0` to omit them.
+
 - Display debug info data about focused vob or selected in the inventory item.
 
   - Use `zutilities debug` command to toggle on/off.
   - While debug command is active, `zutilities showtriggers` command can be toggled to display invisible triggers.
+  - While debug command is active, `zutilities showvobsvisualnames` command can be toggled to display nearby vob visual names.
 
 - Insert all items into inventory with `zutilities giveallitems` command.
 
@@ -313,6 +328,25 @@ DamagePopupColorDmgTypes=1
 
 DamagePopupColorOnlyIcon=0
 ; ... enables (1) or disables (0) coloring only the popup icon
+
+RemoveEmptyBodies=0
+; ... enables (1) or disables (0) removing dead empty bodies from the world
+; ... bodies fade away over time
+
+NoGrass=0
+; ... enables (1) or disables (0) hiding visuals for grass and other specified vobs
+
+NoGrassDebugShowHidden=1
+; ... enables (1) or disables (0) showing names of hidden vobs in debug mode
+
+NoGrassRemoveVobsWithDynamicCollisions=0
+; ... enables (1) or disables (0) hiding visuals for vobs with dynamic collisions
+
+NoGrassVisualNames0=*grass*, *farn*, *bush*, *smallweed*, nw_nature_plant*, nw_nature_sideplant*, *cavewebs*, *mushroom*
+NoGrassVisualNames1=kb_grass*, kb_unter*, kb_green*, kb_pflan*, kb_farn*, kb_strauch*, ody_farn*
+NoGrassVisualNames2=*duckweed*, *waterlili*
+; ... comma-separated, case-insensitive wildcard patterns for visual names that should be hidden
+; ... add more lists as sequential NoGrassVisualNamesX entries
 ```
 
 </details>
