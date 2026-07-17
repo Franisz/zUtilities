@@ -30,7 +30,7 @@ namespace GOTHIC_ENGINE {
 
       auto showTargetProtectionValue = zoptions->ReadInt(PLUGIN_NAME, "ShowTargetProtection", true);
       if (showTargetProtectionValue < 0 || showTargetProtectionValue > 2) {
-          return;
+        return;
       }
 
       ShowTargetProtection = showTargetProtectionValue >= 1;

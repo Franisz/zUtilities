@@ -43,17 +43,17 @@ namespace GOTHIC_ENGINE {
   }
 
   int IconInfo::GetSize() {
-      if (!text.Length()) {
-          return vsize;
-      }
+    if (!text.Length()) {
+      return vsize;
+    }
 
-      return vsize + screen->FontY() / 10 + screen->FontSize(text);
+    return vsize + screen->FontY() / 10 + screen->FontSize(text);
   }
 
   void IconInfo::RestoreViewport() {
-      int ScreenX, ScreenY, ScreenSX, ScreenSY;
-      screen->GetViewport(ScreenX, ScreenY, ScreenSX, ScreenSY);
-      zrenderer->SetViewport(ScreenX, ScreenY, ScreenSX, ScreenSY);
+    int ScreenX, ScreenY, ScreenSX, ScreenSY;
+    screen->GetViewport(ScreenX, ScreenY, ScreenSX, ScreenSY);
+    zrenderer->SetViewport(ScreenX, ScreenY, ScreenSX, ScreenSY);
   }
 
   IconInfo::IconInfo( int x, int y, int size, zCOLOR color, zSTRING texName, zSTRING text = "" )

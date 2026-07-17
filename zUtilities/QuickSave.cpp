@@ -206,7 +206,7 @@ namespace GOTHIC_ENGINE {
     gameMan->savegameManager->SetAndWriteSavegame( info->m_SlotNr, info );
 
     if ( Options::PrintQuickSaveLoadInfo )
-        ogame->GetTextView()->Printwin( Z Options::SaveCompleted + " '" + Z info->m_Name + Z "' #" + Z info->m_SlotNr );
+      ogame->GetTextView()->Printwin( Z Options::SaveCompleted + " '" + Z info->m_Name + Z "' #" + Z info->m_SlotNr );
   }
 
   void QuickSave::CheckLoad() {
@@ -234,7 +234,7 @@ namespace GOTHIC_ENGINE {
 #endif
 
     if( Options::PrintQuickSaveLoadInfo )
-        ogame->GetTextView()->Printwin( Z Options::LoadCompleted + " '" + Z info->m_Name + Z "' #" + Z info->m_SlotNr );
+      ogame->GetTextView()->Printwin( Z Options::LoadCompleted + " '" + Z info->m_Name + Z "' #" + Z info->m_SlotNr );
   }
 
   void QuickSave::LoadFromMainMenu() const {

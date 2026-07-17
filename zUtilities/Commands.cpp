@@ -5,62 +5,62 @@ namespace GOTHIC_ENGINE {
   int (*innerEvalFunc)(const zSTRING&, zSTRING&);
 
   int GiveAllItems() {
-      auto c_item = parser->GetIndex(oCItem::classDef->scriptClassName);
-      if (c_item == -1) {
-          return 0;
+    auto c_item = parser->GetIndex(oCItem::classDef->scriptClassName);
+    if (c_item == -1) {
+      return 0;
+    }
+
+    oCItem* tempItem = nullptr;
+
+    int itemsCreated = 0;
+    for (int i = 0; i < parser->symtab.GetNumInList(); i++) {
+      zCPar_Symbol* symbol = parser->symtab.table[i];
+
+      if (i == parser->instance_help) {
+        continue;
       }
 
-		oCItem* tempItem = nullptr;
-
-      int itemsCreated = 0;
-      for (int i = 0; i < parser->symtab.GetNumInList(); i++) {
-          zCPar_Symbol* symbol = parser->symtab.table[i];
-
-          if (i == parser->instance_help) {
-              continue;
-          }
-
-          if (symbol->type != zPAR_TYPE_INSTANCE) {
-              continue;
-          }
-
-          if ((symbol->flags & zPAR_FLAG_CONST) == 0) {
-              continue;
-          }
-
-          //  Instance isn't global scope
-          if (symbol->name.HasWord(".")) {
-              continue;
-          }
-
-          auto baseClass = parser->GetBaseClass(symbol);
-
-          // Symbol isn't a item class
-          if (baseClass != c_item) {
-              continue;
-          }
-
-			tempItem = new oCItem();
-			parser->CreateInstance(i, tempItem);
-			auto itemFlags = tempItem->flags;
-			tempItem->Release();
-			tempItem = nullptr;
-
-			if (itemFlags == -1) {
-				continue;
-			}
-
-          oCItem* item = static_cast<oCItem*>(ogame->GetGameWorld()->CreateVob(zVOB_TYPE_ITEM, i));
-          if (item->HasFlag(ITM_FLAG_MULTI)) {
-              item->amount = 50;
-          }
-
-          player->PutInInv(item);
-          item->Release();
-          itemsCreated++;
+      if (symbol->type != zPAR_TYPE_INSTANCE) {
+        continue;
       }
 
-      return itemsCreated;
+      if ((symbol->flags & zPAR_FLAG_CONST) == 0) {
+        continue;
+      }
+
+      //  Instance isn't global scope
+      if (symbol->name.HasWord(".")) {
+        continue;
+      }
+
+      auto baseClass = parser->GetBaseClass(symbol);
+
+      // Symbol isn't a item class
+      if (baseClass != c_item) {
+        continue;
+      }
+
+      tempItem = new oCItem();
+      parser->CreateInstance(i, tempItem);
+      auto itemFlags = tempItem->flags;
+      tempItem->Release();
+      tempItem = nullptr;
+
+      if (itemFlags == -1) {
+        continue;
+      }
+
+      oCItem* item = static_cast<oCItem*>(ogame->GetGameWorld()->CreateVob(zVOB_TYPE_ITEM, i));
+      if (item->HasFlag(ITM_FLAG_MULTI)) {
+        item->amount = 50;
+      }
+
+      player->PutInInv(item);
+      item->Release();
+      itemsCreated++;
+    }
+
+    return itemsCreated;
   }
 
   int ConsoleEvalFunc( const zSTRING& inpstr, zSTRING& msg ) {
@@ -77,28 +77,28 @@ namespace GOTHIC_ENGINE {
     }
 
     if ( w2 == "Debug" ) {
-			Options::UsingDebugHelper = ( Options::UsingDebugHelper ) ? false : true;
-			zSTRING state = ( Options::UsingDebugHelper ) ? "ON" : "OFF";
+      Options::UsingDebugHelper = ( Options::UsingDebugHelper ) ? false : true;
+      zSTRING state = ( Options::UsingDebugHelper ) ? "ON" : "OFF";
       msg = "zUtilites debug helper " + state;
       return true;
     }
 
-		if ( w2 == "GiveAllItems" ) {
-        auto result = GiveAllItems();
-        msg = "Created " + Z result + " instances.";
+    if ( w2 == "GiveAllItems" ) {
+      auto result = GiveAllItems();
+      msg = "Created " + Z result + " instances.";
 
-        return true;
+      return true;
     }
 
-		if ( w2 == "ShowTriggers" ) {
+    if ( w2 == "ShowTriggers" ) {
       Options::ShowTriggers = !Options::ShowTriggers;
-			zSTRING state = ( Options::ShowTriggers ) ? "ON" : "OFF";
+      zSTRING state = ( Options::ShowTriggers ) ? "ON" : "OFF";
       msg = "zUtilities showing triggers " + state;
-			if ( Options::ShowTriggers && !Options::UsingDebugHelper ) {
-				msg += "\nYou have to turn on zUtilities Debug";
-			}
-			return true;
-		}
+      if ( Options::ShowTriggers && !Options::UsingDebugHelper ) {
+        msg += "\nYou have to turn on zUtilities Debug";
+      }
+      return true;
+    }
 
     if ( w2 == "ShowVobsVisualNames" ) {
       Options::ShowVobsVisualNames = !Options::ShowVobsVisualNames;
