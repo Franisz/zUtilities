@@ -103,7 +103,7 @@ namespace GOTHIC_ENGINE {
       zoptions->AddTrivia( PLUGIN_NAME, "SelectedDialogueColor", "... defines color of selected line in dialogues" + nline + "... use 'R|G|B' or 'R|G|B|A' format" + nline + "... leave empty to use default color" );
 
       zoptions->AddTrivia( PLUGIN_NAME, "SaveReminder", "... Time in minutes after which the reminder to save the game appears on the screen" + nline + "... set to -1 to disable");
-      zoptions->AddTrivia( PLUGIN_NAME, "RemoveEmptyBodies", "... enables (1) or disables (0) removing of dead empty bodies from the world" + nline + "... bodies fade away over time" );
+      zoptions->AddTrivia( PLUGIN_NAME, "RemoveEmptyBodies", "... removing of dead empty bodies from the world" + nline + "... 0 - turned off" + nline + "... 1 - bodies fade away over time" + nline + "... 2 - bodies are removed immediately" );
 
       zoptions->AddTrivia( PLUGIN_NAME, "NoGrass", "... enables (1) or disables (0) hiding visuals for grass and other specified vobs" );
       zoptions->AddTrivia( PLUGIN_NAME, "NoGrassDebugShowHidden", "... enables (1) or disables (0) showing names of hidden vobs in debug mode" );

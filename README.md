@@ -134,9 +134,9 @@ This is a plugin with a set of many quality-of-life and utility features made fo
 
 - Removes dead npcs with empty inventories from the world.
 
-  - Bodies fade away instead of disappearing instantly.
   - Npcs carrying mission items are never removed.
-  - This is disabled by default and can be enabled with `RemoveEmptyBodies` option.
+  - Change `RemoveEmptyBodies` for different removal modes: `0` - _Disabled_, `1` - _Fade away_, `2` - _Immediately_.
+  - This feature is disabled by default.
 
 - Hides grass and other configured world object visuals.
 
@@ -330,8 +330,10 @@ DamagePopupColorOnlyIcon=0
 ; ... enables (1) or disables (0) coloring only the popup icon
 
 RemoveEmptyBodies=0
-; ... enables (1) or disables (0) removing dead empty bodies from the world
-; ... bodies fade away over time
+; ... removing of dead empty bodies from the world
+; ... 0 - turned off
+; ... 1 - bodies fade away over time
+; ... 2 - bodies are removed immediately
 
 NoGrass=0
 ; ... enables (1) or disables (0) hiding visuals for grass and other specified vobs
