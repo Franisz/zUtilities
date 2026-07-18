@@ -619,7 +619,7 @@ instance MenuItem_Opt_Page2_RemoveEmptyBodies(C_MENU_ITEM)
   posy += Menu_DY * CurrentMenuItem_PY + Text_DY;
   
   text[0] = "RemoveEmptyBodies";
-  text[1] = "remove empty bodies from world (fade away)";
+  text[1] = "remove empty bodies from world";
 };
 
 instance MenuItem_Opt_Page2_RemoveEmptyBodies_Choice(C_MENU_ITEM_DEF)
@@ -629,7 +629,7 @@ instance MenuItem_Opt_Page2_RemoveEmptyBodies_Choice(C_MENU_ITEM_DEF)
   
   onchgsetoption        = "RemoveEmptyBodies";
   onchgsetoptionsection = "zUtilities";
-  text[0]               = "Off|On";
+  text[0]               = "Off|Fade away|Immediately";
 };
 
 // Page 3

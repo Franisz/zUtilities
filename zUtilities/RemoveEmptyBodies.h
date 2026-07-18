@@ -3,10 +3,10 @@
 
 namespace GOTHIC_ENGINE {
   namespace Options {
-    bool RemoveBodies;
+    int RemoveBodies;
 
     void RemoveEmptyBodies() {
-      RemoveBodies = zoptions->ReadBool( PLUGIN_NAME, "RemoveEmptyBodies", false);
+      RemoveBodies = zoptions->ReadInt( PLUGIN_NAME, "RemoveEmptyBodies", 0);
     }
   }
 }

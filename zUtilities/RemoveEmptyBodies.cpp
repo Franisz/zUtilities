@@ -55,7 +55,15 @@ namespace GOTHIC_ENGINE {
       return TRUE;
     }
     else {
-      npc->StartFadeAway();
+      if ( Options::RemoveBodies == 1 ) {
+        npc->StartFadeAway();
+      }
+      else if ( Options::RemoveBodies == 2 )  {
+        this->DeleteNpc( npc );
+      }
+      else {
+        return THISCALL( Ivk_CheckRemoveNpc_Union )( npc );
+      }
 
       return TRUE;
     }

@@ -7,9 +7,6 @@ namespace GOTHIC_ENGINE {
     bool NoGrassDebugShowHidden;
     bool NoGrassRemoveVobsWithDynamicCollisions;
     std::vector<string> NoGrassVisualNames;
-
-    void NoGrassOptions() {
-    }
   } // namespace Options
 
   class NoGrass {

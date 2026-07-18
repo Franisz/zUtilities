@@ -11,13 +11,10 @@ namespace GOTHIC_ENGINE {
 
     if ( !zoptions->EntryExists( PLUGIN_NAME, "NoGrassVisualNames0" ) )
       zoptions->WriteString( PLUGIN_NAME, "NoGrassVisualNames0", "*grass*, *farn*, *bush*, *smallweed*, nw_nature_plant*, nw_nature_sideplant*, *cavewebs*, *mushroom*", 0 );
-    // zoptions->WriteString(PLUGIN_NAME, "NoGrassVisualNames0", "NW_NATURE_FARN,NW_NATURE_BUSH,NW_NATURE_SIDEPLANT,NW_NATURE_PLANT,NW_NATURE_SMALLWEED,NW_NATURE_GRASS,NW_NATURE_LONG_BUSH,NW_CAVEWEBS,OW_MUSHROOM,OW_BUSH", 0);
     if ( !zoptions->EntryExists( PLUGIN_NAME, "NoGrassVisualNames1" ) )
       zoptions->WriteString( PLUGIN_NAME, "NoGrassVisualNames1", "kb_grass*, kb_unter*, kb_green*, kb_pflan*, kb_farn*, kb_strauch*, ody_farn*", 0 );
-    // zoptions->WriteString(PLUGIN_NAME, "NoGrassVisualNames1", "KB_GRASS,KB_UNTER,KB_GREEN,KB_PFLAN,KB_FARN,KB_STRAUCH,ODY_FARN_GROSS", 0);
     if ( !zoptions->EntryExists( PLUGIN_NAME, "NoGrassVisualNames2" ) )
       zoptions->WriteString( PLUGIN_NAME, "NoGrassVisualNames2", "*duckweed*, *waterlili*", 0 );
-    // zoptions->WriteString(PLUGIN_NAME, "NoGrassVisualNames2", "NW_NATURE_WATERGRASS,NW_NATURE_DUCKWEED,NW_NATURE_WATERLILI", 0);
 
     int vi = 0;
     while ( true ) {
